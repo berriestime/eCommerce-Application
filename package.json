@@ -1,0 +1,28 @@
+{
+  "name": "ecom-final-task",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Task for RS School",
+  "main": "eslint.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.1.1",
+    "@tsconfig/node20": "^20.1.4",
+    "@types/eslint__js": "^8.42.3",
+    "eslint": "^8.57.0",
+    "husky": "^9.0.11",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5",
+    "react": "^18.3.1",
+    "react-redux": "^9.1.1",
+    "redux": "^5.0.1",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.7.1",
+    "vite": "^5.2.10"
+  }
+}
