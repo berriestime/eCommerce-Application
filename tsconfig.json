@@ -1,5 +1,9 @@
 {
   "extends": "@tsconfig/node20/tsconfig.json",
-  "compilerOptions": { "jsx": "react", "lib": ["dom", "dom.iterable", "esnext"] },
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "outDir": "lib"
+  },
   "include": ["**/*", "*"]
 }

@@ -5,7 +5,15 @@
   "description": "Task for RS School",
   "main": "eslint.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc && vite build",
+    "ci:format": "prettier --check .",
+    "dev": "vite",
+    "format": "prettier --write .",
+    "lint:fix": "eslint --fix --color ./src",
+    "lint": "eslint ./src",
+    "prepare": "husky",
+    "preview": "vite preview",
+    "typecheck": "tsc"
   },
   "keywords": [],
   "author": "",
