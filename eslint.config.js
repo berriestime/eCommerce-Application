@@ -2,6 +2,7 @@
 
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier';
 
 const config = tseslint.config(
   eslint.configs.recommended,
@@ -13,7 +14,8 @@ const config = tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
-  }
-)
+  },
+  eslintConfigPrettier,
+);
 
-export default config
+export default config;
