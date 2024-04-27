@@ -1,14 +1,31 @@
-1. Task: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/fancy-weather.md
-2. Screenshot:
-   ![](https://docs.rs.school/images/fancy-weather.png)
-3. Deploy: https://chakapega-fancy-weather.netlify.com/
-4. Done 28.05.2020 / deadline 31.05.2020
-5. Score: 220 / 300
-- Вёрстка, дизайн, UI (15/30)
-  - [x] минимальная ширина страницы, при которой она отображается корректно – 320 рх (10)
-  - [±] внешний вид приложения внешне соответствует макету или является его улучшенной версией (5/10)   
-  - [ ] приложение корректно отображается для любого выбранного языка (0)
-- В блоке "Погода за сегодня" отображаются следующие данные (15/20)
-  - [x] данные о погоде и местоположении пользователя (10)
-  - [±] часы, обновляющие время каждую секунду (5/10) 
- ...
+# Pull Request Template
+
+#### Description
+
+Please include a summary of the change and which issue is fixed. Also include relevant motivation and context. List any dependencies that are required for this change.
+
+#### 🤔 This is a ...
+
+- [ ] New feature
+- [ ] Bug fix
+- [ ] Performance optimization
+- [ ] Refactoring
+- [ ] Test Case
+- [ ] Documentation update
+- [ ] Other
+
+#### 🔗 Related issue link
+
+_Describe the source of requirement, like related issue link._
+
+#### How Has This Been Tested?
+
+Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
+
+- [ ] Test
+
+#### ☑️ Self Check before Merge
+
+⚠️ Please check all items below before review. ⚠️
+- [ ] Changes are tested locally
+- [ ] Documentation is updated/provided or not needed
