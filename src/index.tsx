@@ -1,7 +1,22 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import { Header } from './components/header/header.js';
+import { LoginPage } from './pages/login-page';
+import { RootPage } from './pages/root-page';
+
+const router = createBrowserRouter([
+  {
+    children: [
+      {
+        element: <LoginPage />,
+        path: 'login',
+      },
+    ],
+    element: <RootPage />,
+    path: '/',
+  },
+]);
 
 const node = document.getElementById('root');
 if (!node) {
@@ -10,6 +25,6 @@ if (!node) {
 const root = createRoot(node);
 root.render(
   <StrictMode>
-    <Header />
+    <RouterProvider router={router} />
   </StrictMode>,
 );
