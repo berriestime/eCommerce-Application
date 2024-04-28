@@ -1,7 +1,8 @@
-import React from 'react';
+import type { FC } from 'react';
+
 import s from './header.module.css';
 
-const Header = () => {
+const Header: FC = () => {
   return <header className={s.header}>Hello world</header>;
 };
 
