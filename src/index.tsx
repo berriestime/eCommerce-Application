@@ -7,14 +7,12 @@ import { RootPage } from './pages/root-page';
 
 const router = createBrowserRouter([
   {
-    children: [
-      {
-        element: <LoginPage />,
-        path: 'login',
-      },
-    ],
     element: <RootPage />,
     path: '/',
+  },
+  {
+    element: <LoginPage />,
+    path: '/login',
   },
 ]);
 
