@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import { Header } from './header.js';
+import { Layout } from './layout.js';
 
-describe('Header', () => {
+describe('Layout', () => {
   test('should render', () => {
-    render(<Header />);
+    render(<Layout>Hello</Layout>);
     expect(screen.getByText('Header')).toBeInTheDocument();
+    expect(screen.getByText('Hello')).toBeInTheDocument();
   });
 });
