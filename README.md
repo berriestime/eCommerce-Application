@@ -93,7 +93,7 @@ npm run dev
 The following contributors have worked on this project:
 
 - **Nadya** - Developer | Designer - [GitHub](https://github.com/NadyaGus)
-- **Naya** - Developer | Designer - [GitHub](https://github.com/Naya252)
+- **Anna** - Developer | Designer - [GitHub](https://github.com/Naya252)
 - **Lena** - Developer | Project Manager - [GitHub](https://github.com/berriestime)
 
 Enjoy lighting up your world with Lava Lamps!
