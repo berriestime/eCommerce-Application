@@ -1,8 +1,1 @@
-# commit_message=$(head -n 1 $GIT_PARAMS)
-commit_regex='^(fix|feat|refactor|chore|docs|init): .*$'
-
-if ! cat "$1" | head -n 1 | grep -qE "$commit_regex"; then
-  echo "ERROR: Commit message does not match required format!"
-  echo "Example of valid message: feat: add new feature"
-  exit 1
-fi
+npx --no -- commitlint --edit $1
