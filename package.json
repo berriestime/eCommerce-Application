@@ -1,5 +1,5 @@
 {
-  "name": "ecom-final-task",
+  "name": "lava-lamps",
   "type": "module",
   "version": "1.0.0",
   "description": "Task for RS School",
@@ -15,7 +15,8 @@
     "prepare": "husky",
     "preview": "vite preview",
     "typecheck": "tsc",
-    "test": "vitest run"
+    "test": "vitest run",
+    "coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "^1.5.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -56,6 +58,8 @@
     "vitest": "^1.5.2"
   },
   "dependencies": {
+    "@mantine/core": "^7.9.0",
+    "@mantine/hooks": "^7.9.0",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "react": "^18.3.1",

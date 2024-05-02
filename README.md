@@ -94,6 +94,8 @@ This project includes a number of npm scripts that can be used to facilitate the
 
 - `test`: Runs the test suite using Vitest, a Vite-native test framework.
 
+- `coverage`: Generates a test coverage report using Vitest, which assesses the proportion of your codebase that is covered by your tests. This helps identify any gaps in your test suite that might need attention.
+
 To run any of these scripts, you can use `npm run` followed by the script name. For example, to start the development server, you would run:
 
 ```
