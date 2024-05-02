@@ -42,7 +42,7 @@ Our application leverages a modern technology stack to ensure a seamless and eff
 ### Sprint 2: Authentication and Navigation
 
 - Implement login and registration pages.
-- Perform input validation with React Hook Forms + Zod.
+- Perform input validation with React Hook Form + Zod.
 - Integrate with an authentication service.
 - Manage user authentication state and token persistence.
 - Provide navigational buttons and implement routing with React Router.
@@ -74,7 +74,7 @@ Our application leverages a modern technology stack to ensure a seamless and eff
 
 This project includes a number of npm scripts that can be used to facilitate the development process. Below is a brief description of each:
 
-- `build`: Compiles the TypeScript codebase using the TypeScript Compiler (tsc) and then builds the production version of the application with Vite.
+- `build`: Compiles the TypeScript codebase using the esbuild and then builds the production version of the application with Vite.
 
 - `ci:format`: Checks if the files in the project adhere to the formatting standards set by Prettier without writing any changes.
 
