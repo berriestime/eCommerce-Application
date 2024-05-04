@@ -1,12 +1,17 @@
+import { Outlet } from 'react-router-dom';
+
 import { Header } from '../header';
 
 import s from './layout.module.css';
 
-const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
+const Layout = (): JSX.Element => {
   return (
     <div className={s.layout}>
       <Header />
-      {children}
+
+      <Outlet />
+
+      <footer>2024</footer>
     </div>
   );
 };
