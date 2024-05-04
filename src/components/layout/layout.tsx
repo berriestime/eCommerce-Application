@@ -9,7 +9,9 @@ const Layout = (): JSX.Element => {
     <div className={s.layout}>
       <Header />
 
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
 
       <footer>2024</footer>
     </div>
