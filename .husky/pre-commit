@@ -1,3 +1,2 @@
-npm run ci:format
 npm run typecheck
-npm run lint
+npx --no -- lint-staged

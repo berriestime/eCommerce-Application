@@ -50,6 +50,7 @@
     "husky": "^9.0.11",
     "jsdom": "^24.0.0",
     "lightningcss": "^1.24.1",
+    "lint-staged": "^12.3.2",
     "npm": "^10.6.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
@@ -67,5 +68,9 @@
     "react-redux": "^9.1.1",
     "react-router-dom": "^6.23.0",
     "redux": "^5.0.1"
+  },
+  "lint-staged": {
+    "*": "prettier --list-different --ignore-unknown",
+    "*.{cjs,js,mjs,jsx,ts,tsx}": "eslint"
   }
 }
