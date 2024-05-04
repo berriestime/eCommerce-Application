@@ -1,20 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import { LoginPage } from './pages/login-page';
-import { RootPage } from './pages/root-page';
+import { App } from './App';
 
-const router = createBrowserRouter([
-  {
-    element: <RootPage />,
-    path: '/',
-  },
-  {
-    element: <LoginPage />,
-    path: '/login',
-  },
-]);
+import './index.css';
 
 const node = document.getElementById('root');
 if (!node) {
@@ -23,6 +12,6 @@ if (!node) {
 const root = createRoot(node);
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </StrictMode>,
 );

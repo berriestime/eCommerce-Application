@@ -2,20 +2,33 @@
 
 Welcome to the repository for Lava Lamps, a cutting-edge e-commerce platform dedicated to providing a diverse range of high-quality lamps. Our application is designed to deliver an exceptional shopping experience, allowing users to explore, select, and purchase their favorite lamps with ease.
 
+<div style="text-align: center;">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/6p65CzC.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://i.imgur.com/4htNEce.png">
+  <img alt="lava lamps logo" src="https://i.imgur.com/4htNEce.png">
+</picture>
+</div>
+
 ## Purpose
 
 Lava Lamps aims to illuminate the lives of our customers by offering a selection of lamps that cater to various tastes and preferences. We strive to create a user-friendly platform that simplifies the process of finding and purchasing the perfect lamp for any setting, be it home or office.
+
+<div style="text-align: center;">
+<img src="./src/assets/2006729-uhd_3840_2160_25fps-ezgif.com-video-to-gif-converter.gif" style="max-width: 100%; height: auto;" />
+</div>
 
 ## Technology Stack
 
 Our application leverages a modern technology stack to ensure a seamless and efficient user experience:
 
-- **Frontend**: React, React Router
-- **State Management**: Redux, Redux Toolkit, RTK Query, React Hook Forms, Zod
+- **Frontend**: <a href="https://reactjs.org/"><img src="https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png" width="20" alt="react"></a>, React Router
+- **State Management**: <a href="https://redux.js.org/"><img src="https://user-images.githubusercontent.com/25181517/187896150-cc1dcb12-d490-445c-8e4d-1275cd2388d6.png" width="20" alt="redux"></a>, Redux Toolkit, RTK Query, React Hook Forms, Zod
 - **UI Components**: UI-kit Mantine
-- **Development Tools**: Vite, TypeScript, ESLint, Prettier
-- **Testing**: Vitest
-- **CI/CD**: Husky, Deploy on Netlify
+- **Development Tools**: <a href="https://vitejs.dev/"><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/62091613/261395532-b40892ef-efb8-4b0e-a6b5-d1cfc2f3fc35.png" width="20" alt="vite"></a>, <a href="https://www.typescriptlang.org/"><img src="https://user-images.githubusercontent.com/25181517/183890598-19a0ac2d-e88a-4005-a8df-1ee36782fde1.png" width="20" alt="typescript"></a>, ESLint, Prettier
+- **Testing**: <a href="https://vitest.dev/"><img src="https://github.com/tandpfun/skill-icons/blob/main/icons/Vitest-Dark.svg" width="20" alt="vitest"></a>
+- **CI/CD**: Husky, Deploy on Netlify <a href="https://www.netlify.com/"><img src="https://github.com/tandpfun/skill-icons/blob/main/icons/Netlify-Dark.svg" width="20" alt="netlify"></a>
+- **Design**: <a href="https://www.figma.com/"><img src="https://user-images.githubusercontent.com/25181517/189715289-df3ee512-6eca-463f-a0f4-c10d94a06b2f.png" width="20" alt="figma"></a>
 
 ## Development Sprints
 
@@ -29,7 +42,7 @@ Our application leverages a modern technology stack to ensure a seamless and eff
 ### Sprint 2: Authentication and Navigation
 
 - Implement login and registration pages.
-- Perform input validation with React Hook Forms + Zod.
+- Perform input validation with React Hook Form + Zod.
 - Integrate with an authentication service.
 - Manage user authentication state and token persistence.
 - Provide navigational buttons and implement routing with React Router.
@@ -50,17 +63,18 @@ Our application leverages a modern technology stack to ensure a seamless and eff
 
 ## Getting Started
 
-To get started with the development:
-
-1. Clone the repository.
-2. Install dependencies using `npm install`.
-3. Run the development server using `npm start`.
+> [!NOTE]
+> To get started with the development:
+>
+> 1. Clone the repository.
+> 2. Install dependencies using `npm install`.
+> 3. Run the development server using `npm run dev`.
 
 # Scripts
 
 This project includes a number of npm scripts that can be used to facilitate the development process. Below is a brief description of each:
 
-- `build`: Compiles the TypeScript codebase using the TypeScript Compiler (tsc) and then builds the production version of the application with Vite.
+- `build`: Compiles the TypeScript codebase using the esbuild and then builds the production version of the application with Vite.
 
 - `ci:format`: Checks if the files in the project adhere to the formatting standards set by Prettier without writing any changes.
 
@@ -79,6 +93,8 @@ This project includes a number of npm scripts that can be used to facilitate the
 - `typecheck`: Uses the TypeScript Compiler to perform type checking across the codebase without emitting JavaScript files.
 
 - `test`: Runs the test suite using Vitest, a Vite-native test framework.
+
+- `coverage`: Generates a test coverage report using Vitest, which assesses the proportion of your codebase that is covered by your tests. This helps identify any gaps in your test suite that might need attention.
 
 To run any of these scripts, you can use `npm run` followed by the script name. For example, to start the development server, you would run:
 

@@ -1,5 +1,5 @@
 {
-  "name": "ecom-final-task",
+  "name": "lava-lamps",
   "type": "module",
   "version": "1.0.0",
   "description": "Task for RS School",
@@ -15,12 +15,15 @@
     "prepare": "husky",
     "preview": "vite preview",
     "typecheck": "tsc",
-    "test": "vitest"
+    "test": "vitest run",
+    "coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.5",
     "@tsconfig/node20": "^20.1.4",
@@ -31,6 +34,7 @@
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/coverage-v8": "^1.5.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -46,6 +50,7 @@
     "husky": "^9.0.11",
     "jsdom": "^24.0.0",
     "lightningcss": "^1.24.1",
+    "lint-staged": "^12.3.2",
     "npm": "^10.6.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.5",
@@ -54,6 +59,8 @@
     "vitest": "^1.5.2"
   },
   "dependencies": {
+    "@mantine/core": "^7.9.0",
+    "@mantine/hooks": "^7.9.0",
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "react": "^18.3.1",
@@ -61,5 +68,9 @@
     "react-redux": "^9.1.1",
     "react-router-dom": "^6.23.0",
     "redux": "^5.0.1"
+  },
+  "lint-staged": {
+    "*": "prettier --list-different --ignore-unknown",
+    "*.{cjs,js,mjs,jsx,ts,tsx}": "eslint"
   }
 }

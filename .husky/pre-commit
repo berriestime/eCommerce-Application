@@ -1,1 +1,2 @@
-npm run ci:format
+npm run typecheck
+npx --no -- lint-staged

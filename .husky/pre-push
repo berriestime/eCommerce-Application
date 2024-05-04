@@ -1,2 +1,4 @@
-npm run typecheck
-npm run lint
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm t
