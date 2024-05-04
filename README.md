@@ -2,21 +2,13 @@
 
 Welcome to the repository for Lava Lamps, a cutting-edge e-commerce platform dedicated to providing a diverse range of high-quality lamps. Our application is designed to deliver an exceptional shopping experience, allowing users to explore, select, and purchase their favorite lamps with ease.
 
-<div style="text-align: center;">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://i.imgur.com/6p65CzC.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://i.imgur.com/4htNEce.png">
-  <img alt="lava lamps logo" src="https://i.imgur.com/4htNEce.png">
-</picture>
+<div style="text-align: center; margin: 0; padding: 0;">
+  <img src="./src/assets/lava-90.webp" height="100" width="100%">
 </div>
 
 ## Purpose
 
 Lava Lamps aims to illuminate the lives of our customers by offering a selection of lamps that cater to various tastes and preferences. We strive to create a user-friendly platform that simplifies the process of finding and purchasing the perfect lamp for any setting, be it home or office.
-
-<div style="text-align: center;">
-<img src="./src/assets/2006729-uhd_3840_2160_25fps-ezgif.com-video-to-gif-converter.gif" style="max-width: 100%; height: auto;" />
-</div>
 
 ## Technology Stack
 
