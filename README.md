@@ -23,7 +23,7 @@ Lava Lamps aims to illuminate the lives of our customers by offering a selection
 Our application leverages a modern technology stack to ensure a seamless and efficient user experience:
 
 - **Frontend**: <a href="https://reactjs.org/"><img src="https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png" width="20" alt="react"></a>, React Router
-- **State Management**: <a href="https://redux.js.org/"><img src="https://user-images.githubusercontent.com/25181517/187896150-cc1dcb12-d490-445c-8e4d-1275cd2388d6.png" width="20" alt="redux"></a>, Redux Toolkit, RTK Query, React Hook Forms, Zod
+- **State Management**: <a href="https://redux.js.org/"><img src="https://user-images.githubusercontent.com/25181517/187896150-cc1dcb12-d490-445c-8e4d-1275cd2388d6.png" width="20" alt="redux"></a>, Redux Toolkit
 - **UI Components**: UI-kit Mantine
 - **Development Tools**: <a href="https://vitejs.dev/"><img src="https://github-production-user-asset-6210df.s3.amazonaws.com/62091613/261395532-b40892ef-efb8-4b0e-a6b5-d1cfc2f3fc35.png" width="20" alt="vite"></a>, <a href="https://www.typescriptlang.org/"><img src="https://user-images.githubusercontent.com/25181517/183890598-19a0ac2d-e88a-4005-a8df-1ee36782fde1.png" width="20" alt="typescript"></a>, ESLint, Prettier
 - **Testing**: <a href="https://vitest.dev/"><img src="https://github.com/tandpfun/skill-icons/blob/main/icons/Vitest-Dark.svg" width="20" alt="vitest"></a>
