@@ -1,0 +1,2 @@
+npm run typecheck
+npx --no -- lint-staged
