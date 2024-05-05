@@ -27,6 +27,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "commitlint.config.js"],
+  "include": ["src", "commitlint.config.js", "postcss.config.cjs"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

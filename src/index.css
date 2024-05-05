@@ -6,17 +6,17 @@
 body {
   box-sizing: border-box;
   margin: 0px;
-  min-height: 100vh;
-}
-
-#root {
-  min-height: 100vh;
 }
 
 main {
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 48px) !important;
+  padding-bottom: 0 !important;
 }
 
 footer {
-  min-height: 52px;
+  position: static !important;
+}
+
+.mantine-AppShell-root {
+  min-height: 100vh;
 }
