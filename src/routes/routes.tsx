@@ -6,6 +6,8 @@ import { LoginPage } from '@/features/login-page';
 import { Profile } from '@/features/profile/profile';
 import { RootPage } from '@/features/root-page';
 
+import { AuthRouteGuard } from './AuthRouteGuard';
+
 export const routes = [
   {
     children: [
@@ -14,11 +16,19 @@ export const routes = [
         index: true,
       },
       {
-        element: <LoginPage />,
+        element: (
+          <AuthRouteGuard authRejectStatus="AUTHENTICATED" rejectRoute="/">
+            <LoginPage />
+          </AuthRouteGuard>
+        ),
         path: 'login',
       },
       {
-        element: <Profile />,
+        element: (
+          <AuthRouteGuard authRejectStatus="UNAUTHENTICATED" rejectRoute="/login">
+            <Profile />
+          </AuthRouteGuard>
+        ),
         path: 'dashboard',
       },
       {
