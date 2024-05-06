@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { AppShell } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 
+import { Footer } from '../footer';
 import { Header } from '../header';
 
 const Layout = (): JSX.Element => {
@@ -18,7 +19,9 @@ const Layout = (): JSX.Element => {
         <Outlet />
       </AppShell.Main>
 
-      <AppShell.Footer>2024</AppShell.Footer>
+      <AppShell.Footer>
+        <Footer />
+      </AppShell.Footer>
     </AppShell>
   );
 };
