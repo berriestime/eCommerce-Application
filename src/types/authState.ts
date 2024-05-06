@@ -1,0 +1,1 @@
+export type AuthState = 'AUTHENTICATED' | 'PENDING' | 'UNAUTHENTICATED';

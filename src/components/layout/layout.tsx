@@ -1,20 +1,22 @@
 import { Outlet } from 'react-router-dom';
 
-import { Header } from '../header';
+import { AppShell } from '@mantine/core';
 
-import s from './layout.module.css';
+import { Header } from '../header';
 
 const Layout = (): JSX.Element => {
   return (
-    <div className={s.layout}>
-      <Header />
+    <AppShell footer={{ height: 48 }} header={{ height: 60 }}>
+      <AppShell.Header>
+        <Header />
+      </AppShell.Header>
 
-      <main>
+      <AppShell.Main>
         <Outlet />
-      </main>
+      </AppShell.Main>
 
-      <footer>2024</footer>
-    </div>
+      <AppShell.Footer>2024</AppShell.Footer>
+    </AppShell>
   );
 };
 
