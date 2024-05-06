@@ -5,6 +5,7 @@ import { CategoryPage } from '@/features/catalog/category/category-page';
 import { ProductPage } from '@/features/catalog/product/product-page';
 import { LoginPage } from '@/features/login-page';
 import { Profile } from '@/features/profile/profile';
+import { RegistrationPage } from '@/features/registration-page';
 import { RootPage } from '@/features/root-page';
 import { TeamPage } from '@/features/team/team-page';
 
@@ -24,6 +25,14 @@ export const routes = [
           </AuthRouteGuard>
         ),
         path: 'login',
+      },
+      {
+        element: (
+          <AuthRouteGuard authRejectStatus="AUTHENTICATED" rejectRoute="/">
+            <RegistrationPage />
+          </AuthRouteGuard>
+        ),
+        path: 'registration',
       },
       {
         element: (
