@@ -1,0 +1,71 @@
+.main {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  max-width: 1920;
+  margin: 2rem auto;
+  padding-left: 100px;
+  padding-right: 100px;
+  user-select: none;
+
+  @media (max-width: 1200px) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  @media (max-width: 600px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.title {
+  font-weight: 900;
+  font-size: rem(34px);
+  margin-bottom: var(--mantine-spacing-md);
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+
+  @media (max-width: 767px) {
+    font-size: rem(20px) !important;
+  }
+}
+
+.control {
+  max-width: 150px;
+  color: #fff !important;
+  border: 1px solid #fff !important;
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.control:hover {
+  border: none !important;
+}
+
+.error {
+  display: flex;
+  margin: 0 auto;
+  font-size: clamp(6rem, 25vw, 18rem);
+  font-weight: bold;
+  background: url('../../assets/lava.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 2rem;
+  max-width: 600px;
+  font-size: 1rem;
+}
