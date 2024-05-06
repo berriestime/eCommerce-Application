@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { Box, Burger, Divider, Drawer, Group, ScrollArea, rem } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
-import { Logo } from '@/components/logo/logo';
+import { Logo } from '@/components/logo';
 
 import classes from './header.module.css';
 
