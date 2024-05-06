@@ -62,7 +62,8 @@ Our application leverages a modern technology stack to ensure a seamless and eff
 > 2. Install dependencies using `npm install`.
 > 3. Run the development server using `npm run dev`.
 
-# Scripts
+<details>
+  <summary>Scripts</summary>
 
 This project includes a number of npm scripts that can be used to facilitate the development process. Below is a brief description of each:
 
@@ -95,6 +96,8 @@ bash
 npm install
 npm run dev
 ```
+
+</details>
 
 ## Project Team
 
