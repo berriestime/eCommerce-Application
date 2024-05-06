@@ -1,99 +1,56 @@
 import type { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import {
-  Anchor,
-  Box,
-  Burger,
-  Button,
-  Center,
-  Divider,
-  Drawer,
-  Group,
-  HoverCard,
-  ScrollArea,
-  Text,
-  rem,
-} from '@mantine/core';
+import { Box, Burger, Divider, Drawer, Group, ScrollArea, rem } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import { Logo } from '@/components/logo/logo';
 
-import classes from './HeaderMegaMenu.module.css';
-// import s from './header.module.css';
-
-// const HeaderOld: FC = () => {
-//   return <header className={s.header}>Header</header>;
-// };
+import classes from './header.module.css';
 
 const Header: FC = () => {
   const [drawerOpened, { close: closeDrawer, toggle: toggleDrawer }] = useDisclosure(false);
 
   return (
-    <Box>
-      <header className={classes.header}>
-        <Group h="100%" justify="space-between">
-          <Logo />
+    <Box className={classes.container}>
+      <Group h="100%" justify="space-between">
+        <Logo />
 
-          <Group gap={0} h="100%" visibleFrom="sm">
-            <a className={classes.link} href="/">
-              Home
-            </a>
-            <HoverCard position="bottom" radius="md" shadow="md" width={600} withinPortal>
-              <HoverCard.Target>
-                <a className={classes.link} href="/">
-                  <Center inline>
-                    <Box component="span" mr={5}>
-                      Features
-                    </Box>
-                  </Center>
-                </a>
-              </HoverCard.Target>
-
-              <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
-                <Group justify="space-between" px="md">
-                  <Text fw={500}>Features</Text>
-                  <Anchor fz="xs" href="#">
-                    View all
-                  </Anchor>
-                </Group>
-
-                <Divider my="sm" />
-
-                {/* <SimpleGrid cols={2} spacing={0}>
-                  {links}
-                </SimpleGrid> */}
-
-                <div className={classes.dropdownFooter}>
-                  <Group justify="space-between">
-                    <div>
-                      <Text fw={500} fz="sm">
-                        Get started
-                      </Text>
-                      <Text c="dimmed" size="xs">
-                        Their food sources have decreased, and their numbers
-                      </Text>
-                    </div>
-                    <Button variant="default">Get started</Button>
-                  </Group>
-                </div>
-              </HoverCard.Dropdown>
-            </HoverCard>
-            <a className={classes.link} href="/">
-              Learn
-            </a>
-            <a className={classes.link} href="/">
-              Academy
-            </a>
-          </Group>
-
-          <Group visibleFrom="sm">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
-          </Group>
-
-          <Burger hiddenFrom="sm" onClick={toggleDrawer} opened={drawerOpened} />
+        <Group gap={0} h="100px" visibleFrom="sm">
+          <NavLink className={({ isActive }) => (isActive ? `${classes.link} ${classes.active}` : classes.link)} to="/">
+            Main
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
+            to="/catalog"
+          >
+            Store
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
+            to="/cart"
+          >
+            Cart
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
+            to="/team"
+          >
+            Our Team
+          </NavLink>
         </Group>
-      </header>
+
+        <Group visibleFrom="sm">
+          <NavLink className={classes.authLink} to="/login">
+            Log in
+          </NavLink>
+          <NavLink className={classes.authLink} to="/team">
+            Sign up
+          </NavLink>
+        </Group>
+
+        <Burger hiddenFrom="sm" onClick={toggleDrawer} opened={drawerOpened} />
+      </Group>
 
       <Drawer
         hiddenFrom="sm"
@@ -107,29 +64,37 @@ const Header: FC = () => {
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
           <Divider my="sm" />
 
-          <a className={classes.link} href="/">
-            Home
-          </a>
-          {/* <UnstyledButton className={classes.link} onClick={toggleLinks}>
-            <Center inline>
-              <Box component="span" mr={5}>
-                Features
-              </Box>
-            </Center>
-          </UnstyledButton> */}
-
-          <a className={classes.link} href="/">
-            Learn
-          </a>
-          <a className={classes.link} href="/">
-            Academy
-          </a>
+          <NavLink className={({ isActive }) => (isActive ? `${classes.link} ${classes.active}` : classes.link)} to="/">
+            Main
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
+            to="/catalog"
+          >
+            Store
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
+            to="/cart"
+          >
+            Cart
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
+            to="/team"
+          >
+            Our Team
+          </NavLink>
 
           <Divider my="sm" />
 
           <Group grow justify="center" pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            <NavLink className={classes.link} to="/login">
+              Log in
+            </NavLink>
+            <NavLink className={classes.link} to="/team">
+              Sign up
+            </NavLink>
           </Group>
         </ScrollArea>
       </Drawer>
