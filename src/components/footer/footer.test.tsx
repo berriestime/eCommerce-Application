@@ -5,13 +5,16 @@ import { describe, expect, test } from 'vitest';
 import { customRender, screen } from '../../test-utils';
 import { Footer } from './footer';
 
-describe('Header', () => {
+describe('Footer', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
         <Footer />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Main')).toBeInTheDocument();
+    expect(screen.getByText('GitHub link')).toHaveAttribute(
+      'href',
+      'https://github.com/berriestime/eCommerce-Application',
+    );
   });
 });
