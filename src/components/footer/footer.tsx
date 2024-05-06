@@ -9,7 +9,7 @@ const Footer: FC = () => {
 
   return (
     <Box className={classes.container}>
-      <Group align="center" className={classes.footerWrapper} h="100px" justify="space-between">
+      <Group align="center" className={classes.footerWrapper} justify="space-between">
         <Text<'a'> c="dimmed" className={classes.link} component="a" href={link} size="md" target="_blank">
           GitHub link
         </Text>

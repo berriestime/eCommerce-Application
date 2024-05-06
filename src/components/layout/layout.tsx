@@ -10,7 +10,11 @@ const Layout = (): JSX.Element => {
   const { width } = useViewportSize();
 
   return (
-    <AppShell footer={{ height: 100 }} header={{ height: width > 767 ? 100 : 64 }} withBorder={false}>
+    <AppShell
+      footer={{ height: width > 767 ? 100 : 200 }}
+      header={{ height: width > 767 ? 100 : 64 }}
+      withBorder={false}
+    >
       <AppShell.Header>
         <Header />
       </AppShell.Header>

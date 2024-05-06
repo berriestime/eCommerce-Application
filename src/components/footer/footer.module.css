@@ -22,6 +22,13 @@
 .footerWrapper {
   border-top: 1px solid #aa9f9c;
   user-select: none;
+  min-height: 100px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+
+  @media (max-width: 767px) {
+    flex-direction: column !important;
+  }
 }
 
 .link:hover {
