@@ -42,10 +42,10 @@ const Header: FC = () => {
 
         <Group visibleFrom="sm">
           <NavLink className={classes.authLink} to="/login">
-            Log in
+            Log In
           </NavLink>
-          <NavLink className={classes.authLink} to="/team">
-            Sign up
+          <NavLink className={classes.authLink} to="/registration">
+            Sign Up
           </NavLink>
         </Group>
 
@@ -90,10 +90,10 @@ const Header: FC = () => {
 
           <Group grow justify="center" pb="xl" px="md">
             <NavLink className={classes.link} to="/login">
-              Log in
+              Log In
             </NavLink>
-            <NavLink className={classes.link} to="/team">
-              Sign up
+            <NavLink className={classes.link} to="/registration">
+              Sign Up
             </NavLink>
           </Group>
         </ScrollArea>
