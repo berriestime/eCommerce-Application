@@ -59,17 +59,16 @@ const Header: FC = () => {
       </Group>
 
       <Drawer
+        className={classes.drawer}
         hiddenFrom="sm"
         onClose={closeDrawer}
         opened={drawerOpened}
         padding="md"
         size="100%"
-        title="Navigation"
+        title={<Logo />}
         zIndex={1000000}
       >
-        <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
-          <Divider my="sm" />
-
+        <ScrollArea h={`calc(100vh - ${rem(100)})`} mx="-md">
           {getItems(nav, classes.link)}
 
           <Divider my="sm" />
