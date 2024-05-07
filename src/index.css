@@ -13,16 +13,7 @@ body {
 }
 
 main {
-  min-height: calc(100vh - 100px) !important;
   padding-bottom: 0 !important;
-
-  @media (max-width: 767px) {
-    min-height: calc(100vh - 200px) !important;
-  }
-}
-
-footer {
-  position: static !important;
 }
 
 .mantine-AppShell-root {
