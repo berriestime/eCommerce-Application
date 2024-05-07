@@ -59,6 +59,10 @@
 .authLink {
   padding-right: 0;
   padding-left: 0;
+
+  @media (max-width: 767px) {
+    padding-top: 16px;
+  }
 }
 
 .authLink:first-child {
@@ -67,6 +71,10 @@
 
 .authLink:last-child {
   position: relative;
+
+  @media (max-width: 767px) {
+    max-width: 64px;
+  }
 }
 
 .authLink:last-child::after {
