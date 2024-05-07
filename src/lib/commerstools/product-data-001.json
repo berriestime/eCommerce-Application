@@ -1,0 +1,176 @@
+[
+  {
+    "name": "Astro the original lava lamp: Silver",
+    "description": "The first lava lamp designed by the founder of Mathmos and inventor of lava lamps in 1963",
+    "price": "£87.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3812/mathmos_astro_original_lava_lamp_vioet_red_main-517x517-c.jpg"
+  },
+  {
+    "name": "Telstar rocket lava lamp: Silver",
+    "description": "The classic rocket shaped lava lamp in cast metal",
+    "price": "£88.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/4805/mathmos_telstar_rocket_lava_lamp_silver_blue_green_main-517x517-c.jpg"
+  },
+  {
+    "name": "Astro the original lava lamp: Copper",
+    "description": "A range of classic 1963 Astro lava lamps in the original copper finish",
+    "price": "£89.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/18835/mathmos_astro_copper_lava_lamp_yellow_orange-517x517-c.jpg"
+  },
+  {
+    "name": "Neo lava lamp for children & all ages: Silver",
+    "description": "The only lava lamp available in the UK tested safe for children and all ages",
+    "price": "£85.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/4809/mathmos_neo_lava_lamp_silver_violet_turquoise_man-2-517x517-c.jpg"
+  },
+  {
+    "name": "AstroBaby lava lamp: Silver",
+    "description": "Designed by the inventor of lava lamps and hand made in Britain since 1964",
+    "price": "£78.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3402/orig_01-517x517-c.jpg"
+  },
+  {
+    "name": "Astro Vinyl lava lamp",
+    "description": "A classic Mathmos Astro lava lamp inspired by vinyl records",
+    "price": "£95.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3804/mathmos_astro_vinyl_lava_lamp_violet_orange_main-517x517-c.jpg"
+  },
+  {
+    "name": "Lava Lamp Projector: Silver",
+    "description": "Mathmos' multi-effect Space Projector in silver",
+    "price": "£128.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/1121/mathmos_lava_lamp_projector_silver_violet_red-1-517x517-c.jpg"
+  },
+  {
+    "name": "Astro Platinum Vinyl lava lamp",
+    "description": "The classic Astro inspired by platinum vinyl awards",
+    "price": "£95.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/4008/mathmos_astro_platinum_vinyl_lava_lamp_blue_turquoise_main-517x517-c.jpg"
+  },
+  {
+    "name": "Astro the original lava lamp: Black",
+    "description": "A range of classic 1963 Astro lava lamps in matt black",
+    "price": "£89.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3808/mathmos_astro_black_lava_lamp_yellow_orange_main-517x517-c.jpg"
+  },
+  {
+    "name": "Rokit giant lava lamp",
+    "description": "Mathmos' new giant rocket lava lamp",
+    "price": "£295.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/4797/01_mathmos_rokit_giant_rocket_lava_lamp-1-517x517-c.jpg"
+  },
+  {
+    "name": "Neo lava lamp for children & all ages: Copper",
+    "description": "A copper lava lamp made of cast metal designed by Jonathan Coles Design Studio",
+    "price": "£85.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3814/mathmos_neo_copper_lava_lamp_blue_green_main-517x517-c.jpg"
+  },
+  {
+    "name": "Lava Lamp Projector: White",
+    "description": "A white lava lamp projector with a big range of effects",
+    "price": "£128.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/4292/mathmos_lava_projector_white-517x517-c.jpg"
+  },
+  {
+    "name": "Fireflow candle lava lamp: Silver",
+    "description": "A tea-light powered rocket lava lamp (20% multiple discount)",
+    "price": "£46.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/1194/mathmos_fireflow_candle_lava_lamp_silver_violet_orange-1-517x517-c.jpg"
+  },
+  {
+    "name": "Pod candle lava lamp: Silver",
+    "description": "A candle powered lava lamp in silver cast metal (20% multiple discount)",
+    "price": "£48.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/970/mathmos_pod_candle_lava_lamp_silver_blue_yellow-1-517x517-c.jpg"
+  },
+  {
+    "name": "Fireflow candle lava lamp: Black",
+    "description": "A black metal candle powered rocket lava lamp (20% multiple discount)",
+    "price": "£46.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/31258/v2_mathmos_fireflow_candle_lava_lamp_black_clear_black-517x517-c.jpg"
+  },
+  {
+    "name": "iO giant lava lamp: Silver",
+    "description": "A big lava lamp in silver cast metal",
+    "price": "£375.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/6033/01_mathmos_io_silver_giant_lava_lamp-517x517-c.jpg"
+  },
+  {
+    "name": "Telstar rocket lava lamp: Black",
+    "description": "The classic rocket shaped lava lamp in shining black nickel plate",
+    "price": "£88.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3390/telstar_03-517x517-c.jpg"
+  },
+  {
+    "name": "Pod+ candle lava lamp: Copper",
+    "description": "A taller candle powered lava lamp in copper cast metal (20% multiple discount)",
+    "price": "£52.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/1031/mathmos_pod-_candle_lava_lamp_copper_blue_yellow-1-517x517-c.jpg"
+  },
+  {
+    "name": "Saturn giant lava lamp",
+    "description": "The Biggest Lava Lamp from Inventors Mathmos",
+    "price": "£2,500.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3818/mathmos_saturn_giant_lava_lamp_violet_red_main-517x517-c.jpg"
+  },
+  {
+    "name": "iO giant lava lamp: Black",
+    "description": "A big lava lamp in black cast metal",
+    "price": "£395.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3556/04_mathmos_io_black_giant_lava_lamp-517x517-c.jpg"
+  },
+  {
+    "name": "Telstar rocket lava lamp: Orange",
+    "description": "Mathmos' rocket lava lamp in chrome and neon orange",
+    "price": "£88.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/1437/mathmos_telstar_rocket_lava_lamp_orange_blue_yellow-1-517x517-c.jpg"
+  },
+  {
+    "name": "Fireflow candle lava lamp: Copper",
+    "description": "Mathmos' unique candle powered rocket shaped lava lamp in copper (20% multiple discount)",
+    "price": "£46.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/31255/v2_mathmos_fireflow_candle_lava_lamp_copper_blue_yellow-517x517-c.jpg"
+  },
+  {
+    "name": "Pod candle lava lamp: Copper",
+    "description": "A small candle powered lava lamp in copper (20% multiple discount)",
+    "price": "£48.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/991/mathmos_pod_candle_lava_lamp_copper_violet_orange-1-517x517-c.jpg"
+  },
+  {
+    "name": "Pod+ candle lava lamp: Silver",
+    "description": "A taller candle powered lava lamp in silver cast metal (20% multiple discount)",
+    "price": "£52.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/3627/mathmos_pod_candle_lava_lamp_copper_yellow_orange-2-517x517-c.jpg"
+  },
+  {
+    "name": "Evo Candle lava lamp",
+    "description": "A full-size candle-powered lava lamp made of cast glass and metal.",
+    "price": "£65.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/5875/mathmos_evo_candle_lava_lamp_clear_black-517x517-c.jpg"
+  },
+  {
+    "name": "Neo Wall lava lamp: Silver",
+    "description": "The only lava lamp for walls on the market",
+    "price": "£115.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/1260/mathmos_neo_wall_lava_lamp_silver_violet_turquoise-1-517x517-c.jpg"
+  },
+  {
+    "name": "Giant lava lamps and installations",
+    "description": "Giant Lava lamps and installations for public spaces, events and interiors of all kinds",
+    "price": "",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/33196/Anya_Hindmarch_Mathmos_Seldridges_Installation_04-517x517-c.jpg"
+  },
+  {
+    "name": "Lava Lamp Projector: Black",
+    "description": "Mathmos' Black Lava Lamp Projector",
+    "price": "£128.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/4293/mathmos_lava_projector_black-517x517-c.jpg"
+  },
+  {
+    "name": "Neo Wall lava lamp: Copper",
+    "description": "A unique copper wall lava lamp by Mathmos",
+    "price": "£115.00",
+    "image": "https://network.mathmos.com/app/uploads/sites/10/fly-images/4288/mathmos_neo_wall_lava_lamp_copper-517x517-c.jpg"
+  }
+]
