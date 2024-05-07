@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { AppShell, Box, Button, SimpleGrid, Text, Title } from '@mantine/core';
 import { useHover, useViewportSize } from '@mantine/hooks';
 
-import { Footer } from '../footer';
 import { Header } from '../header';
 
 import classes from './error-page.module.css';
@@ -16,11 +15,7 @@ const NotFoundPage: FC = () => {
   const goBack = (): void => navigate(-1);
 
   return (
-    <AppShell
-      footer={{ height: width > 767 ? 100 : 200 }}
-      header={{ height: width > 767 ? 100 : 64 }}
-      withBorder={false}
-    >
+    <AppShell header={{ height: width > 767 ? 100 : 64 }} withBorder={false}>
       <AppShell.Header>
         <Header />
       </AppShell.Header>
@@ -53,10 +48,6 @@ const NotFoundPage: FC = () => {
           </SimpleGrid>
         </Box>
       </AppShell.Main>
-
-      <AppShell.Footer>
-        <Footer />
-      </AppShell.Footer>
     </AppShell>
   );
 };
