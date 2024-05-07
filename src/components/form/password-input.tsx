@@ -2,9 +2,9 @@ import { ReactElement } from 'react';
 
 import { PasswordInput } from '@mantine/core';
 
-interface PasswordInputProps {
+type PasswordInputProps = {
   label: 'Confirm password' | 'Password';
-}
+};
 
 const CustomPasswordInput = (props: PasswordInputProps): ReactElement => {
   const { label } = props;
