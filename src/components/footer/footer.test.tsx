@@ -3,15 +3,18 @@ import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, test } from 'vitest';
 
 import { customRender, screen } from '../../test-utils';
-import { Header } from './header';
+import { Footer } from './footer';
 
-describe('Header', () => {
+describe('Footer', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
-        <Header />
+        <Footer />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Main')).toBeInTheDocument();
+    expect(screen.getByText('GitHub link')).toHaveAttribute(
+      'href',
+      'https://github.com/berriestime/eCommerce-Application',
+    );
   });
 });
