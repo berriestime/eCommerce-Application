@@ -28,7 +28,7 @@ const NotFoundPage: FC = () => {
       <AppShell.Main className={classes.main}>
         <Box className={classes.container}>
           <SimpleGrid cols={{ base: 1, sm: 2 }} spacing={{ base: 40, sm: 80 }}>
-            <div className={classes.error}>404</div>
+            <div className={classes.error}></div>
 
             <div className={classes.text}>
               <Title className={classes.title}>Something is not right...</Title>

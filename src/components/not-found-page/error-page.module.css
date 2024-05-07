@@ -49,16 +49,14 @@
 }
 
 .error {
-  display: flex;
-  margin: 0 auto;
-  font-size: clamp(6rem, 25vw, 18rem);
-  font-weight: bold;
   background: url('../../assets/lava.webp');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  mask-image: url('./assets/404.svg');
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  @media (max-width: 767px) {
+    height: 6em;
+  }
 }
 
 .text {
