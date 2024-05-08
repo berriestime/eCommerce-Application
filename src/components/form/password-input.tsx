@@ -2,9 +2,9 @@ import { LegacyRef, ReactElement, forwardRef } from 'react';
 
 import { PasswordInput } from '@mantine/core';
 
-type PasswordInputProps = {
+interface PasswordInputProps {
   label: 'Confirm password' | 'Password';
-};
+}
 
 const CustomPasswordInput = forwardRef(function MyPassword(
   props: PasswordInputProps,
