@@ -5,7 +5,7 @@ const validatePassword = (value: string): null | string => {
     return 'Password is required';
   }
 
-  if (value[0] === ' ' || value[value.length - 1] === ' ') {
+  if (value[0] === ' ' || value.at(-1) === ' ') {
     return 'Password must not contain leading or trailing whitespace';
   }
 

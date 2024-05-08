@@ -3,8 +3,8 @@ import { FC } from 'react';
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import { validateEmail } from '../../../components/form/validate-email';
-import { validatePassword } from '../../../components/form/validate-password';
+import { validateEmail } from '@/utils/validate-email';
+import { validatePassword } from '@/utils/validate-password';
 
 const LoginForm: FC = () => {
   const form = useForm({
