@@ -1,10 +1,11 @@
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-import { AppShell, Box, Button, SimpleGrid, Text, Title } from '@mantine/core';
+import { AppShell, Box, SimpleGrid, Text, Title } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 
-import { Header } from '../header';
+import { BaseButton } from '@/components/base-button';
+import { Header } from '@/components/header';
 
 import classes from './error-page.module.css';
 
@@ -30,9 +31,7 @@ const NotFoundPage: FC = () => {
               </Text>
 
               <Link to="/">
-                <Button className={classes.control} mt="xl" size="md" variant={'outline'}>
-                  Get back to home page
-                </Button>
+                <BaseButton>Get back to home page</BaseButton>
               </Link>
             </div>
           </SimpleGrid>

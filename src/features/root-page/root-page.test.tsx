@@ -1,17 +1,17 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
+import { customRender, screen } from '../../test-utils';
 import { RootPage } from './root-page';
 
 describe('RootPage', () => {
   test('should render', () => {
-    render(
+    customRender(
       <MemoryRouter>
         <RootPage />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Root Page')).toBeInTheDocument();
+    expect(screen.getByText('Shop Now')).toBeInTheDocument();
   });
 });

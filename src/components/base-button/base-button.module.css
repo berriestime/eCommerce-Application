@@ -1,0 +1,17 @@
+.control {
+  border-image: linear-gradient(45deg, rgb(255, 255, 255), rgb(245, 245, 241)) !important;
+  border-image-slice: 1 !important;
+  background-clip: padding-box;
+  font-weight: 400 !important;
+  transition: all 0.3s linear;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    min-width: 100% !important;
+  }
+}
+
+.control:hover {
+  border-image: linear-gradient(45deg, #f51313, #ffc710) !important;
+  border-image-slice: 1 !important;
+}
