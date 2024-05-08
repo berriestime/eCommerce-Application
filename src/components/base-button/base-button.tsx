@@ -1,18 +1,17 @@
-import { Button } from '@mantine/core';
+import { forwardRef } from 'react';
+
+import { Button, type ButtonProps, createPolymorphicComponent } from '@mantine/core';
 
 import classes from './base-button.module.css';
 
-type BaseButtonProps = {
-  label: string;
-  onClick?: () => void;
-};
+const BaseButtonUnwrapped = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...others }, ref) => (
+  <Button {...others} className={classes.control} ref={ref} size="md" variant="light">
+    {children}
+  </Button>
+));
 
-const BaseButton = ({ label, onClick }: BaseButtonProps): JSX.Element => {
-  return (
-    <Button className={classes.control} mt="xl" onClick={onClick} size="md" variant={'outline'}>
-      {label}
-    </Button>
-  );
-};
+BaseButtonUnwrapped.displayName = 'BaseButton';
+
+const BaseButton = createPolymorphicComponent<'button', ButtonProps>(BaseButtonUnwrapped);
 
 export { BaseButton };

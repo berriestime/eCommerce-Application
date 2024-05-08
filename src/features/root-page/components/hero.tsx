@@ -21,7 +21,7 @@ const Hero: FC = () => {
         </Title>
 
         <Link className={classes.control} to="/catalog">
-          <BaseButton label="Shop Now" />
+          <BaseButton mt="xl">Shop Now</BaseButton>
         </Link>
       </Container>
     </div>
