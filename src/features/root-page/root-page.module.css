@@ -1,15 +1,11 @@
 .container {
   max-width: 1920;
   margin: 0 auto;
-  padding: 100px 80px;
+  padding: 60px 100px;
   user-select: none;
 
   @media (max-width: 1200px) {
-    padding: 32px;
-  }
-
-  @media (max-width: 600px) {
-    padding: 16px;
+    padding: 2.5rem;
   }
 }
 
@@ -20,18 +16,30 @@
 }
 
 .title {
-  font-size: 24px;
+  font-size: 1.5rem;
   color: #fff;
-  font-weight: 400;
+  font-weight: 300;
   padding-bottom: 32px;
+
+  @media (max-width: 1400px) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 1.1rem;
+  }
 }
 
 .text {
-  font-size: 20px;
+  font-size: 1.25rem;
+
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+  }
 }
 
 .textPadding {
-  padding-bottom: 60px;
+  padding-bottom: 40px;
 
   @media (max-width: 1200px) {
     padding-bottom: 32px;

@@ -17,15 +17,21 @@ import { SecondHero } from './components/second-hero';
 // import classes from './root-page.module.css';
 
 const bestData = [
-  { image: imgBestGreen, price: '100500$', title: 'ASTRO LAVA LAMP', to: '/catalog' },
-  { image: imgBestBlue, price: '100500$', title: 'ASTRO LAVA LAMP2', to: '/catalog' },
-  { image: imgBestYellow, price: '100500$', title: 'ASTRO LAVA LAMP3', to: '/catalog' },
+  { image: imgBestGreen, price: '£46.00', title: 'Fireflow candle lava lamp: Copper', to: '/catalog' },
+  {
+    discount: '25%',
+    image: imgBestBlue,
+    price: '£85.00',
+    title: 'Neo lava lamp for children & all ages: Copper',
+    to: '/catalog',
+  },
+  { discount: '15%', image: imgBestYellow, price: '£48.00', title: 'Pod candle lava lamp: Copper', to: '/catalog' },
 ];
 
 const classicData = [
-  { image: imgAstroBlue, price: '100500$', title: 'ASTRO LAVA LAMP', to: '/catalog' },
-  { image: imgAstroYellow, price: '100500$', title: 'ASTRO LAVA LAMP2', to: '/catalog' },
-  { image: imgAstroRed, price: '100500$', title: 'ASTRO LAVA LAMP3', to: '/catalog' },
+  { image: imgAstroBlue, price: '£95.00', title: 'Astro Platinum Vinyl lava lamp', to: '/catalog' },
+  { image: imgAstroYellow, price: '£95.00', title: 'Astro Vinyl lava lamp', to: '/catalog' },
+  { image: imgAstroRed, price: '£87.00', title: 'Astro the original lava lamp: Silver', to: '/catalog' },
 ];
 
 const RootPage: FC = () => {

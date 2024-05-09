@@ -1,30 +1,97 @@
+.title {
+  font-size: 1.4rem !important;
+  color: var(--mantine-color-white) !important;
+  transition: all 0.5s linear;
+
+  @media (max-width: 1200px) {
+    font-size: 1.2rem !important;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 1rem !important;
+  }
+}
+
 .card {
   background-color: var(--mantine-color-dark-7) !important;
+  height: 100%;
+}
+
+.card .title {
+  font-size: 1.4rem !important;
+  color: var(--mantine-color-white) !important;
+  transition: all 0.5s linear;
+
+  @media (max-width: 1200px) {
+    font-size: 1.2rem !important;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 1rem !important;
+  }
+}
+
+.card:hover .title {
+  color: #aa9f9c !important;
+}
+
+.card .image {
+  max-height: 300px;
+  transition: all 0.5s linear;
+}
+
+.card:hover .image {
+  transform: scale(1.1);
 }
 
 .imageSection {
-  padding: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-md) 0 var(--mantine-spacing-md);
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  position: relative;
 }
 
-.label {
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-image: linear-gradient(45deg, #f51313, #ffc710) !important;
+  border-image-slice: 1 !important;
+}
+
+.price {
   margin-bottom: var(--mantine-spacing-xs);
   line-height: 1;
   font-weight: 700;
   font-size: var(--mantine-font-size-xs);
   letter-spacing: rem(-0.25px);
   text-transform: uppercase;
+  color: #aa9f9c !important;
 }
 
 .section {
+  margin-top: auto;
   padding: var(--mantine-spacing-md);
   border-top: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  text-align: center;
+  text-decoration: none;
 }
 
 .icon {
   margin-right: rem(5px);
   color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-2));
+}
+
+.link {
+  text-decoration: none;
+}
+
+.cardsGap {
+  gap: 10rem !important;
+
+  @media (max-width: 1400px) {
+    gap: 3rem !important;
+  }
 }

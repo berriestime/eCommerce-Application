@@ -1,8 +1,9 @@
-import { Badge, Card, Group, Image, Text } from '@mantine/core';
+import { Badge, Card, Image, Text } from '@mantine/core';
 
 import classes from './simple-card.module.css';
 
-type CardData = {
+export type CardData = {
+  discount?: string;
   image: string;
   price: string;
   title: string;
@@ -10,27 +11,34 @@ type CardData = {
 };
 
 const SimpleCard = (params: CardData): JSX.Element => {
-  const { image, price, title } = params;
+  const { discount, image, price, title } = params;
+
+  const Bage = (): JSX.Element | undefined => {
+    if (!discount) {
+      return;
+    }
+
+    return (
+      <Badge c="white" className={classes.badge} size="xl" variant="transparent">
+        {discount} off
+      </Badge>
+    );
+  };
 
   return (
     <Card className={classes.card}>
       <Card.Section className={classes.imageSection}>
-        <Image alt="Tesla Model S" src={image} />
+        <Image alt={title} className={classes.image} fit="contain" src={image} />
+        <Bage />
       </Card.Section>
 
-      <Group justify="space-between" mt="md">
-        <div>
-          <Text fw={500}>{title}</Text>
-          {/* <Text c="dimmed" fz="xs">
-            Free recharge at any station
-          </Text> */}
-        </div>
-        <Badge variant="outline">25% off</Badge>
-      </Group>
+      <Text className={classes.title} fw={500} mt="xl" ta="center">
+        {title}
+      </Text>
 
-      <Card.Section className={classes.section} mt="md">
-        <Text c="dimmed" className={classes.label} fz="sm">
-          {price}$
+      <Card.Section className={classes.section}>
+        <Text className={classes.price} fz={{ base: 'md', lg: 'xl', sm: 'md' }}>
+          {price}
         </Text>
       </Card.Section>
     </Card>
