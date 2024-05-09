@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { Anchor, Button, Checkbox, Container, Group, SimpleGrid, Text, Title } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
@@ -59,6 +59,28 @@ const RegistrationPage: FC = () => {
     },
     validateInputOnChange: true,
   });
+
+  const countryCombobox = useCombobox({
+    onDropdownClose: () => countryCombobox.resetSelectedOption(),
+  });
+
+  const [countryValue, setCountryValue] = useState('');
+
+  const shouldFilterOptions = !countries.some((country) => country === countryValue);
+  const filteredOptions = shouldFilterOptions
+    ? countries.filter((country) => country.toLowerCase().includes(countryValue.toLowerCase().trim()))
+    : countries;
+
+  const countryOptions = filteredOptions.map((item) => (
+    <Combobox.Option key={item} value={item}>
+      {item}
+    </Combobox.Option>
+  ));
+
+  useEffect(() => {
+    // we need to wait for options to render before we can select first one
+    countryCombobox.selectFirstOption();
+  }, [countryValue]);
 
   return (
     <Container className={classes.container} mx="auto" p={0} w={363}>
