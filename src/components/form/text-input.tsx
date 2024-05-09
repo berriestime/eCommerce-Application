@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { LegacyRef, ReactElement, forwardRef } from 'react';
 
 import { TextInput } from '@mantine/core';
 
@@ -7,11 +7,13 @@ type TextInputProps = {
   required: boolean;
 };
 
-const CustomTextInput = (props: TextInputProps): ReactElement => {
+const CustomTextInput = forwardRef(function MyInput(
+  props: TextInputProps,
+  ref: LegacyRef<HTMLInputElement>,
+): ReactElement {
   const { label } = props;
-  const { required } = props;
 
-  return <TextInput label={label} required={required} />;
-};
+  return <TextInput label={label} mt="md" ref={ref} required type="text" />;
+});
 
 export { CustomTextInput };
