@@ -8,6 +8,7 @@ import { store } from '@/store/store';
 import { theme } from '@/theme';
 
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
 
 export const AppProvider = (): JSX.Element => {
   return (
