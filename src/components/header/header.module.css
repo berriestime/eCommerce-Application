@@ -18,15 +18,31 @@
 
 .link:nth-child(1) {
   width: 88px;
+
+  @media (max-width: 1200px) {
+    width: 80px;
+  }
 }
 .link:nth-child(2) {
   width: 92px;
+
+  @media (max-width: 1200px) {
+    width: 85px;
+  }
 }
 .link:nth-child(3) {
   width: 84px;
+
+  @media (max-width: 1200px) {
+    width: 76px;
+  }
 }
 .link:nth-child(4) {
   width: 130px;
+
+  @media (max-width: 1200px) {
+    width: 126px;
+  }
 }
 
 .link,
@@ -40,6 +56,11 @@
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   font-weight: 500;
   font-size: var(--mantine-font-size-md);
+
+  @media (max-width: 1200px) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 
   @media (max-width: 767px) {
     height: rem(42px);
