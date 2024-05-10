@@ -14,7 +14,7 @@ declare module '*.png' {
   export default content;
 }
 
-declare module '*.jpg' {
+declare module '*.webp' {
   const content: string;
   export default content;
 }

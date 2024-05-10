@@ -4,11 +4,11 @@ import { AspectRatio, Box, Grid, Overlay } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
-import img1 from '../../assets/categories/new/cat_mathmos_1960s_original_lava_lamps_silver2-1-1200x774-c.jpg';
-import img2 from '../../assets/categories/new/cat_mathmos_candle_lava_lamps-1-1200x774-c.jpg';
-import img3 from '../../assets/categories/new/cat_mathmos_rocket_lava_lamps-1200x774-c.jpg';
-import img4 from '../../assets/categories/new/mathmos_neo_kids_lava_lamp-1-1200x774-c.jpg';
-import img5 from '../../assets/categories/new/mathmos_saturn_giant_lava_lamp_violet_red_main-517x517-c.jpg';
+import imgCandle from '../../assets/categories/candle.webp';
+import imgGiant from '../../assets/categories/giant.webp';
+import imgKids from '../../assets/categories/kids.webp';
+import imgOriginal from '../../assets/categories/original.webp';
+import imgRocket from '../../assets/categories/rocket.webp';
 
 import classes from './categories-section.module.css';
 
@@ -20,7 +20,7 @@ const CategoriesSection = (): JSX.Element => {
     {
       alt: '1960s Originals',
       className: clsx(classes.img, classes.img1),
-      img: img1,
+      img: imgOriginal,
       ratio: width > 2040 ? 1 : width < 600 ? 1.1 : 1.072,
       title: '1960s Originals',
       to: '/catalog',
@@ -30,7 +30,7 @@ const CategoriesSection = (): JSX.Element => {
     {
       alt: 'Candle Powered ',
       className: clsx(classes.img, classes.img2),
-      img: img2,
+      img: imgCandle,
       ratio: width < 600 ? 1.1 : 1.5,
       title: 'Candle Powered ',
       to: '/catalog',
@@ -40,7 +40,7 @@ const CategoriesSection = (): JSX.Element => {
     {
       alt: 'Giant Lava Lamps',
       className: clsx(classes.img, classes.img3),
-      img: img5,
+      img: imgGiant,
       ratio: width > 2040 ? 1 : width < 600 ? 1.1 : 0.75,
       title: 'Giant Lava Lamps',
       to: '/catalog',
@@ -50,7 +50,7 @@ const CategoriesSection = (): JSX.Element => {
     {
       alt: 'Lava Lamps for kids',
       className: clsx(classes.img, classes.img4),
-      img: img4,
+      img: imgKids,
       ratio: width < 600 ? 1.1 : 1,
       title: 'Lava Lamps for kids',
       to: '/catalog',
@@ -60,7 +60,7 @@ const CategoriesSection = (): JSX.Element => {
     {
       alt: 'Classic Rockets',
       className: clsx(classes.img, classes.img5),
-      img: img3,
+      img: imgRocket,
       ratio: width > 2040 ? 1.5 : width < 600 ? 1.1 : 1.25,
       title: 'Classic Rockets',
       to: '/catalog',
