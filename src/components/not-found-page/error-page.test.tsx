@@ -4,15 +4,15 @@ import { describe, expect, test } from 'vitest';
 
 import { customRender, screen } from '@/test-utils';
 
-import { Header } from './header';
+import { NotFoundPage } from './not-found-page';
 
-describe('Header', () => {
+describe('NotFoundPage', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
-        <Header />
+        <NotFoundPage />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Main')).toBeInTheDocument();
+    expect(screen.getByText('Get back to home page')).toHaveAttribute('href', '/');
   });
 });

@@ -4,15 +4,15 @@ import { describe, expect, test } from 'vitest';
 
 import { customRender, screen } from '@/test-utils';
 
-import { Header } from './header';
+import { Logo } from './logo';
 
-describe('Header', () => {
+describe('Logo', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
-        <Header />
+        <Logo />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Main')).toBeInTheDocument();
+    expect(screen.getByText('')).toHaveAttribute('href', '/');
   });
 });

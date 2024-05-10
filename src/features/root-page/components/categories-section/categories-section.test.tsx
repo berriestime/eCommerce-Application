@@ -4,15 +4,15 @@ import { describe, expect, test } from 'vitest';
 
 import { customRender, screen } from '@/test-utils';
 
-import { Header } from './header';
+import { CategoriesSection } from './categories-section';
 
-describe('Header', () => {
+describe('CategoriesSection', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
-        <Header />
+        <CategoriesSection />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Main')).toBeInTheDocument();
+    expect(screen.getByText('Classic Rockets')).toBeInTheDocument();
   });
 });
