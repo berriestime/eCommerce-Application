@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 
 import { Anchor, Container, Paper, Text, Title } from '@mantine/core';
 
@@ -13,7 +14,7 @@ const LoginPage: FC = () => {
       <Text c="dimmed" mt={5} size="sm" ta="center">
         Do not have an account yet?{' '}
         <Anchor component="button" size="sm">
-          Create account
+          <NavLink to={'/registration'}>Create account</NavLink>
         </Anchor>
       </Text>
 
