@@ -21,7 +21,7 @@ const validateEmail = (value: string): null | string => {
     return MESSAGE_EMAIL_MUST_FORMATTED;
   }
 
-  if (!/(\w*@+[a-zA-Z-0-9].[a-zA-Z]\w*)/.test(value)) {
+  if (!/(\w*@[a-zA-Z-0-9]+\.[a-zA-Z]\w*)/.test(value)) {
     return MESSAGE_EMAIL_NEED_DOMAIN;
   }
 
