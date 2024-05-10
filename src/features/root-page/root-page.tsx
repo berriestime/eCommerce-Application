@@ -11,10 +11,9 @@ import imgBestBlue from './assets/new/mathmos_neo_copper_lava_lamp_blue_turquois
 import imgBestYellow from './assets/new/mathmos_pod_candle_lava_lamp_copper_yellow_orange-1-removebg-preview.png';
 import imgBestGreen from './assets/new/v2_mathmos_fireflow_candle_lava_lamp_copper_blue_yellow-removebg-preview.png';
 import { CardsSection } from './components/cards-section';
+import { CategoriesSection } from './components/categories-section';
 import { FirstHero } from './components/first-hero';
 import { SecondHero } from './components/second-hero';
-
-// import classes from './root-page.module.css';
 
 const bestData = [
   { image: imgBestGreen, price: '£46.00', title: 'Fireflow candle lava lamp: Copper', to: '/catalog' },
@@ -45,6 +44,7 @@ const RootPage: FC = () => {
         text="The first and original lava lamp is a Pop Design classic. Timeless and time-tested choice."
         title="ASTRO LAVA LAMP"
       />
+      <CategoriesSection />
       <Footer />
     </Box>
   );
