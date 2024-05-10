@@ -74,7 +74,11 @@ const CategoriesSection = (): JSX.Element => {
       <Grid.Col className={classes.col} key={i} pos="relative" span={{ base: 12, xl: column.xl, xs: column.xs }}>
         <Link to={column.to}>
           <AspectRatio ratio={column.ratio}>
-            <img alt={column.alt} className={column.className} src={column.img} />
+            <Box className={classes.imgWrapper}>
+              <AspectRatio ratio={column.ratio}>
+                <img alt={column.alt} className={column.className} src={column.img} />
+              </AspectRatio>
+            </Box>
           </AspectRatio>
           <Box className={classes.box}>{column.title}</Box>
         </Link>
