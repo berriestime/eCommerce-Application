@@ -1,53 +1,128 @@
 import { FC } from 'react';
 
-import { Anchor, Box, Button, Checkbox, Paper, Text, TextInput, Title } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { Anchor, Button, Checkbox, Container, Group, SimpleGrid, Text, Title } from '@mantine/core';
+import { DateInput } from '@mantine/dates';
+import { isEmail, useForm } from '@mantine/form';
+
+import { validatePassword } from '@/utils/validate-password';
 // import clsx from 'clsx';
 
-import { CustomPasswordInput } from '@/components/form/password-input';
-import { CustomTextInput } from '@/components/form/text-input';
+import { COUNTRIES, CountrySelect } from '@/components/country-select';
+import { CustomPasswordInput } from '@/components/custom-password-input';
+import { CustomTextInput } from '@/components/custom-text-input';
 
-// import s from './registration-page.module.css';
+import classes from './registration-page.module.css';
+
+const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required');
+
+const noSpecial =
+  (message: string) =>
+  (value: string): null | string => {
+    if (/[^a-zA-Z]/.test(value)) {
+      return message;
+    }
+    return null;
+  };
+
+const matchesPassword = (value: string, values: { password: string }): null | string =>
+  value !== values.password ? 'Passwords did not match' : null;
+
+const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
 
 const RegistrationPage: FC = () => {
   const form = useForm({
     initialValues: {
+      billingAddress: '',
       checkbox: false,
       confirmPassword: '',
       email: '',
       firstName: '',
       lastName: '',
       password: '',
+      shippingAddress: '',
+      shippingCity: '',
+      shippingCountry: '',
+      shippingPostalCode: '',
+      shippingStreet: '',
     },
     mode: 'uncontrolled',
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      billingAddress: notEmpty,
+      confirmPassword: matchesPassword,
+      email: isEmail('Invalid email'),
+      firstName: noSpecial('First name must not contain special characters'),
+      lastName: noSpecial('Last name must not contain special characters'),
+      password: validatePassword,
+      shippingAddress: notEmpty,
+      shippingCountry: isProperCountry,
     },
+    validateInputOnChange: true,
   });
 
   return (
-    <Box maw={340} mx="auto">
+    <Container className={classes.container} mx="auto" p={0} w={363}>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <Title ta="center">Registration Page</Title>
-        <Paper mt={30} p={30} radius="md" shadow="md withBorder ">
-          <CustomTextInput key={form.key('email')} label="Email" required={true} {...form.getInputProps('email')} />
-          <CustomPasswordInput key={form.key('password')} label="Password" {...form.getInputProps('password')} />
-          <CustomPasswordInput label="Confirm password" />
-          <CustomTextInput label="First Name" required={true} />
-          <CustomTextInput label="Last Name" required={true} />
-          <Checkbox
-            key={form.key('checkbox')}
-            label="The schopping and billing adresses are the same"
-            mt="md"
-            {...form.getInputProps('checkbox', { type: 'checkbox' })}
+        <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
+        <CustomPasswordInput key={form.key('password')} label="Password" required {...form.getInputProps('password')} />
+        <CustomPasswordInput
+          key={form.key('confirmPassword')}
+          label="Confirm password"
+          required
+          {...form.getInputProps('confirmPassword')}
+        />
+        <Group gap={23} grow>
+          <CustomTextInput
+            key={form.key('firstName')}
+            label="First Name"
+            required
+            {...form.getInputProps('firstName')}
           />
-          <TextInput label="Shipping address" placeholder="15329 Huston 21st" required={true} />
-          <TextInput label="Billing address" placeholder="15329 Huston 21st" required={true} />
-          <Button fullWidth mt="xl" type="submit">
-            Sign Up
-          </Button>
-        </Paper>
+          <CustomTextInput key={form.key('lastName')} label="Last Name" required {...form.getInputProps('lastName')} />
+        </Group>
+        <DateInput key={form.key('birthday')} label="Birthday" required {...form.getInputProps('birthday')} />
+        <Title component="h2">Shipping address</Title>
+        <Checkbox
+          key={form.key('checkbox')}
+          label="The schipping and billing adresses are the same"
+          mt="md"
+          {...form.getInputProps('checkbox', { type: 'checkbox' })}
+        />
+        <CustomTextInput
+          key={form.key('billingAddress')}
+          label="Billing address"
+          placeholder="15329 Huston 21st"
+          required
+          {...form.getInputProps('billingAddress')}
+        />
+        <SimpleGrid cols={2}>
+          <CustomTextInput
+            key={form.key('shippingStreet')}
+            label="Street"
+            placeholder="15329 Huston 21st"
+            required
+            {...form.getInputProps('shippingStreet')}
+          />
+          <CustomTextInput
+            key={form.key('shippingCity')}
+            label="City"
+            placeholder="London"
+            required
+            {...form.getInputProps('shippingCity')}
+          />
+          <CustomTextInput
+            key={form.key('shippingPostalCode')}
+            label="PostalCode"
+            placeholder="01234"
+            required
+            {...form.getInputProps('shippingPostalCode')}
+          />
+          <CountrySelect form={form} />
+        </SimpleGrid>
+        <Button fullWidth mt="xl" type="submit">
+          Sign Up
+        </Button>
       </form>
       <Text c="dimmed" mt={5} size="sm" ta="center">
         Already a member?{' '}
@@ -55,7 +130,7 @@ const RegistrationPage: FC = () => {
           Log in
         </Anchor>
       </Text>
-    </Box>
+    </Container>
   );
 };
 
