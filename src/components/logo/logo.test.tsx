@@ -1,5 +1,6 @@
 import { MemoryRouter } from 'react-router-dom';
 
+import { userEvent } from '@testing-library/user-event';
 import { describe, expect, test } from 'vitest';
 
 import { customRender, screen } from '@/test-utils';
@@ -7,12 +8,16 @@ import { customRender, screen } from '@/test-utils';
 import { Logo } from './logo';
 
 describe('Logo', () => {
-  test('should render', () => {
+  test('should navigate to root page when logo is clicked', async () => {
     customRender(
       <MemoryRouter>
         <Logo />
       </MemoryRouter>,
     );
-    expect(screen.getByText('')).toHaveAttribute('href', '/');
+
+    const logo = screen.getByAltText('logo');
+    await userEvent.click(logo);
+
+    expect(window.location.pathname).toBe('/');
   });
 });
