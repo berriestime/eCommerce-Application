@@ -1,16 +1,17 @@
 .card {
-  background-color: var(--mantine-color-dark-7) !important;
+  background-color: var(--mantine-color-dark-7);
   height: 100%;
 }
 
 .card .title {
-  font-size: 16px !important;
-  color: var(--mantine-color-white) !important;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--mantine-color-white);
   transition: all 0.5s linear;
 }
 
 .card:hover .title {
-  color: #aa9f9c !important;
+  color: #aa9f9c;
 }
 
 .card .image {
@@ -35,20 +36,20 @@
   position: absolute;
   top: 0;
   right: 0.1rem;
-  border-image: linear-gradient(45deg, #f51313, #ffc710) !important;
-  border-image-slice: 1 !important;
-  font-size: 16px !important;
-  padding-top: 4px !important;
-  font-weight: 300 !important;
+  border-image: linear-gradient(45deg, #f51313, #ffc710);
+  border-image-slice: 1;
+  font-size: 16px;
+  padding-top: 4px;
+  font-weight: 300;
 }
 
 .price {
   margin-bottom: var(--mantine-spacing-xs);
   line-height: 1;
-  font-weight: 700;
-  font-size: 16px !important;
+  font-weight: 300;
+  font-size: 16px;
   text-transform: uppercase;
-  color: #aa9f9c !important;
+  color: #aa9f9c;
 }
 
 .section {
@@ -64,10 +65,10 @@
 }
 
 .cardsGap {
-  gap: 10rem !important;
+  gap: 10rem;
 
   @media (max-width: 1400px) {
-    gap: 3rem !important;
+    gap: 3rem;
   }
 }
 
@@ -85,16 +86,16 @@
 }
 
 .carouselIndicators {
-  bottom: -4px !important;
+  bottom: -4px;
 }
 
 .carouselIndicator {
-  width: 5px !important;
-  height: 5px !important;
+  width: 5px;
+  height: 5px;
   transition: width 250ms ease;
 
   &[data-active] {
-    width: 16px !important;
+    width: 16px;
     background-color: #aa9f9c;
   }
 }

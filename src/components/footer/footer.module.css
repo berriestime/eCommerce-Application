@@ -27,10 +27,10 @@
   padding-bottom: 16px;
 
   @media (max-width: 767px) {
-    flex-direction: column !important;
+    flex-direction: column;
   }
 }
 
 .link:hover {
-  color: #aa9f9c !important;
+  color: #aa9f9c;
 }
