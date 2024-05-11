@@ -1,9 +1,8 @@
 import { FC } from 'react';
 
 import { Button, PasswordInput, TextInput } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { isEmail, useForm } from '@mantine/form';
 
-import { validateEmail } from '@/utils/validate-email';
 import { validatePassword } from '@/utils/validate-password';
 
 const LoginForm: FC = () => {
@@ -15,7 +14,7 @@ const LoginForm: FC = () => {
     mode: 'uncontrolled',
 
     validate: {
-      email: (value) => validateEmail(value),
+      email: isEmail('Invalid email'),
       password: (value) => validatePassword(value),
     },
     validateInputOnChange: true,
