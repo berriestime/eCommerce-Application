@@ -4,12 +4,12 @@ import { Box } from '@mantine/core';
 
 import { Footer } from '@/components/footer';
 
-import imgAstroRed from './assets/astro/lava_lamp_vioet_red.png';
-import imgAstroBlue from './assets/astro/platinum_vinyl_lava_lamp_blue.png';
-import imgAstroYellow from './assets/astro/vinyl.png';
-import imgBestBlue from './assets/best/blue.png';
-import imgBestGreen from './assets/best/green.png';
-import imgBestYellow from './assets/best/yellow.png';
+import imgAstroRed from './assets/astro/lava_lamp_vioet_red.webp';
+import imgAstroBlue from './assets/astro/platinum_vinyl_lava_lamp_blue.webp';
+import imgAstroYellow from './assets/astro/vinyl.webp';
+import imgBestBlue from './assets/best/blue.webp';
+import imgBestGreen from './assets/best/green.webp';
+import imgBestYellow from './assets/best/yellow.webp';
 import { CardsSection } from './components/cards-section';
 import { CategoriesSection } from './components/categories-section';
 import { FirstHero } from './components/first-hero';
