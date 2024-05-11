@@ -1,3 +1,3 @@
-const COUNTRIES = ['UK', 'France', 'Germany'];
+const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
 
 export { COUNTRIES };
