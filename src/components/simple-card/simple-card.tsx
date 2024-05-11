@@ -32,14 +32,12 @@ const SimpleCard = (params: CardData): JSX.Element => {
         <Bage />
       </Card.Section>
 
-      <Text className={classes.title} fw={500} mt="xl" ta="center">
+      <Text className={classes.title} mt="xl" ta="center">
         {title}
       </Text>
 
       <Card.Section className={classes.section}>
-        <Text className={classes.price} fz={{ base: 'md', lg: 'xl', sm: 'md' }}>
-          {price}
-        </Text>
+        <Text className={classes.price}>{price}</Text>
       </Card.Section>
     </Card>
   );
