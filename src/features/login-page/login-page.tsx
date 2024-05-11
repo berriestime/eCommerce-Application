@@ -1,9 +1,8 @@
 import { FC } from 'react';
 
-import { Anchor, Button, Container, Paper, Text, Title } from '@mantine/core';
+import { Anchor, Container, Paper, Text, Title } from '@mantine/core';
 
-import { CustomPasswordInput } from '@/components/form/password-input';
-import { CustomTextInput } from '@/components/form/text-input';
+import { LoginForm } from './login-form/login-form';
 
 import classes from './login-page.module.css';
 
@@ -19,11 +18,7 @@ const LoginPage: FC = () => {
       </Text>
 
       <Paper mt={30} p={30} radius="md" shadow="md withBorder ">
-        <CustomTextInput label="Email" required={true} />
-        <CustomPasswordInput label="Password" />
-        <Button fullWidth mt="xl">
-          Sign in
-        </Button>
+        <LoginForm />
       </Paper>
     </Container>
   );
