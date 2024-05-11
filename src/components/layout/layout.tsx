@@ -1,9 +1,13 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { AppShell } from '@mantine/core';
+import { AppShell, Box, Loader } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
+import { Notifications } from '@mantine/notifications';
 
 import { Header } from '../header';
+
+import classes from '../loader/loader.module.css';
 
 const Layout = (): JSX.Element => {
   const { width } = useViewportSize();
@@ -15,7 +19,17 @@ const Layout = (): JSX.Element => {
       </AppShell.Header>
 
       <AppShell.Main>
-        <Outlet />
+        <Suspense
+          fallback={
+            <Box className={classes.box}>
+              <Loader />
+            </Box>
+          }
+        >
+          <Notifications />
+
+          <Outlet />
+        </Suspense>
       </AppShell.Main>
     </AppShell>
   );

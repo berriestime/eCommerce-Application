@@ -1,15 +1,17 @@
 import { Layout } from '@/components/layout';
-import { NotFoundPage } from '@/components/not-found-page/not-found-page';
-import { CartPage } from '@/features/cart/cart-page';
-import { CategoryPage } from '@/features/catalog/category/category-page';
-import { ProductPage } from '@/features/catalog/product/product-page';
-import { LoginPage } from '@/features/login-page';
-import { Profile } from '@/features/profile/profile';
-import { RegistrationPage } from '@/features/registration-page';
-import { RootPage } from '@/features/root-page';
-import { TeamPage } from '@/features/team/team-page';
 
 import { AuthRouteGuard } from './AuthRouteGuard';
+import {
+  CartPage,
+  CategoryPage,
+  LoginPage,
+  NotFoundPage,
+  ProductPage,
+  Profile,
+  RegistrationPage,
+  RootPage,
+  TeamPage,
+} from './lazy';
 
 export const routes = [
   {

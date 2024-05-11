@@ -6,6 +6,22 @@
   color: var(--color-fg);
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #424242;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #828282;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aa9f9c;
+}
+
 body {
   box-sizing: border-box;
   margin: 0px;

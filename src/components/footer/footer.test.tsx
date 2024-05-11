@@ -13,9 +13,6 @@ describe('Footer', () => {
         <Footer />
       </MemoryRouter>,
     );
-    expect(screen.getByText('GitHub link')).toHaveAttribute(
-      'href',
-      'https://github.com/berriestime/eCommerce-Application',
-    );
+    expect(screen.getByText('GitHub')).toHaveAttribute('href', 'https://github.com/berriestime/eCommerce-Application');
   });
 });
