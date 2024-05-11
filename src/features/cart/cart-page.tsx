@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 import { Button } from '@mantine/core';
 
-import { addNotification } from '@/components/notification';
+import { addNotification } from '@/utils/show-notification';
 
 import s from './cart-page.module.css';
 
