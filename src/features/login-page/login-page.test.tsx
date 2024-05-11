@@ -5,7 +5,7 @@ import { describe, expect, test } from 'vitest';
 
 import { customRender } from '@/test-utils';
 
-import { LoginPage } from './login-page';
+import { LoginPage } from './components/login-page';
 
 describe('Login', () => {
   test('should render', () => {

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import { Anchor, Container, Paper, Text, Title } from '@mantine/core';
 
-import { LoginForm } from './login-form/login-form';
+import { LoginForm } from './login-form';
 
 import classes from './login-page.module.css';
 
