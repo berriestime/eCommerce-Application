@@ -1,13 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 
 import { Anchor, Button, Checkbox, Container, Group, SimpleGrid, Text, Title } from '@mantine/core';
-import { DateInput } from '@mantine/dates';
 import { isEmail, useForm } from '@mantine/form';
 
 import { validatePassword } from '@/utils/validate-password';
 // import clsx from 'clsx';
 
 import { COUNTRIES, CountrySelect } from '@/components/country-select';
+import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
 
@@ -103,7 +103,7 @@ const RegistrationPage: FC = () => {
           />
           <CustomTextInput key={form.key('lastName')} label="Last Name" required {...form.getInputProps('lastName')} />
         </Group>
-        <DateInput key={form.key('birthday')} label="Birthday" required {...form.getInputProps('birthday')} />
+        <CustomDateInput key={form.key('birthday')} label="Birthday" required {...form.getInputProps('birthday')} />
         <Title component="h2">Shipping address</Title>
         <Checkbox
           key={form.key('checkbox')}
