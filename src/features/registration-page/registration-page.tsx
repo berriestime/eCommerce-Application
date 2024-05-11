@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 
-import { Anchor, Button, Checkbox, Container, Group, SimpleGrid, Text, Title } from '@mantine/core';
+import { Accordion, Anchor, Button, Checkbox, Container, Group, SimpleGrid, Text, Title } from '@mantine/core';
 import { isEmail, useForm } from '@mantine/form';
+import dayjs from 'dayjs';
 
 import { validatePassword } from '@/utils/validate-password';
 // import clsx from 'clsx';
@@ -13,6 +14,8 @@ import { CustomTextInput } from '@/components/custom-text-input';
 
 import classes from './registration-page.module.css';
 
+const TEN_YEARS_AGO = dayjs(new Date()).subtract(10, 'year').toDate();
+const TWENTY_YEARS_AGO = dayjs(new Date()).subtract(20, 'year').toDate();
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required');
 
 const noSpecial =
@@ -103,7 +106,15 @@ const RegistrationPage: FC = () => {
           />
           <CustomTextInput key={form.key('lastName')} label="Last Name" required {...form.getInputProps('lastName')} />
         </Group>
-        <CustomDateInput key={form.key('birthday')} label="Birthday" required {...form.getInputProps('birthday')} />
+        <CustomDateInput
+          defaultDate={TWENTY_YEARS_AGO}
+          defaultLevel="decade"
+          key={form.key('birthday')}
+          label="Birthday"
+          maxDate={TEN_YEARS_AGO}
+          required
+          {...form.getInputProps('birthday')}
+        />
         <Title component="h2">Shipping address</Title>
         <Checkbox
           key={form.key('checkbox')}
@@ -142,6 +153,7 @@ const RegistrationPage: FC = () => {
           />
           <CountrySelect form={form} />
         </SimpleGrid>
+        <Accordion></Accordion>
         <Button fullWidth mt="xl" type="submit">
           Sign Up
         </Button>
