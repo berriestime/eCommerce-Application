@@ -4,6 +4,7 @@
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/carousel/styles.css';
+import '@mantine/notifications/styles.css';
 
 // eslint-disable-next-line perfectionist/sort-imports
 import { Provider } from 'react-redux';
