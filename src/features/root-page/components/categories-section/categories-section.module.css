@@ -1,0 +1,47 @@
+.container {
+  padding: 120px 0 140px;
+}
+
+.col {
+  padding: 0;
+  margin: -4px 0;
+  overflow: hidden;
+  background-color: #8aa1ad;
+}
+
+.col .img4 {
+  object-position: 0;
+}
+
+.col .img {
+  max-height: 100%;
+  min-height: 100%;
+  height: 100%;
+  transition: all 0.5s linear;
+}
+
+.col:hover .img {
+  transform: scale(1.1);
+}
+
+.box {
+  position: absolute;
+  padding: 16px;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  top: 0;
+  left: 0;
+  font-size: 20px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.imgWrapper {
+  overflow: hidden;
+}

@@ -2,7 +2,8 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { describe, expect, test } from 'vitest';
 
-import { customRender, screen } from '../../test-utils';
+import { customRender, screen } from '@/test-utils';
+
 import { RootPage } from './root-page';
 
 describe('RootPage', () => {

@@ -4,15 +4,15 @@ import { describe, expect, test } from 'vitest';
 
 import { customRender, screen } from '@/test-utils';
 
-import { Header } from './header';
+import { SecondHero } from './second-hero';
 
-describe('Header', () => {
+describe('SecondHero', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
-        <Header />
+        <SecondHero />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Main')).toBeInTheDocument();
+    expect(screen.getByText('YOUR SPACE')).toBeInTheDocument();
   });
 });

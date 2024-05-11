@@ -22,15 +22,15 @@
 }
 
 .title {
-  font-weight: 900;
-  font-size: rem(34px);
-  margin-bottom: var(--mantine-spacing-md);
+  font-weight: 300;
+  font-size: 20px;
+  text-transform: uppercase;
   font-family:
     Greycliff CF,
     var(--mantine-font-family);
 
   @media (max-width: 767px) {
-    font-size: rem(20px) !important;
+    font-size: rem(20px);
   }
 }
 
@@ -51,5 +51,5 @@
   margin: auto;
   gap: 2rem;
   max-width: 600px;
-  font-size: 1rem;
+  font-size: 16px;
 }
