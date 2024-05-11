@@ -31,6 +31,20 @@
   }
 }
 
+.link {
+  display: flex;
+  align-items: end;
+  color: #828282;
+}
+
 .link:hover {
   color: #aa9f9c;
+}
+
+.link svg {
+  margin-right: 4px;
+}
+
+.text {
+  text-align: center;
 }
