@@ -7,6 +7,10 @@ import dayjs from 'dayjs';
 import { validatePassword } from '@/utils/validate-password';
 // import clsx from 'clsx';
 
+import { Link } from 'react-router-dom';
+
+import { postcodeValidator } from 'postcode-validator';
+
 import { COUNTRIES, CountrySelect } from '@/components/country-select';
 import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
@@ -31,6 +35,19 @@ const matchesPassword = (value: string, values: { password: string }): null | st
   value !== values.password ? 'Passwords did not match' : null;
 
 const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
+
+const isProperPostcode = (value: string, values: { shippingCountry: string }): null | string => {
+  const countryNamesToCodes: Record<string, string> = {
+    Germany: 'DE',
+    'United Kingdom': 'UK',
+    'United States': 'US',
+  };
+  const code = countryNamesToCodes[values.shippingCountry];
+  if (!code) {
+    return 'Invalid country';
+  }
+  return postcodeValidator(value, code) ? null : 'Invalid postcode';
+};
 
 const RegistrationPage: FC = () => {
   const form = useForm({
@@ -57,8 +74,10 @@ const RegistrationPage: FC = () => {
       firstName: noSpecial('First name must not contain special characters'),
       lastName: noSpecial('Last name must not contain special characters'),
       password: validatePassword,
-      shippingAddress: notEmpty,
+      shippingCity: noSpecial('City must not contain special characters'),
       shippingCountry: isProperCountry,
+      shippingPostalCode: isProperPostcode,
+      shippingStreet: notEmpty,
     },
     validateInputOnChange: true,
   });
@@ -118,16 +137,9 @@ const RegistrationPage: FC = () => {
         <Title component="h2">Shipping address</Title>
         <Checkbox
           key={form.key('checkbox')}
-          label="The schipping and billing adresses are the same"
+          label="The shipping and billing addresses are the same"
           mt="md"
           {...form.getInputProps('checkbox', { type: 'checkbox' })}
-        />
-        <CustomTextInput
-          key={form.key('billingAddress')}
-          label="Billing address"
-          placeholder="15329 Huston 21st"
-          required
-          {...form.getInputProps('billingAddress')}
         />
         <SimpleGrid cols={2}>
           <CustomTextInput
@@ -144,6 +156,7 @@ const RegistrationPage: FC = () => {
             required
             {...form.getInputProps('shippingCity')}
           />
+          <CountrySelect form={form} />
           <CustomTextInput
             key={form.key('shippingPostalCode')}
             label="PostalCode"
@@ -151,7 +164,6 @@ const RegistrationPage: FC = () => {
             required
             {...form.getInputProps('shippingPostalCode')}
           />
-          <CountrySelect form={form} />
         </SimpleGrid>
         <Accordion></Accordion>
         <Button fullWidth mt="xl" type="submit">
@@ -160,7 +172,7 @@ const RegistrationPage: FC = () => {
       </form>
       <Text c="dimmed" mt={5} size="sm" ta="center">
         Already a member?{' '}
-        <Anchor component="button" size="sm">
+        <Anchor component={Link} size="sm" to="/login">
           Log in
         </Anchor>
       </Text>
