@@ -19,6 +19,7 @@
 .firstHero {
   min-height: calc(100vh - 100px);
   padding-bottom: calc(var(--mantine-spacing-xl) * 12);
+  padding-top: calc(var(--mantine-spacing-xl) * 2);
 
   @media (max-width: 767px) {
     min-height: calc(100vh - 64px);

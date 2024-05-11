@@ -18,13 +18,13 @@ import { SecondHero } from './components/second-hero';
 const bestData = [
   { image: imgBestGreen, price: '£46.00', title: 'Fireflow candle lava lamp: Copper', to: '/catalog' },
   {
-    discount: '25%',
+    discount: '- 25%',
     image: imgBestBlue,
     price: '£85.00',
     title: 'Neo lava lamp for children & all ages: Copper',
     to: '/catalog',
   },
-  { discount: '15%', image: imgBestYellow, price: '£48.00', title: 'Pod candle lava lamp: Copper', to: '/catalog' },
+  { discount: '- 15%', image: imgBestYellow, price: '£48.00', title: 'Pod candle lava lamp: Copper', to: '/catalog' },
 ];
 
 const classicData = [

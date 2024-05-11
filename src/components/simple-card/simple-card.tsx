@@ -20,7 +20,7 @@ const SimpleCard = (params: CardData): JSX.Element => {
 
     return (
       <Badge c="white" className={classes.badge} size="xl" variant="transparent">
-        {discount} off
+        {discount}
       </Badge>
     );
   };
