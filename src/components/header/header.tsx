@@ -1,14 +1,14 @@
 import type { FC, ReactElement } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { Box, Burger, Button, Divider, Drawer, Group, Modal, ScrollArea, UnstyledButton, rem } from '@mantine/core';
+import { Box, Burger, Divider, Drawer, Group, ScrollArea, UnstyledButton, rem } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
-import { BaseButton } from '@/components/base-button';
 import { LogoutIcon } from '@/components/icons/logout';
 import { ProfileIcon } from '@/components/icons/profile';
 import { Logo } from '@/components/logo';
+import { LogoutModal } from '@/components/modals/logout-modal';
 
 import classes from './header.module.css';
 
@@ -110,25 +110,7 @@ const Header: FC = () => {
         </ScrollArea>
       </Drawer>
 
-      <Modal
-        centered
-        classNames={{
-          body: classes.body,
-          header: classes.header,
-          title: classes.title,
-        }}
-        onClose={closeModal}
-        opened={modalOpened}
-        title="Logout"
-      >
-        Are you sure you want to log out?
-        <Group grow justify="center" mt="xl">
-          <BaseButton>Ok</BaseButton>
-          <Button onClick={closeModal} radius="xs" variant="default">
-            Cancel
-          </Button>
-        </Group>
-      </Modal>
+      <LogoutModal close={closeModal} opened={modalOpened} />
     </Box>
   );
 };
