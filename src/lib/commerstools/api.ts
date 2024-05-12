@@ -1,52 +1,41 @@
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import {
-  // Import middlewares
-  type AuthMiddlewareOptions, // Required for auth
+  type AnonymousAuthMiddlewareOptions,
   ClientBuilder,
-  type HttpMiddlewareOptions, // Required for sending HTTP requests
+  type HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import assert from 'assert';
-import 'dotenv/config';
 
-const { API_URL, AUTH_URL, CLIENT_ID, CLIENT_SECRET, PROJECT_KEY, SCOPES } = process.env;
+const { VITE_API_URL, VITE_AUTH_URL, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_PROJECT_KEY, VITE_SCOPES } = import.meta
+  .env;
 
-assert(API_URL);
-assert(AUTH_URL);
-assert(CLIENT_ID);
-assert(CLIENT_SECRET);
-assert(PROJECT_KEY);
-assert(SCOPES);
+const projectKey = VITE_PROJECT_KEY;
+const scopes = [VITE_SCOPES];
 
-const projectKey = PROJECT_KEY;
-const scopes = [SCOPES];
+export const httpMiddlewareOptions: HttpMiddlewareOptions = {
+  fetch,
+  host: VITE_API_URL,
+};
 
-// Configure authMiddlewareOptions
-const authMiddlewareOptions: AuthMiddlewareOptions = {
+const anonymous_id = crypto.randomUUID();
+const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
   credentials: {
-    clientId: CLIENT_ID,
-    clientSecret: CLIENT_SECRET,
+    anonymousId: anonymous_id,
+    clientId: VITE_CLIENT_ID,
+    clientSecret: VITE_CLIENT_SECRET,
   },
   fetch,
-  host: AUTH_URL,
-  projectKey: projectKey,
+  host: VITE_AUTH_URL,
+  projectKey,
   scopes,
 };
 
-// Configure httpMiddlewareOptions
-const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  fetch,
-  host: API_URL,
-};
-
-// Export the ClientBuilder
 const ctpClient = new ClientBuilder()
-  .withProjectKey(projectKey) // .withProjectKey() is not required if the projectKey is included in authMiddlewareOptions
-  .withClientCredentialsFlow(authMiddlewareOptions)
+  .withProjectKey(projectKey)
   .withHttpMiddleware(httpMiddlewareOptions)
-  .withLoggerMiddleware() // Include middleware for logging
+  .withLoggerMiddleware()
+  .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
   .build();
 
-// Create apiRoot from the imported ClientBuilder and include your Project key
-const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: PROJECT_KEY });
+const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
 
-export { apiRoot, ctpClient };
+export { apiRoot };
