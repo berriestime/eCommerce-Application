@@ -25,7 +25,7 @@ const LoginForm: FC = () => {
   return (
     <form
       onSubmit={form.onSubmit((customer) => {
-        postCustomerLogin(customer).catch((err) => console.log(err));
+        postCustomerLogin(customer).catch(console.error);
       })}
     >
       <TextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />

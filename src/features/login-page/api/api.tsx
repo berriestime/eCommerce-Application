@@ -2,6 +2,7 @@ import { ByProjectKeyRequestBuilder, CustomerSignin, createApiBuilderFromCtpClie
 import { ClientBuilder, type PasswordAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';
 
 import { httpMiddlewareOptions } from '@/lib/commerstools/api';
+import { addNotification } from '@/utils/show-notification';
 
 const { VITE_AUTH_URL, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_PROJECT_KEY, VITE_SCOPES } = import.meta.env;
 
@@ -18,7 +19,8 @@ const postCustomerLogin = (customer: CustomerSignin): Promise<void> => {
     .then(({ body }) => {
       console.log(body);
     })
-    .catch(console.error);
+    .catch(console.error)
+    .catch(() => addNotification({ message: 'Customer with this username and password was not found', type: 'error' }));
 
   return result;
 };
