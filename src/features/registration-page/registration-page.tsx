@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 
-import { Accordion, Anchor, Button, Checkbox, Container, Group, SimpleGrid, Text, Title } from '@mantine/core';
-import { isEmail, useForm } from '@mantine/form';
+import { Anchor, Button, Checkbox, Container, Group, SimpleGrid, Text, Title } from '@mantine/core';
+import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
 import dayjs from 'dayjs';
 
 import { validatePassword } from '@/utils/validate-password';
@@ -15,6 +15,7 @@ import { COUNTRIES, CountrySelect } from '@/components/country-select';
 import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
+import { Spoiler } from '@/components/spoiler';
 
 import classes from './registration-page.module.css';
 
@@ -36,30 +37,34 @@ const matchesPassword = (value: string, values: { password: string }): null | st
 
 const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
 
-const isProperPostcode = (value: string, values: { shippingCountry: string }): null | string => {
-  const countryNamesToCodes: Record<string, string> = {
-    Germany: 'DE',
-    'United Kingdom': 'UK',
-    'United States': 'US',
+const isProperPostcode =
+  <K extends string, T extends Record<K, string>>(countryField: K) =>
+  (value: string, values: UseFormReturnType<T>['values']): null | string => {
+    const countryNamesToCodes: Record<string, string> = {
+      Germany: 'DE',
+      'United Kingdom': 'UK',
+      'United States': 'US',
+    };
+    const code = countryNamesToCodes[values[countryField]];
+    if (!code) {
+      return 'Invalid country';
+    }
+    return postcodeValidator(value, code) ? null : 'Invalid postcode';
   };
-  const code = countryNamesToCodes[values.shippingCountry];
-  if (!code) {
-    return 'Invalid country';
-  }
-  return postcodeValidator(value, code) ? null : 'Invalid postcode';
-};
 
 const RegistrationPage: FC = () => {
   const form = useForm({
     initialValues: {
-      billingAddress: '',
+      billingCity: '',
+      billingCountry: '',
+      billingPostalCode: '',
+      billingStreet: '',
       checkbox: false,
       confirmPassword: '',
       email: '',
       firstName: '',
       lastName: '',
       password: '',
-      shippingAddress: '',
       shippingCity: '',
       shippingCountry: '',
       shippingPostalCode: '',
@@ -68,15 +73,18 @@ const RegistrationPage: FC = () => {
     mode: 'uncontrolled',
 
     validate: {
-      billingAddress: notEmpty,
+      billingCity: noSpecial('City must not contain special characters'),
+      billingCountry: isProperCountry,
+      billingPostalCode: isProperPostcode('billingCountry'),
+      billingStreet: notEmpty,
       confirmPassword: matchesPassword,
       email: isEmail('Invalid email'),
-      firstName: noSpecial('First name must not contain special characters'),
-      lastName: noSpecial('Last name must not contain special characters'),
+      firstName: noSpecial('No special characters'),
+      lastName: noSpecial('No special characters'),
       password: validatePassword,
       shippingCity: noSpecial('City must not contain special characters'),
       shippingCountry: isProperCountry,
-      shippingPostalCode: isProperPostcode,
+      shippingPostalCode: isProperPostcode('shippingCountry'),
       shippingStreet: notEmpty,
     },
     validateInputOnChange: true,
@@ -134,38 +142,64 @@ const RegistrationPage: FC = () => {
           required
           {...form.getInputProps('birthday')}
         />
-        <Title component="h2">Shipping address</Title>
-        <Checkbox
-          key={form.key('checkbox')}
-          label="The shipping and billing addresses are the same"
-          mt="md"
-          {...form.getInputProps('checkbox', { type: 'checkbox' })}
-        />
-        <SimpleGrid cols={2}>
-          <CustomTextInput
-            key={form.key('shippingStreet')}
-            label="Street"
-            placeholder="15329 Huston 21st"
-            required
-            {...form.getInputProps('shippingStreet')}
+        <Spoiler header="Shipping address" initiallyOpen={true}>
+          <Checkbox
+            key={form.key('checkbox')}
+            label="The shipping and billing addresses are the same"
+            mt="md"
+            {...form.getInputProps('checkbox', { type: 'checkbox' })}
           />
-          <CustomTextInput
-            key={form.key('shippingCity')}
-            label="City"
-            placeholder="London"
-            required
-            {...form.getInputProps('shippingCity')}
-          />
-          <CountrySelect form={form} />
-          <CustomTextInput
-            key={form.key('shippingPostalCode')}
-            label="PostalCode"
-            placeholder="01234"
-            required
-            {...form.getInputProps('shippingPostalCode')}
-          />
-        </SimpleGrid>
-        <Accordion></Accordion>
+          <SimpleGrid cols={2}>
+            <CustomTextInput
+              key={form.key('shippingStreet')}
+              label="Street"
+              placeholder="15329 Huston 21st"
+              required
+              {...form.getInputProps('shippingStreet')}
+            />
+            <CustomTextInput
+              key={form.key('shippingCity')}
+              label="City"
+              placeholder="London"
+              required
+              {...form.getInputProps('shippingCity')}
+            />
+            <CountrySelect field="shippingCountry" form={form} />
+            <CustomTextInput
+              key={form.key('shippingPostalCode')}
+              label="PostalCode"
+              placeholder="01234"
+              required
+              {...form.getInputProps('shippingPostalCode')}
+            />
+          </SimpleGrid>
+        </Spoiler>
+        <Spoiler header="Billing address">
+          <SimpleGrid cols={2}>
+            <CustomTextInput
+              key={form.key('billingStreet')}
+              label="Street"
+              placeholder="15329 Huston 21st"
+              required
+              {...form.getInputProps('billingStreet')}
+            />
+            <CustomTextInput
+              key={form.key('billingCity')}
+              label="City"
+              placeholder="London"
+              required
+              {...form.getInputProps('billingCity')}
+            />
+            <CountrySelect field="billingCountry" form={form} />
+            <CustomTextInput
+              key={form.key('billingPostalCode')}
+              label="PostalCode"
+              placeholder="01234"
+              required
+              {...form.getInputProps('billingPostalCode')}
+            />
+          </SimpleGrid>
+        </Spoiler>
         <Button fullWidth mt="xl" type="submit">
           Sign Up
         </Button>
