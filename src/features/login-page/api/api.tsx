@@ -19,8 +19,13 @@ const postCustomerLogin = (customer: CustomerSignin): Promise<void> => {
     .then(({ body }) => {
       console.log(body);
     })
-    .catch(console.error)
-    .catch(() => addNotification({ message: 'Customer with this username and password was not found', type: 'error' }));
+    .catch(() =>
+      addNotification({
+        message: 'Customer with this username and password was not found',
+        title: 'Sign In Error',
+        type: 'error',
+      }),
+    );
 
   return result;
 };
