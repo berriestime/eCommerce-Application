@@ -1,8 +1,9 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Anchor, Container, Paper, Text, Title } from '@mantine/core';
 
-import { LoginForm } from './login-form/login-form';
+import { LoginForm } from './login-form';
 
 import classes from './login-page.module.css';
 
@@ -13,7 +14,7 @@ const LoginPage: FC = () => {
       <Text c="dimmed" mt={5} size="sm" ta="center">
         Do not have an account yet?{' '}
         <Anchor component="button" size="sm">
-          Create account
+          <Link to={'/registration'}>Create account</Link>
         </Anchor>
       </Text>
 
