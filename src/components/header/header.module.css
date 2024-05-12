@@ -46,7 +46,8 @@
 }
 
 .link,
-.authLink {
+.authLink,
+.profileLink {
   display: flex;
   align-items: center;
   height: 100%;
@@ -73,7 +74,8 @@
 }
 
 .link:hover,
-.authLink:hover {
+.authLink:hover,
+.profileLink:hover {
   color: #aa9f9c;
 }
 
@@ -116,4 +118,22 @@
 
 .drawer header {
   padding-top: 0;
+}
+
+.profileLink {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.header {
+  padding: 32px 32px 0 32px;
+}
+
+.body {
+  padding: 20px 32px 32px 32px !important;
+}
+
+.title {
+  font-size: 20px;
 }
