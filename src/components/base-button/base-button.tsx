@@ -5,7 +5,7 @@ import { Button, type ButtonProps, createPolymorphicComponent } from '@mantine/c
 import classes from './base-button.module.css';
 
 const BaseButtonUnwrapped = forwardRef<HTMLButtonElement, ButtonProps>(({ children, ...others }, ref) => (
-  <Button {...others} className={classes.control} ref={ref} size="md" variant="light">
+  <Button {...others} className={classes.control} ref={ref} variant="light">
     {children}
   </Button>
 ));

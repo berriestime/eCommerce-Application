@@ -18,7 +18,9 @@ const FirstHero = (): JSX.Element => {
         </Title>
 
         <Link className={classes.control} to="/catalog">
-          <BaseButton mt="xl">Shop Now</BaseButton>
+          <BaseButton mt="xl" size="md">
+            Shop Now
+          </BaseButton>
         </Link>
       </Container>
     </Hero>
