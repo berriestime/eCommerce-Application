@@ -79,6 +79,7 @@ const CountrySelect = <K extends string, T extends Record<K, string>>({
             onFocus?.(event);
           }}
           placeholder="Pick value or type anything"
+          required
           value={countryValue}
         />
       </Combobox.Target>

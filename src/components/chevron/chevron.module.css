@@ -1,0 +1,14 @@
+.chevron {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-bottom: 3px solid #f00;
+  border-right: 3px solid #f00;
+  transform: rotate(45deg);
+  transition: all 0.5s ease-in-out;
+  margin-right: 0.5rem;
+}
+
+.rotated {
+  transform: rotate(-135deg);
+}
