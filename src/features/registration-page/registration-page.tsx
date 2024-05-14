@@ -23,10 +23,10 @@ const TEN_YEARS_AGO = dayjs(new Date()).subtract(10, 'year').toDate();
 const TWENTY_YEARS_AGO = dayjs(new Date()).subtract(20, 'year').toDate();
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required');
 
-const noSpecial =
+const noSpecialOrDigits =
   (message: string) =>
   (value: string): null | string => {
-    if (/[^a-zA-Z]/.test(value)) {
+    if (/\d/.test(value) || /[~`!@#$%^&*()_+=[\]{};':"\\|,.<>/?]+/.test(value)) {
       return message;
     }
     return null;
@@ -73,16 +73,16 @@ const RegistrationPage: FC = () => {
     mode: 'uncontrolled',
 
     validate: {
-      billingCity: noSpecial('City must not contain special characters'),
+      billingCity: noSpecialOrDigits('City must not contain special characters'),
       billingCountry: isProperCountry,
       billingPostalCode: isProperPostcode('billingCountry'),
       billingStreet: notEmpty,
       confirmPassword: matchesPassword,
       email: isEmail('Invalid email'),
-      firstName: noSpecial('No special characters'),
-      lastName: noSpecial('No special characters'),
+      firstName: noSpecialOrDigits('No special characters'),
+      lastName: noSpecialOrDigits('No special characters'),
       password: validatePassword,
-      shippingCity: noSpecial('City must not contain special characters'),
+      shippingCity: noSpecialOrDigits('City must not contain special characters'),
       shippingCountry: isProperCountry,
       shippingPostalCode: isProperPostcode('shippingCountry'),
       shippingStreet: notEmpty,
