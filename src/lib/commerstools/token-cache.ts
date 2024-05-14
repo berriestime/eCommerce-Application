@@ -2,7 +2,7 @@ import { type TokenCache, type TokenStore } from '@commercetools/sdk-client-v2';
 
 const ANONYMOUS_TOKEN_STORAGE_KEY = 'lava-lamps-anonymous-token';
 
-function makePersistentTokenCache(): TokenCache {
+function makeTokenCache(): TokenCache {
   let current: TokenStore | object = {};
 
   const storedValue = localStorage.getItem(ANONYMOUS_TOKEN_STORAGE_KEY);
@@ -42,4 +42,4 @@ function makePersistentTokenCache(): TokenCache {
   };
 }
 
-export { makePersistentTokenCache };
+export { makeTokenCache };
