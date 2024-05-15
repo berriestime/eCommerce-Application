@@ -18,11 +18,15 @@ interface CustomInputProps {
 }
 
 const CountrySelect = <K extends string, T extends Record<K, string>>({
+  disabled = false,
   field,
   form,
+  required = false,
 }: {
+  disabled?: boolean;
   field: K;
   form: UseFormReturnType<T>;
+  required?: boolean;
 }): JSX.Element => {
   const { defaultValue, error, onBlur, onChange, onFocus } = form.getInputProps(field) as CustomInputProps;
 
@@ -61,6 +65,7 @@ const CountrySelect = <K extends string, T extends Record<K, string>>({
     >
       <Combobox.Target>
         <CustomTextInput
+          disabled={disabled}
           error={error}
           label="Country"
           onBlur={(event) => {
@@ -79,7 +84,7 @@ const CountrySelect = <K extends string, T extends Record<K, string>>({
             onFocus?.(event);
           }}
           placeholder="Pick value or type anything"
-          required
+          required={required}
           value={countryValue}
         />
       </Combobox.Target>
