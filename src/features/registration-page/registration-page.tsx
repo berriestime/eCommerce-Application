@@ -18,6 +18,7 @@ import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { Spoiler } from '@/components/spoiler';
+import { createCustomer } from '@/lib/commerstools/customer-creator';
 
 import classes from './registration-page.module.css';
 
@@ -73,6 +74,7 @@ const RegistrationPage: FC = () => {
       billingCountry: '',
       billingPostalCode: '',
       billingStreet: '',
+      birthday: '',
       checkbox: false,
       confirmPassword: '',
       email: '',
@@ -123,9 +125,33 @@ const RegistrationPage: FC = () => {
     }
   };
 
+  const handleSubmit = (values: typeof form.values): void => {
+    createCustomer({
+      addresses: [
+        {
+          additionalStreetInfo: values.shippingStreet,
+          city: values.shippingCity,
+          country: values.shippingCountry,
+          postalCode: values.shippingPostalCode,
+        },
+      ],
+      billingAddresses: [1],
+      dateOfBirth: values.birthday,
+      defaultBillingAddress: 0,
+      defaultShippingAddress: 0,
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      password: values.password,
+      shippingAddresses: [0],
+    })
+      .then(console.log)
+      .catch(console.error);
+  };
+
   return (
     <Container className={classes.container} mx="auto" w={360}>
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title mb={40} ta="center">
           Sign Up
         </Title>

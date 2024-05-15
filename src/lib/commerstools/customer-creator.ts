@@ -1,4 +1,10 @@
-import { ClientResponse, CustomerPagedQueryResponse, CustomerSignInResult, Project } from '@commercetools/platform-sdk';
+import {
+  ClientResponse,
+  CustomerDraft,
+  CustomerPagedQueryResponse,
+  CustomerSignInResult,
+  Project,
+} from '@commercetools/platform-sdk';
 
 import { apiRootAnonymous } from './create-anonymous-client';
 import { apiRootLogin } from './create-password-client';
@@ -20,24 +26,7 @@ const getCustomers = (): Promise<ClientResponse<CustomerPagedQueryResponse>> => 
   return apiRoot.customers().get().execute();
 };
 
-const createCustomer = ({
-  email,
-  firstName,
-  lastName,
-  password,
-}: {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-}): Promise<ClientResponse<CustomerSignInResult>> => {
-  const body = {
-    email,
-    firstName,
-    lastName,
-    password,
-  };
-  const apiRoot = defineClient({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+const createCustomer = (body: CustomerDraft): Promise<ClientResponse<CustomerSignInResult>> => {
   return apiRoot.customers().post({ body }).execute();
 };
 
