@@ -1,12 +1,15 @@
 import { type CustomerSignin } from '@commercetools/platform-sdk';
 
-import { createPasswordFlowClient } from '@/lib/commerstools/create-password-client';
+import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
+import { apiRootLogin, createPasswordFlowClient } from '@/lib/commerstools/create-password-client';
+import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
+import { defineClient } from '@/lib/commerstools/define-client';
 import { addNotification } from '@/utils/show-notification';
 
 const postCustomerLogin = (customer: CustomerSignin): Promise<void> => {
-  const apiRootLogin = createPasswordFlowClient(customer);
+  const apiRoot = createPasswordFlowClient(customer);
 
-  const result = apiRootLogin
+  const result = apiRoot
     .login()
     .post({ body: customer })
     .execute()
@@ -20,6 +23,8 @@ const postCustomerLogin = (customer: CustomerSignin): Promise<void> => {
         type: 'error',
       }),
     );
+
+  defineClient({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
 
   return result;
 };

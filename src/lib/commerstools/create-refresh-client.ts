@@ -3,11 +3,13 @@ import { ClientBuilder, type RefreshAuthMiddlewareOptions } from '@commercetools
 
 import { httpMiddlewareOptions } from '@/lib/commerstools/create-anonymous-client';
 
+import { getRefreshToken } from './token-cache';
+
 const { VITE_AUTH_URL, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_PROJECT_KEY } = import.meta.env;
 
 let apiRootRefresh: ByProjectKeyRequestBuilder | null = null;
 
-const createRefreshClient = (): ByProjectKeyRequestBuilder => {
+const createRefreshFlowClient = (): ByProjectKeyRequestBuilder => {
   const refreshAuthMiddlewareOptions: RefreshAuthMiddlewareOptions = {
     credentials: {
       clientId: VITE_CLIENT_ID,
@@ -16,8 +18,7 @@ const createRefreshClient = (): ByProjectKeyRequestBuilder => {
     fetch,
     host: VITE_AUTH_URL,
     projectKey: VITE_PROJECT_KEY,
-    refreshToken: 'Function to get refresh token here', //TODO: add function to get refreshToken
-    // tokenCache: TokenCache,
+    refreshToken: getRefreshToken(),
   };
 
   const ctpClient = new ClientBuilder()
@@ -28,7 +29,9 @@ const createRefreshClient = (): ByProjectKeyRequestBuilder => {
     .build();
 
   apiRootRefresh = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
+  apiRootRefresh.get().execute().catch(console.error);
+
   return apiRootRefresh;
 };
 
-export { createRefreshClient };
+export { apiRootRefresh, createRefreshFlowClient };

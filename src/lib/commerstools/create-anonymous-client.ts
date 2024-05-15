@@ -10,7 +10,7 @@ const { VITE_API_URL, VITE_AUTH_URL, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_PR
 const projectKey = VITE_PROJECT_KEY;
 const scopes = [VITE_SCOPES];
 
-let apiRootAnonymous: ByProjectKeyRequestBuilder;
+let apiRootAnonymous: ByProjectKeyRequestBuilder | null = null;
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {
   fetch,
@@ -40,9 +40,5 @@ const createAnonymousFlowClient = (): ByProjectKeyRequestBuilder => {
 
   return apiRootAnonymous;
 };
-
-//TODO: add function to check user state (login, anonymous) when the app starts
-// change to `let apiRootAnonymous: ByProjectKeyRequestBuilder | null = null;` after adding user check
-apiRootAnonymous = createAnonymousFlowClient();
 
 export { apiRootAnonymous, createAnonymousFlowClient, httpMiddlewareOptions };
