@@ -9,6 +9,7 @@ import { validatePassword } from '@/utils/validate-password';
 
 import { Link } from 'react-router-dom';
 
+import { useDisclosure } from '@mantine/hooks';
 import { postcodeValidator } from 'postcode-validator';
 
 import { COUNTRIES, CountrySelect } from '@/components/country-select';
@@ -18,6 +19,18 @@ import { CustomTextInput } from '@/components/custom-text-input';
 import { Spoiler } from '@/components/spoiler';
 
 import classes from './registration-page.module.css';
+
+// NOTE(berriestime):
+// @see https://mantine.dev/form/get-input-props/#integrate-getinputprops-with-custom-inputs
+interface CheckboxProps {
+  checked?: boolean;
+  defaultValue?: string;
+  error?: string;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  value?: string;
+}
 
 const TEN_YEARS_AGO = dayjs(new Date()).subtract(10, 'year').toDate();
 const TWENTY_YEARS_AGO = dayjs(new Date()).subtract(20, 'year').toDate();
@@ -90,27 +103,24 @@ const RegistrationPage: FC = () => {
     validateInputOnChange: true,
   });
 
-  const countryCombobox = useCombobox({
-    onDropdownClose: () => countryCombobox.resetSelectedOption(),
-  });
-
-  const [countryValue, setCountryValue] = useState('');
-
-  const shouldFilterOptions = !countries.some((country) => country === countryValue);
-  const filteredOptions = shouldFilterOptions
-    ? countries.filter((country) => country.toLowerCase().includes(countryValue.toLowerCase().trim()))
-    : countries;
-
-  const countryOptions = filteredOptions.map((item) => (
-    <Combobox.Option key={item} value={item}>
-      {item}
-    </Combobox.Option>
-  ));
-
-  useEffect(() => {
-    // we need to wait for options to render before we can select first one
-    countryCombobox.selectFirstOption();
-  }, [countryValue]);
+  const [areBillingFieldsDisabled, { close: enableBillingFields, open: disableBillingFields }] = useDisclosure(false);
+  const checkboxProps = form.getInputProps('checkbox', { type: 'checkbox' }) as CheckboxProps;
+  const handleCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const checked = event.target.checked;
+    if (checked) {
+      disableBillingFields();
+      form.setFieldValue('billingCity', '');
+      form.setFieldValue('billingCountry', '');
+      form.setFieldValue('billingPostalCode', '');
+      form.setFieldValue('billingStreet', '');
+      form.setFieldError('billingCity', undefined);
+      form.setFieldError('billingCountry', undefined);
+      form.setFieldError('billingPostalCode', undefined);
+      form.setFieldError('billingStreet', undefined);
+    } else {
+      enableBillingFields();
+    }
+  };
 
   return (
     <Container className={classes.container} mx="auto" p={0} w={363}>
@@ -144,10 +154,19 @@ const RegistrationPage: FC = () => {
         />
         <Spoiler header="Shipping address" initiallyOpen={true}>
           <Checkbox
+            checked={checkboxProps.checked}
+            defaultValue={checkboxProps.defaultValue}
+            error={checkboxProps.error}
             key={form.key('checkbox')}
             label="The shipping and billing addresses are the same"
             mt="md"
-            {...form.getInputProps('checkbox', { type: 'checkbox' })}
+            onBlur={checkboxProps.onBlur}
+            onChange={(event) => {
+              handleCheckbox(event);
+              checkboxProps.onChange?.(event);
+            }}
+            onFocus={checkboxProps.onFocus}
+            value={checkboxProps.value}
           />
           <SimpleGrid cols={2}>
             <CustomTextInput
@@ -164,7 +183,7 @@ const RegistrationPage: FC = () => {
               required
               {...form.getInputProps('shippingCity')}
             />
-            <CountrySelect field="shippingCountry" form={form} />
+            <CountrySelect field="shippingCountry" form={form} required />
             <CustomTextInput
               key={form.key('shippingPostalCode')}
               label="PostalCode"
@@ -174,28 +193,36 @@ const RegistrationPage: FC = () => {
             />
           </SimpleGrid>
         </Spoiler>
-        <Spoiler header="Billing address">
+        <Spoiler forceFullyClosed={areBillingFieldsDisabled} header="Billing address">
           <SimpleGrid cols={2}>
             <CustomTextInput
+              disabled={areBillingFieldsDisabled}
               key={form.key('billingStreet')}
               label="Street"
               placeholder="15329 Huston 21st"
-              required
+              required={!areBillingFieldsDisabled}
               {...form.getInputProps('billingStreet')}
             />
             <CustomTextInput
+              disabled={areBillingFieldsDisabled}
               key={form.key('billingCity')}
               label="City"
               placeholder="London"
-              required
+              required={!areBillingFieldsDisabled}
               {...form.getInputProps('billingCity')}
             />
-            <CountrySelect field="billingCountry" form={form} />
+            <CountrySelect
+              disabled={areBillingFieldsDisabled}
+              field="billingCountry"
+              form={form}
+              required={!areBillingFieldsDisabled}
+            />
             <CustomTextInput
+              disabled={areBillingFieldsDisabled}
               key={form.key('billingPostalCode')}
               label="PostalCode"
               placeholder="01234"
-              required
+              required={!areBillingFieldsDisabled}
               {...form.getInputProps('billingPostalCode')}
             />
           </SimpleGrid>

@@ -1,3 +1,7 @@
-.spoiler:hover {
+.spoiler:hover:not(.spoilerDisabled) {
   cursor: pointer;
+}
+
+.spoilerDisabled {
+  cursor: default;
 }
