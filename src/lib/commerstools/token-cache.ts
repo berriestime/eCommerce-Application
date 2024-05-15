@@ -1,28 +1,43 @@
 import { type TokenCache, type TokenStore } from '@commercetools/sdk-client-v2';
+import { z } from 'zod';
 
 const TOKEN_STORAGE_KEY = 'lava-lamps-refresh-token';
 
+const schemaToken = z.object({
+  expirationTime: z.number(),
+  refreshToken: z.string().optional(),
+  token: z.string(),
+});
+
 function makeTokenCache(): TokenCache {
-  let current: TokenStore | object = {};
+  let current: TokenStore;
 
   return {
     get: () => {
       const storedValue = localStorage.getItem(TOKEN_STORAGE_KEY);
       if (storedValue) {
         try {
-          const parsedToken = JSON.parse(storedValue) as TokenStore;
-          if ('expirationTime' in parsedToken && parsedToken.expirationTime >= Date.now()) {
-            current = parsedToken;
+          const parsedToken: unknown = JSON.parse(storedValue);
+          const correctToken = schemaToken.parse(parsedToken);
+          if (correctToken.expirationTime >= Date.now()) {
+            current = correctToken;
           } else {
             localStorage.removeItem(TOKEN_STORAGE_KEY);
-            current = {};
+            current = {
+              expirationTime: -1,
+              token: '',
+            } satisfies TokenStore;
           }
-          return current as TokenStore;
-        } catch {
-          console.error("Invalid data.Can't get a refresh token.");
+          return current;
+        } catch (err) {
+          console.error(err);
+          localStorage.removeItem(TOKEN_STORAGE_KEY);
         }
       }
-      return {} as TokenStore;
+      return {
+        expirationTime: -1,
+        token: '',
+      } satisfies TokenStore;
     },
     set: (newValue: TokenStore) => {
       current = newValue;
