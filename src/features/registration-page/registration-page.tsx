@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 
 import { Anchor, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
 import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
