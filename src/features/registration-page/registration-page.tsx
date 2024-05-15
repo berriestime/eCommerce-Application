@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 
-import { Anchor, Button, Checkbox, Container, Group, SimpleGrid, Text, Title } from '@mantine/core';
+import { Anchor, Button, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
 import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
 import dayjs from 'dayjs';
 
@@ -123,7 +123,7 @@ const RegistrationPage: FC = () => {
   };
 
   return (
-    <Container className={classes.container} mx="auto" p={0} w={363}>
+    <Container className={classes.container} mx="auto" w={360}>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <Title ta="center">Registration Page</Title>
         <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
@@ -134,7 +134,7 @@ const RegistrationPage: FC = () => {
           required
           {...form.getInputProps('confirmPassword')}
         />
-        <Group gap={23} grow>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <CustomTextInput
             key={form.key('firstName')}
             label="First Name"
@@ -142,7 +142,7 @@ const RegistrationPage: FC = () => {
             {...form.getInputProps('firstName')}
           />
           <CustomTextInput key={form.key('lastName')} label="Last Name" required {...form.getInputProps('lastName')} />
-        </Group>
+        </SimpleGrid>
         <CustomDateInput
           defaultDate={TWENTY_YEARS_AGO}
           defaultLevel="decade"
@@ -168,7 +168,7 @@ const RegistrationPage: FC = () => {
             onFocus={checkboxProps.onFocus}
             value={checkboxProps.value}
           />
-          <SimpleGrid cols={2}>
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <CustomTextInput
               key={form.key('shippingStreet')}
               label="Street"
@@ -194,7 +194,7 @@ const RegistrationPage: FC = () => {
           </SimpleGrid>
         </Spoiler>
         <Spoiler forceFullyClosed={areBillingFieldsDisabled} header="Billing address">
-          <SimpleGrid cols={2}>
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <CustomTextInput
               disabled={areBillingFieldsDisabled}
               key={form.key('billingStreet')}
