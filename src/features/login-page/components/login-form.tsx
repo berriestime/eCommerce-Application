@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { isEmail, useForm } from '@mantine/form';
@@ -21,11 +22,14 @@ const LoginForm: FC = () => {
     },
     validateInputOnChange: true,
   });
+  const navigate = useNavigate();
 
   return (
     <form
       onSubmit={form.onSubmit((customer) => {
-        postCustomerLogin(customer).catch(console.error);
+        postCustomerLogin(customer)
+          .then(() => navigate('../'))
+          .catch(console.error);
       })}
     >
       <TextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
