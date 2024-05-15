@@ -12,6 +12,7 @@ import imgBestGreen from './assets/best/green.webp';
 import imgBestYellow from './assets/best/yellow.webp';
 import { CardsSection } from './components/cards-section';
 import { CategoriesSection } from './components/categories-section';
+import { CheckSection } from './components/check-section/check-section';
 import { FirstHero } from './components/first-hero';
 import { SecondHero } from './components/second-hero';
 
@@ -36,6 +37,7 @@ const classicData = [
 const RootPage: FC = () => {
   return (
     <Box>
+      <CheckSection />
       <FirstHero />
       <CardsSection mockdata={bestData} title="BEST SELLERS" />
       <SecondHero />
