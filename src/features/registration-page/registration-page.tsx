@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 
-import { Anchor, Button, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
+import { Anchor, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
 import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
 import dayjs from 'dayjs';
 
@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { postcodeValidator } from 'postcode-validator';
 
+import { BaseButton } from '@/components/base-button';
 import { COUNTRIES, CountrySelect } from '@/components/country-select';
 import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
@@ -125,7 +126,9 @@ const RegistrationPage: FC = () => {
   return (
     <Container className={classes.container} mx="auto" w={360}>
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
-        <Title ta="center">Registration Page</Title>
+        <Title mb={40} ta="center">
+          Sign Up
+        </Title>
         <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
         <CustomPasswordInput key={form.key('password')} label="Password" required {...form.getInputProps('password')} />
         <CustomPasswordInput
@@ -227,9 +230,9 @@ const RegistrationPage: FC = () => {
             />
           </SimpleGrid>
         </Spoiler>
-        <Button fullWidth mt="xl" type="submit">
+        <BaseButton fullWidth mt="xl" type="submit">
           Sign Up
-        </Button>
+        </BaseButton>
       </form>
       <Text c="dimmed" mt={5} size="sm" ta="center">
         Already a member?{' '}
