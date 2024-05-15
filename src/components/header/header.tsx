@@ -1,19 +1,27 @@
 import type { FC, ReactElement } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { Box, Burger, Divider, Drawer, Group, ScrollArea, UnstyledButton, rem } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
+import type { RootState } from '@/store/store';
+
 import { LogoutIcon } from '@/components/icons/logout';
 import { ProfileIcon } from '@/components/icons/profile';
 import { Logo } from '@/components/logo';
 import { LogoutModal } from '@/components/modals/logout-modal';
+import { setAuthState } from '@/features/auth/authSlice';
 
 import classes from './header.module.css';
 
 const Header: FC = () => {
-  const isAuth = true;
+  const authData = useSelector((state: RootState) => state.auth.authState);
+  const dispatch = useDispatch();
+
+  const isAuth = authData === 'AUTHENTICATED';
+
   const [drawerOpened, { close: closeDrawer, toggle: toggleDrawer }] = useDisclosure(false);
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const nav = [
@@ -110,7 +118,7 @@ const Header: FC = () => {
         </ScrollArea>
       </Drawer>
 
-      <LogoutModal close={closeModal} opened={modalOpened} />
+      <LogoutModal close={closeModal} opened={modalOpened} submit={() => dispatch(setAuthState('UNAUTHENTICATED'))} />
     </Box>
   );
 };

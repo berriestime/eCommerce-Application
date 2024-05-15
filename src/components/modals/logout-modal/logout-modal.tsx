@@ -7,9 +7,10 @@ import classes from '../modal.module.css';
 type LogoutModalProps = {
   close: () => void;
   opened: boolean;
+  submit: () => void;
 };
 
-const LogoutModal = ({ close, opened }: LogoutModalProps): JSX.Element => {
+const LogoutModal = ({ close, opened, submit }: LogoutModalProps): JSX.Element => {
   return (
     <Modal
       centered
@@ -24,7 +25,14 @@ const LogoutModal = ({ close, opened }: LogoutModalProps): JSX.Element => {
     >
       Are you sure you want to log out?
       <Group grow justify="center" mt="xl">
-        <BaseButton>Ok</BaseButton>
+        <BaseButton
+          onClick={() => {
+            submit();
+            close();
+          }}
+        >
+          Ok
+        </BaseButton>
         <Button onClick={close} radius="xs" variant="default">
           Cancel
         </Button>
