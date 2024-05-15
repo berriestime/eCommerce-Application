@@ -1,10 +1,14 @@
 import { ClientResponse, CustomerPagedQueryResponse, CustomerSignInResult, Project } from '@commercetools/platform-sdk';
 
-import { apiRoot } from './api';
+import { apiRootAnonymous } from './create-anonymous-client';
+import { apiRootLogin } from './create-password-client';
+import { apiRootRefresh } from './create-refresh-client';
+import { defineClient } from './define-client';
 
 // Example call to return Project information
 // This code has the same effect as sending a GET request to the commercetools Composable Commerce API without any endpoints.
 const getProject = (): Promise<ClientResponse<Project>> => {
+  const apiRoot = defineClient({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   return apiRoot.get().execute();
 };
 
@@ -12,6 +16,7 @@ const getProject = (): Promise<ClientResponse<Project>> => {
 // getProject().then(console.log).catch(console.error);
 
 const getCustomers = (): Promise<ClientResponse<CustomerPagedQueryResponse>> => {
+  const apiRoot = defineClient({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   return apiRoot.customers().get().execute();
 };
 
@@ -32,6 +37,7 @@ const createCustomer = ({
     lastName,
     password,
   };
+  const apiRoot = defineClient({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   return apiRoot.customers().post({ body }).execute();
 };
 
