@@ -17,12 +17,18 @@ interface CustomInputProps {
   value?: string;
 }
 
-const CountrySelect = <T extends { shippingCountry: string }>({
+const CountrySelect = <K extends string, T extends Record<K, string>>({
+  disabled = false,
+  field,
   form,
+  required = false,
 }: {
+  disabled?: boolean;
+  field: K;
   form: UseFormReturnType<T>;
+  required?: boolean;
 }): JSX.Element => {
-  const { defaultValue, error, onBlur, onChange, onFocus } = form.getInputProps('shippingCountry') as CustomInputProps;
+  const { defaultValue, error, onBlur, onChange, onFocus } = form.getInputProps(field) as CustomInputProps;
 
   const countryCombobox = useCombobox({
     onDropdownClose: () => countryCombobox.resetSelectedOption(),
@@ -53,12 +59,13 @@ const CountrySelect = <T extends { shippingCountry: string }>({
         countryCombobox.closeDropdown();
 
         // @ts-expect-error FIXME(berriestime): for some reason TypeScript fails to infer type
-        form.setFieldValue('shippingCountry', val);
+        form.setFieldValue(field, val);
       }}
       store={countryCombobox}
     >
       <Combobox.Target>
         <CustomTextInput
+          disabled={disabled}
           error={error}
           label="Country"
           onBlur={(event) => {
@@ -77,6 +84,7 @@ const CountrySelect = <T extends { shippingCountry: string }>({
             onFocus?.(event);
           }}
           placeholder="Pick value or type anything"
+          required={required}
           value={countryValue}
         />
       </Combobox.Target>

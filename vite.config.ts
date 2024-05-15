@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
@@ -9,7 +10,7 @@ export default defineConfig({
   css: {
     transformer: 'lightningcss',
   },
-  plugins: [tsconfigPaths(), react()],
+  plugins: [tsconfigPaths(), react(), nodePolyfills()],
   test: {
     coverage: {
       all: true,
