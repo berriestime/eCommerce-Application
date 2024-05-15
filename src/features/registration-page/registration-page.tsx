@@ -134,6 +134,12 @@ const RegistrationPage: FC = () => {
           country: values.shippingCountry,
           postalCode: values.shippingPostalCode,
         },
+        {
+          additionalStreetInfo: values.billingStreet,
+          city: values.billingCity,
+          country: values.billingCountry,
+          postalCode: values.billingPostalCode,
+        },
       ],
       billingAddresses: [1],
       dateOfBirth: values.birthday,
