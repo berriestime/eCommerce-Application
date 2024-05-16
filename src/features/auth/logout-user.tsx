@@ -1,8 +1,8 @@
 import { createAnonymousFlowClient } from '@/lib/commerstools/create-anonymous-client';
-import { Clients } from '@/lib/commerstools/define-client';
+import { ApiRoots } from '@/lib/commerstools/define-client';
 import { deleteToken } from '@/lib/commerstools/token-cache';
 
-const logoutUser = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: Clients): Clients => {
+const logoutUser = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRoots): ApiRoots => {
   deleteToken();
   apiRootLogin = null;
   apiRootRefresh = null;
