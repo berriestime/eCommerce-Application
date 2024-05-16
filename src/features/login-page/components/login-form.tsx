@@ -2,9 +2,11 @@ import { FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { isEmail, useForm } from '@mantine/form';
 
+import { BaseButton } from '@/components/base-button';
+import { CustomPasswordInput } from '@/components/custom-password-input';
+import { CustomTextInput } from '@/components/custom-text-input';
 import { setAuthState } from '@/features/auth/authSlice';
 import { type AuthState } from '@/types/authState';
 import { addNotification } from '@/utils/show-notification';
@@ -53,11 +55,11 @@ const LoginForm: FC = () => {
           .catch(console.error);
       })}
     >
-      <TextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
-      <PasswordInput label="Password" required {...form.getInputProps('password')} />
-      <Button fullWidth mt="xl" type="submit">
+      <CustomTextInput label="Email" required {...form.getInputProps('email')}></CustomTextInput>
+      <CustomPasswordInput label="Password" required {...form.getInputProps('password')}></CustomPasswordInput>
+      <BaseButton fullWidth mt={25} type="submit">
         Sign in
-      </Button>
+      </BaseButton>
     </form>
   );
 };
