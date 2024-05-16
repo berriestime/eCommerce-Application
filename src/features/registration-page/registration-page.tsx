@@ -52,15 +52,23 @@ const matchesPassword = (value: string, values: { password: string }): null | st
 
 const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
 
+const transformCountryIntoCountryCode = (country: string): string => {
+  switch (country) {
+    case 'Germany':
+      return 'DE';
+    case 'United Kingdom':
+      return 'UK';
+    case 'United States':
+      return 'US';
+    default:
+      throw new Error(`Unexpected country: ${country}`);
+  }
+};
+
 const isProperPostcode =
   <K extends string, T extends Record<K, string>>(countryField: K) =>
   (value: string, values: UseFormReturnType<T>['values']): null | string => {
-    const countryNamesToCodes: Record<string, string> = {
-      Germany: 'DE',
-      'United Kingdom': 'UK',
-      'United States': 'US',
-    };
-    const code = countryNamesToCodes[values[countryField]];
+    const code = transformCountryIntoCountryCode(values[countryField]);
     if (!code) {
       return 'Invalid country';
     }
@@ -75,10 +83,10 @@ const RegistrationPage: FC = () => {
       billingPostalCode: '',
       billingStreet: '',
       birthday: '',
-      checkbox: false,
       confirmPassword: '',
       email: '',
       firstName: '',
+      isSameAddress: false,
       lastName: '',
       password: '',
       shippingCity: '',
@@ -88,6 +96,22 @@ const RegistrationPage: FC = () => {
     },
     mode: 'uncontrolled',
 
+    onValuesChange: (values) => {
+      if (values.isSameAddress) {
+        form.setFieldValue('billingCity', values.shippingCity);
+        form.setFieldValue('billingCountry', values.shippingCountry);
+        form.setFieldValue('billingPostalCode', values.shippingPostalCode);
+        form.setFieldValue('billingStreet', values.shippingStreet);
+      }
+    },
+    transformValues: (values) => {
+      return {
+        ...values,
+        billingCountry: transformCountryIntoCountryCode(values.billingCountry),
+        birthday: dayjs(values.birthday).format('YYYY-MM-DD'),
+        shippingCountry: transformCountryIntoCountryCode(values.shippingCountry),
+      };
+    },
     validate: {
       billingCity: noSpecialOrDigits('City must not contain special characters'),
       billingCountry: isProperCountry,
@@ -107,7 +131,7 @@ const RegistrationPage: FC = () => {
   });
 
   const [areBillingFieldsDisabled, { close: enableBillingFields, open: disableBillingFields }] = useDisclosure(false);
-  const checkboxProps = form.getInputProps('checkbox', { type: 'checkbox' }) as CheckboxProps;
+  const isSameAddressProps = form.getInputProps('isSameAddress', { type: 'checkbox' }) as CheckboxProps;
   const handleCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const checked = event.target.checked;
     if (checked) {
@@ -143,7 +167,7 @@ const RegistrationPage: FC = () => {
       ],
       billingAddresses: [1],
       dateOfBirth: values.birthday,
-      defaultBillingAddress: 0,
+      defaultBillingAddress: 1,
       defaultShippingAddress: 0,
       email: values.email,
       firstName: values.firstName,
@@ -189,19 +213,19 @@ const RegistrationPage: FC = () => {
         />
         <Spoiler header="Shipping address" initiallyOpen={true}>
           <Checkbox
-            checked={checkboxProps.checked}
-            defaultValue={checkboxProps.defaultValue}
-            error={checkboxProps.error}
-            key={form.key('checkbox')}
+            checked={isSameAddressProps.checked}
+            defaultValue={isSameAddressProps.defaultValue}
+            error={isSameAddressProps.error}
+            key={form.key('isSameAddress')}
             label="The shipping and billing addresses are the same"
             mt="md"
-            onBlur={checkboxProps.onBlur}
+            onBlur={isSameAddressProps.onBlur}
             onChange={(event) => {
               handleCheckbox(event);
-              checkboxProps.onChange?.(event);
+              isSameAddressProps.onChange?.(event);
             }}
-            onFocus={checkboxProps.onFocus}
-            value={checkboxProps.value}
+            onFocus={isSameAddressProps.onFocus}
+            value={isSameAddressProps.value}
           />
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <CustomTextInput
