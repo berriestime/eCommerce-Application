@@ -9,7 +9,7 @@ type State = {
 };
 
 const initialState: State = {
-  authState: 'UNAUTHENTICATED',
+  authState: 'PENDING',
 };
 
 const authSlice = createSlice({
