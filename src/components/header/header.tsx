@@ -13,6 +13,7 @@ import { ProfileIcon } from '@/components/icons/profile';
 import { Logo } from '@/components/logo';
 import { LogoutModal } from '@/components/modals/logout-modal';
 import { setAuthState } from '@/features/auth/authSlice';
+import { deleteToken } from '@/lib/commerstools/token-cache';
 
 import classes from './header.module.css';
 
@@ -118,7 +119,14 @@ const Header: FC = () => {
         </ScrollArea>
       </Drawer>
 
-      <LogoutModal close={closeModal} opened={modalOpened} submit={() => dispatch(setAuthState('UNAUTHENTICATED'))} />
+      <LogoutModal
+        close={closeModal}
+        opened={modalOpened}
+        submit={() => {
+          dispatch(setAuthState('UNAUTHENTICATED'));
+          deleteToken();
+        }}
+      />
     </Box>
   );
 };

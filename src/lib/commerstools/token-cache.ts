@@ -58,4 +58,11 @@ const getRefreshToken = (): string => {
   return '';
 };
 
-export { getRefreshToken, makeTokenCache };
+const deleteToken = (): void => {
+  const storedValue = localStorage.getItem(TOKEN_STORAGE_KEY);
+  if (storedValue) {
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+  }
+};
+
+export { deleteToken, getRefreshToken, makeTokenCache };
