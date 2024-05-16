@@ -52,15 +52,23 @@ const matchesPassword = (value: string, values: { password: string }): null | st
 
 const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
 
+const transformCountryIntoCountryCode = (country: string): string => {
+  switch (country) {
+    case 'Germany':
+      return 'DE';
+    case 'United Kingdom':
+      return 'UK';
+    case 'United States':
+      return 'US';
+    default:
+      throw new Error(`Unexpected country: ${country}`);
+  }
+};
+
 const isProperPostcode =
   <K extends string, T extends Record<K, string>>(countryField: K) =>
   (value: string, values: UseFormReturnType<T>['values']): null | string => {
-    const countryNamesToCodes: Record<string, string> = {
-      Germany: 'DE',
-      'United Kingdom': 'UK',
-      'United States': 'US',
-    };
-    const code = countryNamesToCodes[values[countryField]];
+    const code = transformCountryIntoCountryCode(values[countryField]);
     if (!code) {
       return 'Invalid country';
     }
@@ -88,10 +96,14 @@ const RegistrationPage: FC = () => {
     },
     mode: 'uncontrolled',
 
-    transformValues: (values) => ({
-      ...values,
-      birthday: dayjs(values.birthday).format('YYYY-MM-DD'),
-    }),
+    transformValues: (values) => {
+      return {
+        ...values,
+        billingCountry: transformCountryIntoCountryCode(values.billingCountry),
+        birthday: dayjs(values.birthday).format('YYYY-MM-DD'),
+        shippingCountry: transformCountryIntoCountryCode(values.shippingCountry),
+      };
+    },
     validate: {
       billingCity: noSpecialOrDigits('City must not contain special characters'),
       billingCountry: isProperCountry,
