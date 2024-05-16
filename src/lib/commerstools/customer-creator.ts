@@ -3,9 +3,9 @@ import { ClientResponse, CustomerDraft, CustomerSignInResult } from '@commerceto
 import { apiRootAnonymous } from './create-anonymous-client';
 import { apiRootLogin } from './create-password-client';
 import { apiRootRefresh } from './create-refresh-client';
-import { defineClient } from './define-client';
+import { defineApiRoot } from './define-client';
 
-const apiRoot = defineClient({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
 
 const createCustomer = (body: CustomerDraft): Promise<ClientResponse<CustomerSignInResult>> => {
   return apiRoot.customers().post({ body }).execute();

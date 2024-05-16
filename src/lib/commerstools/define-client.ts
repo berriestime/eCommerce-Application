@@ -2,13 +2,13 @@ import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
 import { createAnonymousFlowClient } from './create-anonymous-client';
 
-type Clients = {
+export type ApiRoots = {
   apiRootAnonymous: ByProjectKeyRequestBuilder | null;
   apiRootLogin: ByProjectKeyRequestBuilder | null;
   apiRootRefresh: ByProjectKeyRequestBuilder | null;
 };
 
-const defineClient = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: Clients): ByProjectKeyRequestBuilder => {
+const defineApiRoot = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRoots): ByProjectKeyRequestBuilder => {
   if (apiRootLogin) {
     return apiRootLogin;
   }
@@ -25,4 +25,4 @@ const defineClient = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: Client
   return client;
 };
 
-export { defineClient };
+export { defineApiRoot };
