@@ -31,7 +31,7 @@ const NotFoundPage: FC = () => {
               </Text>
 
               <Link to="/">
-                <BaseButton>Get back to home page</BaseButton>
+                <BaseButton size="md">Get back to home page</BaseButton>
               </Link>
             </div>
           </SimpleGrid>
