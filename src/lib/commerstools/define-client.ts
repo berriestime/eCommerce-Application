@@ -2,7 +2,7 @@ import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
 import { createAnonymousFlowClient } from './create-anonymous-client';
 
-type Clients = {
+export type Clients = {
   apiRootAnonymous: ByProjectKeyRequestBuilder | null;
   apiRootLogin: ByProjectKeyRequestBuilder | null;
   apiRootRefresh: ByProjectKeyRequestBuilder | null;

@@ -13,7 +13,10 @@ import { ProfileIcon } from '@/components/icons/profile';
 import { Logo } from '@/components/logo';
 import { LogoutModal } from '@/components/modals/logout-modal';
 import { setAuthState } from '@/features/auth/authSlice';
-import { deleteToken } from '@/lib/commerstools/token-cache';
+import { logoutUser } from '@/features/auth/logout-user';
+import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
+import { apiRootLogin } from '@/lib/commerstools/create-password-client';
+import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 
 import classes from './header.module.css';
 
@@ -124,7 +127,7 @@ const Header: FC = () => {
         opened={modalOpened}
         submit={() => {
           dispatch(setAuthState('UNAUTHENTICATED'));
-          deleteToken();
+          logoutUser({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
         }}
       />
     </Box>
