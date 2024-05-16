@@ -88,6 +88,10 @@ const RegistrationPage: FC = () => {
     },
     mode: 'uncontrolled',
 
+    transformValues: (values) => ({
+      ...values,
+      birthday: dayjs(values.birthday).format('YYYY-MM-DD'),
+    }),
     validate: {
       billingCity: noSpecialOrDigits('City must not contain special characters'),
       billingCountry: isProperCountry,
