@@ -87,6 +87,8 @@ const RegistrationPage: FC = () => {
       confirmPassword: '',
       email: '',
       firstName: '',
+      isDefaultBillingAddress: false,
+      isDefaultShippingAddress: false,
       isSameAddress: false,
       lastName: '',
       password: '',
@@ -168,8 +170,8 @@ const RegistrationPage: FC = () => {
       ],
       billingAddresses: [1],
       dateOfBirth: values.birthday,
-      defaultBillingAddress: 1,
-      defaultShippingAddress: 0,
+      defaultBillingAddress: values.isDefaultBillingAddress ? 1 : undefined,
+      defaultShippingAddress: values.isDefaultShippingAddress ? 0 : undefined,
       email: values.email,
       firstName: values.firstName,
       lastName: values.lastName,
@@ -218,6 +220,11 @@ const RegistrationPage: FC = () => {
         />
         <Spoiler header="Shipping address" initiallyOpen={true}>
           <Checkbox
+            key={form.key('isDefaultShippingAddress')}
+            label="Set as default address"
+            {...form.getInputProps('isDefaultShippingAddress')}
+          />
+          <Checkbox
             checked={isSameAddressProps.checked}
             defaultValue={isSameAddressProps.defaultValue}
             error={isSameAddressProps.error}
@@ -258,6 +265,11 @@ const RegistrationPage: FC = () => {
           </SimpleGrid>
         </Spoiler>
         <Spoiler forceFullyClosed={areBillingFieldsDisabled} header="Billing address">
+          <Checkbox
+            key={form.key('isDefaultBillingAddress')}
+            label="Set as default address"
+            {...form.getInputProps('isDefaultBillingAddress')}
+          />
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <CustomTextInput
               disabled={areBillingFieldsDisabled}
