@@ -14,6 +14,6 @@ describe('Login', () => {
         <LoginPage />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Welcome back!')).toBeInTheDocument();
+    expect(screen.getByText('Welcome Back')).toBeInTheDocument();
   });
 });

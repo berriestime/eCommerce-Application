@@ -9,16 +9,20 @@ import classes from './login-page.module.css';
 
 const LoginPage: FC = () => {
   return (
-    <Container className={classes.container} my={40} size={420}>
-      <Title ta="center">Welcome back!</Title>
-      <Text c="dimmed" mt={5} size="sm" ta="center">
+    <Container className={classes.container} size={420}>
+      <Title className={classes.title} ta="center">
+        Welcome Back
+      </Title>
+      <Text className={classes.text} mb={5} mt={30} px={14} ta="center">
         Do not have an account yet?{' '}
-        <Anchor component="button" size="sm">
-          <Link to={'/registration'}>Create account</Link>
+        <Anchor className={classes.anchor} component="button" ml={5}>
+          <Link className={classes.authLink} to={'/registration'}>
+            Create account
+          </Link>
         </Anchor>
       </Text>
 
-      <Paper mt={30} p={30} radius="md" shadow="md withBorder ">
+      <Paper mt={30} p={14} radius="md" shadow="md withBorder ">
         <LoginForm />
       </Paper>
     </Container>
