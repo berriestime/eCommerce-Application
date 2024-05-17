@@ -61,7 +61,7 @@ const transformCountryIntoCountryCode = (country: string): string => {
     case 'United States':
       return 'US';
     default:
-      throw new Error(`Unexpected country: ${country}`);
+      return '';
   }
 };
 
@@ -180,7 +180,7 @@ const RegistrationPage: FC = () => {
   };
 
   return (
-    <Container className={classes.container} mx="auto" w={360}>
+    <Container className={classes.container} mx="auto" p={16} size="xs">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Title mb={40} ta="center">
           Sign Up
