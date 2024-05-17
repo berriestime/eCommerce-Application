@@ -21,7 +21,7 @@ const Spoiler = ({
 }): JSX.Element => {
   const [opened, { toggle }] = useDisclosure(initiallyOpen);
   return (
-    <Stack>
+    <Stack gap={0}>
       <Text
         className={clsx({ [classes.spoiler!]: true, [classes.spoilerDisabled!]: forceFullyClosed })}
         onClick={toggle}
