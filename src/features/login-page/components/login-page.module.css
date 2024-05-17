@@ -1,11 +1,20 @@
 .container {
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   min-width: 340px;
   padding: 0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  @media only screen and (orientation: landscape) {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+  }
 }
 
 .title {

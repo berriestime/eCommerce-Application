@@ -13,7 +13,7 @@ const LoginPage: FC = () => {
       <Title className={classes.title} ta="center">
         Welcome Back
       </Title>
-      <Text className={classes.text} mb={5} mt={30} ta="center">
+      <Text className={classes.text} mb={5} mt={30} px={14} ta="center">
         Do not have an account yet?{' '}
         <Anchor className={classes.anchor} component="button" ml={5}>
           <Link className={classes.authLink} to={'/registration'}>
@@ -22,7 +22,7 @@ const LoginPage: FC = () => {
         </Anchor>
       </Text>
 
-      <Paper pt={30} radius="md" shadow="md withBorder ">
+      <Paper mt={30} p={14} radius="md" shadow="md withBorder ">
         <LoginForm />
       </Paper>
     </Container>
