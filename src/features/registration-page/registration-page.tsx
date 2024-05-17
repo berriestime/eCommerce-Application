@@ -19,6 +19,7 @@ import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { Spoiler } from '@/components/spoiler';
 import { createCustomer } from '@/lib/commerstools/customer-creator';
+import { addNotification } from '@/utils/show-notification';
 
 import classes from './registration-page.module.css';
 
@@ -175,8 +176,12 @@ const RegistrationPage: FC = () => {
       password: values.password,
       shippingAddresses: [0],
     })
-      .then(console.log)
-      .catch(console.error);
+      .then(() => {
+        addNotification({ message: 'You have successfully created an account.', title: 'Account created' });
+      })
+      .catch((error) => {
+        addNotification({ message: `${error}`, title: 'Error', type: 'error' });
+      });
   };
 
   return (
