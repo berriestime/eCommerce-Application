@@ -21,9 +21,14 @@ const Spoiler = ({
 }): JSX.Element => {
   const [opened, { toggle }] = useDisclosure(initiallyOpen);
   return (
-    <Stack gap={0}>
+    <Stack gap={0} mt={'lg'}>
       <Text
-        className={clsx({ [classes.spoiler!]: true, [classes.spoilerDisabled!]: forceFullyClosed })}
+        className={clsx({
+          [classes.spoiler!]: true,
+          [classes.spoilerDisabled!]: forceFullyClosed,
+          [classes.text!]: true,
+        })}
+        mb={'lg'}
         onClick={toggle}
       >
         <Chevron rotated={!forceFullyClosed && opened} />

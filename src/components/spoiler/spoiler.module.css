@@ -1,7 +1,12 @@
 .spoiler:hover:not(.spoilerDisabled) {
   cursor: pointer;
+  color: var(--mantine-color-white);
 }
 
 .spoilerDisabled {
   cursor: default;
+}
+
+.text {
+  color: var(--mantine-color-white);
 }

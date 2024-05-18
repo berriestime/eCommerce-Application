@@ -83,7 +83,7 @@ const CountrySelect = <K extends string, T extends Record<K, string>>({
             countryCombobox.openDropdown();
             onFocus?.(event);
           }}
-          placeholder="Pick value or type anything"
+          // placeholder="Pick value or type anything"
           required={required}
           value={countryValue}
         />

@@ -14,6 +14,7 @@ const CustomTextInput = forwardRef(function MyInput(
       classNames={{
         error: classes.error,
         input: classes.input,
+        label: classes.label,
         root: classes.root,
         wrapper: classes.wrapper,
       }}
