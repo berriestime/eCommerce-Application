@@ -1,15 +1,10 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Anchor, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
 import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
-import dayjs from 'dayjs';
-
-import { validatePassword } from '@/utils/validate-password';
-// import clsx from 'clsx';
-
-import { Link } from 'react-router-dom';
-
 import { useDisclosure } from '@mantine/hooks';
+import dayjs from 'dayjs';
 import { postcodeValidator } from 'postcode-validator';
 
 import { BaseButton } from '@/components/base-button';
@@ -19,6 +14,8 @@ import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { Spoiler } from '@/components/spoiler';
 import { createCustomer } from '@/lib/commerstools/customer-creator';
+import { addNotification } from '@/utils/show-notification';
+import { validatePassword } from '@/utils/validate-password';
 
 import classes from './registration-page.module.css';
 
@@ -61,7 +58,7 @@ const transformCountryIntoCountryCode = (country: string): string => {
     case 'United States':
       return 'US';
     default:
-      throw new Error(`Unexpected country: ${country}`);
+      return '';
   }
 };
 
@@ -86,6 +83,8 @@ const RegistrationPage: FC = () => {
       confirmPassword: '',
       email: '',
       firstName: '',
+      isDefaultBillingAddress: false,
+      isDefaultShippingAddress: false,
       isSameAddress: false,
       lastName: '',
       password: '',
@@ -167,22 +166,26 @@ const RegistrationPage: FC = () => {
       ],
       billingAddresses: [1],
       dateOfBirth: values.birthday,
-      defaultBillingAddress: 1,
-      defaultShippingAddress: 0,
+      defaultBillingAddress: values.isDefaultBillingAddress ? 1 : undefined,
+      defaultShippingAddress: values.isDefaultShippingAddress ? 0 : undefined,
       email: values.email,
       firstName: values.firstName,
       lastName: values.lastName,
       password: values.password,
       shippingAddresses: [0],
     })
-      .then(console.log)
-      .catch(console.error);
+      .then(() => {
+        addNotification({ message: 'You have successfully created an account.', title: 'Account created' });
+      })
+      .catch((error) => {
+        addNotification({ message: `${error}`, title: 'Error', type: 'error' });
+      });
   };
 
   return (
-    <Container className={classes.container} mx="auto" w={360}>
+    <Container className={classes.container} mx="auto" p={16} size="xs">
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Title mb={40} ta="center">
+        <Title mb="lg" ta="center">
           Sign Up
         </Title>
         <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
@@ -218,7 +221,8 @@ const RegistrationPage: FC = () => {
             error={isSameAddressProps.error}
             key={form.key('isSameAddress')}
             label="The shipping and billing addresses are the same"
-            mt="md"
+            mb="xs"
+            mt="xs"
             onBlur={isSameAddressProps.onBlur}
             onChange={(event) => {
               handleCheckbox(event);
@@ -252,6 +256,13 @@ const RegistrationPage: FC = () => {
             />
           </SimpleGrid>
         </Spoiler>
+        <Checkbox
+          key={form.key('isDefaultShippingAddress')}
+          label="Set as default address"
+          mb="lg"
+          mt="xs"
+          {...form.getInputProps('isDefaultShippingAddress')}
+        />
         <Spoiler forceFullyClosed={areBillingFieldsDisabled} header="Billing address">
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <CustomTextInput
@@ -286,14 +297,22 @@ const RegistrationPage: FC = () => {
             />
           </SimpleGrid>
         </Spoiler>
+        <Checkbox
+          key={form.key('isDefaultBillingAddress')}
+          label="Set as default address"
+          mt="xs"
+          {...form.getInputProps('isDefaultBillingAddress')}
+        />
         <BaseButton fullWidth mt="xl" type="submit">
           Sign Up
         </BaseButton>
       </form>
-      <Text c="dimmed" mt={5} size="sm" ta="center">
+      <Text c="dimmed" className={classes.text} mt={30} size="sm" ta="center">
         Already a member?{' '}
-        <Anchor component={Link} size="sm" to="/login">
-          Log in
+        <Anchor className={classes.anchor} component="button" size="sm">
+          <Link className={classes.authLink} to={'/login'}>
+            Log in
+          </Link>
         </Anchor>
       </Text>
     </Container>
