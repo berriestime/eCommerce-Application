@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Address } from '@commercetools/platform-sdk';
 import { Anchor, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
@@ -14,8 +15,11 @@ import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { createCustomer } from '@/lib/commerstools/customer-creator';
+import { AuthState } from '@/types/authState';
 import { addNotification } from '@/utils/show-notification';
 import { validatePassword } from '@/utils/validate-password';
+
+import { setAuthState } from '../auth/authSlice';
 
 import classes from './registration-page.module.css';
 
@@ -205,10 +209,20 @@ const RegistrationPage: FC = () => {
       .then(() => {
         addNotification({ message: 'You have successfully created an account.', title: 'Account created' });
       })
+      .then(() => {
+        changeAuthState();
+        navigate('../');
+      })
       .catch((error) => {
         addNotification({ message: `${error}`, title: 'Error', type: 'error' });
       });
   };
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const changeAuthState = (): { payload: AuthState; type: 'auth/setAuthState' } =>
+    dispatch(setAuthState('AUTHENTICATED'));
 
   return (
     <Container className={classes.container} mx="auto" p={16} size="xs">
