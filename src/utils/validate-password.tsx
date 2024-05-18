@@ -21,11 +21,11 @@ const validatePassword = (value: string): null | string => {
     return MESSAGE_PASSWORD_LENGTH_ERROR;
   }
 
-  if (!/(\w*[A-Z]\w*)/.test(value)) {
+  if (!/\p{Uppercase_Letter}/u.test(value)) {
     return MESSAGE_PASSWORD_CONTAIN_UPPERCASE;
   }
 
-  if (!/(\w*[a-z]\w*)/.test(value)) {
+  if (!/\p{Lowercase_Letter}/u.test(value)) {
     return MESSAGE_PASSWORD_CONTAIN_LOWERCASE;
   }
 
