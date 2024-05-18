@@ -227,7 +227,7 @@ const RegistrationPage: FC = () => {
   return (
     <Container className={classes.container} mx="auto" p={16} size="xs">
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Title className={classes.title} mt={'xl'} ta="center">
+        <Title className={classes.title} mb={30} mt={5} ta="center">
           Sign Up
         </Title>
         <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
@@ -253,12 +253,13 @@ const RegistrationPage: FC = () => {
           key={form.key('birthday')}
           label="Birthday"
           maxDate={TEN_YEARS_AGO}
+          mb={30}
           required
           {...form.getInputProps('birthday')}
         />
-        <Title mt={'xl'} order={2}>
+        <Text className={classes.textAddress} mb={20}>
           Shipping address
-        </Title>
+        </Text>
         <Checkbox
           checked={isSameAddressProps.checked}
           className={classes.text}
@@ -290,12 +291,14 @@ const RegistrationPage: FC = () => {
           <CustomTextInput
             key={form.key('shippingStreet')}
             label="Street"
+            mt={10}
             required
             {...form.getInputProps('shippingStreet')}
           />
           <CustomTextInput
             key={form.key('shippingCity')}
             label="City"
+            mt={10}
             required
             {...form.getInputProps('shippingCity')}
           />
@@ -307,9 +310,9 @@ const RegistrationPage: FC = () => {
             {...form.getInputProps('shippingPostalCode')}
           />
         </SimpleGrid>
-        <Title mt={'xl'} order={2}>
+        <Text className={classes.textAddress} mb={20} mt={30}>
           Billing address
-        </Title>
+        </Text>
         <Checkbox
           className={classes.text}
           color="rgba(243, 231, 228, 1)"
@@ -324,6 +327,7 @@ const RegistrationPage: FC = () => {
             disabled={areBillingFieldsDisabled}
             key={form.key('billingStreet')}
             label="Street"
+            mt={10}
             required={!areBillingFieldsDisabled}
             {...form.getInputProps('billingStreet')}
           />
@@ -331,6 +335,7 @@ const RegistrationPage: FC = () => {
             disabled={areBillingFieldsDisabled}
             key={form.key('billingCity')}
             label="City"
+            mt={10}
             required={!areBillingFieldsDisabled}
             {...form.getInputProps('billingCity')}
           />
@@ -350,11 +355,11 @@ const RegistrationPage: FC = () => {
             {...form.getInputProps('billingPostalCode')}
           />
         </SimpleGrid>
-        <BaseButton fullWidth mt="xl" type="submit">
+        <BaseButton fullWidth mb={30} mt={30} type="submit">
           Sign Up
         </BaseButton>
       </form>
-      <Text className={classes.text} mb={'lg'} mt={30} px={14} ta="center">
+      <Text className={classes.text} mb={15} px={14} ta="center">
         Already a member?{' '}
         <Anchor className={classes.anchor} component="button" ml={5}>
           <Link className={classes.authLink} to={'/login'}>

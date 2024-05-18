@@ -44,3 +44,7 @@
   color: var(--mantine-color-white);
   cursor: pointer;
 }
+
+.textAddress {
+  font-size: 1.25em;
+}
