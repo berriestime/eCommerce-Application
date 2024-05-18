@@ -36,8 +36,8 @@ interface CheckboxProps {
 }
 
 const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
-const TEN_YEARS_AGO = dayjs(new Date()).subtract(10, 'year').toDate();
-const TWENTY_YEARS_AGO = dayjs(new Date()).subtract(20, 'year').toDate();
+const ONE_HUNDRED_AND_THIRTY_YEARS_AGO = dayjs(new Date()).subtract(130, 'year').toDate();
+const TODAY = dayjs(new Date()).toDate();
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required');
 
 const noSpecialOrDigits =
@@ -248,12 +248,12 @@ const RegistrationPage: FC = () => {
           <CustomTextInput key={form.key('lastName')} label="Last Name" required {...form.getInputProps('lastName')} />
         </SimpleGrid>
         <CustomDateInput
-          defaultDate={TWENTY_YEARS_AGO}
           defaultLevel="decade"
           key={form.key('birthday')}
           label="Birthday"
-          maxDate={TEN_YEARS_AGO}
+          maxDate={TODAY}
           mb={30}
+          minDate={ONE_HUNDRED_AND_THIRTY_YEARS_AGO}
           required
           {...form.getInputProps('birthday')}
         />
