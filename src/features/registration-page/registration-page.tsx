@@ -302,7 +302,13 @@ const RegistrationPage: FC = () => {
             required
             {...form.getInputProps('shippingCity')}
           />
-          <CustomSelect label="Country" required {...form.getInputProps('shippingCountry')} data={COUNTRIES} />
+          <CustomSelect
+            label="Country"
+            required
+            searchable
+            {...form.getInputProps('shippingCountry')}
+            data={COUNTRIES}
+          />
           <CustomTextInput
             key={form.key('shippingPostalCode')}
             label="PostalCode"
