@@ -60,6 +60,7 @@ const CountrySelect = <K extends string, T extends Record<K, string>>({
 
         // @ts-expect-error FIXME(berriestime): for some reason TypeScript fails to infer type
         form.setFieldValue(field, val);
+        form.validate();
       }}
       store={countryCombobox}
     >
@@ -83,7 +84,6 @@ const CountrySelect = <K extends string, T extends Record<K, string>>({
             countryCombobox.openDropdown();
             onFocus?.(event);
           }}
-          // placeholder="Pick value or type anything"
           required={required}
           value={countryValue}
         />

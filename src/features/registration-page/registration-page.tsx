@@ -12,7 +12,6 @@ import { COUNTRIES, CountrySelect } from '@/components/country-select';
 import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
-import { Spoiler } from '@/components/spoiler';
 import { createCustomer } from '@/lib/commerstools/customer-creator';
 import { addNotification } from '@/utils/show-notification';
 import { validatePassword } from '@/utils/validate-password';
@@ -211,109 +210,101 @@ const RegistrationPage: FC = () => {
           key={form.key('birthday')}
           label="Birthday"
           maxDate={TEN_YEARS_AGO}
-          mb={50}
           required
           {...form.getInputProps('birthday')}
         />
-        <Spoiler header="Shipping address" initiallyOpen={true}>
-          <Checkbox
-            checked={isSameAddressProps.checked}
-            className={classes.text}
-            color="rgba(243, 231, 228, 1)"
-            defaultValue={isSameAddressProps.defaultValue}
-            error={isSameAddressProps.error}
-            key={form.key('isSameAddress')}
-            label="The shipping and billing addresses are the same"
-            mb={30}
-            mt={10}
-            onBlur={isSameAddressProps.onBlur}
-            onChange={(event) => {
-              handleCheckbox(event);
-              isSameAddressProps.onChange?.(event);
-            }}
-            onFocus={isSameAddressProps.onFocus}
-            value={isSameAddressProps.value}
-            variant="outline"
-          />
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>
-            <CustomTextInput
-              key={form.key('shippingStreet')}
-              label="Street"
-              // placeholder="15329 Huston 21st"
-              required
-              {...form.getInputProps('shippingStreet')}
-            />
-            <CustomTextInput
-              key={form.key('shippingCity')}
-              label="City"
-              // placeholder="London"
-              required
-              {...form.getInputProps('shippingCity')}
-            />
-            <CountrySelect field="shippingCountry" form={form} required />
-            <CustomTextInput
-              key={form.key('shippingPostalCode')}
-              label="PostalCode"
-              // placeholder="01234"
-              required
-              {...form.getInputProps('shippingPostalCode')}
-            />
-          </SimpleGrid>
-        </Spoiler>
+        <Title mt={'xl'} order={2}>
+          Shipping address
+        </Title>
+        <Checkbox
+          checked={isSameAddressProps.checked}
+          className={classes.text}
+          color="rgba(243, 231, 228, 1)"
+          defaultValue={isSameAddressProps.defaultValue}
+          error={isSameAddressProps.error}
+          key={form.key('isSameAddress')}
+          label="The shipping and billing addresses are the same"
+          my={'sm'}
+          onBlur={isSameAddressProps.onBlur}
+          onChange={(event) => {
+            handleCheckbox(event);
+            isSameAddressProps.onChange?.(event);
+          }}
+          onFocus={isSameAddressProps.onFocus}
+          value={isSameAddressProps.value}
+          variant="outline"
+        />
         <Checkbox
           className={classes.text}
           color="rgba(243, 231, 228, 1)"
           key={form.key('isDefaultShippingAddress')}
           label="Set as default address"
-          mb={50}
-          mt="xs"
+          my={'sm'}
           variant="outline"
           {...form.getInputProps('isDefaultShippingAddress')}
         />
-        <Spoiler forceFullyClosed={areBillingFieldsDisabled} header="Billing address">
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>
-            <CustomTextInput
-              disabled={areBillingFieldsDisabled}
-              key={form.key('billingStreet')}
-              label="Street"
-              // placeholder="15329 Huston 21st"
-              required={!areBillingFieldsDisabled}
-              {...form.getInputProps('billingStreet')}
-            />
-            <CustomTextInput
-              disabled={areBillingFieldsDisabled}
-              key={form.key('billingCity')}
-              label="City"
-              // placeholder="London"
-              required={!areBillingFieldsDisabled}
-              {...form.getInputProps('billingCity')}
-            />
-            <CountrySelect
-              disabled={areBillingFieldsDisabled}
-              field="billingCountry"
-              form={form}
-              required={!areBillingFieldsDisabled}
-            />
-            <CustomTextInput
-              disabled={areBillingFieldsDisabled}
-              key={form.key('billingPostalCode')}
-              label="PostalCode"
-              // placeholder="01234"
-              required={!areBillingFieldsDisabled}
-              {...form.getInputProps('billingPostalCode')}
-            />
-          </SimpleGrid>
-        </Spoiler>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <CustomTextInput
+            key={form.key('shippingStreet')}
+            label="Street"
+            required
+            {...form.getInputProps('shippingStreet')}
+          />
+          <CustomTextInput
+            key={form.key('shippingCity')}
+            label="City"
+            required
+            {...form.getInputProps('shippingCity')}
+          />
+          <CountrySelect field="shippingCountry" form={form} required />
+          <CustomTextInput
+            key={form.key('shippingPostalCode')}
+            label="PostalCode"
+            required
+            {...form.getInputProps('shippingPostalCode')}
+          />
+        </SimpleGrid>
+        <Title mt={'xl'} order={2}>
+          Billing address
+        </Title>
         <Checkbox
           className={classes.text}
           color="rgba(243, 231, 228, 1)"
           key={form.key('isDefaultBillingAddress')}
           label="Set as default address"
-          mb={50}
-          mt="xs"
+          my={'sm'}
           variant="outline"
           {...form.getInputProps('isDefaultBillingAddress')}
         />
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <CustomTextInput
+            disabled={areBillingFieldsDisabled}
+            key={form.key('billingStreet')}
+            label="Street"
+            required={!areBillingFieldsDisabled}
+            {...form.getInputProps('billingStreet')}
+          />
+          <CustomTextInput
+            disabled={areBillingFieldsDisabled}
+            key={form.key('billingCity')}
+            label="City"
+            required={!areBillingFieldsDisabled}
+            {...form.getInputProps('billingCity')}
+          />
+          <CountrySelect
+            disabled={areBillingFieldsDisabled}
+            field="billingCountry"
+            form={form}
+            required={!areBillingFieldsDisabled}
+          />
+          <CustomTextInput
+            disabled={areBillingFieldsDisabled}
+            key={form.key('billingPostalCode')}
+            label="PostalCode"
+            required={!areBillingFieldsDisabled}
+            {...form.getInputProps('billingPostalCode')}
+          />
+        </SimpleGrid>
         <BaseButton fullWidth mt="xl" type="submit">
           Sign Up
         </BaseButton>
