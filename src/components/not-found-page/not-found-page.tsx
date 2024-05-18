@@ -30,8 +30,10 @@ const NotFoundPage: FC = () => {
                 to another URL.
               </Text>
 
-              <Link to="/">
-                <BaseButton size="md">Get back to home page</BaseButton>
+              <Link className={classes.button} to="/">
+                <BaseButton fullWidth size="md">
+                  Get back to home page
+                </BaseButton>
               </Link>
             </div>
           </SimpleGrid>

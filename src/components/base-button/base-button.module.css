@@ -4,11 +4,6 @@
   background-clip: padding-box;
   font-weight: 400;
   transition: all 0.3s linear;
-
-  @media (max-width: 767px) {
-    width: 100%;
-    min-width: 100%;
-  }
 }
 
 .control:hover {
