@@ -11,9 +11,7 @@ const SecondHero = (): JSX.Element => {
   return (
     <Hero>
       <Container className={clsx(classes.container, classes.secondHero)} size="md">
-        <Text c="white" className={clsx(classes.text, classes.textSize)}>
-          Illuminate
-        </Text>
+        <Text className={clsx(classes.text, classes.textSize)}>Illuminate</Text>
 
         <Title className={classes.title}>YOUR SPACE</Title>
 

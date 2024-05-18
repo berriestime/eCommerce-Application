@@ -20,7 +20,7 @@ const Footer: FC = () => {
           Created and developed by the The Redux Rangers team for RSSchool
         </Text>
 
-        <Text c="dimmed" size="md">
+        <Text c="dimmed" className={classes.year} size="md">
           2024
         </Text>
       </Group>

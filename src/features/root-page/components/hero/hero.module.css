@@ -33,7 +33,7 @@
 }
 
 .title {
-  color: var(--mantine-color-white);
+  color: #f3e7e4;
   font-size: 40px;
   font-weight: 300;
   line-height: 1.1;
@@ -57,6 +57,7 @@
 }
 
 .text {
+  color: #f3e7e4;
   @media (max-width: 900px) {
     margin-left: calc(var(--mantine-spacing-xl) * 1.5);
   }
@@ -66,7 +67,7 @@
   margin-left: 3.5rem;
   text-decoration: none;
   position: relative;
-  color: #fff;
+  color: #f3e7e4;
   transition: all 0.3s ease;
 
   @media (max-width: 900px) {

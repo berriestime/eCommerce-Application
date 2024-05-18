@@ -6,7 +6,7 @@
 .card .title {
   font-size: 16px;
   font-weight: 300;
-  color: var(--mantine-color-white);
+  color: #f3e7e4;
   transition: all 0.5s linear;
 }
 
@@ -30,6 +30,8 @@
   justify-content: center;
   border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
   position: relative;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .badge {
@@ -41,6 +43,7 @@
   font-size: 16px;
   padding-top: 4px;
   font-weight: 300;
+  color: #f3e7e4;
 }
 
 .price {

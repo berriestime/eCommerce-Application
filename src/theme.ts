@@ -9,7 +9,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
     return {
       background: 'transparent',
       border: `${rem(1)} solid transparent`,
-      color: '#ffffff',
+      color: '#F3E7E4',
       hover: 'transparent',
     };
   }

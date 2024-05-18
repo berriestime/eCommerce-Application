@@ -1,6 +1,6 @@
 import type { FC, ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { Box, Burger, Divider, Drawer, Group, ScrollArea, UnstyledButton, rem } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
@@ -22,6 +22,7 @@ import classes from './header.module.css';
 
 const Header: FC = () => {
   const authData = useSelector((state: RootState) => state.auth.authState);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const isAuth = authData === 'AUTHENTICATED';
@@ -128,6 +129,7 @@ const Header: FC = () => {
         submit={() => {
           dispatch(setAuthState('UNAUTHENTICATED'));
           logoutUser({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+          navigate('../');
         }}
       />
     </Box>
