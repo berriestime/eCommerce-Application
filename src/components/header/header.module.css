@@ -126,3 +126,7 @@
   align-items: flex-end;
   gap: 4px;
 }
+
+.drawer .link {
+  margin: 1.5rem auto;
+}
