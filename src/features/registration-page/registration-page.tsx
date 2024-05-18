@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Address } from '@commercetools/platform-sdk';
-import { Anchor, Checkbox, Container, Select, SimpleGrid, Text, Title } from '@mantine/core';
+import { Anchor, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
 import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -11,6 +11,7 @@ import { postcodeValidator } from 'postcode-validator';
 import { BaseButton } from '@/components/base-button';
 import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
+import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { createCustomer } from '@/lib/commerstools/customer-creator';
 import { addNotification } from '@/utils/show-notification';
@@ -284,7 +285,7 @@ const RegistrationPage: FC = () => {
             required
             {...form.getInputProps('shippingCity')}
           />
-          <Select label="Country" required {...form.getInputProps('shippingCountry')} data={COUNTRIES} />
+          <CustomSelect label="Country" required {...form.getInputProps('shippingCountry')} data={COUNTRIES} />
           <CustomTextInput
             key={form.key('shippingPostalCode')}
             label="PostalCode"
@@ -319,7 +320,8 @@ const RegistrationPage: FC = () => {
             required={!areBillingFieldsDisabled}
             {...form.getInputProps('billingCity')}
           />
-          <Select
+          <CustomSelect
+            disabled={areBillingFieldsDisabled}
             label="Country"
             required={!areBillingFieldsDisabled}
             {...form.getInputProps('billingCountry')}
