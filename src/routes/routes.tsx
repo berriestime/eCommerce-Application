@@ -1,8 +1,11 @@
+import { Link } from 'react-router-dom';
+
 import { Layout } from '@/components/layout';
 
 import { AuthRouteGuard } from './AuthRouteGuard';
 import {
   CartPage,
+  CatalogPage,
   CategoryPage,
   LoginPage,
   NotFoundPage,
@@ -45,15 +48,40 @@ export const routes = [
         path: 'dashboard',
       },
       {
-        children: [
-          {
-            element: <ProductPage />,
-            path: 'catalog/:productId',
-          },
-        ],
-        element: <CategoryPage />,
+        element: <CatalogPage />,
+        handle: {
+          crumb: () => <span key="1">Catalog</span>,
+        },
         path: 'catalog',
       },
+      {
+        element: <CategoryPage />,
+        handle: {
+          crumb: () => [
+            <Link key="1" to="/catalog">
+              Catalog
+            </Link>,
+            <span key="2">Category</span>,
+          ],
+        },
+        path: '/catalog/:categoryId',
+      },
+      {
+        element: <ProductPage />,
+        handle: {
+          crumb: () => [
+            <Link key="1" to="/catalog">
+              Catalog
+            </Link>,
+            <Link key="2" to="/catalog/33">
+              Category
+            </Link>,
+            <span key="3">Product</span>,
+          ],
+        },
+        path: '/catalog/:categoryId/:productId',
+      },
+
       {
         element: <TeamPage />,
         path: 'team',
