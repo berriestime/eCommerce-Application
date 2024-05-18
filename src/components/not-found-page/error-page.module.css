@@ -25,13 +25,16 @@
   font-weight: 300;
   font-size: 20px;
   text-transform: uppercase;
-  font-family:
-    Greycliff CF,
-    var(--mantine-font-family);
+  color: #f3e7e4;
 
   @media (max-width: 767px) {
     font-size: rem(20px);
   }
+}
+
+.message {
+  font-size: 16px;
+  color: #aa9f9c;
 }
 
 .error {

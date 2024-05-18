@@ -1,5 +1,5 @@
 .control {
-  border-image: linear-gradient(45deg, rgb(255, 255, 255), rgb(245, 245, 241));
+  border-image: linear-gradient(45deg, rgb(243, 231, 228), rgb(243, 231, 228));
   border-image-slice: 1;
   background-clip: padding-box;
   font-weight: 400;

@@ -6,7 +6,7 @@
 .card .title {
   font-size: 16px;
   font-weight: 300;
-  color: var(--mantine-color-white);
+  color: #f3e7e4;
   transition: all 0.5s linear;
 }
 
@@ -43,6 +43,7 @@
   font-size: 16px;
   padding-top: 4px;
   font-weight: 300;
+  color: #f3e7e4;
 }
 
 .price {

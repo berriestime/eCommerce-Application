@@ -25,7 +25,7 @@ const NotFoundPage: FC = () => {
 
             <div className={classes.text}>
               <Title className={classes.title}>Something is not right...</Title>
-              <Text c="dimmed" size="lg">
+              <Text className={classes.message} size="lg">
                 Page you are trying to open was not found. You may have mistyped the address, or the page has been moved
                 to another URL.
               </Text>

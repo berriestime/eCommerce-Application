@@ -58,6 +58,7 @@
   font-weight: 500;
   font-size: var(--mantine-font-size-md);
   transition: all 0.3s ease;
+  color: #f3e7e4;
 
   @media (max-width: 1200px) {
     padding-left: 0.5rem;
