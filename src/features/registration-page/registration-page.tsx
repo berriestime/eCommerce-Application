@@ -1,14 +1,14 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Anchor, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
+import { Address } from '@commercetools/platform-sdk';
+import { Anchor, Checkbox, Container, Select, SimpleGrid, Text, Title } from '@mantine/core';
 import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { postcodeValidator } from 'postcode-validator';
 
 import { BaseButton } from '@/components/base-button';
-import { COUNTRIES, CountrySelect } from '@/components/country-select';
 import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
@@ -30,6 +30,7 @@ interface CheckboxProps {
   value?: string;
 }
 
+const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
 const TEN_YEARS_AGO = dayjs(new Date()).subtract(10, 'year').toDate();
 const TWENTY_YEARS_AGO = dayjs(new Date()).subtract(20, 'year').toDate();
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required');
@@ -60,6 +61,15 @@ const transformCountryIntoCountryCode = (country: string): string => {
       return '';
   }
 };
+
+const wrapSameAddressCheck =
+  <T extends { isSameAddress: boolean }>(cb: (value: string, values: T) => null | string) =>
+  (value: string, values: T) => {
+    if (values.isSameAddress) {
+      return null;
+    }
+    return cb(value, values);
+  };
 
 const isProperPostcode =
   <K extends string, T extends Record<K, string>>(countryField: K) =>
@@ -92,14 +102,26 @@ const RegistrationPage: FC = () => {
       shippingPostalCode: '',
       shippingStreet: '',
     },
-    mode: 'uncontrolled',
+    mode: 'controlled',
 
-    onValuesChange: (values) => {
+    onValuesChange: (values, previous) => {
       if (values.isSameAddress) {
         form.setFieldValue('billingCity', values.shippingCity);
         form.setFieldValue('billingCountry', values.shippingCountry);
         form.setFieldValue('billingPostalCode', values.shippingPostalCode);
         form.setFieldValue('billingStreet', values.shippingStreet);
+      }
+      if (previous.shippingCountry !== values.shippingCountry && form.isDirty('shippingPostalCode')) {
+        const { hasError } = form.validateField('shippingPostalCode');
+        if (!hasError) {
+          form.setFieldError('shippingPostalCode', '');
+        }
+      }
+      if (previous.billingCountry !== values.billingCountry && form.isDirty('billingPostalCode')) {
+        const { hasError } = form.validateField('billingPostalCode');
+        if (!hasError) {
+          form.setFieldError('billingPostalCode', '');
+        }
       }
     },
     transformValues: (values) => {
@@ -111,10 +133,10 @@ const RegistrationPage: FC = () => {
       };
     },
     validate: {
-      billingCity: noSpecialOrDigits('City must not contain special characters'),
-      billingCountry: isProperCountry,
-      billingPostalCode: isProperPostcode('billingCountry'),
-      billingStreet: notEmpty,
+      billingCity: wrapSameAddressCheck(noSpecialOrDigits('City must not contain special characters')),
+      billingCountry: wrapSameAddressCheck(isProperCountry),
+      billingPostalCode: wrapSameAddressCheck(isProperPostcode('billingCountry')),
+      billingStreet: wrapSameAddressCheck(notEmpty),
       confirmPassword: matchesPassword,
       email: isEmail('Invalid email'),
       firstName: noSpecialOrDigits('No special characters'),
@@ -134,44 +156,50 @@ const RegistrationPage: FC = () => {
     const checked = event.target.checked;
     if (checked) {
       disableBillingFields();
-      form.setFieldValue('billingCity', '');
-      form.setFieldValue('billingCountry', '');
-      form.setFieldValue('billingPostalCode', '');
-      form.setFieldValue('billingStreet', '');
-      form.setFieldError('billingCity', undefined);
-      form.setFieldError('billingCountry', undefined);
-      form.setFieldError('billingPostalCode', undefined);
-      form.setFieldError('billingStreet', undefined);
     } else {
       enableBillingFields();
     }
   };
 
   const handleSubmit = (values: typeof form.values): void => {
-    createCustomer({
-      addresses: [
+    const getAddresses = (values: typeof form.values): Address[] => {
+      const addresses = [
         {
           additionalStreetInfo: values.shippingStreet,
           city: values.shippingCity,
           country: values.shippingCountry,
           postalCode: values.shippingPostalCode,
         },
-        {
+      ];
+      if (!values.isSameAddress) {
+        addresses.push({
           additionalStreetInfo: values.billingStreet,
           city: values.billingCity,
           country: values.billingCountry,
           postalCode: values.billingPostalCode,
-        },
-      ],
-      billingAddresses: [1],
+        });
+      }
+      return addresses;
+    };
+    const addresses = getAddresses(values);
+
+    const shippingAddressesId = 0;
+    const billingAddressesId = values.isSameAddress ? 0 : 1;
+
+    const defaultBillingAddress = values.isDefaultBillingAddress ? billingAddressesId : undefined;
+    const defaultShippingAddress = values.isDefaultShippingAddress ? shippingAddressesId : undefined;
+
+    createCustomer({
+      addresses,
+      billingAddresses: [billingAddressesId],
       dateOfBirth: values.birthday,
-      defaultBillingAddress: values.isDefaultBillingAddress ? 1 : undefined,
-      defaultShippingAddress: values.isDefaultShippingAddress ? 0 : undefined,
+      defaultBillingAddress,
+      defaultShippingAddress,
       email: values.email,
       firstName: values.firstName,
       lastName: values.lastName,
       password: values.password,
-      shippingAddresses: [0],
+      shippingAddresses: [shippingAddressesId],
     })
       .then(() => {
         addNotification({ message: 'You have successfully created an account.', title: 'Account created' });
@@ -256,7 +284,7 @@ const RegistrationPage: FC = () => {
             required
             {...form.getInputProps('shippingCity')}
           />
-          <CountrySelect field="shippingCountry" form={form} required />
+          <Select label="Country" required {...form.getInputProps('shippingCountry')} data={COUNTRIES} />
           <CustomTextInput
             key={form.key('shippingPostalCode')}
             label="PostalCode"
@@ -291,11 +319,12 @@ const RegistrationPage: FC = () => {
             required={!areBillingFieldsDisabled}
             {...form.getInputProps('billingCity')}
           />
-          <CountrySelect
-            disabled={areBillingFieldsDisabled}
-            field="billingCountry"
-            form={form}
+          <Select
+            label="Country"
             required={!areBillingFieldsDisabled}
+            {...form.getInputProps('billingCountry')}
+            data={COUNTRIES}
+            searchable
           />
           <CustomTextInput
             disabled={areBillingFieldsDisabled}
