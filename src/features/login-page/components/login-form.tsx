@@ -43,7 +43,7 @@ const LoginForm: FC = () => {
 
   return (
     <>
-      <LoadingOverlay loaderProps={{ type: 'oval' }} visible={visible} zIndex="2000" />
+      <LoadingOverlay loaderProps={{ type: 'oval' }} pos="fixed" visible={visible} zIndex="2000" />
       <form
         onSubmit={form.onSubmit((customer) => {
           toggle();
@@ -53,7 +53,7 @@ const LoginForm: FC = () => {
               navigate('/');
             })
             .catch((err) => {
-              console.error('Login failed', err);
+              console.warn('Login failed', err);
               addNotification({
                 message: 'Customer with this username and password was not found',
                 title: 'Sign In Error',
