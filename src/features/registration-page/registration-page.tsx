@@ -36,8 +36,8 @@ interface CheckboxProps {
 }
 
 const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
+const TODAY = new Date();
 const ONE_HUNDRED_AND_THIRTY_YEARS_AGO = dayjs(new Date()).subtract(130, 'year').toDate();
-const TODAY = dayjs(new Date()).toDate();
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required');
 
 const noSpecialOrDigits =
@@ -142,6 +142,9 @@ const RegistrationPage: FC = () => {
       billingCountry: wrapSameAddressCheck(isProperCountry),
       billingPostalCode: wrapSameAddressCheck(isProperPostcode('billingCountry')),
       billingStreet: wrapSameAddressCheck(notEmpty),
+      birthday: (value) => {
+        return dayjs(value).isAfter(dayjs().subtract(18, 'years')) ? 'Must be at least 18 years old' : null;
+      },
       confirmPassword: matchesPassword,
       email: isEmail('Invalid email'),
       firstName: noSpecialOrDigits('No special characters'),
