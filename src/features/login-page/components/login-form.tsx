@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { LoadingOverlay } from '@mantine/core';
 import { isEmail, useForm } from '@mantine/form';
 
 import { BaseButton } from '@/components/base-button';
@@ -34,33 +35,43 @@ const LoginForm: FC = () => {
   const changeAuthState = (): { payload: AuthState; type: 'auth/setAuthState' } =>
     dispatch(setAuthState('AUTHENTICATED'));
 
+  const [visible, setVisible] = useState(false);
+
+  const toggle = (): void => {
+    setVisible((prev) => !prev);
+  };
+
   return (
-    <form
-      onSubmit={form.onSubmit((customer) => {
-        postCustomerLogin(customer)
-          .then(
-            function resolve() {
+    <>
+      <LoadingOverlay loaderProps={{ type: 'oval' }} pos="fixed" visible={visible} zIndex="2000" />
+      <form
+        onSubmit={form.onSubmit((customer) => {
+          toggle();
+          postCustomerLogin(customer)
+            .then(() => {
               changeAuthState();
-              navigate('../');
-            },
-            function reject(err) {
-              console.log(err);
+              navigate('/');
+            })
+            .catch((err) => {
+              console.warn('Login failed', err);
               addNotification({
                 message: 'Customer with this username and password was not found',
                 title: 'Sign In Error',
                 type: 'error',
               });
-            },
-          )
-          .catch(console.error);
-      })}
-    >
-      <CustomTextInput label="Email" required {...form.getInputProps('email')}></CustomTextInput>
-      <CustomPasswordInput label="Password" required {...form.getInputProps('password')}></CustomPasswordInput>
-      <BaseButton fullWidth mt={25} type="submit">
-        Sign in
-      </BaseButton>
-    </form>
+            })
+            .finally(() => {
+              toggle();
+            });
+        })}
+      >
+        <CustomTextInput label="Email" required {...form.getInputProps('email')}></CustomTextInput>
+        <CustomPasswordInput label="Password" required {...form.getInputProps('password')}></CustomPasswordInput>
+        <BaseButton fullWidth mt={25} type="submit">
+          Sign in
+        </BaseButton>
+      </form>
+    </>
   );
 };
 

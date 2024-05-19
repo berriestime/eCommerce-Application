@@ -38,3 +38,7 @@ main {
 .mantine-AppShell-root {
   min-height: 100vh;
 }
+
+.mantine-LoadingOverlay-overlay {
+  background-color: #05050580;
+}
