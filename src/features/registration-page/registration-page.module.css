@@ -1,10 +1,17 @@
 .container {
   display: block;
-  padding: 0 0 2rem 0;
+}
+
+.title {
+  color: var(--mantine-color-white);
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.1;
 }
 
 .text {
-  color: #f3e7e4;
+  color: var(--mantine-color-white);
+  font-size: 16px;
 }
 
 .authLink {
@@ -31,4 +38,13 @@
 
 .anchor:hover {
   text-decoration: none;
+}
+
+.checkbox {
+  color: var(--mantine-color-white);
+  cursor: pointer;
+}
+
+.textAddress {
+  font-size: 1.25em;
 }

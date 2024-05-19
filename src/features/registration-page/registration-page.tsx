@@ -1,6 +1,8 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
+import { Address } from '@commercetools/platform-sdk';
 import { Anchor, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
 import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
@@ -8,14 +10,17 @@ import dayjs from 'dayjs';
 import { postcodeValidator } from 'postcode-validator';
 
 import { BaseButton } from '@/components/base-button';
-import { COUNTRIES, CountrySelect } from '@/components/country-select';
 import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
+import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
-import { Spoiler } from '@/components/spoiler';
 import { createCustomer } from '@/lib/commerstools/customer-creator';
+import { AuthState } from '@/types/authState';
 import { addNotification } from '@/utils/show-notification';
 import { validatePassword } from '@/utils/validate-password';
+
+import { setAuthState } from '../auth/authSlice';
+import { postCustomerLogin } from '../login-page/api';
 
 import classes from './registration-page.module.css';
 
@@ -31,8 +36,9 @@ interface CheckboxProps {
   value?: string;
 }
 
-const TEN_YEARS_AGO = dayjs(new Date()).subtract(10, 'year').toDate();
-const TWENTY_YEARS_AGO = dayjs(new Date()).subtract(20, 'year').toDate();
+const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
+const TODAY = new Date();
+const ONE_HUNDRED_AND_THIRTY_YEARS_AGO = dayjs(new Date()).subtract(130, 'year').toDate();
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required');
 
 const noSpecialOrDigits =
@@ -61,6 +67,15 @@ const transformCountryIntoCountryCode = (country: string): string => {
       return '';
   }
 };
+
+const wrapSameAddressCheck =
+  <T extends { isSameAddress: boolean }>(cb: (value: string, values: T) => null | string) =>
+  (value: string, values: T) => {
+    if (values.isSameAddress) {
+      return null;
+    }
+    return cb(value, values);
+  };
 
 const isProperPostcode =
   <K extends string, T extends Record<K, string>>(countryField: K) =>
@@ -93,14 +108,26 @@ const RegistrationPage: FC = () => {
       shippingPostalCode: '',
       shippingStreet: '',
     },
-    mode: 'uncontrolled',
+    mode: 'controlled',
 
-    onValuesChange: (values) => {
+    onValuesChange: (values, previous) => {
       if (values.isSameAddress) {
         form.setFieldValue('billingCity', values.shippingCity);
         form.setFieldValue('billingCountry', values.shippingCountry);
         form.setFieldValue('billingPostalCode', values.shippingPostalCode);
         form.setFieldValue('billingStreet', values.shippingStreet);
+      }
+      if (previous.shippingCountry !== values.shippingCountry && form.isDirty('shippingPostalCode')) {
+        const { hasError } = form.validateField('shippingPostalCode');
+        if (!hasError) {
+          form.setFieldError('shippingPostalCode', '');
+        }
+      }
+      if (previous.billingCountry !== values.billingCountry && form.isDirty('billingPostalCode')) {
+        const { hasError } = form.validateField('billingPostalCode');
+        if (!hasError) {
+          form.setFieldError('billingPostalCode', '');
+        }
       }
     },
     transformValues: (values) => {
@@ -112,10 +139,13 @@ const RegistrationPage: FC = () => {
       };
     },
     validate: {
-      billingCity: noSpecialOrDigits('City must not contain special characters'),
-      billingCountry: isProperCountry,
-      billingPostalCode: isProperPostcode('billingCountry'),
-      billingStreet: notEmpty,
+      billingCity: wrapSameAddressCheck(noSpecialOrDigits('City must not contain special characters')),
+      billingCountry: wrapSameAddressCheck(isProperCountry),
+      billingPostalCode: wrapSameAddressCheck(isProperPostcode('billingCountry')),
+      billingStreet: wrapSameAddressCheck(notEmpty),
+      birthday: (value) => {
+        return dayjs(value).isAfter(dayjs().subtract(18, 'years')) ? 'Must be at least 18 years old' : null;
+      },
       confirmPassword: matchesPassword,
       email: isEmail('Invalid email'),
       firstName: noSpecialOrDigits('No special characters'),
@@ -135,57 +165,76 @@ const RegistrationPage: FC = () => {
     const checked = event.target.checked;
     if (checked) {
       disableBillingFields();
-      form.setFieldValue('billingCity', '');
-      form.setFieldValue('billingCountry', '');
-      form.setFieldValue('billingPostalCode', '');
-      form.setFieldValue('billingStreet', '');
-      form.setFieldError('billingCity', undefined);
-      form.setFieldError('billingCountry', undefined);
-      form.setFieldError('billingPostalCode', undefined);
-      form.setFieldError('billingStreet', undefined);
     } else {
       enableBillingFields();
     }
   };
 
   const handleSubmit = (values: typeof form.values): void => {
-    createCustomer({
-      addresses: [
+    const getAddresses = (values: typeof form.values): Address[] => {
+      const addresses = [
         {
           additionalStreetInfo: values.shippingStreet,
           city: values.shippingCity,
           country: values.shippingCountry,
           postalCode: values.shippingPostalCode,
         },
-        {
+      ];
+      if (!values.isSameAddress) {
+        addresses.push({
           additionalStreetInfo: values.billingStreet,
           city: values.billingCity,
           country: values.billingCountry,
           postalCode: values.billingPostalCode,
-        },
-      ],
-      billingAddresses: [1],
+        });
+      }
+      return addresses;
+    };
+    const addresses = getAddresses(values);
+
+    const shippingAddressesId = 0;
+    const billingAddressesId = values.isSameAddress ? 0 : 1;
+
+    const defaultBillingAddress = values.isDefaultBillingAddress ? billingAddressesId : undefined;
+    const defaultShippingAddress = values.isDefaultShippingAddress ? shippingAddressesId : undefined;
+
+    createCustomer({
+      addresses,
+      billingAddresses: [billingAddressesId],
       dateOfBirth: values.birthday,
-      defaultBillingAddress: values.isDefaultBillingAddress ? 1 : undefined,
-      defaultShippingAddress: values.isDefaultShippingAddress ? 0 : undefined,
+      defaultBillingAddress,
+      defaultShippingAddress,
       email: values.email,
       firstName: values.firstName,
       lastName: values.lastName,
       password: values.password,
-      shippingAddresses: [0],
+      shippingAddresses: [shippingAddressesId],
     })
       .then(() => {
         addNotification({ message: 'You have successfully created an account.', title: 'Account created' });
+      })
+      .then(() => {
+        return postCustomerLogin({ email: values.email, password: values.password });
+      })
+      .then(() => {
+        changeAuthState();
+        navigate('../');
       })
       .catch((error) => {
         addNotification({ message: `${error}`, title: 'Error', type: 'error' });
       });
   };
 
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const changeAuthState = (): { payload: AuthState; type: 'auth/setAuthState' } =>
+    dispatch(setAuthState('AUTHENTICATED'));
+
   return (
     <Container className={classes.container} mx="auto" p={16} size="xs">
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Title mb="lg" ta="center">
+        <Title className={classes.title} mb={50} mt={80} ta="center">
           Sign Up
         </Title>
         <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
@@ -206,110 +255,127 @@ const RegistrationPage: FC = () => {
           <CustomTextInput key={form.key('lastName')} label="Last Name" required {...form.getInputProps('lastName')} />
         </SimpleGrid>
         <CustomDateInput
-          defaultDate={TWENTY_YEARS_AGO}
           defaultLevel="decade"
           key={form.key('birthday')}
           label="Birthday"
-          maxDate={TEN_YEARS_AGO}
+          maxDate={TODAY}
+          mb={30}
+          minDate={ONE_HUNDRED_AND_THIRTY_YEARS_AGO}
           required
           {...form.getInputProps('birthday')}
         />
-        <Spoiler header="Shipping address" initiallyOpen={true}>
-          <Checkbox
-            checked={isSameAddressProps.checked}
-            defaultValue={isSameAddressProps.defaultValue}
-            error={isSameAddressProps.error}
-            key={form.key('isSameAddress')}
-            label="The shipping and billing addresses are the same"
-            mb="xs"
-            mt="xs"
-            onBlur={isSameAddressProps.onBlur}
-            onChange={(event) => {
-              handleCheckbox(event);
-              isSameAddressProps.onChange?.(event);
-            }}
-            onFocus={isSameAddressProps.onFocus}
-            value={isSameAddressProps.value}
-          />
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>
-            <CustomTextInput
-              key={form.key('shippingStreet')}
-              label="Street"
-              placeholder="15329 Huston 21st"
-              required
-              {...form.getInputProps('shippingStreet')}
-            />
-            <CustomTextInput
-              key={form.key('shippingCity')}
-              label="City"
-              placeholder="London"
-              required
-              {...form.getInputProps('shippingCity')}
-            />
-            <CountrySelect field="shippingCountry" form={form} required />
-            <CustomTextInput
-              key={form.key('shippingPostalCode')}
-              label="PostalCode"
-              placeholder="01234"
-              required
-              {...form.getInputProps('shippingPostalCode')}
-            />
-          </SimpleGrid>
-        </Spoiler>
+        <Text className={classes.textAddress} mb={20}>
+          Shipping address
+        </Text>
         <Checkbox
+          checked={isSameAddressProps.checked}
+          className={classes.text}
+          color="rgba(243, 231, 228, 1)"
+          defaultValue={isSameAddressProps.defaultValue}
+          error={isSameAddressProps.error}
+          key={form.key('isSameAddress')}
+          label="The shipping and billing addresses are the same"
+          my={'sm'}
+          onBlur={isSameAddressProps.onBlur}
+          onChange={(event) => {
+            handleCheckbox(event);
+            isSameAddressProps.onChange?.(event);
+          }}
+          onFocus={isSameAddressProps.onFocus}
+          value={isSameAddressProps.value}
+          variant="outline"
+        />
+        <Checkbox
+          className={classes.text}
+          color="rgba(243, 231, 228, 1)"
           key={form.key('isDefaultShippingAddress')}
           label="Set as default address"
-          mb="lg"
-          mt="xs"
+          mt={20}
+          my={'sm'}
+          variant="outline"
           {...form.getInputProps('isDefaultShippingAddress')}
         />
-        <Spoiler forceFullyClosed={areBillingFieldsDisabled} header="Billing address">
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>
-            <CustomTextInput
-              disabled={areBillingFieldsDisabled}
-              key={form.key('billingStreet')}
-              label="Street"
-              placeholder="15329 Huston 21st"
-              required={!areBillingFieldsDisabled}
-              {...form.getInputProps('billingStreet')}
-            />
-            <CustomTextInput
-              disabled={areBillingFieldsDisabled}
-              key={form.key('billingCity')}
-              label="City"
-              placeholder="London"
-              required={!areBillingFieldsDisabled}
-              {...form.getInputProps('billingCity')}
-            />
-            <CountrySelect
-              disabled={areBillingFieldsDisabled}
-              field="billingCountry"
-              form={form}
-              required={!areBillingFieldsDisabled}
-            />
-            <CustomTextInput
-              disabled={areBillingFieldsDisabled}
-              key={form.key('billingPostalCode')}
-              label="PostalCode"
-              placeholder="01234"
-              required={!areBillingFieldsDisabled}
-              {...form.getInputProps('billingPostalCode')}
-            />
-          </SimpleGrid>
-        </Spoiler>
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <CustomTextInput
+            key={form.key('shippingStreet')}
+            label="Street"
+            mt={10}
+            required
+            {...form.getInputProps('shippingStreet')}
+          />
+          <CustomTextInput
+            key={form.key('shippingCity')}
+            label="City"
+            mt={10}
+            required
+            {...form.getInputProps('shippingCity')}
+          />
+          <CustomSelect
+            label="Country"
+            required
+            searchable
+            {...form.getInputProps('shippingCountry')}
+            data={COUNTRIES}
+          />
+          <CustomTextInput
+            key={form.key('shippingPostalCode')}
+            label="PostalCode"
+            required
+            {...form.getInputProps('shippingPostalCode')}
+          />
+        </SimpleGrid>
+        <Text className={classes.textAddress} mb={20} mt={30}>
+          Billing address
+        </Text>
         <Checkbox
+          className={classes.text}
+          color="rgba(243, 231, 228, 1)"
           key={form.key('isDefaultBillingAddress')}
           label="Set as default address"
-          mt="xs"
+          my={'sm'}
+          variant="outline"
           {...form.getInputProps('isDefaultBillingAddress')}
         />
-        <BaseButton fullWidth mt="xl" type="submit">
+        <SimpleGrid cols={{ base: 1, sm: 2 }}>
+          <CustomTextInput
+            disabled={areBillingFieldsDisabled}
+            key={form.key('billingStreet')}
+            label="Street"
+            mt={10}
+            required={!areBillingFieldsDisabled}
+            {...form.getInputProps('billingStreet')}
+          />
+          <CustomTextInput
+            disabled={areBillingFieldsDisabled}
+            key={form.key('billingCity')}
+            label="City"
+            mt={10}
+            required={!areBillingFieldsDisabled}
+            {...form.getInputProps('billingCity')}
+          />
+          <CustomSelect
+            disabled={areBillingFieldsDisabled}
+            label="Country"
+            required={!areBillingFieldsDisabled}
+            {...form.getInputProps('billingCountry')}
+            data={COUNTRIES}
+            searchable
+          />
+          <CustomTextInput
+            disabled={areBillingFieldsDisabled}
+            key={form.key('billingPostalCode')}
+            label="PostalCode"
+            required={!areBillingFieldsDisabled}
+            {...form.getInputProps('billingPostalCode')}
+          />
+        </SimpleGrid>
+        <BaseButton fullWidth mb={40} mt={30} type="submit">
           Sign Up
         </BaseButton>
       </form>
-      <Text c="dimmed" className={classes.text} mt={30} size="sm" ta="center">
+      <Text className={classes.text} mb={80} px={14} ta="center">
         Already a member?{' '}
-        <Anchor className={classes.anchor} component="button" size="sm">
+        <Anchor className={classes.anchor} component="button" ml={5}>
           <Link className={classes.authLink} to={'/login'}>
             Log in
           </Link>

@@ -1,15 +1,12 @@
 import { LegacyRef, ReactElement, forwardRef } from 'react';
 
-import { TextInput, TextInputProps } from '@mantine/core';
+import { Select, SelectProps } from '@mantine/core';
 
-import classes from './custom-text-input.module.css';
+import classes from './custom-select.module.css';
 
-const CustomTextInput = forwardRef(function MyInput(
-  props: TextInputProps,
-  ref: LegacyRef<HTMLInputElement>,
-): ReactElement {
+const CustomSelect = forwardRef(function MyInput(props: SelectProps, ref: LegacyRef<HTMLInputElement>): ReactElement {
   return (
-    <TextInput
+    <Select
       {...props}
       classNames={{
         error: classes.error,
@@ -23,4 +20,4 @@ const CustomTextInput = forwardRef(function MyInput(
   );
 });
 
-export { CustomTextInput };
+export { CustomSelect };
