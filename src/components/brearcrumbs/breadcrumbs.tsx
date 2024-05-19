@@ -3,6 +3,8 @@ import { type UIMatch, useMatches } from 'react-router-dom';
 
 import { Breadcrumbs } from '@mantine/core';
 
+import classes from './breadcrumbs.module.css';
+
 interface Handle {
   crumb: (data: unknown) => React.ReactNode;
 }
@@ -16,5 +18,5 @@ export const BreadC = (): JSX.Element => {
     .filter((match): match is MatchWithHandle => Boolean(match.handle?.crumb))
     .map((match) => match.handle!.crumb(match.data));
 
-  return <Breadcrumbs>{crumbs}</Breadcrumbs>;
+  return <Breadcrumbs className={classes.bc}>{crumbs}</Breadcrumbs>;
 };
