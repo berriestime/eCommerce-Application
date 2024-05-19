@@ -1,11 +1,11 @@
 import type { FC } from 'react';
 
-import { BreadC } from '@/components/brearcrumbs/breadcrumbs';
+import { Breadcrumbs } from '@/components/brearcrumbs';
 
 const CatalogPage: FC = () => {
   return (
     <div>
-      <BreadC />
+      <Breadcrumbs />
       <h2>Store page</h2>
     </div>
   );
