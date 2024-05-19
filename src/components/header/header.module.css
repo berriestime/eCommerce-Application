@@ -54,11 +54,10 @@
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   text-decoration: none;
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  color: var(--mantine-color-bright);
   font-weight: 500;
   font-size: var(--mantine-font-size-md);
   transition: all 0.3s ease;
-  color: #f3e7e4;
 
   @media (max-width: 1200px) {
     padding-left: 0.5rem;
@@ -68,10 +67,6 @@
   @media (max-width: 767px) {
     height: rem(42px);
     width: 100%;
-  }
-
-  @mixin hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
   }
 }
 

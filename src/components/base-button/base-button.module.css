@@ -1,4 +1,12 @@
 .control {
+  border-image: linear-gradient(45deg, var(--mantine-color-bright), var(--mantine-color-bright));
+  border-image-slice: 1;
+  background-clip: padding-box;
+  font-weight: 400;
+  transition: all 0.3s linear;
+}
+
+.controlWhite {
   border-image: linear-gradient(45deg, rgb(243, 231, 228), rgb(243, 231, 228));
   border-image-slice: 1;
   background-clip: padding-box;
@@ -6,6 +14,7 @@
   transition: all 0.3s linear;
 }
 
+.controlWhite:hover,
 .control:hover {
   border-image: linear-gradient(45deg, #f51313, #ffc710);
   border-image-slice: 1;

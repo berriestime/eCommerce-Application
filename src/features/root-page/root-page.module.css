@@ -17,9 +17,9 @@
 
 .title {
   font-size: 20px;
-  color: #f3e7e4;
   font-weight: 300;
   padding-bottom: 32px;
+  color: var(--mantine-color-bright);
 }
 
 .text {

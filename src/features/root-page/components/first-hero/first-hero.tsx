@@ -8,6 +8,7 @@ import { BaseButton } from '@/components/base-button';
 import { Hero } from '../hero/hero';
 
 import classes from '../hero/hero.module.css';
+import btnClasses from '@/components/base-button/base-button.module.css';
 
 const FirstHero = (): JSX.Element => {
   return (
@@ -18,7 +19,7 @@ const FirstHero = (): JSX.Element => {
         </Title>
 
         <Link className={classes.control} to="/catalog">
-          <BaseButton mt="xl" size="md">
+          <BaseButton className={btnClasses.controlWhite} mt="xl" size="md">
             Shop Now
           </BaseButton>
         </Link>

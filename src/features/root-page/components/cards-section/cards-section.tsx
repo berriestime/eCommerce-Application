@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Carousel } from '@mantine/carousel';
-import { Box, SimpleGrid, rem } from '@mantine/core';
+import { Box, SimpleGrid, Text, rem } from '@mantine/core';
 import { clsx } from 'clsx';
 import Autoplay from 'embla-carousel-autoplay';
 
@@ -32,7 +32,9 @@ const CardsSection = (props: Info): JSX.Element => {
   return (
     <Box className={classes.container}>
       <h3 className={clsx(classes.title, classes.infoContent, { [classes.textPadding || '']: !text })}>{title}</h3>
-      <p className={clsx(classes.text, classes.infoContent, { [classes.textPadding || '']: text })}>{text}</p>
+      <Text c="bright" className={clsx(classes.text, classes.infoContent, { [classes.textPadding || '']: text })}>
+        {text}
+      </Text>
 
       <SimpleGrid className={cardClasses.cardsGap} cols={3} mt="md" visibleFrom="md">
         {productCards}

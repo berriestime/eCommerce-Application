@@ -26,13 +26,16 @@ const LogoutModal = ({ close, opened, submit }: LogoutModalProps): JSX.Element =
       <Modal.Content>
         <LoadingOverlay loaderProps={{ type: 'oval' }} visible={visible} zIndex="2000" />
         <Modal.Header className={classes.header}>
-          <Modal.Title className={classes.title}>Logout</Modal.Title>
+          <Modal.Title c="bright" className={classes.title}>
+            Logout
+          </Modal.Title>
           <Modal.CloseButton />
         </Modal.Header>
-        <Modal.Body className={classes.body}>
+        <Modal.Body c="bright" className={classes.body}>
           Are you sure you want to log out?
           <Group grow justify="center" mt="xl">
             <BaseButton
+              c="bright"
               onClick={() => {
                 toggle();
                 submit();

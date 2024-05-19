@@ -1,12 +1,11 @@
 .card {
-  background-color: var(--mantine-color-dark-7);
   height: 100%;
 }
 
 .card .title {
   font-size: 16px;
   font-weight: 300;
-  color: #f3e7e4;
+  color: var(--mantine-color-bright);
   transition: all 0.5s linear;
 }
 
@@ -43,7 +42,7 @@
   font-size: 16px;
   padding-top: 4px;
   font-weight: 300;
-  color: #f3e7e4;
+  color: var(--mantine-color-bright);
 }
 
 .price {

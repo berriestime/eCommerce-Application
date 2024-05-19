@@ -2,8 +2,8 @@
   width: 10px;
   height: 10px;
   display: inline-block;
-  border-bottom: 3px solid #f3e7e4;
-  border-right: 3px solid #f3e7e4;
+  border-bottom: 3px solid var(--mantine-color-bright);
+  border-right: 3px solid var(--mantine-color-bright);
   transform: rotate(45deg);
   transition: all 0.2s ease-in-out;
   margin-right: 1rem;

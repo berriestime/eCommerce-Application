@@ -2,7 +2,18 @@ import type { FC, ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { Box, Burger, Divider, Drawer, Group, ScrollArea, UnstyledButton, rem } from '@mantine/core';
+import {
+  Box,
+  Burger,
+  Button,
+  Divider,
+  Drawer,
+  Group,
+  ScrollArea,
+  UnstyledButton,
+  rem,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
@@ -21,6 +32,8 @@ import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import classes from './header.module.css';
 
 const Header: FC = () => {
+  const { setColorScheme } = useMantineColorScheme();
+
   const authData = useSelector((state: RootState) => state.auth.authState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -86,7 +99,7 @@ const Header: FC = () => {
   };
 
   return (
-    <Box className={classes.container}>
+    <Box bg="customBg" className={classes.container}>
       <Group h="100%" justify="space-between">
         <Logo />
 
@@ -95,7 +108,13 @@ const Header: FC = () => {
         </Group>
 
         <Group visibleFrom="sm">
-          {isAuth ? getItems(profile, classes.profileLink) : getItems(auth, classes.authLink)}
+          {isAuth ? getItems(profile, classes.profileLink) : getItems(auth, classes.authLink)}{' '}
+          <Button lightHidden onClick={() => setColorScheme('light')}>
+            Light
+          </Button>
+          <Button darkHidden onClick={() => setColorScheme('dark')}>
+            Dark
+          </Button>
         </Group>
 
         <Burger hiddenFrom="sm" onClick={toggleDrawer} opened={drawerOpened} />
