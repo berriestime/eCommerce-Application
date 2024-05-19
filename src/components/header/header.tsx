@@ -127,9 +127,9 @@ const Header: FC = () => {
         close={closeModal}
         opened={modalOpened}
         submit={() => {
-          dispatch(setAuthState('UNAUTHENTICATED'));
           logoutUser({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-          navigate('../');
+          dispatch(setAuthState('UNAUTHENTICATED'));
+          navigate('/');
         }}
       />
     </Box>
