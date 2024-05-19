@@ -20,6 +20,7 @@ import { addNotification } from '@/utils/show-notification';
 import { validatePassword } from '@/utils/validate-password';
 
 import { setAuthState } from '../auth/authSlice';
+import { postCustomerLogin } from '../login-page/api';
 
 import classes from './registration-page.module.css';
 
@@ -213,6 +214,9 @@ const RegistrationPage: FC = () => {
         addNotification({ message: 'You have successfully created an account.', title: 'Account created' });
       })
       .then(() => {
+        return postCustomerLogin({ email: values.email, password: values.password });
+      })
+      .then(() => {
         changeAuthState();
         navigate('../');
       })
@@ -230,7 +234,7 @@ const RegistrationPage: FC = () => {
   return (
     <Container className={classes.container} mx="auto" p={16} size="xs">
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Title className={classes.title} mb={30} mt={5} ta="center">
+        <Title className={classes.title} mb={50} mt={80} ta="center">
           Sign Up
         </Title>
         <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
@@ -286,6 +290,7 @@ const RegistrationPage: FC = () => {
           color="rgba(243, 231, 228, 1)"
           key={form.key('isDefaultShippingAddress')}
           label="Set as default address"
+          mt={20}
           my={'sm'}
           variant="outline"
           {...form.getInputProps('isDefaultShippingAddress')}
@@ -364,11 +369,11 @@ const RegistrationPage: FC = () => {
             {...form.getInputProps('billingPostalCode')}
           />
         </SimpleGrid>
-        <BaseButton fullWidth mb={30} mt={30} type="submit">
+        <BaseButton fullWidth mb={40} mt={30} type="submit">
           Sign Up
         </BaseButton>
       </form>
-      <Text className={classes.text} mb={15} px={14} ta="center">
+      <Text className={classes.text} mb={80} px={14} ta="center">
         Already a member?{' '}
         <Anchor className={classes.anchor} component="button" ml={5}>
           <Link className={classes.authLink} to={'/login'}>
