@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Address } from '@commercetools/platform-sdk';
-import { Anchor, Checkbox, Container, SimpleGrid, Text, Title } from '@mantine/core';
+import { Anchor, Checkbox, Container, LoadingOverlay, SimpleGrid, Text, Title } from '@mantine/core';
 import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -88,6 +88,12 @@ const isProperPostcode =
   };
 
 const RegistrationPage: FC = () => {
+  const [visible, setVisible] = useState(false);
+
+  const toggle = (): void => {
+    setVisible((prev) => !prev);
+  };
+
   const form = useForm({
     initialValues: {
       billingCity: '',
@@ -198,6 +204,7 @@ const RegistrationPage: FC = () => {
     const defaultBillingAddress = values.isDefaultBillingAddress ? billingAddressesId : undefined;
     const defaultShippingAddress = values.isDefaultShippingAddress ? shippingAddressesId : undefined;
 
+    toggle();
     createCustomer({
       addresses,
       billingAddresses: [billingAddressesId],
@@ -222,6 +229,9 @@ const RegistrationPage: FC = () => {
       })
       .catch((error) => {
         addNotification({ message: `${error}`, title: 'Error', type: 'error' });
+      })
+      .finally(() => {
+        toggle();
       });
   };
 
@@ -232,156 +242,169 @@ const RegistrationPage: FC = () => {
     dispatch(setAuthState('AUTHENTICATED'));
 
   return (
-    <Container className={classes.container} mx="auto" p={16} size="xs">
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Title className={classes.title} mb={50} mt={80} ta="center">
-          Sign Up
-        </Title>
-        <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
-        <CustomPasswordInput key={form.key('password')} label="Password" required {...form.getInputProps('password')} />
-        <CustomPasswordInput
-          key={form.key('confirmPassword')}
-          label="Confirm password"
-          required
-          {...form.getInputProps('confirmPassword')}
-        />
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>
-          <CustomTextInput
-            key={form.key('firstName')}
-            label="First Name"
+    <>
+      <LoadingOverlay loaderProps={{ type: 'oval' }} pos="fixed" visible={visible} zIndex="2000" />
+      <Container className={classes.container} mx="auto" p={16} size="xs">
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          <Title className={classes.title} mb={50} mt={80} ta="center">
+            Sign Up
+          </Title>
+          <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
+          <CustomPasswordInput
+            key={form.key('password')}
+            label="Password"
             required
-            {...form.getInputProps('firstName')}
+            {...form.getInputProps('password')}
           />
-          <CustomTextInput key={form.key('lastName')} label="Last Name" required {...form.getInputProps('lastName')} />
-        </SimpleGrid>
-        <CustomDateInput
-          defaultLevel="decade"
-          key={form.key('birthday')}
-          label="Birthday"
-          maxDate={TODAY}
-          mb={30}
-          minDate={ONE_HUNDRED_AND_THIRTY_YEARS_AGO}
-          required
-          {...form.getInputProps('birthday')}
-        />
-        <Text className={classes.textAddress} mb={20}>
-          Shipping address
+          <CustomPasswordInput
+            key={form.key('confirmPassword')}
+            label="Confirm password"
+            required
+            {...form.getInputProps('confirmPassword')}
+          />
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <CustomTextInput
+              key={form.key('firstName')}
+              label="First Name"
+              required
+              {...form.getInputProps('firstName')}
+            />
+            <CustomTextInput
+              key={form.key('lastName')}
+              label="Last Name"
+              required
+              {...form.getInputProps('lastName')}
+            />
+          </SimpleGrid>
+          <CustomDateInput
+            defaultLevel="decade"
+            key={form.key('birthday')}
+            label="Birthday"
+            maxDate={TODAY}
+            mb={30}
+            minDate={ONE_HUNDRED_AND_THIRTY_YEARS_AGO}
+            required
+            {...form.getInputProps('birthday')}
+          />
+          <Text className={classes.textAddress} mb={20}>
+            Shipping address
+          </Text>
+          <Checkbox
+            checked={isSameAddressProps.checked}
+            className={classes.text}
+            color="rgba(243, 231, 228, 1)"
+            defaultValue={isSameAddressProps.defaultValue}
+            error={isSameAddressProps.error}
+            key={form.key('isSameAddress')}
+            label="The shipping and billing addresses are the same"
+            my={'sm'}
+            onBlur={isSameAddressProps.onBlur}
+            onChange={(event) => {
+              handleCheckbox(event);
+              isSameAddressProps.onChange?.(event);
+            }}
+            onFocus={isSameAddressProps.onFocus}
+            value={isSameAddressProps.value}
+            variant="outline"
+          />
+          <Checkbox
+            className={classes.text}
+            color="rgba(243, 231, 228, 1)"
+            key={form.key('isDefaultShippingAddress')}
+            label="Set as default address"
+            mt={20}
+            my={'sm'}
+            variant="outline"
+            {...form.getInputProps('isDefaultShippingAddress')}
+          />
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <CustomTextInput
+              key={form.key('shippingStreet')}
+              label="Street"
+              mt={10}
+              required
+              {...form.getInputProps('shippingStreet')}
+            />
+            <CustomTextInput
+              key={form.key('shippingCity')}
+              label="City"
+              mt={10}
+              required
+              {...form.getInputProps('shippingCity')}
+            />
+            <CustomSelect
+              label="Country"
+              required
+              searchable
+              {...form.getInputProps('shippingCountry')}
+              data={COUNTRIES}
+            />
+            <CustomTextInput
+              key={form.key('shippingPostalCode')}
+              label="PostalCode"
+              required
+              {...form.getInputProps('shippingPostalCode')}
+            />
+          </SimpleGrid>
+          <Text className={classes.textAddress} mb={20} mt={30}>
+            Billing address
+          </Text>
+          <Checkbox
+            className={classes.text}
+            color="rgba(243, 231, 228, 1)"
+            key={form.key('isDefaultBillingAddress')}
+            label="Set as default address"
+            my={'sm'}
+            variant="outline"
+            {...form.getInputProps('isDefaultBillingAddress')}
+          />
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            <CustomTextInput
+              disabled={areBillingFieldsDisabled}
+              key={form.key('billingStreet')}
+              label="Street"
+              mt={10}
+              required={!areBillingFieldsDisabled}
+              {...form.getInputProps('billingStreet')}
+            />
+            <CustomTextInput
+              disabled={areBillingFieldsDisabled}
+              key={form.key('billingCity')}
+              label="City"
+              mt={10}
+              required={!areBillingFieldsDisabled}
+              {...form.getInputProps('billingCity')}
+            />
+            <CustomSelect
+              disabled={areBillingFieldsDisabled}
+              label="Country"
+              required={!areBillingFieldsDisabled}
+              {...form.getInputProps('billingCountry')}
+              data={COUNTRIES}
+              searchable
+            />
+            <CustomTextInput
+              disabled={areBillingFieldsDisabled}
+              key={form.key('billingPostalCode')}
+              label="PostalCode"
+              required={!areBillingFieldsDisabled}
+              {...form.getInputProps('billingPostalCode')}
+            />
+          </SimpleGrid>
+          <BaseButton fullWidth mb={40} mt={30} type="submit">
+            Sign Up
+          </BaseButton>
+        </form>
+        <Text className={classes.text} mb={80} px={14} ta="center">
+          Already a member?{' '}
+          <Anchor className={classes.anchor} component="button" ml={5}>
+            <Link className={classes.authLink} to={'/login'}>
+              Log in
+            </Link>
+          </Anchor>
         </Text>
-        <Checkbox
-          checked={isSameAddressProps.checked}
-          className={classes.text}
-          color="rgba(243, 231, 228, 1)"
-          defaultValue={isSameAddressProps.defaultValue}
-          error={isSameAddressProps.error}
-          key={form.key('isSameAddress')}
-          label="The shipping and billing addresses are the same"
-          my={'sm'}
-          onBlur={isSameAddressProps.onBlur}
-          onChange={(event) => {
-            handleCheckbox(event);
-            isSameAddressProps.onChange?.(event);
-          }}
-          onFocus={isSameAddressProps.onFocus}
-          value={isSameAddressProps.value}
-          variant="outline"
-        />
-        <Checkbox
-          className={classes.text}
-          color="rgba(243, 231, 228, 1)"
-          key={form.key('isDefaultShippingAddress')}
-          label="Set as default address"
-          mt={20}
-          my={'sm'}
-          variant="outline"
-          {...form.getInputProps('isDefaultShippingAddress')}
-        />
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>
-          <CustomTextInput
-            key={form.key('shippingStreet')}
-            label="Street"
-            mt={10}
-            required
-            {...form.getInputProps('shippingStreet')}
-          />
-          <CustomTextInput
-            key={form.key('shippingCity')}
-            label="City"
-            mt={10}
-            required
-            {...form.getInputProps('shippingCity')}
-          />
-          <CustomSelect
-            label="Country"
-            required
-            searchable
-            {...form.getInputProps('shippingCountry')}
-            data={COUNTRIES}
-          />
-          <CustomTextInput
-            key={form.key('shippingPostalCode')}
-            label="PostalCode"
-            required
-            {...form.getInputProps('shippingPostalCode')}
-          />
-        </SimpleGrid>
-        <Text className={classes.textAddress} mb={20} mt={30}>
-          Billing address
-        </Text>
-        <Checkbox
-          className={classes.text}
-          color="rgba(243, 231, 228, 1)"
-          key={form.key('isDefaultBillingAddress')}
-          label="Set as default address"
-          my={'sm'}
-          variant="outline"
-          {...form.getInputProps('isDefaultBillingAddress')}
-        />
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>
-          <CustomTextInput
-            disabled={areBillingFieldsDisabled}
-            key={form.key('billingStreet')}
-            label="Street"
-            mt={10}
-            required={!areBillingFieldsDisabled}
-            {...form.getInputProps('billingStreet')}
-          />
-          <CustomTextInput
-            disabled={areBillingFieldsDisabled}
-            key={form.key('billingCity')}
-            label="City"
-            mt={10}
-            required={!areBillingFieldsDisabled}
-            {...form.getInputProps('billingCity')}
-          />
-          <CustomSelect
-            disabled={areBillingFieldsDisabled}
-            label="Country"
-            required={!areBillingFieldsDisabled}
-            {...form.getInputProps('billingCountry')}
-            data={COUNTRIES}
-            searchable
-          />
-          <CustomTextInput
-            disabled={areBillingFieldsDisabled}
-            key={form.key('billingPostalCode')}
-            label="PostalCode"
-            required={!areBillingFieldsDisabled}
-            {...form.getInputProps('billingPostalCode')}
-          />
-        </SimpleGrid>
-        <BaseButton fullWidth mb={40} mt={30} type="submit">
-          Sign Up
-        </BaseButton>
-      </form>
-      <Text className={classes.text} mb={80} px={14} ta="center">
-        Already a member?{' '}
-        <Anchor className={classes.anchor} component="button" ml={5}>
-          <Link className={classes.authLink} to={'/login'}>
-            Log in
-          </Link>
-        </Anchor>
-      </Text>
-    </Container>
+      </Container>
+    </>
   );
 };
 
