@@ -28,6 +28,7 @@ export const theme = createTheme({
       },
     }),
   },
+  cursorType: 'pointer',
   fontFamily: 'Inter, sans-serif',
   headings: { fontFamily: 'Martel' },
   primaryColor: 'red',

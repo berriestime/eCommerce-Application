@@ -13,6 +13,7 @@ const CustomDateInput = forwardRef(function MyInput(
       {...props}
       classNames={{
         input: classes.input,
+        label: classes.label,
         root: classes.root,
         wrapper: classes.wrapper,
       }}

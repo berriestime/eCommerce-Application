@@ -19,3 +19,7 @@
 .error {
   text-wrap: nowrap;
 }
+
+.label {
+  color: var(--mantine-color-white);
+}
