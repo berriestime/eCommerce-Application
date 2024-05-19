@@ -227,8 +227,9 @@ const RegistrationPage: FC = () => {
         changeAuthState();
         navigate('../');
       })
-      .catch((error) => {
-        addNotification({ message: `${error}`, title: 'Error', type: 'error' });
+      .catch((error: unknown) => {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        addNotification({ message: errorMessage, title: 'Error', type: 'error' });
       })
       .finally(() => {
         toggle();
