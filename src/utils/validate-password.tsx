@@ -1,6 +1,6 @@
 const MIN_PASSWORD_LENGTH = 8;
 
-const MESSAGE_PASSWORD_REQUIRED = 'Password is required';
+const MESSAGE_PASSWORD_REQUIRED = 'Required field';
 const MESSAGE_PASSWORD_NO_TRAILING_WHITESPACE = 'Must not contain leading or trailing whitespace';
 const MESSAGE_PASSWORD_LENGTH_ERROR = 'Must be at least 8 characters long';
 const MESSAGE_PASSWORD_CONTAIN_UPPERCASE = 'Must contain at least one uppercase letter';

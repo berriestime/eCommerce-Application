@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Address } from '@commercetools/platform-sdk';
 import { Anchor, Checkbox, Container, LoadingOverlay, SimpleGrid, Text, Title } from '@mantine/core';
-import { UseFormReturnType, isEmail, useForm } from '@mantine/form';
+import { UseFormReturnType, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { postcodeValidator } from 'postcode-validator';
@@ -39,19 +39,36 @@ interface CheckboxProps {
 const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
 const TODAY = new Date();
 const ONE_HUNDRED_AND_THIRTY_YEARS_AGO = dayjs(new Date()).subtract(130, 'year').toDate();
-const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required');
+const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required field');
 
-const noSpecialOrDigits =
+const onlyLetters =
   (message: string) =>
   (value: string): null | string => {
-    if (/\d/.test(value) || /[~`!@#$%^&*()_+=[\]{};':"\\|,.<>/?]+/.test(value)) {
+    if (!value) {
+      return 'Required field';
+    }
+    if (!/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value)) {
       return message;
     }
     return null;
   };
 
-const matchesPassword = (value: string, values: { password: string }): null | string =>
-  value !== values.password ? 'Passwords did not match' : null;
+const isEmail =
+  (message: string) =>
+  (value: string): null | string => {
+    if (!value) {
+      return 'Required field';
+    }
+
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? null : message;
+  };
+
+const matchesPassword = (value: string, values: { password: string }): null | string => {
+  if (!value) {
+    return 'Required field';
+  }
+  return value !== values.password ? 'Passwords did not match' : null;
+};
 
 const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
 
@@ -145,19 +162,22 @@ const RegistrationPage: FC = () => {
       };
     },
     validate: {
-      billingCity: wrapSameAddressCheck(noSpecialOrDigits('City must not contain special characters')),
+      billingCity: wrapSameAddressCheck(onlyLetters('Only letters')),
       billingCountry: wrapSameAddressCheck(isProperCountry),
       billingPostalCode: wrapSameAddressCheck(isProperPostcode('billingCountry')),
       billingStreet: wrapSameAddressCheck(notEmpty),
       birthday: (value) => {
+        if (!value) {
+          return 'Required field';
+        }
         return dayjs(value).isAfter(dayjs().subtract(18, 'years')) ? 'Must be at least 18 years old' : null;
       },
       confirmPassword: matchesPassword,
       email: isEmail('Invalid email'),
-      firstName: noSpecialOrDigits('No special characters'),
-      lastName: noSpecialOrDigits('No special characters'),
+      firstName: onlyLetters('Only letters'),
+      lastName: onlyLetters('Only letters'),
       password: validatePassword,
-      shippingCity: noSpecialOrDigits('City must not contain special characters'),
+      shippingCity: onlyLetters('Only letters'),
       shippingCountry: isProperCountry,
       shippingPostalCode: isProperPostcode('shippingCountry'),
       shippingStreet: notEmpty,
@@ -170,8 +190,21 @@ const RegistrationPage: FC = () => {
   const handleCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const checked = event.target.checked;
     if (checked) {
+      form.clearFieldError('billingCity');
+      form.clearFieldError('billingCountry');
+      form.clearFieldError('billingPostalCode');
+      form.clearFieldError('billingStreet');
       disableBillingFields();
     } else {
+      const billingFields = ['billingCity', 'billingCountry', 'billingPostalCode', 'billingStreet'];
+      setTimeout(() => {
+        billingFields.forEach((field) => form.isTouched(field));
+        form.validateField('billingCity');
+        form.validateField('billingCountry');
+        form.validateField('billingPostalCode');
+        form.validateField('billingStreet');
+      }, 0);
+
       enableBillingFields();
     }
   };
@@ -250,30 +283,30 @@ const RegistrationPage: FC = () => {
           <Title className={classes.title} mb={50} mt={80} ta="center">
             Sign Up
           </Title>
-          <CustomTextInput key={form.key('email')} label="Email" required {...form.getInputProps('email')} />
+          <CustomTextInput key={form.key('email')} label="Email" withAsterisk {...form.getInputProps('email')} />
           <CustomPasswordInput
             key={form.key('password')}
             label="Password"
-            required
+            withAsterisk
             {...form.getInputProps('password')}
           />
           <CustomPasswordInput
             key={form.key('confirmPassword')}
             label="Confirm password"
-            required
+            withAsterisk
             {...form.getInputProps('confirmPassword')}
           />
           <SimpleGrid cols={{ base: 1, sm: 2 }}>
             <CustomTextInput
               key={form.key('firstName')}
               label="First Name"
-              required
+              withAsterisk
               {...form.getInputProps('firstName')}
             />
             <CustomTextInput
               key={form.key('lastName')}
               label="Last Name"
-              required
+              withAsterisk
               {...form.getInputProps('lastName')}
             />
           </SimpleGrid>
@@ -284,7 +317,7 @@ const RegistrationPage: FC = () => {
             maxDate={TODAY}
             mb={30}
             minDate={ONE_HUNDRED_AND_THIRTY_YEARS_AGO}
-            required
+            withAsterisk
             {...form.getInputProps('birthday')}
           />
           <Text className={classes.textAddress} mb={20}>
@@ -323,27 +356,21 @@ const RegistrationPage: FC = () => {
               key={form.key('shippingStreet')}
               label="Street"
               mt={10}
-              required
+              withAsterisk
               {...form.getInputProps('shippingStreet')}
             />
             <CustomTextInput
               key={form.key('shippingCity')}
               label="City"
               mt={10}
-              required
+              withAsterisk
               {...form.getInputProps('shippingCity')}
             />
-            <CustomSelect
-              label="Country"
-              required
-              searchable
-              {...form.getInputProps('shippingCountry')}
-              data={COUNTRIES}
-            />
+            <CustomSelect label="Country" withAsterisk {...form.getInputProps('shippingCountry')} data={COUNTRIES} />
             <CustomTextInput
               key={form.key('shippingPostalCode')}
               label="PostalCode"
-              required
+              withAsterisk
               {...form.getInputProps('shippingPostalCode')}
             />
           </SimpleGrid>
@@ -365,7 +392,7 @@ const RegistrationPage: FC = () => {
               key={form.key('billingStreet')}
               label="Street"
               mt={10}
-              required={!areBillingFieldsDisabled}
+              withAsterisk
               {...form.getInputProps('billingStreet')}
             />
             <CustomTextInput
@@ -373,22 +400,21 @@ const RegistrationPage: FC = () => {
               key={form.key('billingCity')}
               label="City"
               mt={10}
-              required={!areBillingFieldsDisabled}
+              withAsterisk
               {...form.getInputProps('billingCity')}
             />
             <CustomSelect
               disabled={areBillingFieldsDisabled}
               label="Country"
-              required={!areBillingFieldsDisabled}
+              withAsterisk
               {...form.getInputProps('billingCountry')}
               data={COUNTRIES}
-              searchable
             />
             <CustomTextInput
               disabled={areBillingFieldsDisabled}
               key={form.key('billingPostalCode')}
               label="PostalCode"
-              required={!areBillingFieldsDisabled}
+              withAsterisk
               {...form.getInputProps('billingPostalCode')}
             />
           </SimpleGrid>
