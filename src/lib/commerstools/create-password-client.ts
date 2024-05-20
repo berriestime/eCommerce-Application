@@ -28,12 +28,11 @@ const createPasswordFlowClient = (customer: { email: string; password: string })
     tokenCache: makeTokenCache(),
   };
 
-  const ctpClient = new ClientBuilder()
+  const ctpClientBuilder = new ClientBuilder()
     .withProjectKey(projectKey)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
-    .withPasswordFlow(passwordAuthMiddlewareOptions)
-    .build();
+    .withPasswordFlow(passwordAuthMiddlewareOptions);
+  const ctpClient = import.meta.env.PROD ? ctpClientBuilder.build() : ctpClientBuilder.withLoggerMiddleware().build();
 
   apiRootLogin = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
 

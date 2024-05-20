@@ -21,12 +21,11 @@ const createRefreshFlowClient = (): ByProjectKeyRequestBuilder => {
     refreshToken: getRefreshToken(),
   };
 
-  const ctpClient = new ClientBuilder()
+  const ctpClientBuilder = new ClientBuilder()
     .withProjectKey(VITE_PROJECT_KEY)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
-    .withRefreshTokenFlow(refreshAuthMiddlewareOptions)
-    .build();
+    .withRefreshTokenFlow(refreshAuthMiddlewareOptions);
+  const ctpClient = import.meta.env.PROD ? ctpClientBuilder.build() : ctpClientBuilder.withLoggerMiddleware().build();
 
   apiRootRefresh = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
   apiRootRefresh.get().execute().catch(console.error);
