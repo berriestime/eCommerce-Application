@@ -50,6 +50,15 @@ const noSpecialOrDigits =
     return null;
   };
 
+const onlyLetters =
+  (message: string) =>
+  (value: string): null | string => {
+    if (!/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value)) {
+      return message;
+    }
+    return null;
+  };
+
 const matchesPassword = (value: string, values: { password: string }): null | string =>
   value !== values.password ? 'Passwords did not match' : null;
 
@@ -154,10 +163,10 @@ const RegistrationPage: FC = () => {
       },
       confirmPassword: matchesPassword,
       email: isEmail('Invalid email'),
-      firstName: noSpecialOrDigits('No special characters'),
-      lastName: noSpecialOrDigits('No special characters'),
+      firstName: onlyLetters('Only letters'),
+      lastName: onlyLetters('Only letters'),
       password: validatePassword,
-      shippingCity: noSpecialOrDigits('City must not contain special characters'),
+      shippingCity: onlyLetters('Only letters'),
       shippingCountry: isProperCountry,
       shippingPostalCode: isProperPostcode('shippingCountry'),
       shippingStreet: notEmpty,
