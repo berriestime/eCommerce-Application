@@ -196,11 +196,6 @@ const RegistrationPage: FC = () => {
       form.clearFieldError('billingStreet');
       disableBillingFields();
     } else {
-      // form.isDirty('billingCity');
-      // form.isDirty('billingCountry');
-      // form.isDirty('billingPostalCode');
-      // form.isDirty('billingStreet');
-
       const billingFields = ['billingCity', 'billingCountry', 'billingPostalCode', 'billingStreet'];
       setTimeout(() => {
         billingFields.forEach((field) => form.isTouched(field));

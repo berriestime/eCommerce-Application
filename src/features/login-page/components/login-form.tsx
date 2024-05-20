@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { LoadingOverlay } from '@mantine/core';
-import { isEmail, useForm } from '@mantine/form';
+import { useForm } from '@mantine/form';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomPasswordInput } from '@/components/custom-password-input';
@@ -14,6 +14,16 @@ import { addNotification } from '@/utils/show-notification';
 import { validatePassword } from '@/utils/validate-password';
 
 import { postCustomerLogin } from '../api';
+
+const isEmail =
+  (message: string) =>
+  (value: string): null | string => {
+    if (!value) {
+      return 'Required field';
+    }
+
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? null : message;
+  };
 
 const LoginForm: FC = () => {
   const form = useForm({
@@ -65,8 +75,8 @@ const LoginForm: FC = () => {
             });
         })}
       >
-        <CustomTextInput label="Email" required {...form.getInputProps('email')}></CustomTextInput>
-        <CustomPasswordInput label="Password" required {...form.getInputProps('password')}></CustomPasswordInput>
+        <CustomTextInput label="Email" withAsterisk {...form.getInputProps('email')}></CustomTextInput>
+        <CustomPasswordInput label="Password" withAsterisk {...form.getInputProps('password')}></CustomPasswordInput>
         <BaseButton fullWidth mt={25} type="submit">
           Sign in
         </BaseButton>
