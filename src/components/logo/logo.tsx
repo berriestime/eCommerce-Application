@@ -5,7 +5,7 @@ import classes from './logo.module.css';
 
 const Logo: FC = () => {
   return (
-    <Link to="/">
+    <Link aria-label="logo" to="/">
       <svg
         className={classes.logo}
         fill="none"

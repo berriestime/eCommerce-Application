@@ -15,7 +15,7 @@ describe('Logo', () => {
       </MemoryRouter>,
     );
 
-    const logo = screen.getByAltText('logo');
+    const logo = screen.getByRole('link', { name: /logo/i });
     await userEvent.click(logo);
 
     expect(window.location.pathname).toBe('/');
