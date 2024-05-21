@@ -69,7 +69,7 @@
 .cardsGap {
   gap: 10rem;
 
-  @media (max-width: 1400px) {
+  @media (width <= 1400px) {
     gap: 3rem;
   }
 }
