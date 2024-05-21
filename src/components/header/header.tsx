@@ -54,10 +54,10 @@ const Header: FC = () => {
       name: string;
       to?: string;
     }[],
-    curClass: string | undefined,
+    curClass?: string,
   ): JSX.Element[] => {
     const items = elements.map((el) =>
-      el.to && el.icon === undefined ? (
+      el.to && !el.icon ? (
         <NavLink
           className={({ isActive }) => clsx(curClass, { [classes.active || '']: isActive })}
           key={el.name}
@@ -76,7 +76,14 @@ const Header: FC = () => {
           {el.icon} {el.name}
         </NavLink>
       ) : (
-        <UnstyledButton className={clsx(curClass)} key={el.name} onClick={() => (closeDrawer(), openModal())}>
+        <UnstyledButton
+          className={clsx(curClass)}
+          key={el.name}
+          onClick={() => {
+            closeDrawer();
+            openModal();
+          }}
+        >
           {el.icon} {!matches ? el.name : ''}
         </UnstyledButton>
       ),
