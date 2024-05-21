@@ -13,6 +13,16 @@ import {
   TeamPage,
 } from './lazy';
 
+export const APP_ROUTES = {
+  Cart: 'cart',
+  Login: 'login',
+  Main: '/',
+  Profile: 'profile',
+  Registration: 'registration',
+  Store: 'store',
+  Team: 'team',
+} as const;
+
 export const routes = [
   {
     children: [
@@ -26,7 +36,7 @@ export const routes = [
             <LoginPage />
           </AuthRouteGuard>
         ),
-        path: 'login',
+        path: APP_ROUTES.Login,
       },
       {
         element: (
@@ -34,7 +44,7 @@ export const routes = [
             <RegistrationPage />
           </AuthRouteGuard>
         ),
-        path: 'registration',
+        path: APP_ROUTES.Registration,
       },
       {
         element: (
@@ -42,7 +52,7 @@ export const routes = [
             <Profile />
           </AuthRouteGuard>
         ),
-        path: 'dashboard',
+        path: APP_ROUTES.Profile,
       },
       {
         children: [
@@ -52,19 +62,19 @@ export const routes = [
           },
         ],
         element: <CategoryPage />,
-        path: 'catalog',
+        path: APP_ROUTES.Store,
       },
       {
         element: <TeamPage />,
-        path: 'team',
+        path: APP_ROUTES.Team,
       },
       {
         element: <CartPage />,
-        path: 'cart',
+        path: APP_ROUTES.Cart,
       },
     ],
     element: <Layout />,
     errorElement: <NotFoundPage />,
-    path: '/',
+    path: APP_ROUTES.Main,
   },
 ];
