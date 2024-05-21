@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 import logo from '@/assets/images/logo.svg';
 
-import s from './logo.module.css';
+import classes from './logo.module.css';
 
 const Logo: FC = () => {
   return (
     <Link to="/">
-      <img alt="logo" className={s.logo} src={logo} />
+      <img alt="logo" className={classes.logo} src={logo} />
     </Link>
   );
 };

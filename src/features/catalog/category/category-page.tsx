@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 
-import s from './category-page.module.css';
+import classes from './category-page.module.css';
 
 const CategoryPage: FC = () => {
   return (
-    <div className={s.container}>
+    <div className={classes.container}>
       <h2>Store page</h2>
     </div>
   );

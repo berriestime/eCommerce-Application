@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 
-import s from './team-page.module.css';
+import classes from './team-page.module.css';
 
 const TeamPage: FC = () => {
   return (
-    <div className={s.container}>
+    <div className={classes.container}>
       <h2>Team page</h2>
     </div>
   );
