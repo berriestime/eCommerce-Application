@@ -5,14 +5,14 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Box,
   Burger,
-  Button,
+  // Button,
   Divider,
   Drawer,
   Group,
   ScrollArea,
   UnstyledButton,
   rem,
-  useMantineColorScheme,
+  // useMantineColorScheme,
 } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
@@ -32,7 +32,7 @@ import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import classes from './header.module.css';
 
 const Header: FC = () => {
-  const { setColorScheme } = useMantineColorScheme();
+  // const { setColorScheme } = useMantineColorScheme();
 
   const authData = useSelector((state: RootState) => state.auth.authState);
   const navigate = useNavigate();
@@ -107,7 +107,7 @@ const Header: FC = () => {
           {getItems(nav, classes.link)}
         </Group>
 
-        <Group visibleFrom="sm">
+        {/* <Group visibleFrom="sm">
           {isAuth ? getItems(profile, classes.profileLink) : getItems(auth, classes.authLink)}{' '}
           <Button lightHidden onClick={() => setColorScheme('light')}>
             Light
@@ -115,7 +115,7 @@ const Header: FC = () => {
           <Button darkHidden onClick={() => setColorScheme('dark')}>
             Dark
           </Button>
-        </Group>
+        </Group> */}
 
         <Burger hiddenFrom="sm" onClick={toggleDrawer} opened={drawerOpened} />
       </Group>
