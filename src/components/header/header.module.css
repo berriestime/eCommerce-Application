@@ -1,18 +1,15 @@
 .container {
   max-width: 1920;
   margin: 0 auto;
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-inline: 100px;
   user-select: none;
 
   @media (width <= 1200px) {
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-inline: 32px;
   }
 
   @media (width <= 600px) {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-inline: 16px;
   }
 }
 
@@ -51,8 +48,7 @@
   display: flex;
   align-items: center;
   height: 100%;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-inline: 1.5rem;
   text-decoration: none;
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   font-weight: 500;
@@ -61,8 +57,7 @@
   color: #f3e7e4;
 
   @media (width <= 1200px) {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding-inline: 0.5rem;
   }
 
   @media (width <= 767px) {
@@ -82,8 +77,7 @@
 }
 
 .authLink {
-  padding-right: 0;
-  padding-left: 0;
+  padding-inline: 0;
 
   @media (width <= 767px) {
     padding-top: 16px;
@@ -91,7 +85,7 @@
 }
 
 .authLink:first-child {
-  padding-right: 2rem;
+  padding-inline: 2rem;
 }
 
 .authLink:last-child {
