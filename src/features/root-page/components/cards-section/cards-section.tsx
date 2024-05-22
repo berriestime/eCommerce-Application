@@ -8,8 +8,7 @@ import Autoplay from 'embla-carousel-autoplay';
 
 import { type CardData, SimpleCard } from '@/components/simple-card';
 
-import classes from '../../root-page.module.css';
-import cardClasses from '@/components/simple-card/simple-card.module.css';
+import classes from './cards-section.module.css';
 
 type Info = {
   mockdata: CardData[];
@@ -22,7 +21,7 @@ const CardsSection = (props: Info): JSX.Element => {
   const autoplay = useRef(Autoplay({ delay: 5000 }));
 
   const productCards = mockdata.map((productCard) => (
-    <Link className={cardClasses.link} key={productCard.title} to={productCard.to}>
+    <Link className={classes.link} key={productCard.title} to={productCard.to}>
       <SimpleCard {...productCard} />
     </Link>
   ));
@@ -36,17 +35,17 @@ const CardsSection = (props: Info): JSX.Element => {
         {text}
       </Text>
 
-      <SimpleGrid className={cardClasses.cardsGap} cols={3} mt="md" visibleFrom="md">
+      <SimpleGrid className={classes.cardsGap} cols={3} mt="md" visibleFrom="md">
         {productCards}
       </SimpleGrid>
 
       <Carousel
         align="start"
         classNames={{
-          controls: cardClasses.carouselControls,
-          indicator: cardClasses.carouselIndicator,
-          indicators: cardClasses.carouselIndicators,
-          root: cardClasses.carousel,
+          controls: classes.carouselControls,
+          indicator: classes.carouselIndicator,
+          indicators: classes.carouselIndicators,
+          root: classes.carousel,
         }}
         hiddenFrom="md"
         loop

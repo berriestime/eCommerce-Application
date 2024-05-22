@@ -1,18 +1,8 @@
 .container {
-  max-width: 1920;
-  margin: 0 auto;
-  padding-inline: 100px;
-
-  @media (width <= 1200px) {
-    padding-inline: 32px;
-  }
+  composes: commonContainer from '../../index.css';
 
   @media (width <= 767px) {
     flex-direction: column;
-  }
-
-  @media (width <= 600px) {
-    padding-inline: 16px;
   }
 }
 

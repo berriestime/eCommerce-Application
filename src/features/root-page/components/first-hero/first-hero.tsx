@@ -8,7 +8,7 @@ import { APP_ROUTES } from '@/routes/routes';
 
 import { Hero } from '../hero/hero';
 
-import classes from '../hero/hero.module.css';
+import classes from './first-hero.module.css';
 import btnClasses from '@/components/base-button/base-button.module.css';
 
 const FirstHero = (): JSX.Element => {

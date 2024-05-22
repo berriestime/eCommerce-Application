@@ -34,3 +34,18 @@ main {
 .mantine-LoadingOverlay-overlay {
   background-color: #05050580;
 }
+
+.commonContainer {
+  max-width: 1920;
+  margin: 0 auto;
+  padding-inline: 100px;
+  user-select: none;
+
+  @media (width <= 1200px) {
+    padding-inline: 32px;
+  }
+
+  @media (width <= 600px) {
+    padding-inline: 16px;
+  }
+}

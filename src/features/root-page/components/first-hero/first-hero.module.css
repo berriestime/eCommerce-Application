@@ -1,0 +1,27 @@
+.container {
+  composes: container from '../hero/hero.module.css';
+}
+
+.firstHero {
+  min-height: calc(100vh - 100px);
+  padding-bottom: calc(var(--mantine-spacing-xl) * 12);
+  padding-top: calc(var(--mantine-spacing-xl) * 2);
+
+  @media (width <= 767px) {
+    min-height: calc(100vh - 64px);
+  }
+}
+
+.title {
+  composes: title from '../hero/hero.module.css';
+}
+
+.control {
+  @media (width <= 900px) {
+    margin-left: calc(var(--mantine-spacing-xl) * 1.5);
+  }
+}
+
+.controlWhite {
+  composes: controlWhite from '../../../../components/base-button/base-button.module.css';
+}

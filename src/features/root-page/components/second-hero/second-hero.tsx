@@ -7,7 +7,7 @@ import { APP_ROUTES } from '@/routes/routes';
 
 import { Hero } from '../hero/hero';
 
-import classes from '../hero/hero.module.css';
+import classes from './second-hero.module.css';
 
 const SecondHero = (): JSX.Element => {
   return (
