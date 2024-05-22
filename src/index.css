@@ -49,3 +49,7 @@ main {
     padding-inline: 16px;
   }
 }
+
+header {
+  box-shadow: 0px 4px 20px 0px rgba(243, 231, 228, 0.08);
+}
