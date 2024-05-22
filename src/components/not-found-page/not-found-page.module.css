@@ -46,7 +46,7 @@
 .button {
   text-decoration: none;
 
-  @media (width <= 768px) {
+  @media (width >= 768px) {
     align-self: self-start;
   }
 }
