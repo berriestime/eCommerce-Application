@@ -1,21 +1,18 @@
 .container {
   max-width: 1920;
   margin: 0 auto;
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-inline: 100px;
 
-  @media (max-width: 1200px) {
-    padding-left: 32px;
-    padding-right: 32px;
+  @media (width <= 1200px) {
+    padding-inline: 32px;
   }
 
-  @media (max-width: 767px) {
+  @media (width <= 767px) {
     flex-direction: column;
   }
 
-  @media (max-width: 600px) {
-    padding-left: 16px;
-    padding-right: 16px;
+  @media (width <= 600px) {
+    padding-inline: 16px;
   }
 }
 
@@ -26,7 +23,7 @@
   padding-top: 16px;
   padding-bottom: 16px;
 
-  @media (max-width: 767px) {
+  @media (width <= 767px) {
     flex-direction: column;
   }
 }

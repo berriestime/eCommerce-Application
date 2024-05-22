@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 
-import s from './cart-page.module.css';
+import classes from './cart-page.module.css';
 
 const CartPage: FC = () => {
   return (
-    <div className={s.container}>
+    <div className={classes.container}>
       <h2>Cart page</h2>
     </div>
   );

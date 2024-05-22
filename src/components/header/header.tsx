@@ -28,6 +28,7 @@ import { logoutUser } from '@/features/auth/logout-user';
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
+import { APP_ROUTES } from '@/routes/routes';
 
 import classes from './header.module.css';
 
@@ -43,19 +44,19 @@ const Header: FC = () => {
   const [drawerOpened, { close: closeDrawer, toggle: toggleDrawer }] = useDisclosure(false);
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const nav = [
-    { name: 'Main', to: '/' },
-    { name: 'Store', to: '/catalog' },
-    { name: 'Cart', to: '/cart' },
-    { name: 'Our Team', to: '/team' },
+    { name: 'Main', to: APP_ROUTES.Main },
+    { name: 'Store', to: `/${APP_ROUTES.Store}` },
+    { name: 'Cart', to: `/${APP_ROUTES.Cart}` },
+    { name: 'Our Team', to: `/${APP_ROUTES.Team}` },
   ];
 
   const auth = [
-    { name: 'Log In', to: '/login' },
-    { name: 'Sign Up', to: '/registration' },
+    { name: 'Log In', to: `/${APP_ROUTES.Login}` },
+    { name: 'Sign Up', to: `/${APP_ROUTES.Registration}` },
   ];
 
   const profile = [
-    { icon: <ProfileIcon size={28} />, name: 'Profile', to: '/dashboard' },
+    { icon: <ProfileIcon size={28} />, name: 'Profile', to: `/${APP_ROUTES.Profile}` },
     { icon: <LogoutIcon size={26} />, name: 'Logout' },
   ];
 
@@ -67,10 +68,10 @@ const Header: FC = () => {
       name: string;
       to?: string;
     }[],
-    curClass: string | undefined,
+    curClass?: string,
   ): JSX.Element[] => {
     const items = elements.map((el) =>
-      el.to && el.icon === undefined ? (
+      el.to && !el.icon ? (
         <NavLink
           className={({ isActive }) => clsx(curClass, { [classes.active || '']: isActive })}
           key={el.name}
@@ -89,7 +90,14 @@ const Header: FC = () => {
           {el.icon} {el.name}
         </NavLink>
       ) : (
-        <UnstyledButton className={clsx(curClass)} key={el.name} onClick={() => (closeDrawer(), openModal())}>
+        <UnstyledButton
+          className={clsx(curClass)}
+          key={el.name}
+          onClick={() => {
+            closeDrawer();
+            openModal();
+          }}
+        >
           {el.icon} {!matches ? el.name : ''}
         </UnstyledButton>
       ),

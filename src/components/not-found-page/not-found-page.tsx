@@ -6,14 +6,18 @@ import { useViewportSize } from '@mantine/hooks';
 
 import { BaseButton } from '@/components/base-button';
 import { Header } from '@/components/header';
+import { BREAKPOINT_SM, HEADER_HEIGHT_DESKTOP, HEADER_HEIGHT_MOBILE } from '@/constants/header-height';
 
-import classes from './error-page.module.css';
+import classes from './not-found-page.module.css';
 
 const NotFoundPage: FC = () => {
   const { width } = useViewportSize();
 
   return (
-    <AppShell header={{ height: width > 767 ? 100 : 64 }} withBorder={false}>
+    <AppShell
+      header={{ height: width > BREAKPOINT_SM ? HEADER_HEIGHT_DESKTOP : HEADER_HEIGHT_MOBILE }}
+      withBorder={false}
+    >
       <AppShell.Header>
         <Header />
       </AppShell.Header>
