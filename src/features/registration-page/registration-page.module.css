@@ -3,21 +3,21 @@
 }
 
 .title {
-  color: var(--mantine-color-white);
+  color: var(--mantine-color-bright);
   font-size: 40px;
   font-weight: 300;
   line-height: 1.1;
 }
 
 .text {
-  color: var(--mantine-color-white);
+  color: var(--mantine-color-bright);
   font-size: 16px;
 }
 
 .authLink {
   padding: 10px 0;
   text-decoration: none;
-  color: #f3e7e4;
+  color: var(--mantine-color-bright);
   transition: all 0.3s linear;
 }
 
@@ -41,11 +41,11 @@
 }
 
 .checkbox {
-  color: var(--mantine-color-white);
+  color: var(--mantine-color-bright);
   cursor: pointer;
 }
 
 .textAddress {
   font-size: 1.25em;
-  color: var(--mantine-color-white);
+  color: var(--mantine-color-bright);
 }

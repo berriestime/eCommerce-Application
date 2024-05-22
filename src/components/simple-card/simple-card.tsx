@@ -26,7 +26,7 @@ const SimpleCard = (params: CardData): JSX.Element => {
   };
 
   return (
-    <Card className={classes.card}>
+    <Card bg="customBg" className={classes.card}>
       <Card.Section className={classes.imageSection}>
         <Image alt={title} className={classes.image} fit="contain" src={image} />
         <Bage />

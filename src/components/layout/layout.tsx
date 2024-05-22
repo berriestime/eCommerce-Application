@@ -14,11 +14,11 @@ const Layout = (): JSX.Element => {
 
   return (
     <AppShell header={{ height: width > 767 ? 100 : 64 }} withBorder={false}>
-      <AppShell.Header>
+      <AppShell.Header c="customColor">
         <Header />
       </AppShell.Header>
 
-      <AppShell.Main>
+      <AppShell.Main bg="customBg" c="customColor">
         <Suspense
           fallback={
             <Box className={classes.box}>
@@ -26,7 +26,7 @@ const Layout = (): JSX.Element => {
             </Box>
           }
         >
-          <Notifications />
+          <Notifications bg="customBg" c="customColor" />
 
           <Outlet />
         </Suspense>
