@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import { type UIMatch, useMatches } from 'react-router-dom';
 
 import { Breadcrumbs as Bc } from '@mantine/core';
@@ -6,7 +6,7 @@ import { Breadcrumbs as Bc } from '@mantine/core';
 import classes from './breadcrumbs.module.css';
 
 interface Handle {
-  crumb: (data: unknown) => React.ReactNode;
+  crumb: (data: unknown) => ReactNode;
 }
 
 type MatchWithHandle = { handle?: Handle } & UIMatch<unknown, unknown>;
