@@ -1,11 +1,14 @@
 import type { FC } from 'react';
 
+import { Breadcrumbs } from '@/components/brearcrumbs';
+
 import s from './category-page.module.css';
 
 const CategoryPage: FC = () => {
   return (
     <div className={s.container}>
-      <h2>Store page</h2>
+      <Breadcrumbs />
+      <h2>Category page</h2>
     </div>
   );
 };

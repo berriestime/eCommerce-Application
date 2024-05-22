@@ -1,0 +1,10 @@
+.bc a,
+.bc span {
+  text-decoration: none;
+  color: #f3e7e4;
+  transition: all 0.3s ease;
+}
+
+.bc a:hover {
+  color: #aa9f9c;
+}

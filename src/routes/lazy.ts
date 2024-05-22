@@ -6,6 +6,9 @@ export const NotFoundPage = lazy(() =>
 export const CartPage = lazy(() =>
   import('@/features/cart/cart-page').then((module) => ({ default: module.CartPage })),
 );
+export const CatalogPage = lazy(() =>
+  import('@/features/catalog/catalog-page').then((module) => ({ default: module.CatalogPage })),
+);
 export const CategoryPage = lazy(() =>
   import('@/features/catalog/category/category-page').then((module) => ({ default: module.CategoryPage })),
 );
