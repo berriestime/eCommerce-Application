@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { Category, Product } from '@commercetools/platform-sdk';
+
 import { Layout } from '@/components/layout';
 
 import { AuthRouteGuard } from './AuthRouteGuard';
@@ -25,6 +27,13 @@ export const APP_ROUTES = {
   Store: 'store',
   Team: 'team',
 } as const;
+
+import { loader as ProductLoader } from '@/features/catalog/product/product-page';
+
+interface LoaderProductData {
+  categoryData: Category;
+  productData: Product;
+}
 
 export const routes = [
   {
@@ -60,7 +69,7 @@ export const routes = [
       {
         element: <CatalogPage />,
         handle: {
-          crumb: () => <span key="1">Catalog</span>,
+          crumb: () => <span key="1">Store</span>,
         },
         path: APP_ROUTES.Store,
       },
@@ -69,7 +78,7 @@ export const routes = [
         handle: {
           crumb: () => [
             <Link key="1" to={APP_ROUTES.Store}>
-              Catalog
+              Store
             </Link>,
             <span key="2">Category</span>,
           ],
@@ -79,16 +88,17 @@ export const routes = [
       {
         element: <ProductPage />,
         handle: {
-          crumb: () => [
+          crumb: ({ categoryData, productData }: LoaderProductData) => [
             <Link key="1" to={APP_ROUTES.Store}>
               Catalog
             </Link>,
-            <Link key="2" to={`${APP_ROUTES.Store}/33`}>
-              Category
+            <Link key="2" to={`${APP_ROUTES.Store}/${categoryData.key}`}>
+              {categoryData.name['en-GB']}
             </Link>,
-            <span key="3">Product</span>,
+            <span key="3">{productData.masterData.current.name['en-GB']}</span>,
           ],
         },
+        loader: ProductLoader,
         path: `${APP_ROUTES.Store}/:categoryId/:productId`,
       },
 
