@@ -68,28 +68,28 @@ export const routes = [
         element: <CategoryPage />,
         handle: {
           crumb: () => [
-            <Link key="1" to="/catalog">
+            <Link key="1" to={APP_ROUTES.Store}>
               Catalog
             </Link>,
             <span key="2">Category</span>,
           ],
         },
-        path: '/catalog/:categoryId',
+        path: `${APP_ROUTES.Store}/:categoryId`,
       },
       {
         element: <ProductPage />,
         handle: {
           crumb: () => [
-            <Link key="1" to="/catalog">
+            <Link key="1" to={APP_ROUTES.Store}>
               Catalog
             </Link>,
-            <Link key="2" to="/catalog/33">
+            <Link key="2" to={`${APP_ROUTES.Store}/33`}>
               Category
             </Link>,
             <span key="3">Product</span>,
           ],
         },
-        path: '/catalog/:categoryId/:productId',
+        path: `${APP_ROUTES.Store}/:categoryId/:productId`,
       },
 
       {

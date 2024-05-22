@@ -4,6 +4,7 @@ import { Container, Title } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
+import { APP_ROUTES } from '@/routes/routes';
 
 import { Hero } from '../hero/hero';
 
@@ -18,7 +19,7 @@ const FirstHero = (): JSX.Element => {
           Timeless Classic <br /> Lava Lamp
         </Title>
 
-        <Link className={classes.control} to="/catalog">
+        <Link className={classes.control} to={`/${APP_ROUTES.Store}`}>
           <BaseButton className={btnClasses.controlWhite} mt="xl" size="md">
             Shop Now
           </BaseButton>
