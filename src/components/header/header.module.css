@@ -70,6 +70,10 @@
 
 .authLink:first-child {
   padding-inline: 2rem;
+
+  @media (width <= 900px) {
+    padding-inline: 1rem;
+  }
 }
 
 .authLink:last-child {

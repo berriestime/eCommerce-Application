@@ -2,4 +2,5 @@
   height: 48px;
   margin-top: 8px;
   color: var(--mantine-color-bright);
+  max-width: 122px;
 }

@@ -115,15 +115,15 @@ const Header: FC = () => {
           {getItems(nav, classes.link)}
         </Group>
 
-        {/* <Group visibleFrom="sm">
+        <Group visibleFrom="sm">
           {isAuth ? getItems(profile, classes.profileLink) : getItems(auth, classes.authLink)}{' '}
-          <Button lightHidden onClick={() => setColorScheme('light')}>
+          {/* <Button lightHidden onClick={() => setColorScheme('light')}>
             Light
           </Button>
           <Button darkHidden onClick={() => setColorScheme('dark')}>
             Dark
-          </Button>
-        </Group> */}
+          </Button> */}
+        </Group>
 
         <Burger hiddenFrom="sm" onClick={toggleDrawer} opened={drawerOpened} />
       </Group>
