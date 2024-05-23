@@ -94,7 +94,7 @@ export const routes = [
         handle: {
           crumb: ({ categoryData, productData }: LoaderProductData) => [
             <Link key="1" to={`/${APP_ROUTES.Store}`}>
-              Catalog
+              Store
             </Link>,
             <Link key="2" to={`/${APP_ROUTES.Store}/${categoryData.key}`}>
               {categoryData.name['en-GB']}
