@@ -16,4 +16,10 @@ const getCategoryByKey = (categoryKey: string): Promise<ClientResponse<Category>
   return apiRoot.categories().withKey({ key: categoryKey }).get().execute();
 };
 
-export { getCategoryById, getCategoryByKey };
+async function getAllCategories(): Promise<ClientResponse> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const response: ClientResponse = await apiRoot.categories().get().execute();
+  return response;
+}
+
+export { getAllCategories, getCategoryById, getCategoryByKey };

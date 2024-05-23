@@ -28,7 +28,9 @@ export const APP_ROUTES = {
   Team: 'team',
 } as const;
 
-import { loader as ProductLoader } from '@/features/catalog/product/product-page';
+import { loader as StoreLoader } from '@/features/catalog/catalog-data-loader';
+import { loader as CategoryLoader } from '@/features/catalog/category/category-data-loader';
+import { loader as ProductLoader } from '@/features/catalog/product/product-data-loader';
 
 interface LoaderProductData {
   categoryData: Category;
@@ -71,28 +73,30 @@ export const routes = [
         handle: {
           crumb: () => <span key="1">Store</span>,
         },
+        loader: StoreLoader,
         path: APP_ROUTES.Store,
       },
       {
         element: <CategoryPage />,
         handle: {
-          crumb: () => [
-            <Link key="1" to={APP_ROUTES.Store}>
+          crumb: ({ categoryData }: { categoryData: Category }) => [
+            <Link key="1" to={`/${APP_ROUTES.Store}`}>
               Store
             </Link>,
-            <span key="2">Category</span>,
+            <span key="2">{categoryData.name['en-GB']}</span>,
           ],
         },
+        loader: CategoryLoader,
         path: `${APP_ROUTES.Store}/:categoryId`,
       },
       {
         element: <ProductPage />,
         handle: {
           crumb: ({ categoryData, productData }: LoaderProductData) => [
-            <Link key="1" to={APP_ROUTES.Store}>
+            <Link key="1" to={`/${APP_ROUTES.Store}`}>
               Catalog
             </Link>,
-            <Link key="2" to={`${APP_ROUTES.Store}/${categoryData.key}`}>
+            <Link key="2" to={`/${APP_ROUTES.Store}/${categoryData.key}`}>
               {categoryData.name['en-GB']}
             </Link>,
             <span key="3">{productData.masterData.current.name['en-GB']}</span>,
