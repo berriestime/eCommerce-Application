@@ -44,7 +44,7 @@ const ProductPage: FC = () => {
               2
             </Box>
           </Grid.Col>
-          <Grid.Col className={classes.col} h="410px" pos="relative" span={{ base: 12, xs: 'auto' }}>
+          <Grid.Col className={classes.col} pos="relative" span={{ base: 12, xs: 'auto' }}>
             <Title order={1}>{productData.masterData.current.name['en-US']}</Title>
 
             <Title my="md" order={2}>

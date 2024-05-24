@@ -20,14 +20,14 @@ const CategoryPage: FC = () => {
 
   const products = productResult.map((product) => (
     <Box key={product.id} mx="xl">
-      <Link to={`/store/${product.categories[0]?.id}/${product.key}`}>{product.name['en-GB']}</Link>
+      <Link to={`/store/${product.categories[0]?.id}/${product.key}`}>{product.name['en-US']}</Link>
     </Box>
   ));
 
   return (
     <>
       <Breadcrumbs />
-      <h1>Category page: {categoryData.name['en-GB']}</h1>
+      <h1>Category page: {categoryData.name['en-US']}</h1>
       <h2>Products</h2>
       {products}
     </>
