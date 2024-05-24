@@ -1,3 +1,11 @@
-.container {
-  display: flex;
+.gridInner {
+  gap: 60px;
+}
+
+.col {
+  padding: 0;
+}
+
+.previewCol {
+  flex-grow: 0;
 }

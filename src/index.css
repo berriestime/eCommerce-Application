@@ -57,14 +57,14 @@ main {
 .middleContainer {
   max-width: 1200px;
   margin: 0 auto;
-  padding-inline: 100px;
+  padding: 32px 100px;
   user-select: none;
 
   @media (width <= 1200px) {
-    padding-inline: 32px;
+    padding: 32px;
   }
 
   @media (width <= 600px) {
-    padding-inline: 16px;
+    padding: 16px;
   }
 }
