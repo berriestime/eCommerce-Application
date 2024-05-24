@@ -1,0 +1,43 @@
+.link {
+  composes: link from '../../../../components/simple-card/simple-card.module.css';
+}
+
+.cardsGap {
+  composes: cardsGap from '../../../../components/simple-card/simple-card.module.css';
+}
+
+.carouselControls {
+  composes: carouselControls from '../../../../components/simple-card/simple-card.module.css';
+}
+
+.carouselIndicator {
+  composes: carouselIndicator from '../../../../components/simple-card/simple-card.module.css';
+}
+
+.carouselIndicators {
+  composes: carouselIndicators from '../../../../components/simple-card/simple-card.module.css';
+}
+
+.carousel {
+  composes: carousel from '../../../../components/simple-card/simple-card.module.css';
+}
+
+.container {
+  composes: container from '../../root-page.module.css';
+}
+
+.title {
+  composes: title from '../../root-page.module.css';
+}
+
+.infoContent {
+  composes: infoContent from '../../root-page.module.css';
+}
+
+.textPadding {
+  composes: textPadding from '../../root-page.module.css';
+}
+
+.text {
+  composes: text from '../../root-page.module.css';
+}

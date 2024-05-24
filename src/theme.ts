@@ -1,4 +1,11 @@
-import { Loader, VariantColorsResolver, createTheme, defaultVariantColorsResolver, rem } from '@mantine/core';
+import {
+  Loader,
+  VariantColorsResolver,
+  createTheme,
+  defaultVariantColorsResolver,
+  rem,
+  virtualColor,
+} from '@mantine/core';
 
 import { CssLoader } from './components/loader/loader';
 
@@ -20,6 +27,18 @@ const variantColorResolver: VariantColorsResolver = (input) => {
 export const theme = createTheme({
   autoContrast: true,
   black: '#1f1b1b',
+  colors: {
+    customBg: virtualColor({
+      dark: '#1f1b1b',
+      light: '#AA9F9C',
+      name: 'customBg',
+    }),
+    customColor: virtualColor({
+      dark: '#f3e7e4',
+      light: '#1f1b1b',
+      name: 'customColor',
+    }),
+  },
   components: {
     Loader: Loader.extend({
       defaultProps: {

@@ -418,7 +418,7 @@ const RegistrationPage: FC = () => {
               {...form.getInputProps('billingPostalCode')}
             />
           </SimpleGrid>
-          <BaseButton fullWidth mb={40} mt={30} type="submit">
+          <BaseButton c="bright" fullWidth mb={40} mt={30} type="submit">
             Sign Up
           </BaseButton>
         </form>

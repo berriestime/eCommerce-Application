@@ -1,7 +1,7 @@
 .input {
   background-color: unset;
   border: unset;
-  border-bottom: 1px solid var(--color-fg);
+  border-bottom: 1px solid var(--mantine-color-bright);
 
   &[data-error='true'] {
     border-bottom: 1px solid var(--input-bd);
@@ -21,5 +21,5 @@
 }
 
 .label {
-  color: var(--mantine-color-white);
+  color: var(--mantine-color-bright);
 }

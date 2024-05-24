@@ -77,7 +77,7 @@ const LoginForm: FC = () => {
       >
         <CustomTextInput label="Email" withAsterisk {...form.getInputProps('email')}></CustomTextInput>
         <CustomPasswordInput label="Password" withAsterisk {...form.getInputProps('password')}></CustomPasswordInput>
-        <BaseButton fullWidth mt={25} type="submit">
+        <BaseButton c="bright" fullWidth mt={25} type="submit">
           Sign in
         </BaseButton>
       </form>

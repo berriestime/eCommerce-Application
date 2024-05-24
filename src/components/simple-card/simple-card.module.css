@@ -1,12 +1,11 @@
 .card {
-  background-color: var(--mantine-color-dark-7);
   height: 100%;
 }
 
 .card .title {
   font-size: 16px;
   font-weight: 300;
-  color: #f3e7e4;
+  color: var(--mantine-color-bright);
   transition: all 0.5s linear;
 }
 
@@ -17,6 +16,33 @@
 .card .image {
   max-height: 300px;
   transition: all 0.5s linear;
+}
+
+@media (width >= 1600px) {
+  @supports (-moz-appearance: none) {
+    .card .image {
+      height: 300px;
+      width: 300px;
+    }
+  }
+}
+
+@media (width < 1600px) {
+  @supports (-moz-appearance: none) {
+    .card .image {
+      height: 250px;
+      width: 250px;
+    }
+  }
+}
+
+@media (width < 1100px) {
+  @supports (-moz-appearance: none) {
+    .card .image {
+      height: 200px;
+      width: 200px;
+    }
+  }
 }
 
 .card:hover .image {
@@ -43,7 +69,7 @@
   font-size: 16px;
   padding-top: 4px;
   font-weight: 300;
-  color: #f3e7e4;
+  color: var(--mantine-color-bright);
 }
 
 .price {
@@ -69,7 +95,7 @@
 .cardsGap {
   gap: 10rem;
 
-  @media (max-width: 1400px) {
+  @media (width <= 1400px) {
     gap: 3rem;
   }
 }

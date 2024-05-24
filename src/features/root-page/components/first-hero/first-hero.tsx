@@ -4,10 +4,12 @@ import { Container, Title } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
+import { APP_ROUTES } from '@/routes/routes';
 
 import { Hero } from '../hero/hero';
 
-import classes from '../hero/hero.module.css';
+import classes from './first-hero.module.css';
+import btnClasses from '@/components/base-button/base-button.module.css';
 
 const FirstHero = (): JSX.Element => {
   return (
@@ -17,8 +19,8 @@ const FirstHero = (): JSX.Element => {
           Timeless Classic <br /> Lava Lamp
         </Title>
 
-        <Link className={classes.control} to="/catalog">
-          <BaseButton mt="xl" size="md">
+        <Link className={classes.control} to={`/${APP_ROUTES.Store}`}>
+          <BaseButton className={btnClasses.controlWhite} mt="xl" size="md">
             Shop Now
           </BaseButton>
         </Link>

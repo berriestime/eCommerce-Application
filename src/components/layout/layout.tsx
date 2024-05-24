@@ -5,6 +5,8 @@ import { AppShell, Box, Loader } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 
+import { BREAKPOINT_SM, HEADER_HEIGHT_DESKTOP, HEADER_HEIGHT_MOBILE } from '@/constants/header-height';
+
 import { Header } from '../header';
 
 import classes from '../loader/loader.module.css';
@@ -13,12 +15,15 @@ const Layout = (): JSX.Element => {
   const { width } = useViewportSize();
 
   return (
-    <AppShell header={{ height: width > 767 ? 100 : 64 }} withBorder={false}>
-      <AppShell.Header>
+    <AppShell
+      header={{ height: width > BREAKPOINT_SM ? HEADER_HEIGHT_DESKTOP : HEADER_HEIGHT_MOBILE }}
+      withBorder={false}
+    >
+      <AppShell.Header className="mainHeader">
         <Header />
       </AppShell.Header>
 
-      <AppShell.Main>
+      <AppShell.Main bg="customBg" c="customColor">
         <Suspense
           fallback={
             <Box className={classes.box}>
@@ -26,7 +31,7 @@ const Layout = (): JSX.Element => {
             </Box>
           }
         >
-          <Notifications />
+          <Notifications bg="customBg" c="customColor" />
 
           <Outlet />
         </Suspense>

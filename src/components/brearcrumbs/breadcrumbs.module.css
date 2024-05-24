@@ -1,0 +1,17 @@
+.bc {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.bc a,
+.bc span {
+  text-decoration: none;
+  color: #f3e7e4;
+  transition: all 0.3s ease;
+  margin: 8px 0;
+}
+
+.bc a:hover {
+  color: #aa9f9c;
+}

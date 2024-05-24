@@ -4,6 +4,8 @@ import { AspectRatio, Box, Grid, Overlay } from '@mantine/core';
 import { useResizeObserver } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
+import { APP_ROUTES } from '@/routes/routes';
+
 import imgCandle from '../../assets/categories/candle.webp';
 import imgGiant from '../../assets/categories/giant.webp';
 import imgKids from '../../assets/categories/kids.webp';
@@ -23,7 +25,7 @@ const CategoriesSection = (): JSX.Element => {
       img: imgOriginal,
       ratio: width > 2040 ? 1 : width < 600 ? 1.1 : 1.072,
       title: '1960s Originals',
-      to: '/catalog',
+      to: `/${APP_ROUTES.Store}`,
       xl: width > 2040 ? 2 : 5,
       xs: width < 600 ? 12 : 5,
     },
@@ -33,7 +35,7 @@ const CategoriesSection = (): JSX.Element => {
       img: imgCandle,
       ratio: width < 600 ? 1.1 : 1.5,
       title: 'Candle Powered ',
-      to: '/catalog',
+      to: `/${APP_ROUTES.Store}`,
       xl: width > 2040 ? 3 : 7,
       xs: width < 600 ? 12 : 7,
     },
@@ -43,7 +45,7 @@ const CategoriesSection = (): JSX.Element => {
       img: imgGiant,
       ratio: width > 2040 ? 1 : width < 600 ? 1.1 : 0.75,
       title: 'Giant Lava Lamps',
-      to: '/catalog',
+      to: `/${APP_ROUTES.Store}`,
       xl: width > 2040 ? 2 : 3,
       xs: width < 600 ? 12 : 3,
     },
@@ -53,7 +55,7 @@ const CategoriesSection = (): JSX.Element => {
       img: imgKids,
       ratio: width < 600 ? 1.1 : 1,
       title: 'Lava Lamps for kids',
-      to: '/catalog',
+      to: `/${APP_ROUTES.Store}`,
       xl: width > 2040 ? 2 : 4,
       xs: width < 600 ? 12 : 4,
     },
@@ -63,7 +65,7 @@ const CategoriesSection = (): JSX.Element => {
       img: imgRocket,
       ratio: width > 2040 ? 1.5 : width < 600 ? 1.1 : 1.25,
       title: 'Classic Rockets',
-      to: '/catalog',
+      to: `/${APP_ROUTES.Store}`,
       xl: width > 2040 ? 3 : 5,
       xs: width < 600 ? 12 : 5,
     },
