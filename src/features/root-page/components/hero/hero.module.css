@@ -1,0 +1,96 @@
+.hero {
+  position: relative;
+  background-image: url('../../../../assets/lava.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: #590006;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  z-index: 1;
+  position: relative;
+}
+
+.firstHero {
+  min-height: calc(100vh - 100px);
+  padding-bottom: calc(var(--mantine-spacing-xl) * 12);
+  padding-top: calc(var(--mantine-spacing-xl) * 2);
+
+  @media (max-width: 767px) {
+    min-height: calc(100vh - 64px);
+  }
+}
+
+.secondHero {
+  min-height: 470px;
+  padding-bottom: calc(var(--mantine-spacing-xl) * 5);
+  gap: 1rem;
+}
+
+.title {
+  color: #f3e7e4;
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.1;
+
+  @media (max-width: 900px) {
+    margin-left: calc(var(--mantine-spacing-xl) * 1.5);
+  }
+
+  @media (max-width: 600px) {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+}
+
+.textSize {
+  font-size: 20px;
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
+}
+
+.text {
+  color: #f3e7e4;
+  @media (max-width: 900px) {
+    margin-left: calc(var(--mantine-spacing-xl) * 1.5);
+  }
+}
+
+.link {
+  margin-left: 3.5rem;
+  text-decoration: none;
+  position: relative;
+  color: #f3e7e4;
+  transition: all 0.3s ease;
+
+  @media (max-width: 900px) {
+    margin-left: calc(var(--mantine-spacing-xl) * 2.5);
+  }
+}
+
+.link:before {
+  bottom: -4px;
+  content: '';
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #aa9f9c;
+}
+
+.link:hover {
+  color: #aa9f9c;
+}
+
+.control {
+  @media (max-width: 900px) {
+    margin-left: calc(var(--mantine-spacing-xl) * 1.5);
+  }
+}

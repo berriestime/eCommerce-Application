@@ -1,12 +1,30 @@
 :root {
-  background-color: #1f1b1b;
-  color: #f3e7e4;
+  --color-fg: #f3e7e4;
+  --color-bg: #1f1b1b;
+
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #424242;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #828282;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aa9f9c;
 }
 
 body {
   box-sizing: border-box;
   margin: 0px;
-  min-height: 100vh;
 }
 
 #root {
@@ -14,9 +32,13 @@ body {
 }
 
 main {
-  min-height: calc(100vh - 100px);
+  padding-bottom: 0;
 }
 
-footer {
-  min-height: 52px;
+.mantine-AppShell-root {
+  min-height: 100vh;
+}
+
+.mantine-LoadingOverlay-overlay {
+  background-color: #05050580;
 }

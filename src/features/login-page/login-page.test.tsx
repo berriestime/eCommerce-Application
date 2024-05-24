@@ -1,17 +1,19 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
 
-import { LoginPage } from './login-page';
+import { customRender } from '@/test-utils';
 
-describe('LoginPage', () => {
+import { LoginPage } from './components/login-page';
+
+describe('Login', () => {
   test('should render', () => {
-    render(
+    customRender(
       <MemoryRouter>
         <LoginPage />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Login Page')).toBeInTheDocument();
+    expect(screen.getByText('Welcome Back')).toBeInTheDocument();
   });
 });

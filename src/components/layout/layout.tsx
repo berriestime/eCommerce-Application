@@ -1,20 +1,37 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+
+import { AppShell, Box, Loader } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
+import { Notifications } from '@mantine/notifications';
 
 import { Header } from '../header';
 
-import s from './layout.module.css';
+import classes from '../loader/loader.module.css';
 
 const Layout = (): JSX.Element => {
+  const { width } = useViewportSize();
+
   return (
-    <div className={s.layout}>
-      <Header />
+    <AppShell header={{ height: width > 767 ? 100 : 64 }} withBorder={false}>
+      <AppShell.Header>
+        <Header />
+      </AppShell.Header>
 
-      <main>
-        <Outlet />
-      </main>
+      <AppShell.Main>
+        <Suspense
+          fallback={
+            <Box className={classes.box}>
+              <Loader />
+            </Box>
+          }
+        >
+          <Notifications />
 
-      <footer>2024</footer>
-    </div>
+          <Outlet />
+        </Suspense>
+      </AppShell.Main>
+    </AppShell>
   );
 };
 

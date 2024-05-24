@@ -1,0 +1,25 @@
+.input {
+  background-color: unset;
+  border: unset;
+  border-bottom: 1px solid var(--color-fg);
+
+  &[data-error='true'] {
+    border-bottom: 1px solid var(--input-bd);
+  }
+}
+
+.wrapper {
+  --input-radius: 0;
+}
+
+.root {
+  min-height: 80.19px;
+}
+
+.error {
+  text-wrap: nowrap;
+}
+
+.label {
+  color: var(--mantine-color-white);
+}

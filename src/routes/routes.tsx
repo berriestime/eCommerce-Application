@@ -1,8 +1,17 @@
 import { Layout } from '@/components/layout';
-import { NotFoundPage } from '@/components/not-found-page/not-found-page';
-import { LoginPage } from '@/features/login-page';
-import { Profile } from '@/features/profile/profile';
-import { RootPage } from '@/features/root-page';
+
+import { AuthRouteGuard } from './AuthRouteGuard';
+import {
+  CartPage,
+  CategoryPage,
+  LoginPage,
+  NotFoundPage,
+  ProductPage,
+  Profile,
+  RegistrationPage,
+  RootPage,
+  TeamPage,
+} from './lazy';
 
 export const routes = [
   {
@@ -12,12 +21,46 @@ export const routes = [
         index: true,
       },
       {
-        element: <LoginPage />,
+        element: (
+          <AuthRouteGuard authRejectStatus="AUTHENTICATED" rejectRoute="/">
+            <LoginPage />
+          </AuthRouteGuard>
+        ),
         path: 'login',
       },
       {
-        element: <Profile />,
+        element: (
+          <AuthRouteGuard authRejectStatus="AUTHENTICATED" rejectRoute="/">
+            <RegistrationPage />
+          </AuthRouteGuard>
+        ),
+        path: 'registration',
+      },
+      {
+        element: (
+          <AuthRouteGuard authRejectStatus="UNAUTHENTICATED" rejectRoute="/login">
+            <Profile />
+          </AuthRouteGuard>
+        ),
         path: 'dashboard',
+      },
+      {
+        children: [
+          {
+            element: <ProductPage />,
+            path: 'catalog/:productId',
+          },
+        ],
+        element: <CategoryPage />,
+        path: 'catalog',
+      },
+      {
+        element: <TeamPage />,
+        path: 'team',
+      },
+      {
+        element: <CartPage />,
+        path: 'cart',
       },
     ],
     element: <Layout />,
