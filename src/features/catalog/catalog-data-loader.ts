@@ -1,7 +1,7 @@
 import { CategoryPagedQueryResponse, ClientResponse, ProductPagedQueryResponse } from '@commercetools/platform-sdk';
 
-import { getAllCategories } from './category/api';
-import { getAllProducts } from './product/api';
+import { getAllCategories } from './api/category-api';
+import { getAllProducts } from './api/product-api';
 
 async function loader(): Promise<{
   categoriesData: CategoryPagedQueryResponse;

@@ -2,8 +2,8 @@ import type { LoaderFunctionArgs } from 'react-router-dom';
 
 import { Category, ClientResponse, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 
-import { getProductsByCategoryId } from '../product/api';
-import { getCategoryByKey } from './api';
+import { getCategoryByKey } from '../api/category-api';
+import { getProductsByCategoryId } from '../api/product-api';
 
 async function loader({
   params,

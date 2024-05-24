@@ -2,8 +2,8 @@ import type { LoaderFunctionArgs } from 'react-router-dom';
 
 import { Category, ClientResponse, Product } from '@commercetools/platform-sdk';
 
-import { getCategoryById } from '../category/api';
-import { getProductByKey } from './api';
+import { getCategoryById } from '../api/category-api';
+import { getProductByKey } from '../api/product-api';
 
 async function loader({ params }: LoaderFunctionArgs): Promise<{ categoryData: Category; productData: Product }> {
   const { categoryId, productId: productKey } = params as { categoryId: string; productId: string };
