@@ -18,7 +18,7 @@ const NotFoundPage: FC = () => {
       header={{ height: width > BREAKPOINT_SM ? HEADER_HEIGHT_DESKTOP : HEADER_HEIGHT_MOBILE }}
       withBorder={false}
     >
-      <AppShell.Header>
+      <AppShell.Header className="mainHeader">
         <Header />
       </AppShell.Header>
 
