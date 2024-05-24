@@ -60,7 +60,7 @@ const Header: FC = () => {
     { icon: <LogoutIcon size={26} />, name: 'Logout' },
   ];
 
-  const matches = useMediaQuery('(min-width: 48em)');
+  const matches = useMediaQuery('(width < 48em)');
 
   const getItems = (
     elements: {
@@ -70,38 +70,34 @@ const Header: FC = () => {
     }[],
     curClass?: string,
   ): JSX.Element[] => {
-    const items = elements.map((el) =>
-      el.to && !el.icon ? (
-        <NavLink
-          className={({ isActive }) => clsx(curClass, { [classes.active || '']: isActive })}
-          key={el.name}
-          onClick={closeDrawer}
-          to={el.to}
-        >
-          {el.name}
-        </NavLink>
-      ) : el.to && el.icon ? (
-        <NavLink
-          className={({ isActive }) => clsx(curClass, { [classes.active || '']: isActive })}
-          key={el.name}
-          onClick={closeDrawer}
-          to={el.to}
-        >
+    const items = elements.map((el) => {
+      if (!el.to) {
+        return (
+          <UnstyledButton className={clsx(curClass)} key={el.name} onClick={() => (closeDrawer(), openModal())}>
+            {el.icon} {matches ? el.name : ''}
+          </UnstyledButton>
+        );
+      }
+
+      const linkContents = el.icon ? (
+        <>
           {el.icon} {el.name}
-        </NavLink>
+        </>
       ) : (
-        <UnstyledButton
-          className={clsx(curClass)}
+        <>{el.name}</>
+      );
+
+      return (
+        <NavLink
+          className={({ isActive }) => clsx(curClass, { [classes.active || '']: isActive })}
           key={el.name}
-          onClick={() => {
-            closeDrawer();
-            openModal();
-          }}
+          onClick={closeDrawer}
+          to={el.to}
         >
-          {el.icon} {!matches ? el.name : ''}
-        </UnstyledButton>
-      ),
-    );
+          {linkContents}
+        </NavLink>
+      );
+    });
 
     return items;
   };
