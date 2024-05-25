@@ -83,7 +83,7 @@ export const routes = [
             <Link key="1" to={`/${APP_ROUTES.Store}`}>
               Store
             </Link>,
-            <span key="2">{categoryData.name['en-GB']}</span>,
+            <span key="2">{categoryData.name['en-US']}</span>,
           ],
         },
         loader: CategoryLoader,
@@ -97,9 +97,9 @@ export const routes = [
               Store
             </Link>,
             <Link key="2" to={`/${APP_ROUTES.Store}/${categoryData.key}`}>
-              {categoryData.name['en-GB']}
+              {categoryData.name['en-US']}
             </Link>,
-            <span key="3">{productData.masterData.current.name['en-GB']}</span>,
+            <span key="3">{productData.masterData.current.name['en-US']}</span>,
           ],
         },
         loader: ProductLoader,

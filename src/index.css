@@ -68,3 +68,8 @@ main {
     padding: 16px;
   }
 }
+
+.commonText {
+  font-size: 16px;
+  font-weight: 200;
+}

@@ -19,14 +19,14 @@ const CatalogPage: FC = () => {
 
   const categories = categoriesResult.map((category) => (
     <Box key={category.id} mx="xl">
-      <Link to={`/store/${category.key}`}>{category.name['en-GB']}</Link>
+      <Link to={`/store/${category.key}`}>{category.name['en-US']}</Link>
     </Box>
   ));
 
   const products = productResult.map((product) => (
     <Box key={product.id} mx="xl">
       <Link to={`/store/${product.masterData.current.categories[0]?.id}/${product.key}`}>
-        {product.masterData.current.name['en-GB']}
+        {product.masterData.current.name['en-US']}
       </Link>
     </Box>
   ));
