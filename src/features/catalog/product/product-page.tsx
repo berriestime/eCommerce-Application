@@ -1,8 +1,8 @@
-import { type FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
 import { Product } from '@commercetools/platform-sdk';
-import { Carousel } from '@mantine/carousel';
+import { Carousel, Embla } from '@mantine/carousel';
 import { Box, Flex, Grid, Image, SimpleGrid, Spoiler, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
@@ -21,7 +21,22 @@ const ProductPage: FC = () => {
 
   const { productData } = data as { productData: Product };
   const { discountPrice, price } = getPrice(productData);
-  const { images } = productData.masterData.current.masterVariant;
+  const images = productData.masterData.current.masterVariant.images || [];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [embla, setEmbla] = useState<Embla | null>(null);
+
+  useEffect(() => {
+    if (embla) {
+      const onSelect = (): void => {
+        setCurrentIndex(embla.selectedScrollSnap());
+      };
+      embla.on('select', onSelect);
+      onSelect();
+    }
+  }, [embla]);
+
+  const currentImageUrl = images.length > 0 ? images[currentIndex]?.url : '';
 
   const cards = [1, 2, 3, 4, 5, 6].map((el) => (
     <Box bg="white" h="482" key={el}>
@@ -35,7 +50,7 @@ const ProductPage: FC = () => {
     </Title>
   );
 
-  const slides = images?.map((image, i) => (
+  const slides = images.map((image, i) => (
     <Carousel.Slide key={image.url} w={60}>
       <Box w={60}>
         <Image alt={'photo' + i} fit="contain" src={image.url} />
@@ -61,7 +76,7 @@ const ProductPage: FC = () => {
               gap={{ base: 'sm', md: 60, sm: 20 }}
               justify={{ sm: 'flex-start' }}
             >
-              {images && images?.length > 1 && (
+              {images.length > 1 && (
                 <Box h="100%" mt="40">
                   <Carousel
                     align="start"
@@ -73,9 +88,10 @@ const ProductPage: FC = () => {
                       indicators: classes.carouselIndicators,
                       root: classes.carousel,
                     }}
+                    getEmblaApi={setEmbla}
                     height={matchesXxs ? 60 : 220}
                     orientation={matchesXxs ? 'horizontal' : 'vertical'}
-                    slideGap={{ base: 0, sm: 'md' }}
+                    slideGap={{ base: 0 }}
                     slideSize={60}
                     slidesToScroll={1}
                     w={matchesXxs ? '100%' : 60}
@@ -86,7 +102,7 @@ const ProductPage: FC = () => {
               )}
 
               <Box h="100%">
-                <Image alt="photo" className={classes.image} fit="contain" src={images?.[0]?.url} />
+                <Image alt="photo" className={classes.image} fit="contain" src={currentImageUrl} />
               </Box>
             </Flex>
           </Grid.Col>
