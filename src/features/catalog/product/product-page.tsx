@@ -20,11 +20,8 @@ const ProductPage: FC = () => {
   const matchesXxs = useMediaQuery('(width < 22.5em)');
 
   const { productData } = data as { productData: Product };
-  console.log('PRODUCT', data);
-
   const { discountPrice, price } = getPrice(productData);
   const { images } = productData.masterData.current.masterVariant;
-  console.log(images);
 
   const cards = [1, 2, 3, 4, 5, 6].map((el) => (
     <Box bg="white" h="482" key={el}>
@@ -37,6 +34,14 @@ const ProductPage: FC = () => {
       {productData.masterData.current.name['en-US']}
     </Title>
   );
+
+  const slides = images?.map((image, i) => (
+    <Carousel.Slide key={image.url} w={60}>
+      <Box w={60}>
+        <Image alt={'photo' + i} fit="contain" src={image.url} />
+      </Box>
+    </Carousel.Slide>
+  ));
 
   return (
     <>
@@ -56,34 +61,32 @@ const ProductPage: FC = () => {
               gap={{ base: 'sm', md: 60, sm: 20 }}
               justify={{ sm: 'flex-start' }}
             >
-              <Box h="100%">
-                <Carousel
-                  align="start"
-                  classNames={{
-                    controls: classes.carouselControls,
-                    indicator: classes.carouselIndicator,
-                    indicators: classes.carouselIndicators,
-                    root: classes.carousel,
-                  }}
-                  height={matchesXxs ? 60 : '100%'}
-                  loop
-                  orientation={matchesXxs ? 'horizontal' : 'vertical'}
-                  slideGap="xl"
-                  slideSize={60}
-                  slidesToScroll={1}
-                  w={matchesXxs ? '100%' : 60}
-                >
-                  <Carousel.Slide bg="blue">1</Carousel.Slide>
-                  <Carousel.Slide bg="cyan">2</Carousel.Slide>
-                  <Carousel.Slide bg="grape">3</Carousel.Slide>
-                  <Carousel.Slide bg="indigo">4</Carousel.Slide>
-                  <Carousel.Slide bg="lime">5</Carousel.Slide>
-                  <Carousel.Slide bg="pink">6</Carousel.Slide>
-                </Carousel>
-              </Box>
+              {images && images?.length > 1 && (
+                <Box h="100%" mt="40">
+                  <Carousel
+                    align="start"
+                    classNames={{
+                      container: classes.carouselContainer,
+                      control: classes.carouselControl,
+                      controls: classes.carouselControls,
+                      indicator: classes.carouselIndicator,
+                      indicators: classes.carouselIndicators,
+                      root: classes.carousel,
+                    }}
+                    height={matchesXxs ? 60 : 220}
+                    orientation={matchesXxs ? 'horizontal' : 'vertical'}
+                    slideGap={{ base: 0, sm: 'md' }}
+                    slideSize={60}
+                    slidesToScroll={1}
+                    w={matchesXxs ? '100%' : 60}
+                  >
+                    {slides}
+                  </Carousel>
+                </Box>
+              )}
 
               <Box h="100%">
-                <Image alt={'alt'} className={classes.image} fit="contain" src={images?.[0]?.url} />
+                <Image alt="photo" className={classes.image} fit="contain" src={images?.[0]?.url} />
               </Box>
             </Flex>
           </Grid.Col>

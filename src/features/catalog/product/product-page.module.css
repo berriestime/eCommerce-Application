@@ -50,7 +50,7 @@
   opacity: 1;
 }
 
-/* .carousel {
+.carousel {
   @mixin hover {
     .carouselControls {
       opacity: 1;
@@ -60,7 +60,34 @@
 
 .carouselControls {
   transition: opacity 150ms ease;
-  opacity: 0;
+  padding: 0;
+  gap: 20px;
+
+  &[data-orientation='vertical'] {
+    top: -40px;
+    bottom: -40px;
+  }
+
+  &[data-orientation='horizontal'] {
+    left: -40px;
+    right: -40px;
+  }
+}
+
+.carouselControl {
+  color: var(--mantine-color-bright);
+  background-color: transparent;
+  border: transparent;
+
+  &[data-inactive] {
+    opacity: 0;
+    cursor: default;
+  }
+}
+
+.carouselControl svg {
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .carouselIndicators {
@@ -76,4 +103,8 @@
     width: 16px;
     background-color: #aa9f9c;
   }
-} */
+}
+
+.carouselContainer {
+  gap: 20px;
+}
