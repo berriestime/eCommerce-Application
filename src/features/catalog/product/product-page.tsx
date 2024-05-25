@@ -77,7 +77,7 @@ const ProductPage: FC = () => {
               justify={{ sm: 'flex-start' }}
             >
               {images.length > 1 && (
-                <Box h="100%" mt="40">
+                <Box h="100%" ml={matchesXxs ? 40 : 0} mt={matchesXxs ? 0 : 40}>
                   <Carousel
                     align="start"
                     classNames={{
@@ -94,7 +94,7 @@ const ProductPage: FC = () => {
                     slideGap={{ base: 0 }}
                     slideSize={60}
                     slidesToScroll={1}
-                    w={matchesXxs ? '100%' : 60}
+                    w={matchesXxs ? 'calc(100% - 40px)' : 60}
                   >
                     {slides}
                   </Carousel>
