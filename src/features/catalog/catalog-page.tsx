@@ -5,6 +5,7 @@ import { CategoryPagedQueryResponse, ProductPagedQueryResponse } from '@commerce
 import { Box } from '@mantine/core';
 
 import { Breadcrumbs } from '@/components/brearcrumbs';
+import { Footer } from '@/components/footer';
 
 const CatalogPage: FC = () => {
   const data = useLoaderData();
@@ -32,14 +33,17 @@ const CatalogPage: FC = () => {
   ));
 
   return (
-    <div>
-      <Breadcrumbs />
-      <h1>Store page</h1>
-      <h2>Categories</h2>
-      {categories}
-      <h2>Products</h2>
-      {products}
-    </div>
+    <>
+      <Box className="middleContainer">
+        <Breadcrumbs />
+        <h1>Store page</h1>
+        <h2>Categories</h2>
+        {categories}
+        <h2>Products</h2>
+        {products}
+      </Box>
+      <Footer />
+    </>
   );
 };
 

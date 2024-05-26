@@ -117,7 +117,7 @@ const ProductPage: FC = () => {
             />
 
             <BaseButton c="bright" fullWidth mt={10}>
-              Add To Card
+              Add To Cart
             </BaseButton>
           </Grid.Col>
         </Grid>

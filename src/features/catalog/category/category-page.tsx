@@ -5,6 +5,7 @@ import { Category, ProductProjectionPagedQueryResponse } from '@commercetools/pl
 import { Box } from '@mantine/core';
 
 import { Breadcrumbs } from '@/components/brearcrumbs';
+import { Footer } from '@/components/footer';
 
 // import classes from './category-page.module.css';
 
@@ -26,10 +27,13 @@ const CategoryPage: FC = () => {
 
   return (
     <>
-      <Breadcrumbs />
-      <h1>Category page: {categoryData.name['en-US']}</h1>
-      <h2>Products</h2>
-      {products}
+      <Box className="middleContainer">
+        <Breadcrumbs />
+        <h1>Category page: {categoryData.name['en-US']}</h1>
+        <h2>Products</h2>
+        {products}
+      </Box>
+      <Footer />
     </>
   );
 };
