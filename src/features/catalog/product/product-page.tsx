@@ -1,7 +1,7 @@
 import { type FC, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 
-import { Product } from '@commercetools/platform-sdk';
+import { Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Spoiler, Text, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
@@ -11,6 +11,7 @@ import { BaseButton } from '@/components/base-button';
 import { Breadcrumbs } from '@/components/brearcrumbs';
 import { CustomSelect } from '@/components/custom-select';
 import { Footer } from '@/components/footer';
+import { CommonCard } from '@/components/product-card/common-card';
 import { CategoriesSection } from '@/features/root-page/components/categories-section';
 import { getPrice } from '@/utils/formate-price';
 
@@ -24,7 +25,8 @@ const ProductPage: FC = () => {
   const matchesXs = useMediaQuery('(width < 48em)');
   const matchesXxs = useMediaQuery('(width < 22.5em)');
 
-  const { productData } = data as { productData: Product };
+  const { cardsData, productData } = data as { cardsData: ProductProjectionPagedQueryResponse; productData: Product };
+  const { results: cards } = cardsData;
   const { discountPrice, price } = getPrice(productData);
 
   const [bigSliderOpened, setOpened] = useState(false);
@@ -36,11 +38,11 @@ const ProductPage: FC = () => {
     setCurrentImageUrl(url);
   };
 
-  const cards = [1, 2, 3, 4, 5, 6].map((el) => (
-    <Box bg="white" h="482" key={el}>
-      {el}
-    </Box>
-  ));
+  // const cards = [1, 2, 3, 4, 5, 6].map((el) => (
+  //   <Box bg="white" h="482" key={el}>
+  //     {el}
+  //   </Box>
+  // ));
 
   const title = (
     <Title c="bright" className={classes.productTitle} mt={matchesXs ? 20 : 0}>
@@ -54,6 +56,17 @@ const ProductPage: FC = () => {
     },
     mode: 'controlled',
   });
+
+  const productCards = cards.map((productCard) => {
+    const { key } = productCard;
+    return (
+      <Link className={classes.link} key={key} to={''}>
+        <CommonCard data={productCard} />
+      </Link>
+    );
+  });
+
+  // const slides = productCards.map((item, i) => <Carousel.Slide key={i}>{item}</Carousel.Slide>);
 
   return (
     <>
@@ -126,8 +139,8 @@ const ProductPage: FC = () => {
           YOU MAY ALSO LIKE...
         </Text>
 
-        <SimpleGrid className={classes.cardsGap} cols={3} mt="xl" spacing="60">
-          {cards}
+        <SimpleGrid className={classes.cardsGap} cols={{ base: 1, sm: 3, xs: 2 }} mt="xl" spacing="60">
+          {productCards}
         </SimpleGrid>
       </Box>
 

@@ -1,11 +1,15 @@
 import type { LoaderFunctionArgs } from 'react-router-dom';
 
-import { Category, ClientResponse, Product } from '@commercetools/platform-sdk';
+import { Category, ClientResponse, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 
 import { getCategoryById } from '../api/category-api';
-import { getProductByKey } from '../api/product-api';
+import { getProductByKey, getProductsByCategoryId } from '../api/product-api';
 
-async function loader({ params }: LoaderFunctionArgs): Promise<{ categoryData: Category; productData: Product }> {
+async function loader({ params }: LoaderFunctionArgs): Promise<{
+  cardsData: ProductProjectionPagedQueryResponse;
+  categoryData: Category;
+  productData: Product;
+}> {
   const { categoryId, productId: productKey } = params as { categoryId: string; productId: string };
 
   const productResponse: ClientResponse<Product> = await getProductByKey(productKey);
@@ -20,7 +24,12 @@ async function loader({ params }: LoaderFunctionArgs): Promise<{ categoryData: C
   const categoryResponse: ClientResponse<Category> = await getCategoryById(categoryId);
   const categoryData: Category = categoryResponse.body;
 
-  return { categoryData, productData };
+  const cardsResponse: ClientResponse<ProductProjectionPagedQueryResponse> = await getProductsByCategoryId(
+    categoryData.id,
+  );
+  const cardsData: ProductProjectionPagedQueryResponse = cardsResponse.body;
+
+  return { cardsData, categoryData, productData };
 }
 
 export { loader };
