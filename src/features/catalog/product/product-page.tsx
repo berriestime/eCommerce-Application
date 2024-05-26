@@ -3,10 +3,13 @@ import { useLoaderData } from 'react-router-dom';
 
 import { Product } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Spoiler, Text, Title } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
+import { BaseButton } from '@/components/base-button';
 import { Breadcrumbs } from '@/components/brearcrumbs';
+import { CustomSelect } from '@/components/custom-select';
 import { Footer } from '@/components/footer';
 import { CategoriesSection } from '@/features/root-page/components/categories-section';
 import { getPrice } from '@/utils/formate-price';
@@ -44,6 +47,13 @@ const ProductPage: FC = () => {
       {productData.masterData.current.name['en-US']}
     </Title>
   );
+
+  const form = useForm({
+    initialValues: {
+      quantity: '1',
+    },
+    mode: 'controlled',
+  });
 
   return (
     <>
@@ -97,6 +107,18 @@ const ProductPage: FC = () => {
                 {productData?.masterData?.current?.description?.['en-US'] || 'No description available'}
               </Text>
             </Spoiler>
+
+            <CustomSelect
+              data={['1', '2', '3', '4', '5']}
+              label="Quantity"
+              maw={68}
+              mt={60}
+              {...form.getInputProps('quantity')}
+            />
+
+            <BaseButton c="bright" fullWidth mt={10}>
+              Add To Card
+            </BaseButton>
           </Grid.Col>
         </Grid>
 
