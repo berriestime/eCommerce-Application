@@ -90,7 +90,7 @@ const ProductPage: FC = () => {
           <Grid.Col className={classes.col} pos="relative" span={{ base: 12, sm: 5, xs: 6 }}>
             {title}
 
-            <Title mb={20} mt={16}>
+            <Title mb={20} mt={16} order={2}>
               {discountPrice && <span className={clsx(classes.price, classes.discount)}>{discountPrice} $</span>}
               <span className={classes.price}>{price} $</span>
             </Title>

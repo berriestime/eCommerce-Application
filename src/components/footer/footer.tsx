@@ -10,7 +10,7 @@ const Footer: FC = () => {
   const link = 'https://github.com/berriestime/eCommerce-Application';
 
   return (
-    <Box className={classes.container}>
+    <Box className={classes.container} mt="auto">
       <Group align="center" className={classes.footerWrapper} justify="space-between">
         <Text<'a'> className={classes.link} component="a" href={link} size="md" target="_blank">
           <GithubIcon size={36} /> GitHub

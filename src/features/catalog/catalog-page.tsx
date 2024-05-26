@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 
 import { CategoryPagedQueryResponse, ProductPagedQueryResponse } from '@commercetools/platform-sdk';
-import { Box } from '@mantine/core';
+import { Box, Title } from '@mantine/core';
 
 import { Breadcrumbs } from '@/components/brearcrumbs';
 import { Footer } from '@/components/footer';
@@ -33,17 +33,22 @@ const CatalogPage: FC = () => {
   ));
 
   return (
-    <>
+    <Box className="wrapper">
       <Box className="middleContainer">
         <Breadcrumbs />
-        <h1>Store page</h1>
-        <h2>Categories</h2>
+        <Title c="bright">Store page</Title>
+
+        <Title c="bright" mb={20} mt={16} order={2}>
+          Categories
+        </Title>
         {categories}
-        <h2>Products</h2>
+        <Title c="bright" mb={20} mt={16} order={2}>
+          Products
+        </Title>
         {products}
       </Box>
       <Footer />
-    </>
+    </Box>
   );
 };
 

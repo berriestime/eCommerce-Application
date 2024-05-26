@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 
 import { Category, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
-import { Box } from '@mantine/core';
+import { Box, Title } from '@mantine/core';
 
 import { Breadcrumbs } from '@/components/brearcrumbs';
 import { Footer } from '@/components/footer';
@@ -26,15 +26,18 @@ const CategoryPage: FC = () => {
   ));
 
   return (
-    <>
+    <Box className="wrapper">
       <Box className="middleContainer">
         <Breadcrumbs />
-        <h1>Category page: {categoryData.name['en-US']}</h1>
-        <h2>Products</h2>
+        <Title c="bright">Category page: {categoryData.name['en-US']}</Title>
+
+        <Title c="bright" mb={20} mt={16} order={2}>
+          Products
+        </Title>
         {products}
       </Box>
       <Footer />
-    </>
+    </Box>
   );
 };
 
