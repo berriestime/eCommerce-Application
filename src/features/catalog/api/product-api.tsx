@@ -15,9 +15,25 @@ const getProductByKey = (productKey: string): Promise<ClientResponse<Product>> =
   return apiRoot.products().withKey({ key: productKey }).get().execute();
 };
 
-async function getAllProducts(): Promise<ClientResponse> {
+// async function getAllProducts(): Promise<ClientResponse> {
+//   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+//   const response: ClientResponse = await apiRoot.products().get().execute();
+//   return response;
+// }
+
+async function getAllProducts(): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  const response: ClientResponse = await apiRoot.products().get().execute();
+  const response: ClientResponse = await apiRoot
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        filter: [],
+        limit: 200,
+        offset: 0,
+      },
+    })
+    .execute();
   return response;
 }
 

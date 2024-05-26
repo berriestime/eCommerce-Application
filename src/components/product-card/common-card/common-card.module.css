@@ -3,16 +3,28 @@
   padding: 0;
   max-width: 400px;
   margin: 0 auto;
+  border-radius: 0;
+}
+
+.info {
+  margin-inline: 0;
 }
 
 .card .title {
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 500;
   color: var(--mantine-color-bright);
   transition: all 0.5s linear;
 }
 
-.card:hover .title {
+.card .description {
+  font-weight: 200;
+  color: var(--mantine-color-bright);
+  transition: all 0.5s linear;
+}
+
+.card:hover .title,
+.card:hover .description {
   color: #aa9f9c;
 }
 
@@ -66,14 +78,13 @@
 
 .badge {
   position: absolute;
-  top: 0;
-  right: 0.1rem;
-  border-image: linear-gradient(45deg, #f51313, #ffc710);
-  border-image-slice: 1;
+  top: 8px;
+  right: 8px;
   font-size: 16px;
+  font-weight: 600;
   padding-top: 4px;
-  font-weight: 300;
   color: var(--mantine-color-bright);
+  background: linear-gradient(45deg, #f51313, #ffc710);
 }
 
 .price {
@@ -84,50 +95,18 @@
   color: #aa9f9c;
 }
 
-.section {
-  margin-top: auto;
-  padding: var(--mantine-spacing-md);
-  border-top: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
-  text-align: center;
-  text-decoration: none;
-}
-
 .link {
   text-decoration: none;
 }
 
-.cardsGap {
-  gap: 10rem;
-
-  @media (width <= 1400px) {
-    gap: 3rem;
-  }
+.price {
+  color: var(--mantine-color-bright);
+  font-weight: 200;
+  font-weight: 600;
 }
 
-.carousel {
-  @mixin hover {
-    .carouselControls {
-      opacity: 1;
-    }
-  }
-}
-
-.carouselControls {
-  transition: opacity 150ms ease;
-  opacity: 0;
-}
-
-.carouselIndicators {
-  bottom: -4px;
-}
-
-.carouselIndicator {
-  width: 5px;
-  height: 5px;
-  transition: width 250ms ease;
-
-  &[data-active] {
-    width: 16px;
-    background-color: #aa9f9c;
-  }
+.discount {
+  text-decoration: line-through;
+  margin-right: 16px;
+  color: #aa9f9c;
 }

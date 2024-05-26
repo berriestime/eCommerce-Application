@@ -38,12 +38,6 @@ const ProductPage: FC = () => {
     setCurrentImageUrl(url);
   };
 
-  // const cards = [1, 2, 3, 4, 5, 6].map((el) => (
-  //   <Box bg="white" h="482" key={el}>
-  //     {el}
-  //   </Box>
-  // ));
-
   const title = (
     <Title c="bright" className={classes.productTitle} mt={matchesXs ? 20 : 0}>
       {productData.masterData.current.name['en-US']}
@@ -60,7 +54,7 @@ const ProductPage: FC = () => {
   const productCards = cards.map((productCard) => {
     const { key } = productCard;
     return (
-      <Link className={classes.link} key={key} to={''}>
+      <Link className="commonLink " key={key} to={`/store/${productCard.categories[0]?.id}/${key}`}>
         <CommonCard data={productCard} />
       </Link>
     );
@@ -139,7 +133,7 @@ const ProductPage: FC = () => {
           YOU MAY ALSO LIKE...
         </Text>
 
-        <SimpleGrid className={classes.cardsGap} cols={{ base: 1, sm: 3, xs: 2 }} mt="xl" spacing="60">
+        <SimpleGrid cols={{ base: 1, sm: 3, xs: 2 }} mt="xl" spacing="60">
           {productCards}
         </SimpleGrid>
       </Box>
