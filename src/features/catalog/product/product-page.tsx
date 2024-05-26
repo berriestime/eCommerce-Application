@@ -26,7 +26,9 @@ const ProductPage: FC = () => {
 
   const [bigSliderOpened, setOpened] = useState(false);
 
-  const [currentImageUrl, setCurrentImageUrl] = useState<string>('');
+  const images = productData.masterData.current.masterVariant.images || [];
+  const [currentImageUrl, setCurrentImageUrl] = useState<string>(images[0]?.url || '');
+
   const handleImageChange = (url: string): void => {
     setCurrentImageUrl(url);
   };
@@ -38,7 +40,7 @@ const ProductPage: FC = () => {
   ));
 
   const title = (
-    <Title c="bright" className={classes.productTitle}>
+    <Title c="bright" className={classes.productTitle} mt={matchesXs ? 20 : 0}>
       {productData.masterData.current.name['en-US']}
     </Title>
   );
@@ -109,7 +111,12 @@ const ProductPage: FC = () => {
 
       <CategoriesSection />
       <Footer />
-      <BigSlider close={() => setOpened(false)} opened={bigSliderOpened} />
+      <BigSlider
+        close={() => setOpened(false)}
+        currentImageUrl={currentImageUrl}
+        images={images}
+        opened={bigSliderOpened}
+      />
     </>
   );
 };
