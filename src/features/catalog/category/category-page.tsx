@@ -8,6 +8,8 @@ import { Breadcrumbs } from '@/components/brearcrumbs';
 import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
 
+import { Tabs } from './components';
+
 // import classes from './category-page.module.css';
 
 const CategoryPage: FC = () => {
@@ -19,6 +21,8 @@ const CategoryPage: FC = () => {
   };
 
   const { results: productResult } = productsData;
+
+  console.log(productsData);
 
   const productCards = productResult.map((product) => {
     const { key } = product;
@@ -33,7 +37,11 @@ const CategoryPage: FC = () => {
     <Box className="wrapper">
       <Box className="middleContainer">
         <Breadcrumbs />
-        <Title c="bright">Category page: {categoryData.name['en-US']}</Title>
+        <Tabs />
+
+        <Title c="bright" mt={20}>
+          Category page: {categoryData.name['en-US']}
+        </Title>
 
         <Title c="bright" mb={20} mt={16} order={2}>
           Products
