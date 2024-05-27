@@ -15,9 +15,10 @@ import { Tabs } from './components';
 const CategoryPage: FC = () => {
   const data = useLoaderData();
 
-  const { categoryData, productsData } = data as {
+  const { categoryData, productsData, subcategoryData } = data as {
     categoryData: Category;
     productsData: ProductProjectionPagedQueryResponse;
+    subcategoryData?: Category;
   };
 
   const { results: productResult } = productsData;
@@ -26,8 +27,9 @@ const CategoryPage: FC = () => {
 
   const productCards = productResult.map((product) => {
     const { key } = product;
+    const url = subcategoryData ? `/store/${categoryData.key}/${subcategoryData.key}` : `/store/${categoryData.key}`;
     return (
-      <Link className="commonLink " key={key} to={`/store/${product.categories[0]?.id}/${key}`}>
+      <Link className="commonLink " key={key} to={`${url}/${key}`}>
         <CommonCard data={product} />
       </Link>
     );
