@@ -1,5 +1,5 @@
-import { type FC, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useLoaderData, useParams } from 'react-router-dom';
 
 import { Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Spoiler, Text, Title } from '@mantine/core';
@@ -20,7 +20,12 @@ import { BigSlider } from './components/slider';
 
 import classes from './product-page.module.css';
 
-const ProductPage: FC = () => {
+const ProductPage = (): JSX.Element => {
+  const { categoryId: categoryKey, subcategoryId: subcategoryKey } = useParams<{
+    categoryId: string;
+    subcategoryId: string;
+  }>();
+
   const data = useLoaderData();
   const matchesXs = useMediaQuery('(width < 48em)');
   const matchesXxs = useMediaQuery('(width < 22.5em)');
@@ -54,7 +59,7 @@ const ProductPage: FC = () => {
   const productCards = cards.map((productCard) => {
     const { key } = productCard;
     return (
-      <Link className="commonLink " key={key} to={`/store/${productCard.categories[0]?.id}/${key}`}>
+      <Link className="commonLink " key={key} to={`/store/${categoryKey}/${subcategoryKey}/${key}`}>
         <CommonCard data={productCard} />
       </Link>
     );

@@ -58,4 +58,22 @@ async function getProductsByCategoryId(
   return response;
 }
 
-export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId };
+async function getProductsByCategoryIds(
+  categoryIds: string[],
+): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const response = await apiRoot
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        'filter.query': categoryIds.map((id) => `categories.id:"${id}"`),
+        limit: 20,
+        offset: 0,
+      },
+    })
+    .execute();
+  return response;
+}
+
+export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId, getProductsByCategoryIds };
