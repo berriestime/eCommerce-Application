@@ -73,8 +73,6 @@ const ProductPage = (): JSX.Element => {
     );
   });
 
-  // const slides = productCards.map((item, i) => <Carousel.Slide key={i}>{item}</Carousel.Slide>);
-
   return (
     <Box className="wrapper">
       <Breadcrumbs />
