@@ -2,7 +2,7 @@ import type { FC, ReactNode } from 'react';
 import { NavLink, useLoaderData } from 'react-router-dom';
 
 import { Category, CategoryPagedQueryResponse } from '@commercetools/platform-sdk';
-import { Box, Title } from '@mantine/core';
+import { Box } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import classes from './tabs.module.css';
@@ -45,15 +45,14 @@ const Tabs: FC = () => {
 
   return (
     <Box>
-      <Box className={classes.categories}>{categoriesNav}</Box>
+      <Box className={classes.categoriesWrapper} py={12}>
+        <Box className={clsx(classes.categories, classes.contentWrapper)}>{categoriesNav}</Box>
+      </Box>
 
       {subcategoriesNav.length > 0 && (
-        <>
-          <Title c="bright" mb={20} mt={16} order={5}>
-            Subcategories
-          </Title>
+        <Box className={clsx(classes.contentWrapper)}>
           <Box className={classes.categories}>{subcategoriesNav}</Box>{' '}
-        </>
+        </Box>
       )}
     </Box>
   );
