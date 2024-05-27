@@ -5,13 +5,17 @@ import { Container, Title } from '@mantine/core';
 
 import { BaseButton } from '@/components/base-button';
 
-import { FirstName } from './first-name';
+import { ProfileDateOfBirth } from './birthday';
+import { ProfileFirstName } from './first-name';
+import { ProfileLastName } from './last-name';
 
 const PersonalInfo = (user: Customer): ReactElement => {
   return (
     <Container>
       <Title order={2}>PERSONAL INFO</Title>
-      <FirstName {...user} />
+      <ProfileFirstName {...user} />
+      <ProfileLastName {...user} />
+      <ProfileDateOfBirth {...user} />
       <BaseButton>Change Password</BaseButton>
     </Container>
   );

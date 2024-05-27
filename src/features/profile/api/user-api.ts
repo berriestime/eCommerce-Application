@@ -18,7 +18,7 @@ async function getVersionUpdate(): Promise<number> {
   return responseVersion.body.version;
 }
 
-async function postUserName(name: string): Promise<ClientResponse> {
+async function postUserFirstName(name: string): Promise<ClientResponse> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const version = await getVersionUpdate();
 
@@ -42,4 +42,52 @@ async function postUserName(name: string): Promise<ClientResponse> {
   return response;
 }
 
-export { getUserData, postUserName };
+async function postUserLastName(name: string): Promise<ClientResponse> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerUpdate = {
+    actions: [
+      {
+        action: 'setLastName',
+        lastName: name,
+      },
+    ],
+    version,
+  };
+
+  const response = await apiRoot
+    .me()
+    .post({
+      body: updateActions,
+    })
+    .execute();
+
+  return response;
+}
+
+async function postUserDateOfBirth(date: string): Promise<ClientResponse> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerUpdate = {
+    actions: [
+      {
+        action: 'setDateOfBirth',
+        dateOfBirth: date,
+      },
+    ],
+    version,
+  };
+
+  const response = await apiRoot
+    .me()
+    .post({
+      body: updateActions,
+    })
+    .execute();
+
+  return response;
+}
+
+export { getUserData, postUserDateOfBirth, postUserFirstName, postUserLastName };

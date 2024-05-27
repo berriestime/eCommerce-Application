@@ -6,22 +6,22 @@ import { useForm } from '@mantine/form';
 import { BaseButton } from '@/components/base-button';
 import { CustomTextInput } from '@/components/custom-text-input';
 
-import { postUserFirstName } from '../../api/user-api';
+import { postUserLastName } from '../../api/user-api';
 
 const BUTTON_TEXT_EDIT = 'Edit';
 const BUTTON_TEXT_SAVE = 'Save';
 
-const ProfileFirstName = (user: Customer): ReactElement => {
-  const firstName = user.firstName ? user.firstName : '';
+const ProfileLastName = (user: Customer): ReactElement => {
+  const lastName = user.lastName ? user.lastName : '';
 
   const form = useForm({
     initialValues: {
-      firstName,
+      lastName,
     },
     mode: 'uncontrolled',
 
     validate: {
-      firstName: (value) => (/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value) ? null : 'Invalid name'),
+      lastName: (value) => (/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value) ? null : 'Invalid name'),
     },
     validateInputOnChange: true,
   });
@@ -29,27 +29,28 @@ const ProfileFirstName = (user: Customer): ReactElement => {
   const [buttonState, setButtonState] = useState(BUTTON_TEXT_EDIT);
   const [inputState, setInputState] = useState(true);
 
-  const handleClick = (firstName: string): void => {
+  const handleClick = (lastName: string): void => {
     if (buttonState === BUTTON_TEXT_EDIT) {
       setButtonState(BUTTON_TEXT_SAVE);
       setInputState(false);
     } else {
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
-      postUserFirstName(firstName).catch(console.error);
+      console.log(lastName);
+      postUserLastName(lastName).catch(console.error);
     }
   };
 
   return (
     <form
       onSubmit={form.onSubmit((user) => {
-        handleClick(user.firstName);
+        handleClick(user.lastName);
       })}
     >
-      <CustomTextInput disabled={inputState} label="First Name" {...form.getInputProps('firstName')} />
+      <CustomTextInput disabled={inputState} label="Last Name" {...form.getInputProps('lastName')} />
       <BaseButton type="submit">{buttonState}</BaseButton>
     </form>
   );
 };
 
-export { ProfileFirstName };
+export { ProfileLastName };
