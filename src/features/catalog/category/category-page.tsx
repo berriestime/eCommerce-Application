@@ -35,13 +35,10 @@ const CategoryPage: FC = () => {
 
   return (
     <Box className="wrapper">
+      <Breadcrumbs />
+      <Tabs />
       <Box className="middleContainer">
-        <Breadcrumbs />
-        <Tabs />
-
-        <Title c="bright" mt={20}>
-          Category page: {categoryData.name['en-US']}
-        </Title>
+        <Title c="bright">Category page: {categoryData.name['en-US']}</Title>
 
         <Title c="bright" mb={20} mt={16} order={2}>
           Products

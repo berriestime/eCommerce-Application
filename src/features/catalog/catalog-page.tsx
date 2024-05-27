@@ -34,14 +34,10 @@ const CatalogPage: FC = () => {
 
   return (
     <Box className="wrapper">
+      <Breadcrumbs />
+      <Tabs />
       <Box className="middleContainer">
-        <Breadcrumbs />
-
-        <Tabs />
-
-        <Title c="bright" mt={20}>
-          Store page
-        </Title>
+        <Title c="bright">Store page</Title>
         <Title c="bright" mb={20} mt={16} order={2}>
           Products
         </Title>
