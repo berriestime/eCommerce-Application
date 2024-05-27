@@ -63,48 +63,19 @@ async function getProductsByCategoryIds(
   categoryIds: string[],
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const whereConditions = categoryIds.map((id) => `categories(id="${id}")`).join(' or ');
   const response = await apiRoot
     .productProjections()
-    .search()
     .get({
       queryArgs: {
-        'filter.query': categoryIds.map((id) => `categories.id:"${id}"`),
-        limit: 20,
+        limit: 12,
         offset: 0,
+        where: whereConditions,
       },
     })
     .execute();
+
   return response;
 }
-
-// async function getProductsIncludingCategoryKeys(
-//   apiRoot: ApiRoot,
-//   categoryId: string, // ID категории для фильтрации
-//   searchText: string, // Текст для поиска по названию
-//   sortPath: string, // Путь для сортировки, например, 'name.en' или 'price.value.centAmount'
-//   sortOrder: 'asc' | 'desc', // Порядок сортировки: 'asc' или 'desc'
-//   limit: number = 20, // Количество продуктов на странице
-//   offset: number = 0, // Смещение для пагинации
-// ): Promise<ProductProjectionPagedSearchResponse> {
-//   const response = await apiRoot
-//     .productProjections()
-//     .search()
-//     .get({
-//       queryArgs: {
-//         filter: [`categories.id:"${categoryId}"`], // Фильтрация по категории
-//         text: {
-//           language: 'en', // Укажите нужный язык
-//           value: searchText, // Поиск по тексту
-//         },
-//         sort: `${sortPath} ${sortOrder}`, // Сортировка
-//         limit: limit, // Лимит
-//         offset: offset, // Оффсет
-//         // Добавляем параметр расширения для получения ключей категорий
-//         expand: ['categories[*]'],
-//       },
-//     })
-//     .execute();
-//   return response.body;
-// }
 
 export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId, getProductsByCategoryIds };
