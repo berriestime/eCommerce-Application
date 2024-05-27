@@ -5,17 +5,13 @@ import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import { defineApiRoot } from '@/lib/commerstools/define-client';
 
+import { getVersionUpdate } from './version';
+
 async function getUserData(): Promise<ClientResponse<Customer>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const response = await apiRoot.me().get().execute();
 
   return response;
-}
-
-async function getVersionUpdate(): Promise<number> {
-  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  const responseVersion = await apiRoot.me().get().execute();
-  return responseVersion.body.version;
 }
 
 async function postUserFirstName(name: string): Promise<ClientResponse> {

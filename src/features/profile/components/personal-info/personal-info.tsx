@@ -9,7 +9,7 @@ import { ProfileDateOfBirth } from './birthday';
 import { ProfileFirstName } from './first-name';
 import { ProfileLastName } from './last-name';
 
-const PersonalInfo = (user: Customer): ReactElement => {
+const ProfileInfo = (user: Customer): ReactElement => {
   return (
     <Container>
       <Title order={2}>PERSONAL INFO</Title>
@@ -21,4 +21,4 @@ const PersonalInfo = (user: Customer): ReactElement => {
   );
 };
 
-export { PersonalInfo };
+export { ProfileInfo };

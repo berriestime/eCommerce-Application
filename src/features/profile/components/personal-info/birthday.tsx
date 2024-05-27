@@ -51,6 +51,7 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
   return (
     <form
       onSubmit={form.onSubmit((user) => {
+        //TODO add close date picker here
         handleClick(user.dateOfBirth);
       })}
     >
