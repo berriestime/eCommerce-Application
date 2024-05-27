@@ -6,7 +6,7 @@ import { Box, SimpleGrid, Text, rem } from '@mantine/core';
 import { clsx } from 'clsx';
 import Autoplay from 'embla-carousel-autoplay';
 
-import { type CardData, SimpleCard } from '@/components/simple-card';
+import { type CardData, SimpleCard } from '@/components/product-card/simple-card';
 
 import classes from './cards-section.module.css';
 

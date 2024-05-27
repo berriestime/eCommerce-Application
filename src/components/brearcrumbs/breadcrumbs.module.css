@@ -7,9 +7,13 @@
 .bc a,
 .bc span {
   text-decoration: none;
-  color: #f3e7e4;
   transition: all 0.3s ease;
   margin: 8px 0;
+  color: #aa9f9c;
+}
+
+.bc a {
+  color: #f3e7e4;
 }
 
 .bc a:hover {

@@ -1,5 +1,6 @@
 .container {
   composes: commonContainer from '../../index.css';
+  width: 100%;
 
   @media (width <= 767px) {
     flex-direction: column;

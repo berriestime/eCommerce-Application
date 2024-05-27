@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 
 import { AppShell, Box, Loader } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
@@ -34,6 +34,7 @@ const Layout = (): JSX.Element => {
           <Notifications bg="customBg" c="customColor" />
 
           <Outlet />
+          <ScrollRestoration />
         </Suspense>
       </AppShell.Main>
     </AppShell>
