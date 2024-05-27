@@ -109,8 +109,14 @@ const ProductPage = (): JSX.Element => {
             {title}
 
             <Title mb={20} mt={16} order={2}>
-              {discountPrice && <span className={clsx(classes.price, classes.discount)}>{discountPrice} $</span>}
-              <span className={classes.price}>{price} $</span>
+              {discountPrice ? (
+                <>
+                  <span className={clsx(classes.price, classes.discount)}>${price}</span>
+                  <span className={classes.price}>${discountPrice}</span>
+                </>
+              ) : (
+                <span className={classes.price}>${price}</span>
+              )}
             </Title>
 
             <Spoiler
