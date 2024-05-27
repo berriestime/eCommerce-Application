@@ -10,8 +10,6 @@ import classes from './tabs.module.css';
 const Tabs: FC = () => {
   const data = useLoaderData();
 
-  console.log(data);
-
   const { categoryData, subcategoriesData } = data as {
     categoryData: Category;
     subcategoriesData?: CategoryPagedQueryResponse;

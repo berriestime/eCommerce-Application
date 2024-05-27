@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
 
-import { Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import { Category, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Spoiler, Text, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
@@ -21,7 +21,7 @@ import { BigSlider } from './components/slider';
 import classes from './product-page.module.css';
 
 const ProductPage = (): JSX.Element => {
-  const { categoryId: categoryKey, subcategoryId: subcategoryKey } = useParams<{
+  const { subcategoryId: subcategoryKey } = useParams<{
     categoryId: string;
     subcategoryId: string;
   }>();
@@ -30,7 +30,13 @@ const ProductPage = (): JSX.Element => {
   const matchesXs = useMediaQuery('(width < 48em)');
   const matchesXxs = useMediaQuery('(width < 22.5em)');
 
-  const { cardsData, productData } = data as { cardsData: ProductProjectionPagedQueryResponse; productData: Product };
+  console.log(data);
+
+  const { cardsData, categoryData, productData } = data as {
+    cardsData: ProductProjectionPagedQueryResponse;
+    categoryData: Category;
+    productData: Product;
+  };
   const { results: cards } = cardsData;
   const { discountPrice, price } = getPrice(productData);
 
@@ -56,10 +62,12 @@ const ProductPage = (): JSX.Element => {
     mode: 'controlled',
   });
 
+  console.log(cards);
+
   const productCards = cards.map((productCard) => {
     const { key } = productCard;
     return (
-      <Link className="commonLink " key={key} to={`/store/${categoryKey}/${subcategoryKey}/${key}`}>
+      <Link className="commonLink " key={key} to={`/store/${categoryData.key}/${subcategoryKey}/${key}`}>
         <CommonCard data={productCard} />
       </Link>
     );

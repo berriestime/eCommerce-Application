@@ -20,9 +20,13 @@ const CatalogPage: FC = () => {
   const { results: productResult } = productsData;
 
   const productCards = productResult.map((product) => {
-    const { key } = product;
+    const { categories, key } = product;
+
+    const subcategory = categories[0]?.obj?.key;
+    const categoryId = categories[0]?.obj?.ancestors[0]?.id;
+
     return (
-      <Link className="commonLink " key={key} to={`/store/${product.categories[0]?.id}/${key}`}>
+      <Link className="commonLink " key={key} to={`/store/${categoryId}/${subcategory}/${key}`}>
         <CommonCard data={product} />
       </Link>
     );

@@ -23,8 +23,6 @@ const CategoryPage: FC = () => {
 
   const { results: productResult } = productsData;
 
-  console.log(productsData);
-
   const productCards = productResult.map((product) => {
     const { key } = product;
     const url = subcategoryData ? `/store/${categoryData.key}/${subcategoryData.key}` : `/store/${categoryData.key}`;
