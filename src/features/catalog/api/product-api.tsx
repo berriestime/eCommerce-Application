@@ -50,7 +50,7 @@ async function getProductsByCategoryId(
         // Используйте фильтр по ID категории
         filter: [`categories.id:"${categoryId}"`],
         // Добавьте параметры пагинации, если ожидается большое количество товаров
-        limit: 20,
+        limit: 300,
         offset: 0,
       },
     })

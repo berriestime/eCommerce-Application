@@ -1,5 +1,4 @@
-import { CategoryPagedQueryResponse, ClientResponse } from '@commercetools/platform-sdk';
-import { Category } from '@commercetools/platform-sdk/dist/declarations/src/generated/models/category';
+import { Category, CategoryPagedQueryResponse, ClientResponse } from '@commercetools/platform-sdk';
 
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin } from '@/lib/commerstools/create-password-client';
@@ -16,9 +15,17 @@ const getCategoryByKey = (categoryKey: string): Promise<ClientResponse<Category>
   return apiRoot.categories().withKey({ key: categoryKey }).get().execute();
 };
 
-async function getAllCategories(): Promise<ClientResponse> {
+async function getAllCategories(): Promise<ClientResponse<CategoryPagedQueryResponse>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  const response: ClientResponse = await apiRoot.categories().get().execute();
+  const response = await apiRoot
+    .categories()
+    .get({
+      queryArgs: {
+        limit: 300,
+        offset: 0,
+      },
+    })
+    .execute();
   return response;
 }
 
