@@ -7,6 +7,7 @@ import { Box, SimpleGrid, Title } from '@mantine/core';
 import { Breadcrumbs } from '@/components/brearcrumbs';
 import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
+import { Filters } from '@/features/catalog/components/filters';
 
 import { Tabs } from './category/components';
 
@@ -19,18 +20,21 @@ const CatalogPage: FC = () => {
 
   const { results: productResult } = productsData;
 
-  const productCards = productResult.map((product) => {
-    const { categories, key } = product;
+  const productCards = productResult
+    .filter((product) => product.categories[0]?.obj?.ancestors[0]?.id)
+    .map((product) => {
+      const { categories, key } = product;
 
-    const subcategory = categories[0]?.obj?.key;
-    const categoryId = categories[0]?.obj?.ancestors[0]?.id;
+      const subcategory = categories[0]?.obj?.key;
+      const categoryId = categories[0]?.obj?.ancestors[0]?.id;
 
-    return <CommonCard data={product} key={key} url={`/store/${categoryId}/${subcategory}/${key}`} />;
-  });
+      return <CommonCard data={product} key={key} url={`/store/${categoryId}/${subcategory}/${key}`} />;
+    });
 
   return (
     <Box className="wrapper">
       <Breadcrumbs />
+      <Filters />
       <Tabs />
       <Box className="middleContainer">
         <Title c="bright">Store page</Title>

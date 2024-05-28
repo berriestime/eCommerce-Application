@@ -15,26 +15,30 @@ const getProductByKey = (productKey: string): Promise<ClientResponse<Product>> =
   return apiRoot.products().withKey({ key: productKey }).get().execute();
 };
 
-// async function getAllProducts(): Promise<ClientResponse> {
-//   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-//   const response: ClientResponse = await apiRoot.products().get().execute();
-//   return response;
-// }
-
-async function getAllProducts(): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+async function getAllProducts({
+  priceFrom,
+  priceTo,
+}: {
+  priceFrom: number;
+  priceTo: number;
+}): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+
+  const filter = [`variants.price.centAmount:range (${priceFrom || '*'} to ${priceTo || '*'})`];
+
   const response: ClientResponse = await apiRoot
     .productProjections()
     .search()
     .get({
       queryArgs: {
         expand: ['categories[*]'],
-        filter: [],
+        filter,
         limit: 12,
-        offset: 150,
+        offset: 0,
       },
     })
     .execute();
+
   return response;
 }
 
