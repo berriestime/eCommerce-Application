@@ -29,8 +29,8 @@ const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
 
   return (
     <Card bg="customBg" className={classes.card} pt={20} w="100%">
-      <Skeleton height={300} visible={loading}>
-        <Card.Section className={classes.imageSection}>
+      <Card.Section className={classes.imageSection}>
+        <Skeleton mih={200} visible={loading}>
           {images && images.length > 0 && (
             <Image alt={name['en-US']} className={classes.image} fit="cover" src={images[0]?.url} />
           )}
@@ -40,8 +40,8 @@ const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
               - 15%
             </Badge>
           )}
-        </Card.Section>
-      </Skeleton>
+        </Skeleton>
+      </Card.Section>
 
       <Card.Section className={classes.info}>
         <Text className={classes.title} mt={24}>

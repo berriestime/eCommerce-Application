@@ -4,6 +4,10 @@
   max-width: 400px;
   margin: 0 auto;
   border-radius: 0;
+
+  @media (width < 600px) {
+    max-width: 300px;
+  }
 }
 
 .info {
