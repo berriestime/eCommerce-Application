@@ -27,7 +27,9 @@ const CategoryPage: FC = () => {
 
   const productCards = productResult.map((product) => {
     const { key } = product;
-    const url = subcategoryData ? `/store/${categoryData.key}/${subcategoryData.key}` : `/store/${categoryData.key}`;
+    const url = subcategoryData
+      ? `/store/${categoryData.key}/${subcategoryData.key}`
+      : `/store/${categoryData.key}/${product.categories[0]?.obj?.key}`;
     return (
       <Link className="commonLink " key={key} to={`${url}/${key}`}>
         <CommonCard data={product} />
