@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
+import { Address } from '@commercetools/platform-sdk';
 import { Button, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
 import { UseFormReturnType, useForm } from '@mantine/form';
 import { postcodeValidator } from 'postcode-validator';
@@ -9,15 +10,17 @@ import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { addNotification } from '@/utils/show-notification';
 
-import { postUserAddress } from '../../../api/address-api';
+import { postAddUserAddress } from '../../../api/address-api';
 
 import classes from '@/components/modals/modal.module.css';
 
 const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
 
 type AddressModalProps = {
+  addresses: Address[];
   close: () => void;
   opened: boolean;
+  setAddresses: Dispatch<SetStateAction<Address[]>>;
 };
 
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required field');
@@ -59,7 +62,7 @@ const isProperPostcode =
     return postcodeValidator(value, code) ? null : 'Invalid postcode';
   };
 
-const AddressModal = ({ close, opened }: AddressModalProps): JSX.Element => {
+const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalProps): JSX.Element => {
   const [visible, setVisible] = useState(false);
 
   const toggle = (): void => {
@@ -113,9 +116,10 @@ const AddressModal = ({ close, opened }: AddressModalProps): JSX.Element => {
           <form
             onSubmit={form.onSubmit((address) => {
               toggle();
-              console.log(address);
-              postUserAddress(address)
+              postAddUserAddress(address)
                 .then(() => {
+                  const newAddresses: Address[] = [...addresses, address];
+                  setAddresses(newAddresses);
                   form.reset();
                   form.clearErrors();
                   close();

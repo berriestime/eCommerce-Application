@@ -1,27 +1,39 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 
 import { Customer } from '@commercetools/platform-sdk';
-import { Container, Title } from '@mantine/core';
+import { Container, Flex, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import { BaseButton } from '@/components/base-button';
 import { AddressModal } from '@/features/profile/components/addresses/address-modal';
 
-// import { postUserAddress } from '../../api/address-api';
+import { AddressCard } from './address-card/address-cars';
 
 const ProfileAddresses = (user: Customer): ReactElement => {
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
-
-  //TODO add cards for addresses and delete console.log
-  console.log(user.addresses);
+  const [addresses, setAddresses] = useState(user.addresses);
 
   return (
     <>
       <Container>
         <Title order={2}>YOUR ADDRESSES</Title>
+        <Flex direction={'column'} mt="md" visibleFrom="md">
+          {addresses.map((address) => (
+            <AddressCard
+              addresses={addresses}
+              city={address.city}
+              country={address.country}
+              id={address.id}
+              key={address.id}
+              postalCode={address.postalCode}
+              setAddresses={setAddresses}
+              streetName={address.streetName}
+            />
+          ))}
+        </Flex>
         <BaseButton onClick={openModal}>Add new address</BaseButton>
       </Container>
-      <AddressModal close={closeModal} opened={modalOpened} />
+      <AddressModal addresses={addresses} close={closeModal} opened={modalOpened} setAddresses={setAddresses} />
     </>
   );
 };

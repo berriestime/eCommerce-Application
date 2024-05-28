@@ -9,7 +9,7 @@ import { getVersionUpdate } from './version';
 
 type UserAddress = { city: string; country: string; postalCode: string; streetName: string };
 
-async function postUserAddress({
+async function postAddUserAddress({
   city,
   country,
   postalCode,
@@ -45,4 +45,28 @@ async function postUserAddress({
   return response;
 }
 
-export { postUserAddress };
+async function postRemoveUserAddress(id: string): Promise<ClientResponse<Customer>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerUpdate = {
+    actions: [
+      {
+        action: 'removeAddress',
+        addressId: id,
+      },
+    ],
+    version,
+  };
+
+  const response = await apiRoot
+    .me()
+    .post({
+      body: updateActions,
+    })
+    .execute();
+
+  return response;
+}
+
+export { postAddUserAddress, postRemoveUserAddress };
