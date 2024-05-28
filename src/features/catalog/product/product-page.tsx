@@ -1,7 +1,7 @@
-import { type FC, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useLoaderData, useParams } from 'react-router-dom';
 
-import { Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import { Category, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Spoiler, Text, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
@@ -20,12 +20,23 @@ import { BigSlider } from './components/slider';
 
 import classes from './product-page.module.css';
 
-const ProductPage: FC = () => {
+const ProductPage = (): JSX.Element => {
+  const { subcategoryId: subcategoryKey } = useParams<{
+    categoryId: string;
+    subcategoryId: string;
+  }>();
+
   const data = useLoaderData();
   const matchesXs = useMediaQuery('(width < 48em)');
   const matchesXxs = useMediaQuery('(width < 22.5em)');
 
-  const { cardsData, productData } = data as { cardsData: ProductProjectionPagedQueryResponse; productData: Product };
+  console.log(data);
+
+  const { cardsData, categoryData, productData } = data as {
+    cardsData: ProductProjectionPagedQueryResponse;
+    categoryData: Category;
+    productData: Product;
+  };
   const { results: cards } = cardsData;
   const { discountPrice, price } = getPrice(productData);
 
@@ -51,21 +62,21 @@ const ProductPage: FC = () => {
     mode: 'controlled',
   });
 
+  console.log(cards);
+
   const productCards = cards.map((productCard) => {
     const { key } = productCard;
     return (
-      <Link className="commonLink " key={key} to={`/store/${productCard.categories[0]?.id}/${key}`}>
+      <Link className="commonLink " key={key} to={`/store/${categoryData.key}/${subcategoryKey}/${key}`}>
         <CommonCard data={productCard} />
       </Link>
     );
   });
 
-  // const slides = productCards.map((item, i) => <Carousel.Slide key={i}>{item}</Carousel.Slide>);
-
   return (
-    <>
+    <Box className="wrapper">
+      <Breadcrumbs />
       <Box className="middleContainer">
-        <Breadcrumbs />
         <Grid
           classNames={{
             inner: classes.gridInner,
@@ -98,8 +109,14 @@ const ProductPage: FC = () => {
             {title}
 
             <Title mb={20} mt={16} order={2}>
-              {discountPrice && <span className={clsx(classes.price, classes.discount)}>{discountPrice} $</span>}
-              <span className={classes.price}>{price} $</span>
+              {discountPrice ? (
+                <>
+                  <span className={clsx(classes.price, classes.discount)}>${price}</span>
+                  <span className={classes.price}>${discountPrice}</span>
+                </>
+              ) : (
+                <span className={classes.price}>${price}</span>
+              )}
             </Title>
 
             <Spoiler
@@ -146,7 +163,7 @@ const ProductPage: FC = () => {
         images={images}
         opened={bigSliderOpened}
       />
-    </>
+    </Box>
   );
 };
 

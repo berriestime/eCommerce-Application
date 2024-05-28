@@ -8,22 +8,28 @@ import { Breadcrumbs } from '@/components/brearcrumbs';
 import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
 
+import { Tabs } from './components';
+
 // import classes from './category-page.module.css';
 
 const CategoryPage: FC = () => {
   const data = useLoaderData();
 
-  const { categoryData, productsData } = data as {
+  console.log(data);
+
+  const { categoryData, productsData, subcategoryData } = data as {
     categoryData: Category;
     productsData: ProductProjectionPagedQueryResponse;
+    subcategoryData?: Category;
   };
 
   const { results: productResult } = productsData;
 
   const productCards = productResult.map((product) => {
     const { key } = product;
+    const url = subcategoryData ? `/store/${categoryData.key}/${subcategoryData.key}` : `/store/${categoryData.key}`;
     return (
-      <Link className="commonLink " key={key} to={`/store/${product.categories[0]?.id}/${key}`}>
+      <Link className="commonLink " key={key} to={`${url}/${key}`}>
         <CommonCard data={product} />
       </Link>
     );
@@ -31,8 +37,9 @@ const CategoryPage: FC = () => {
 
   return (
     <Box className="wrapper">
+      <Breadcrumbs />
+      <Tabs />
       <Box className="middleContainer">
-        <Breadcrumbs />
         <Title c="bright">Category page: {categoryData.name['en-US']}</Title>
 
         <Title c="bright" mb={20} mt={16} order={2}>

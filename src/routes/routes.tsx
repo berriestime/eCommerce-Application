@@ -30,12 +30,8 @@ export const APP_ROUTES = {
 
 import { loader as StoreLoader } from '@/features/catalog/catalog-data-loader';
 import { loader as CategoryLoader } from '@/features/catalog/category/category-data-loader';
+import { loader as SubcategoryLoader } from '@/features/catalog/category/subcategory-data-loader';
 import { loader as ProductLoader } from '@/features/catalog/product/product-data-loader';
-
-interface LoaderProductData {
-  categoryData: Category;
-  productData: Product;
-}
 
 export const routes = [
   {
@@ -90,20 +86,47 @@ export const routes = [
         path: `${APP_ROUTES.Store}/:categoryId`,
       },
       {
-        element: <ProductPage />,
+        element: <CategoryPage />,
         handle: {
-          crumb: ({ categoryData, productData }: LoaderProductData) => [
+          crumb: ({ categoryData, subcategoryData }: { categoryData: Category; subcategoryData: Category }) => [
             <Link key="1" to={`/${APP_ROUTES.Store}`}>
               Store
             </Link>,
             <Link key="2" to={`/${APP_ROUTES.Store}/${categoryData.key}`}>
               {categoryData.name['en-US']}
             </Link>,
-            <span key="3">{productData.masterData.current.name['en-US']}</span>,
+            <span key="3"> {subcategoryData.name['en-US']}</span>,
+          ],
+        },
+        loader: SubcategoryLoader,
+        path: `${APP_ROUTES.Store}/:categoryId/:subcategoryId`,
+      },
+      {
+        element: <ProductPage />,
+        handle: {
+          crumb: ({
+            categoryData,
+            productData,
+            subcategoryData,
+          }: {
+            categoryData: Category;
+            productData: Product;
+            subcategoryData: Category;
+          }) => [
+            <Link key="1" to={`/${APP_ROUTES.Store}`}>
+              Store
+            </Link>,
+            <Link key="2" to={`/${APP_ROUTES.Store}/${categoryData.key}`}>
+              {categoryData.name['en-US']}
+            </Link>,
+            <Link key="3" to={`/${APP_ROUTES.Store}/${categoryData.key}/${subcategoryData.key}`}>
+              {subcategoryData.name['en-US']}
+            </Link>,
+            <span key="4">{productData.masterData.current.name['en-US']}</span>,
           ],
         },
         loader: ProductLoader,
-        path: `${APP_ROUTES.Store}/:categoryId/:productId`,
+        path: `${APP_ROUTES.Store}/:categoryId/:subcategoryId/:productId`,
       },
 
       {

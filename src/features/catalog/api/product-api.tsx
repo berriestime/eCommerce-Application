@@ -28,9 +28,10 @@ async function getAllProducts(): Promise<ClientResponse<ProductProjectionPagedQu
     .search()
     .get({
       queryArgs: {
+        expand: ['categories[*]'],
         filter: [],
-        limit: 200,
-        offset: 0,
+        limit: 12,
+        offset: 150,
       },
     })
     .execute();
@@ -58,4 +59,23 @@ async function getProductsByCategoryId(
   return response;
 }
 
-export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId };
+async function getProductsByCategoryIds(
+  categoryIds: string[],
+): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const whereConditions = categoryIds.map((id) => `categories(id="${id}")`).join(' or ');
+  const response = await apiRoot
+    .productProjections()
+    .get({
+      queryArgs: {
+        limit: 12,
+        offset: 0,
+        where: whereConditions,
+      },
+    })
+    .execute();
+
+  return response;
+}
+
+export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId, getProductsByCategoryIds };

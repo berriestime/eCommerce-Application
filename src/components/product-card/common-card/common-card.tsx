@@ -38,8 +38,14 @@ const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
         )}
 
         <Text mb={20} mt={12}>
-          {discountPrice && <span className={clsx(classes.price, classes.discount)}>{discountPrice} $</span>}
-          <span className={classes.price}>{price} $</span>
+          {discountPrice ? (
+            <>
+              <span className={clsx(classes.price, classes.discount)}>$ {price}</span>
+              <span className={classes.price}>${discountPrice}</span>
+            </>
+          ) : (
+            <span className={classes.price}>${price}</span>
+          )}
         </Text>
       </Card.Section>
 

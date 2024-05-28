@@ -1,10 +1,14 @@
-.bc {
+.categoriesWrapper {
+  background-color: #aa9f9c38;
+}
+
+.contentWrapper {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px 100px;
   user-select: none;
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
 
   @media (width <= 1200px) {
@@ -16,18 +20,13 @@
   }
 }
 
-.bc a,
-.bc span {
-  text-decoration: none;
-  transition: all 0.3s ease;
-  margin: 8px 0;
+.active {
   color: #aa9f9c;
+  font-weight: 600;
+  cursor: default;
 }
 
-.bc a {
-  color: #f3e7e4;
-}
-
-.bc a:hover {
-  color: #aa9f9c;
+.categories {
+  display: flex;
+  gap: 40px;
 }

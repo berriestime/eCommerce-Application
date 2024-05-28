@@ -1,4 +1,4 @@
-import { ClientResponse } from '@commercetools/platform-sdk';
+import { CategoryPagedQueryResponse, ClientResponse } from '@commercetools/platform-sdk';
 import { Category } from '@commercetools/platform-sdk/dist/declarations/src/generated/models/category';
 
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
@@ -22,4 +22,17 @@ async function getAllCategories(): Promise<ClientResponse> {
   return response;
 }
 
-export { getAllCategories, getCategoryById, getCategoryByKey };
+async function getSubcategoryIds(parentCategoryId: string): Promise<ClientResponse<CategoryPagedQueryResponse>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const response: ClientResponse = await apiRoot
+    .categories()
+    .get({
+      queryArgs: {
+        where: `parent(id="${parentCategoryId}")`,
+      },
+    })
+    .execute();
+  return response;
+}
+
+export { getAllCategories, getCategoryById, getCategoryByKey, getSubcategoryIds };
