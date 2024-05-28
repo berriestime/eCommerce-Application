@@ -40,19 +40,19 @@ const bestData = [
 const classicData = [
   {
     image: imgAstroBlue,
-    price: '£95.00',
+    price: '$95.00',
     title: 'Astro Platinum Vinyl lava lamp',
     to: `/${APP_ROUTES.Store}/lamps/1960/astro-original-platinum-violet-turquoise`,
   },
   {
     image: imgAstroYellow,
-    price: '£95.00',
+    price: '$95.00',
     title: 'Astro Vinyl lava lamp',
     to: `/${APP_ROUTES.Store}/lamps/1960/astro-original-black-vinyl-yellow-white`,
   },
   {
     image: imgAstroRed,
-    price: '£87.00',
+    price: '$87.00',
     title: 'Astro the original lava lamp: Silver',
     to: `/${APP_ROUTES.Store}/lamps/1960/astro-original-silver-violet-red`,
   },
