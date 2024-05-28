@@ -16,7 +16,7 @@ const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
     <Card bg="customBg" className={classes.card} pt={20} w="100%">
       <Card.Section className={classes.imageSection}>
         {images && images.length > 0 && (
-          <Image alt={name['en-US']} className={classes.image} fit="contain" src={images[0]?.url} />
+          <Image alt={name['en-US']} className={classes.image} fit="cover" src={images[0]?.url} />
         )}
 
         {discountPrice && (
