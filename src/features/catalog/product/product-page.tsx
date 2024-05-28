@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLoaderData, useParams } from 'react-router-dom';
 
 import { Category, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
-import { Box, Flex, Grid, Image, SimpleGrid, Spoiler, Text, Title } from '@mantine/core';
+import { Box, Flex, Grid, Image, SimpleGrid, Skeleton, Spoiler, Text, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
@@ -30,8 +30,6 @@ const ProductPage = (): JSX.Element => {
   const matchesXs = useMediaQuery('(width < 48em)');
   const matchesXxs = useMediaQuery('(width < 22.5em)');
 
-  console.log(data);
-
   const { cardsData, categoryData, productData } = data as {
     cardsData: ProductProjectionPagedQueryResponse;
     categoryData: Category;
@@ -44,6 +42,20 @@ const ProductPage = (): JSX.Element => {
 
   const images = productData.masterData.current.masterVariant.images || [];
   const [currentImageUrl, setCurrentImageUrl] = useState<string>(images[0]?.url || '');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (currentImageUrl) {
+      setLoading(true);
+      const img = new window.Image();
+      img.src = currentImageUrl;
+      img.onload = () => {
+        setLoading(false);
+      };
+    } else {
+      setLoading(false);
+    }
+  }, [currentImageUrl]);
 
   const handleImageChange = (url: string): void => {
     setCurrentImageUrl(url);
@@ -61,8 +73,6 @@ const ProductPage = (): JSX.Element => {
     },
     mode: 'controlled',
   });
-
-  console.log(cards);
 
   const productCards = cards.map((productCard) => {
     const { key } = productCard;
@@ -93,15 +103,18 @@ const ProductPage = (): JSX.Element => {
             >
               <MiniSlider data={productData} onImageChange={handleImageChange} />
 
-              <Box h="100%">
-                <Image
-                  alt="photo"
-                  className={classes.image}
-                  fit="contain"
-                  onClick={() => setOpened(true)}
-                  src={currentImageUrl}
-                />
-              </Box>
+              <Skeleton visible={loading}>
+                <Box h="100%">
+                  <Image
+                    alt="photo"
+                    className={classes.image}
+                    fit="contain"
+                    mah={440}
+                    onClick={() => setOpened(true)}
+                    src={currentImageUrl}
+                  />
+                </Box>
+              </Skeleton>
             </Flex>
           </Grid.Col>
 
