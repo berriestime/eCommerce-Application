@@ -1,9 +1,16 @@
+.grid {
+  @media (width <= 576px) {
+    max-width: 300px;
+    margin-inline: auto;
+  }
+}
+
 .productTitle {
-  font-size: 40px;
+  font-size: 28px;
   font-weight: 200;
 
   @media (width <= 768px) {
-    font-size: 28px;
+    font-size: 22px;
   }
 }
 

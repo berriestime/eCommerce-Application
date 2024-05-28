@@ -27,8 +27,9 @@ const ProductPage = (): JSX.Element => {
   }>();
 
   const data = useLoaderData();
-  const matchesXs = useMediaQuery('(width < 48em)');
-  const matchesXxs = useMediaQuery('(width < 22.5em)');
+  const matchesLg = useMediaQuery('(width >= 62em)');
+  const matchesMd = useMediaQuery('(width < 62em) and (width >= 36em)');
+  const matchesXxs = useMediaQuery('(width < 25em)');
 
   const { cardsData, categoryData, productData } = data as {
     cardsData: ProductProjectionPagedQueryResponse;
@@ -62,7 +63,7 @@ const ProductPage = (): JSX.Element => {
   };
 
   const title = (
-    <Title c="bright" className={classes.productTitle} mt={matchesXs ? 20 : 0}>
+    <Title c="bright" className={classes.productTitle} mt={matchesLg || matchesMd ? 0 : 40}>
       {productData.masterData.current.name['en-US']}
     </Title>
   );
@@ -92,13 +93,13 @@ const ProductPage = (): JSX.Element => {
             inner: classes.gridInner,
             root: classes.grid,
           }}
-          gutter={matchesXs ? 20 : 60}
+          gutter={matchesLg ? 60 : 20}
           pb={100}
         >
-          <Grid.Col className={classes.col} pos="relative" span={{ base: 12, sm: 7, xs: 6 }}>
+          <Grid.Col className={classes.col} pos="relative" span={{ base: 12, md: 7, sm: 6, xs: 6 }}>
             <Flex
-              direction={matchesXxs ? 'column' : 'row'}
-              gap={{ base: 'sm', md: 60, sm: 20 }}
+              direction={matchesMd || matchesXxs ? 'column' : 'row'}
+              gap={{ base: 'sm', lg: 60, md: 20 }}
               justify={{ sm: 'flex-start' }}
             >
               <MiniSlider data={productData} onImageChange={handleImageChange} />
@@ -118,7 +119,7 @@ const ProductPage = (): JSX.Element => {
             </Flex>
           </Grid.Col>
 
-          <Grid.Col className={classes.col} pos="relative" span={{ base: 12, sm: 5, xs: 6 }}>
+          <Grid.Col className={classes.col} pos="relative" span={{ base: 12, md: 5, sm: 6, xs: 6 }}>
             {title}
 
             <Title mb={20} mt={16} order={2}>
@@ -137,7 +138,7 @@ const ProductPage = (): JSX.Element => {
                 control: classes.spoilerControl,
               }}
               hideLabel="Hide"
-              maxHeight={200}
+              maxHeight={120}
               showLabel="Show more"
             >
               <Text c="bright" className="commonText">
