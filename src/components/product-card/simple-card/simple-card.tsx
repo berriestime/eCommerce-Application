@@ -1,4 +1,4 @@
-import { Badge, Card, Image, Text } from '@mantine/core';
+import { Card, Image, Text } from '@mantine/core';
 
 import classes from './simple-card.module.css';
 
@@ -11,17 +11,12 @@ export type CardData = {
 };
 
 const SimpleCard = (params: CardData): JSX.Element => {
-  const { discount, image, price, title } = params;
+  const { image, price, title } = params;
 
   return (
     <Card bg="customBg" className={classes.card}>
       <Card.Section className={classes.imageSection}>
         <Image alt={title} className={classes.image} fit="contain" src={image} />
-        {discount && (
-          <Badge className={classes.badge} size="xl" variant="transparent">
-            {discount}
-          </Badge>
-        )}
       </Card.Section>
 
       <Text className={classes.title} mt="xl" ta="center">
