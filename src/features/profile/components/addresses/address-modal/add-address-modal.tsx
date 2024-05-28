@@ -73,6 +73,7 @@ const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalPr
     initialValues: {
       city: '',
       country: '',
+      id: '',
       postalCode: '',
       streetName: '',
     },
@@ -117,12 +118,17 @@ const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalPr
             onSubmit={form.onSubmit((address) => {
               toggle();
               postAddUserAddress(address)
-                .then(() => {
-                  const newAddresses: Address[] = [...addresses, address];
-                  setAddresses(newAddresses);
+                .then((response) => {
                   form.reset();
                   form.clearErrors();
                   close();
+                  console.log(response.body.addresses.at(-1));
+                  const isId = response.body.addresses.at(-1)?.id;
+                  const id = isId ? isId : '';
+                  const addressWithId = { ...address };
+                  addressWithId.id = id;
+                  const newAddresses: Address[] = [...addresses, addressWithId];
+                  setAddresses(newAddresses);
                 })
                 .catch((error: unknown) => {
                   const errorMessage = error instanceof Error ? error.message : String(error);

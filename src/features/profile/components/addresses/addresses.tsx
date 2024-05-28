@@ -13,6 +13,8 @@ const ProfileAddresses = (user: Customer): ReactElement => {
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const [addresses, setAddresses] = useState(user.addresses);
 
+  const randomId = crypto.randomUUID();
+
   return (
     <>
       <Container>
@@ -24,7 +26,7 @@ const ProfileAddresses = (user: Customer): ReactElement => {
               city={address.city}
               country={address.country}
               id={address.id}
-              key={address.id}
+              key={address.id || randomId}
               postalCode={address.postalCode}
               setAddresses={setAddresses}
               streetName={address.streetName}

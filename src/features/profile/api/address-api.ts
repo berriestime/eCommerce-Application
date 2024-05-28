@@ -7,7 +7,7 @@ import { defineApiRoot } from '@/lib/commerstools/define-client';
 
 import { getVersionUpdate } from './version';
 
-type UserAddress = { city: string; country: string; postalCode: string; streetName: string };
+type UserAddress = { city: string; country: string; id?: string; postalCode: string; streetName: string };
 
 async function postAddUserAddress({
   city,
