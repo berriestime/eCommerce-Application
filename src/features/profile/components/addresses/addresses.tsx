@@ -13,20 +13,18 @@ const ProfileAddresses = (user: Customer): ReactElement => {
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const [addresses, setAddresses] = useState(user.addresses);
 
-  const randomId = crypto.randomUUID();
-
   return (
     <>
       <Container>
         <Title order={2}>YOUR ADDRESSES</Title>
-        <Flex direction={'column'} mt="md" visibleFrom="md">
+        <Flex direction={'column'} mt="md">
           {addresses.map((address) => (
             <AddressCard
               addresses={addresses}
               city={address.city}
               country={address.country}
               id={address.id}
-              key={address.id || randomId}
+              key={address.id}
               postalCode={address.postalCode}
               setAddresses={setAddresses}
               streetName={address.streetName}
