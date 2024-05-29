@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { Badge, Card, Image, Skeleton, Text } from '@mantine/core';
@@ -9,10 +10,18 @@ import { getProductPrice } from '@/utils/formate-price';
 
 import classes from './common-card.module.css';
 
-const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
-  const { masterVariant, metaDescription, name } = data.data;
+const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleCardClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+    if (!(event.target as HTMLElement).closest('.addToCartButton')) {
+      navigate(url);
+    }
+  };
+
+  const { masterVariant, metaDescription, name } = data;
   const { images } = masterVariant;
-  const { discountPrice, price } = getProductPrice(data.data);
+  const { discountPrice, price } = getProductPrice(data);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -28,7 +37,7 @@ const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
   }, [images]);
 
   return (
-    <Card bg="customBg" className={classes.card} pt={20} w="100%">
+    <Card bg="customBg" className={classes.card} onClick={handleCardClick} pt={20} w="100%">
       <Card.Section className={classes.imageSection}>
         <Skeleton mih={200} visible={loading}>
           {images && images.length > 0 && (
@@ -68,6 +77,7 @@ const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
 
       <BaseButton
         c="bright"
+        className="addToCartButton"
         fullWidth
         mt="auto"
         onClick={(event) => {

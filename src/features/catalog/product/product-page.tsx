@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLoaderData, useParams } from 'react-router-dom';
+import { useLoaderData, useParams } from 'react-router-dom';
 
 import { Category, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Skeleton, Spoiler, Text, Title } from '@mantine/core';
@@ -77,11 +77,7 @@ const ProductPage = (): JSX.Element => {
 
   const productCards = cards.map((productCard) => {
     const { key } = productCard;
-    return (
-      <Link className="commonLink " key={key} to={`/store/${categoryData.key}/${subcategoryKey}/${key}`}>
-        <CommonCard data={productCard} />
-      </Link>
-    );
+    return <CommonCard data={productCard} key={key} url={`/store/${categoryData.key}/${subcategoryKey}/${key}`} />;
   });
 
   return (

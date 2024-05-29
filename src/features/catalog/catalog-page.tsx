@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 
 import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, SimpleGrid, Title } from '@mantine/core';
@@ -25,11 +25,7 @@ const CatalogPage: FC = () => {
     const subcategory = categories[0]?.obj?.key;
     const categoryId = categories[0]?.obj?.ancestors[0]?.id;
 
-    return (
-      <Link className="commonLink " key={key} to={`/store/${categoryId}/${subcategory}/${key}`}>
-        <CommonCard data={product} />
-      </Link>
-    );
+    return <CommonCard data={product} key={key} url={`/store/${categoryId}/${subcategory}/${key}`} />;
   });
 
   return (
