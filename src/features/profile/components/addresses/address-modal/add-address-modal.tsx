@@ -26,6 +26,8 @@ type AddressModalProps = {
   close: () => void;
   opened: boolean;
   setAddresses: Dispatch<SetStateAction<Address[]>>;
+  setBilling: Dispatch<SetStateAction<null | string>>;
+  setShipping: Dispatch<SetStateAction<null | string>>;
 };
 
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required field');
@@ -67,7 +69,14 @@ const isProperPostcode =
     return postcodeValidator(value, code) ? null : 'Invalid postcode';
   };
 
-const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalProps): JSX.Element => {
+const AddressModal = ({
+  addresses,
+  close,
+  opened,
+  setAddresses,
+  setBilling,
+  setShipping,
+}: AddressModalProps): JSX.Element => {
   const [visible, setVisible] = useState(false);
 
   const toggle = (): void => {
@@ -115,10 +124,12 @@ const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalPr
 
         if (address.defaultBillingAddress) {
           await postDefaultBillingAddress(id);
+          setBilling(id);
         }
 
         if (address.defaultShippingAddress) {
           await postDefaultShippingAddress(id);
+          setShipping(id);
         }
 
         const newAddresses: Address[] = [...addresses, addressWithId];

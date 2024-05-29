@@ -5,10 +5,14 @@ import { Button, Flex, Menu, Title } from '@mantine/core';
 
 import { postRemoveUserAddress } from '@/features/profile/api/address-api';
 
+import classes from './address-card.module.css';
+
 type AddressCardProps = {
   addresses: Address[];
   city?: string;
   country: string;
+  defaultBilling: null | string;
+  defaultShipping: null | string;
   id?: string;
   postalCode?: string;
   setAddresses: Dispatch<SetStateAction<Address[]>>;
@@ -33,6 +37,8 @@ function AddressCard(props: AddressCardProps): ReactElement {
     <>
       <Flex>
         <Title order={3}>{fullAddress}</Title>
+        <p className={props.id === props.defaultBilling ? '' : classes.hidden}>Default Billing Address</p>
+        <p className={props.id === props.defaultShipping ? '' : classes.hidden}>Default Shipping Address</p>
         <Menu position={'bottom-end'} shadow="md" width={200}>
           <Menu.Target>
             <Button>menu</Button>

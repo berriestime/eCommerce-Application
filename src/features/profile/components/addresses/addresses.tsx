@@ -12,6 +12,12 @@ import { AddressCard } from './address-card/address-cars';
 const ProfileAddresses = (user: Customer): ReactElement => {
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const [addresses, setAddresses] = useState(user.addresses);
+  const [defaultBillingAddress, setDefaultBillingAddress] = useState(
+    user.defaultBillingAddressId ? user.defaultBillingAddressId : null,
+  );
+  const [defaultShippingAddress, setDefaultShippingAddress] = useState(
+    user.defaultShippingAddressId ? user.defaultShippingAddressId : null,
+  );
 
   return (
     <>
@@ -23,6 +29,8 @@ const ProfileAddresses = (user: Customer): ReactElement => {
               addresses={addresses}
               city={address.city}
               country={address.country}
+              defaultBilling={defaultBillingAddress}
+              defaultShipping={defaultShippingAddress}
               id={address.id}
               key={address.id}
               postalCode={address.postalCode}
@@ -33,7 +41,14 @@ const ProfileAddresses = (user: Customer): ReactElement => {
         </Flex>
         <BaseButton onClick={openModal}>Add new address</BaseButton>
       </Container>
-      <AddressModal addresses={addresses} close={closeModal} opened={modalOpened} setAddresses={setAddresses} />
+      <AddressModal
+        addresses={addresses}
+        close={closeModal}
+        opened={modalOpened}
+        setAddresses={setAddresses}
+        setBilling={setDefaultBillingAddress}
+        setShipping={setDefaultShippingAddress}
+      />
     </>
   );
 };
