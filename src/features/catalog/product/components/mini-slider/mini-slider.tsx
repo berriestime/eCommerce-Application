@@ -13,7 +13,8 @@ type MiniSliderProps = {
 };
 
 const MiniSlider = ({ data, onImageChange }: MiniSliderProps): JSX.Element => {
-  const matchesXxs = useMediaQuery('(width < 22.5em)');
+  const matchesMd = useMediaQuery('(width < 62em) and (width >= 36em)');
+  const matchesXxs = useMediaQuery('(width < 25em)');
   const images = useMemo(() => data.masterData.current.masterVariant.images || [], [data]);
   const [embla, setEmbla] = useState<Embla | null>(null);
 
@@ -44,7 +45,7 @@ const MiniSlider = ({ data, onImageChange }: MiniSliderProps): JSX.Element => {
   return (
     <>
       {images.length > 1 && (
-        <Box h="100%" ml={matchesXxs ? 40 : 0} mt={matchesXxs ? 0 : 40}>
+        <Box h="100%" ml={matchesMd || matchesXxs ? 40 : 0} mt={matchesMd || matchesXxs ? 0 : 40}>
           <Carousel
             align="start"
             classNames={{
@@ -56,12 +57,12 @@ const MiniSlider = ({ data, onImageChange }: MiniSliderProps): JSX.Element => {
               root: classes.carousel,
             }}
             getEmblaApi={setEmbla}
-            height={matchesXxs ? 60 : 220}
-            orientation={matchesXxs ? 'horizontal' : 'vertical'}
+            height={matchesMd || matchesXxs ? 60 : 220}
+            orientation={matchesMd || matchesXxs ? 'horizontal' : 'vertical'}
             slideGap={{ base: 0 }}
             slideSize={60}
             slidesToScroll={1}
-            w={matchesXxs ? 'calc(100% - 40px)' : 60}
+            w={matchesMd || matchesXxs ? 'calc(100% - 40px)' : 60}
           >
             {slides}
           </Carousel>

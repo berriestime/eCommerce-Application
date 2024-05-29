@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { Badge, Card, Image, Text } from '@mantine/core';
+import { Badge, Card, Image, Skeleton, Text } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
@@ -7,23 +10,46 @@ import { getProductPrice } from '@/utils/formate-price';
 
 import classes from './common-card.module.css';
 
-const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
-  const { masterVariant, metaDescription, name } = data.data;
+const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleCardClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+    if (!(event.target as HTMLElement).closest('.addToCartButton')) {
+      navigate(url);
+    }
+  };
+
+  const { masterVariant, metaDescription, name } = data;
   const { images } = masterVariant;
-  const { discountPrice, price } = getProductPrice(data.data);
+  const { discountPrice, price } = getProductPrice(data);
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (images && images.length > 0) {
+      const img = new window.Image();
+      img.src = images[0]?.url || '';
+      img.onload = () => {
+        setLoading(false);
+      };
+    } else {
+      setLoading(false);
+    }
+  }, [images]);
 
   return (
-    <Card bg="customBg" className={classes.card} pt={20} w="100%">
+    <Card bg="customBg" className={classes.card} onClick={handleCardClick} pt={20} w="100%">
       <Card.Section className={classes.imageSection}>
-        {images && images.length > 0 && (
-          <Image alt={name['en-US']} className={classes.image} fit="contain" src={images[0]?.url} />
-        )}
+        <Skeleton mih={200} visible={loading}>
+          {images && images.length > 0 && (
+            <Image alt={name['en-US']} className={classes.image} fit="cover" src={images[0]?.url} />
+          )}
 
-        {discountPrice && (
-          <Badge className={classes.badge} size="xl" variant="transparent">
-            - 15%
-          </Badge>
-        )}
+          {discountPrice && (
+            <Badge className={classes.badge} size="xl" variant="transparent">
+              - 15%
+            </Badge>
+          )}
+        </Skeleton>
       </Card.Section>
 
       <Card.Section className={classes.info}>
@@ -40,7 +66,7 @@ const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
         <Text mb={20} mt={12}>
           {discountPrice ? (
             <>
-              <span className={clsx(classes.price, classes.discount)}>$ {price}</span>
+              <span className={clsx(classes.price, classes.discount)}>${price}</span>
               <span className={classes.price}>${discountPrice}</span>
             </>
           ) : (
@@ -51,6 +77,7 @@ const CommonCard = (data: { data: ProductProjection }): JSX.Element => {
 
       <BaseButton
         c="bright"
+        className="addToCartButton"
         fullWidth
         mt="auto"
         onClick={(event) => {

@@ -68,6 +68,7 @@ async function getProductsByCategoryIds(
     .productProjections()
     .get({
       queryArgs: {
+        expand: ['categories[*]'],
         limit: 12,
         offset: 0,
         where: whereConditions,

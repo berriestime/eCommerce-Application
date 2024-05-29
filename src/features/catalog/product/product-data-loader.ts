@@ -21,7 +21,7 @@ async function loader({ params }: LoaderFunctionArgs): Promise<{
   const productData: Product = productResponse.body;
 
   const categoryResponse: ClientResponse<Category> =
-    categoryKey.length > 10 ? await getCategoryById(categoryKey) : await getCategoryByKey(categoryKey);
+    categoryKey.length > 11 ? await getCategoryById(categoryKey) : await getCategoryByKey(categoryKey);
   const categoryData: Category = categoryResponse.body;
 
   const subcategoryResponse: ClientResponse<Category> = await getCategoryByKey(subcategoryKey);

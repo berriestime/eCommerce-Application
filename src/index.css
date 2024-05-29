@@ -1,17 +1,19 @@
-::-webkit-scrollbar {
-  width: 12px;
-}
+@media only screen and (width > 1024px) {
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
 
-::-webkit-scrollbar-track {
-  background: #424242;
-}
+  ::-webkit-scrollbar-track {
+    background: #424242;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: #828282;
-}
+  ::-webkit-scrollbar-thumb {
+    background: #828282;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #aa9f9c;
+  ::-webkit-scrollbar-thumb:hover {
+    background: #aa9f9c;
+  }
 }
 
 body {
@@ -20,7 +22,7 @@ body {
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 main {
@@ -28,7 +30,7 @@ main {
 }
 
 .mantine-AppShell-root {
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .mantine-LoadingOverlay-overlay {

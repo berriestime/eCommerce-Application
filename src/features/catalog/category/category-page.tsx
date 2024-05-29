@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 
 import { Category, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, SimpleGrid, Title } from '@mantine/core';
@@ -27,12 +27,10 @@ const CategoryPage: FC = () => {
 
   const productCards = productResult.map((product) => {
     const { key } = product;
-    const url = subcategoryData ? `/store/${categoryData.key}/${subcategoryData.key}` : `/store/${categoryData.key}`;
-    return (
-      <Link className="commonLink " key={key} to={`${url}/${key}`}>
-        <CommonCard data={product} />
-      </Link>
-    );
+    const url = subcategoryData
+      ? `/store/${categoryData.key}/${subcategoryData.key}`
+      : `/store/${categoryData.key}/${product.categories[0]?.obj?.key}`;
+    return <CommonCard data={product} key={key} url={`${url}/${key}`} />;
   });
 
   return (
