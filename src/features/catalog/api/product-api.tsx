@@ -38,7 +38,7 @@ async function getProductsByCategoryId(
 async function getProductsByCategorySubtree(
   categoryId: string,
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
-  return getProductsWithFilter([`categories.id: subtree("${categoryId}")`]);
+  return getProductsWithFilter([`categories.id: subtree("${categoryId}")`], ['categories[*]']);
 }
 
 async function getProductsWithFilter(
