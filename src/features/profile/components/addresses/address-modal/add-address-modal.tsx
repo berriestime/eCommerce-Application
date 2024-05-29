@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import { Address } from '@commercetools/platform-sdk';
-import { Button, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
+import { Button, Checkbox, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
 import { UseFormReturnType, useForm } from '@mantine/form';
 import { postcodeValidator } from 'postcode-validator';
 
@@ -10,7 +10,12 @@ import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { addNotification } from '@/utils/show-notification';
 
-import { postAddUserAddress } from '../../../api/address-api';
+import {
+  UserAddress,
+  postAddUserAddress,
+  postDefaultBillingAddress,
+  postDefaultShippingAddress,
+} from '../../../api/address-api';
 
 import classes from '@/components/modals/modal.module.css';
 
@@ -73,6 +78,8 @@ const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalPr
     initialValues: {
       city: '',
       country: '',
+      defaultBillingAddress: false,
+      defaultShippingAddress: false,
       id: '',
       postalCode: '',
       streetName: '',
@@ -92,6 +99,39 @@ const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalPr
     },
     validateInputOnChange: true,
   });
+
+  const handleSubmit = (address: UserAddress): void => {
+    toggle();
+    postAddUserAddress(address)
+      .then(async (response) => {
+        form.reset();
+        form.clearErrors();
+        close();
+
+        const isId = response.body.addresses.at(-1)?.id;
+        const id = isId ? isId : '';
+        const addressWithId = { ...address };
+        addressWithId.id = id;
+
+        if (address.defaultBillingAddress) {
+          await postDefaultBillingAddress(id);
+        }
+
+        if (address.defaultShippingAddress) {
+          await postDefaultShippingAddress(id);
+        }
+
+        const newAddresses: Address[] = [...addresses, addressWithId];
+        setAddresses(newAddresses);
+      })
+      .catch((error: unknown) => {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        addNotification({ message: errorMessage, title: 'Error', type: 'error' });
+      })
+      .finally(() => {
+        toggle();
+      });
+  };
 
   return (
     <Modal.Root
@@ -116,27 +156,7 @@ const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalPr
         <Modal.Body c="bright" className={classes.body}>
           <form
             onSubmit={form.onSubmit((address) => {
-              toggle();
-              postAddUserAddress(address)
-                .then((response) => {
-                  form.reset();
-                  form.clearErrors();
-                  close();
-                  console.log(response.body.addresses.at(-1));
-                  const isId = response.body.addresses.at(-1)?.id;
-                  const id = isId ? isId : '';
-                  const addressWithId = { ...address };
-                  addressWithId.id = id;
-                  const newAddresses: Address[] = [...addresses, addressWithId];
-                  setAddresses(newAddresses);
-                })
-                .catch((error: unknown) => {
-                  const errorMessage = error instanceof Error ? error.message : String(error);
-                  addNotification({ message: errorMessage, title: 'Error', type: 'error' });
-                })
-                .finally(() => {
-                  toggle();
-                });
+              handleSubmit(address);
             })}
           >
             <SimpleGrid cols={{ base: 1, sm: 2 }}>
@@ -145,6 +165,22 @@ const AddressModal = ({ addresses, close, opened, setAddresses }: AddressModalPr
               <CustomSelect label="Country" withAsterisk {...form.getInputProps('country')} data={COUNTRIES} />
               <CustomTextInput label="PostalCode" withAsterisk {...form.getInputProps('postalCode')} />
             </SimpleGrid>
+            <Checkbox
+              key={form.key('defaultShippingAddress')}
+              {...form.getInputProps('defaultShippingAddress', { type: 'checkbox' })}
+              color="rgba(243, 231, 228, 1)"
+              label="Set as default shipping address"
+              my={'sm'}
+              variant="outline"
+            />
+            <Checkbox
+              key={form.key('defaultBillingAddress')}
+              {...form.getInputProps('defaultBillingAddress', { type: 'checkbox' })}
+              color="rgba(243, 231, 228, 1)"
+              label="Set as default billing address"
+              my={'sm'}
+              variant="outline"
+            />
             <Group grow justify="center" mt="xl">
               <BaseButton c="bright" type="submit">
                 Add

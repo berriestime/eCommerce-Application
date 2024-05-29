@@ -7,7 +7,15 @@ import { defineApiRoot } from '@/lib/commerstools/define-client';
 
 import { getVersionUpdate } from './version';
 
-type UserAddress = { city: string; country: string; id?: string; postalCode: string; streetName: string };
+export type UserAddress = {
+  city: string;
+  country: string;
+  defaultBillingAddress: boolean;
+  defaultShippingAddress: boolean;
+  id?: string;
+  postalCode: string;
+  streetName: string;
+};
 
 async function postAddUserAddress({
   city,
@@ -69,4 +77,60 @@ async function postRemoveUserAddress(id: string): Promise<ClientResponse<Custome
   return response;
 }
 
-export { postAddUserAddress, postRemoveUserAddress };
+async function postDefaultBillingAddress(id: string): Promise<ClientResponse<Customer>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerUpdate = {
+    actions: [
+      {
+        action: 'setDefaultBillingAddress',
+        addressId: id,
+      },
+      {
+        action: 'addBillingAddressId',
+        addressId: id,
+      },
+    ],
+    version,
+  };
+
+  const response = await apiRoot
+    .me()
+    .post({
+      body: updateActions,
+    })
+    .execute();
+
+  return response;
+}
+
+async function postDefaultShippingAddress(id: string): Promise<ClientResponse<Customer>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerUpdate = {
+    actions: [
+      {
+        action: 'setDefaultShippingAddress',
+        addressId: id,
+      },
+      {
+        action: 'addShippingAddressId',
+        addressId: id,
+      },
+    ],
+    version,
+  };
+
+  const response = await apiRoot
+    .me()
+    .post({
+      body: updateActions,
+    })
+    .execute();
+
+  return response;
+}
+
+export { postAddUserAddress, postDefaultBillingAddress, postDefaultShippingAddress, postRemoveUserAddress };
