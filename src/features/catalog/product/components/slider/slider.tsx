@@ -65,6 +65,7 @@ const BigSlider = ({ close, currentImageUrl, images, opened }: ModalProps): JSX.
         maw="100%"
         orientation={matches ? 'horizontal' : 'vertical'}
         slidesToScroll={1}
+        withControls={images.length > 1 ? true : false}
         withIndicators={matches ? true : false}
       >
         {slides}
