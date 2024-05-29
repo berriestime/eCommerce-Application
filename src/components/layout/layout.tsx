@@ -1,5 +1,5 @@
-import { Suspense } from 'react';
-import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { Suspense, useEffect, useState } from 'react';
+import { Outlet, ScrollRestoration, useNavigation } from 'react-router-dom';
 
 import { AppShell, Box, Loader } from '@mantine/core';
 import { useViewportSize } from '@mantine/hooks';
@@ -13,6 +13,16 @@ import classes from '../loader/loader.module.css';
 
 const Layout = (): JSX.Element => {
   const { width } = useViewportSize();
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (navigation.state === 'loading') {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [navigation.state]);
 
   return (
     <AppShell
@@ -31,9 +41,19 @@ const Layout = (): JSX.Element => {
             </Box>
           }
         >
-          <Notifications bg="customBg" c="customColor" />
+          {loading && (
+            <Box className={classes.box}>
+              <Loader />
+            </Box>
+          )}
 
-          <Outlet />
+          {!loading && (
+            <>
+              <Notifications bg="customBg" c="customColor" />
+
+              <Outlet />
+            </>
+          )}
           <ScrollRestoration />
         </Suspense>
       </AppShell.Main>
