@@ -1,1 +1,1 @@
-export * from './validate-password';
+export * from './validate/validate-password';

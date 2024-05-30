@@ -28,7 +28,6 @@ const createRefreshFlowClient = (): ByProjectKeyRequestBuilder => {
   const ctpClient = import.meta.env.PROD ? ctpClientBuilder.build() : ctpClientBuilder.withLoggerMiddleware().build();
 
   apiRootRefresh = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
-  apiRootRefresh.get().execute().catch(console.error);
 
   return apiRootRefresh;
 };

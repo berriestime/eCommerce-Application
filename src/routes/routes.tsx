@@ -32,6 +32,7 @@ import { loader as StoreLoader } from '@/features/catalog/catalog-data-loader';
 import { loader as CategoryLoader } from '@/features/catalog/category/category-data-loader';
 import { loader as SubcategoryLoader } from '@/features/catalog/category/subcategory-data-loader';
 import { loader as ProductLoader } from '@/features/catalog/product/product-data-loader';
+import { loader as ProfileLoader } from '@/features/profile/profile-data-loader';
 
 export const routes = [
   {
@@ -62,6 +63,7 @@ export const routes = [
             <Profile />
           </AuthRouteGuard>
         ),
+        loader: ProfileLoader,
         path: APP_ROUTE.Profile,
       },
       {
