@@ -8,7 +8,7 @@ import {
 } from '@commercetools/platform-sdk';
 
 import { getCategoryByKey, getSubcategoryIds } from '../api/category-api';
-import { getProductsByCategoryIds } from '../api/product-api';
+import { getProductsByCategorySubtree } from '../api/product-api';
 
 async function loader({ params }: LoaderFunctionArgs): Promise<{
   categoryData: Category;
@@ -22,10 +22,11 @@ async function loader({ params }: LoaderFunctionArgs): Promise<{
   const subcategoriesResponse: ClientResponse<CategoryPagedQueryResponse> = await getSubcategoryIds(categoryData.id);
   const subcategoriesData: CategoryPagedQueryResponse = subcategoriesResponse.body;
 
-  const subcategoryIds = subcategoriesData.results.map((category) => category.id);
+  // const subcategoryIds = subcategoriesData.results.map((category) => category.id);
 
-  const productsResponse: ClientResponse<ProductProjectionPagedQueryResponse> =
-    await getProductsByCategoryIds(subcategoryIds);
+  // const productsResponse: ClientResponse<ProductProjectionPagedQueryResponse> =
+  //   await getProductsByCategoryIds(subcategoryIds);
+  const productsResponse = await getProductsByCategorySubtree(categoryData.id);
   const productsData: ProductProjectionPagedQueryResponse = productsResponse.body;
 
   return { categoryData, productsData, subcategoriesData };

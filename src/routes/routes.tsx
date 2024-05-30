@@ -18,7 +18,7 @@ import {
   TeamPage,
 } from './lazy';
 
-export const APP_ROUTES = {
+export const APP_ROUTE = {
   Cart: 'cart',
   Login: 'login',
   Main: '/',
@@ -46,7 +46,7 @@ export const routes = [
             <LoginPage />
           </AuthRouteGuard>
         ),
-        path: APP_ROUTES.Login,
+        path: APP_ROUTE.Login,
       },
       {
         element: (
@@ -54,7 +54,7 @@ export const routes = [
             <RegistrationPage />
           </AuthRouteGuard>
         ),
-        path: APP_ROUTES.Registration,
+        path: APP_ROUTE.Registration,
       },
       {
         element: (
@@ -62,7 +62,7 @@ export const routes = [
             <Profile />
           </AuthRouteGuard>
         ),
-        path: APP_ROUTES.Profile,
+        path: APP_ROUTE.Profile,
       },
       {
         element: <CatalogPage />,
@@ -70,36 +70,36 @@ export const routes = [
           crumb: () => <span key="1">Store</span>,
         },
         loader: StoreLoader,
-        path: APP_ROUTES.Store,
+        path: APP_ROUTE.Store,
       },
       {
         element: <CategoryPage />,
         handle: {
           crumb: ({ categoryData }: { categoryData: Category }) => [
-            <Link key="1" to={`/${APP_ROUTES.Store}`}>
+            <Link key="1" to={`/${APP_ROUTE.Store}`}>
               Store
             </Link>,
             <span key="2">{categoryData.name['en-US']}</span>,
           ],
         },
         loader: CategoryLoader,
-        path: `${APP_ROUTES.Store}/:categoryId`,
+        path: `${APP_ROUTE.Store}/:categoryId`,
       },
       {
         element: <CategoryPage />,
         handle: {
           crumb: ({ categoryData, subcategoryData }: { categoryData: Category; subcategoryData: Category }) => [
-            <Link key="1" to={`/${APP_ROUTES.Store}`}>
+            <Link key="1" to={`/${APP_ROUTE.Store}`}>
               Store
             </Link>,
-            <Link key="2" to={`/${APP_ROUTES.Store}/${categoryData.key}`}>
+            <Link key="2" to={`/${APP_ROUTE.Store}/${categoryData.key}`}>
               {categoryData.name['en-US']}
             </Link>,
             <span key="3"> {subcategoryData.name['en-US']}</span>,
           ],
         },
         loader: SubcategoryLoader,
-        path: `${APP_ROUTES.Store}/:categoryId/:subcategoryId`,
+        path: `${APP_ROUTE.Store}/:categoryId/:subcategoryId`,
       },
       {
         element: <ProductPage />,
@@ -113,33 +113,33 @@ export const routes = [
             productData: Product;
             subcategoryData: Category;
           }) => [
-            <Link key="1" to={`/${APP_ROUTES.Store}`}>
+            <Link key="1" to={`/${APP_ROUTE.Store}`}>
               Store
             </Link>,
-            <Link key="2" to={`/${APP_ROUTES.Store}/${categoryData.key}`}>
+            <Link key="2" to={`/${APP_ROUTE.Store}/${categoryData.key}`}>
               {categoryData.name['en-US']}
             </Link>,
-            <Link key="3" to={`/${APP_ROUTES.Store}/${categoryData.key}/${subcategoryData.key}`}>
+            <Link key="3" to={`/${APP_ROUTE.Store}/${categoryData.key}/${subcategoryData.key}`}>
               {subcategoryData.name['en-US']}
             </Link>,
             <span key="4">{productData.masterData.current.name['en-US']}</span>,
           ],
         },
         loader: ProductLoader,
-        path: `${APP_ROUTES.Store}/:categoryId/:subcategoryId/:productId`,
+        path: `${APP_ROUTE.Store}/:categoryId/:subcategoryId/:productId`,
       },
 
       {
         element: <TeamPage />,
-        path: APP_ROUTES.Team,
+        path: APP_ROUTE.Team,
       },
       {
         element: <CartPage />,
-        path: APP_ROUTES.Cart,
+        path: APP_ROUTE.Cart,
       },
     ],
     element: <Layout />,
     errorElement: <NotFoundPage />,
-    path: APP_ROUTES.Main,
+    path: APP_ROUTE.Main,
   },
 ];

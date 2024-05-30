@@ -15,68 +15,50 @@ const getProductByKey = (productKey: string): Promise<ClientResponse<Product>> =
   return apiRoot.products().withKey({ key: productKey }).get().execute();
 };
 
-// async function getAllProducts(): Promise<ClientResponse> {
-//   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-//   const response: ClientResponse = await apiRoot.products().get().execute();
-//   return response;
-// }
-
-async function getAllProducts(): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
-  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  const response: ClientResponse = await apiRoot
-    .productProjections()
-    .search()
-    .get({
-      queryArgs: {
-        expand: ['categories[*]'],
-        filter: [],
-        limit: 12,
-        offset: 150,
-      },
-    })
-    .execute();
-  return response;
+async function getAllProducts({
+  priceFrom,
+  priceTo,
+}: {
+  priceFrom: number;
+  priceTo: number;
+}): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+  const filter = [];
+  if (priceFrom || priceTo) {
+    filter.push(`variants.price.centAmount:range (${priceFrom || '*'} to ${priceTo || '*'})`);
+  }
+  return getProductsWithFilter(filter, ['categories[*]']);
 }
 
 async function getProductsByCategoryId(
   categoryId: string,
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+  return getProductsWithFilter([`categories.id:"${categoryId}"`]);
+}
+
+async function getProductsByCategorySubtree(
+  categoryId: string,
+): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+  return getProductsWithFilter([`categories.id: subtree("${categoryId}")`], ['categories[*]']);
+}
+
+async function getProductsWithFilter(
+  filter: string[],
+  expand?: string[],
+): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const response = await apiRoot
     .productProjections()
     .search()
     .get({
       queryArgs: {
-        // Используйте фильтр по ID категории
-        filter: [`categories.id:"${categoryId}"`],
-        // Добавьте параметры пагинации, если ожидается большое количество товаров
-        limit: 20,
-        offset: 0,
-      },
-    })
-    .execute();
-
-  return response;
-}
-
-async function getProductsByCategoryIds(
-  categoryIds: string[],
-): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
-  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  const whereConditions = categoryIds.map((id) => `categories(id="${id}")`).join(' or ');
-  const response = await apiRoot
-    .productProjections()
-    .get({
-      queryArgs: {
-        expand: ['categories[*]'],
+        expand,
+        filter,
         limit: 12,
         offset: 0,
-        where: whereConditions,
       },
     })
     .execute();
-
   return response;
 }
 
-export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId, getProductsByCategoryIds };
+export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId, getProductsByCategorySubtree };
