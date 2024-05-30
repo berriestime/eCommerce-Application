@@ -23,6 +23,8 @@ async function loader({ params, request }: LoaderFunctionArgs): Promise<{
   const url = new URL(request.url);
   const priceFrom = parseInt(url.searchParams.get('priceFrom') ?? '');
   const priceTo = parseInt(url.searchParams.get('priceTo') ?? '');
+  const lavaColor = url.searchParams.get('lavaColor') ?? '';
+
   const categoryResponse: ClientResponse<Category> = await getCategoryByKey(categoryKey);
   const categoryData: Category = categoryResponse.body;
 
@@ -34,7 +36,7 @@ async function loader({ params, request }: LoaderFunctionArgs): Promise<{
 
   const productsResponse: ClientResponse<ProductProjectionPagedQueryResponse> = await getProductsByCategoryId(
     subcategoryData.id,
-    { priceFrom, priceTo },
+    { lavaColor, priceFrom, priceTo },
   );
   const productsData: ProductProjectionPagedQueryResponse = productsResponse.body;
 
