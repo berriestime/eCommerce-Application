@@ -5,6 +5,7 @@ import { useForm } from '@mantine/form';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomTextInput } from '@/components/custom-text-input';
+import { addNotification } from '@/utils/show-notification';
 import { isEmail } from '@/utils/validate/isEmail';
 
 import { postUserNewEmail } from '../../api/user-api';
@@ -37,7 +38,14 @@ const ProfileEmail = (user: Customer): ReactElement => {
     } else {
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
-      postUserNewEmail(email).catch(console.error);
+      postUserNewEmail(email)
+        .then(() =>
+          addNotification({ message: 'Email has been successfully changed', title: 'Email change', type: 'success' }),
+        )
+        .catch((error: unknown) => {
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          addNotification({ message: errorMessage, title: 'Error', type: 'error' });
+        });
     }
   };
 

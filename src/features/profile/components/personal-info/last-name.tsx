@@ -5,6 +5,7 @@ import { useForm } from '@mantine/form';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomTextInput } from '@/components/custom-text-input';
+import { addNotification } from '@/utils/show-notification';
 
 import { postUserLastName } from '../../api/user-api';
 
@@ -37,7 +38,18 @@ const ProfileLastName = (user: Customer): ReactElement => {
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
       console.log(lastName);
-      postUserLastName(lastName).catch(console.error);
+      postUserLastName(lastName)
+        .then(() =>
+          addNotification({
+            message: 'Last name has been successfully changed',
+            title: 'Last name change',
+            type: 'success',
+          }),
+        )
+        .catch((error: unknown) => {
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          addNotification({ message: errorMessage, title: 'Error', type: 'error' });
+        });
     }
   };
 

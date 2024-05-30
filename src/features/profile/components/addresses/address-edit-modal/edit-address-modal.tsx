@@ -74,6 +74,9 @@ const EditAddressModal = ({
           }),
         );
       })
+      .then(() =>
+        addNotification({ message: 'Address was successfully changed', title: 'Address change', type: 'success' }),
+      )
       .catch((error: unknown) => {
         const errorMessage = error instanceof Error ? error.message : String(error);
         addNotification({ message: errorMessage, title: 'Error', type: 'error' });

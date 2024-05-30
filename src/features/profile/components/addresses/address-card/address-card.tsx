@@ -4,6 +4,7 @@ import { Button, Flex, Menu, Title } from '@mantine/core';
 
 import { postRemoveUserAddress } from '@/features/profile/api/address-api';
 import { AddressCardProps } from '@/features/profile/types/address-card-props';
+import { addNotification } from '@/utils/show-notification';
 
 import classes from './address-card.module.css';
 
@@ -45,7 +46,13 @@ function AddressCard(props: AddressCardProps): ReactElement {
           const newAddresses = props.addresses.filter((address) => address.id !== props.id);
           props.setAddresses(newAddresses);
         })
-        .catch(console.warn);
+        .then(() =>
+          addNotification({ message: 'Address was successfully removed', title: 'Address remove', type: 'success' }),
+        )
+        .catch((error: unknown) => {
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          addNotification({ message: errorMessage, title: 'Error', type: 'error' });
+        });
     }
   };
 

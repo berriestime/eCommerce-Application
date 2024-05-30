@@ -48,6 +48,9 @@ const ChangePasswordModal = ({ close, opened, user }: ChangePasswordModalProps):
         form.clearErrors();
         close();
       })
+      .then(() =>
+        addNotification({ message: 'Password was successfully changed', title: 'Password change', type: 'success' }),
+      )
       .catch((error: unknown) => {
         const errorMessage = error instanceof Error ? error.message : String(error);
         addNotification({ message: errorMessage, title: 'Error', type: 'error' });

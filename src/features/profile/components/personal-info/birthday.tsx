@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomDateInput } from '@/components/custom-date-input';
+import { addNotification } from '@/utils/show-notification';
 
 import { postUserDateOfBirth } from '../../api/user-api';
 
@@ -44,7 +45,14 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
     } else {
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
-      postUserDateOfBirth(date).catch(console.error);
+      postUserDateOfBirth(date)
+        .then(() =>
+          addNotification({ message: 'Birthday was successfully changed', title: 'Birthday change', type: 'success' }),
+        )
+        .catch((error: unknown) => {
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          addNotification({ message: errorMessage, title: 'Error', type: 'error' });
+        });
     }
   };
 
