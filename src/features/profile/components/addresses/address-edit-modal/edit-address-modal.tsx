@@ -9,7 +9,13 @@ import { AddressEditModalProps } from '@/features/profile/types/edit-modal-props
 import { UserAddress } from '@/features/profile/types/user-address';
 import { addNotification } from '@/utils/show-notification';
 
-import { postChangeAddress, postDefaultBillingAddress, postDefaultShippingAddress } from '../../../api/address-api';
+import {
+  postChangeAddress,
+  postDefaultBillingAddress,
+  postDefaultShippingAddress,
+  postRemoveDefaultBillingAddress,
+  postRemoveDefaultShippingAddress,
+} from '../../../api/address-api';
 
 import classes from '@/components/modals/modal.module.css';
 
@@ -22,6 +28,8 @@ const EditAddressModal = ({
   form,
   opened,
   setAddresses,
+  setBilling,
+  setShipping,
 }: AddressEditModalProps): JSX.Element => {
   const [visible, setVisible] = useState(false);
 
@@ -39,10 +47,22 @@ const EditAddressModal = ({
 
         if (address.defaultBillingAddress) {
           await postDefaultBillingAddress(id);
+          setBilling(id);
+        } else {
+          if (id === address.id) {
+            await postRemoveDefaultBillingAddress(id);
+            setBilling(null);
+          }
         }
 
         if (address.defaultShippingAddress) {
           await postDefaultShippingAddress(id);
+          setShipping(id);
+        } else {
+          if (id === address.id) {
+            await postRemoveDefaultShippingAddress(id);
+            setShipping(null);
+          }
         }
 
         const index = addresses.findIndex((address) => address.id === id);

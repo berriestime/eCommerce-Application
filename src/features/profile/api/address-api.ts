@@ -130,6 +130,54 @@ async function postDefaultShippingAddress(id: string): Promise<ClientResponse<Cu
   return response;
 }
 
+async function postRemoveDefaultBillingAddress(id: string): Promise<ClientResponse<Customer>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerUpdate = {
+    actions: [
+      {
+        action: 'removeBillingAddressId',
+        addressId: id,
+      },
+    ],
+    version,
+  };
+
+  const response = await apiRoot
+    .me()
+    .post({
+      body: updateActions,
+    })
+    .execute();
+
+  return response;
+}
+
+async function postRemoveDefaultShippingAddress(id: string): Promise<ClientResponse<Customer>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerUpdate = {
+    actions: [
+      {
+        action: 'removeShippingAddressId',
+        addressId: id,
+      },
+    ],
+    version,
+  };
+
+  const response = await apiRoot
+    .me()
+    .post({
+      body: updateActions,
+    })
+    .execute();
+
+  return response;
+}
+
 async function postChangeAddress(id: string, address: Address): Promise<ClientResponse<Customer>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const customerId = (await apiRoot.me().get().execute()).body.id;
@@ -160,5 +208,7 @@ export {
   postChangeAddress,
   postDefaultBillingAddress,
   postDefaultShippingAddress,
+  postRemoveDefaultBillingAddress,
+  postRemoveDefaultShippingAddress,
   postRemoveUserAddress,
 };

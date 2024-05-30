@@ -20,4 +20,6 @@ export type AddressEditModalProps = {
   }>;
   opened: boolean;
   setAddresses: Dispatch<SetStateAction<Address[]>>;
+  setBilling: Dispatch<SetStateAction<null | string>>;
+  setShipping: Dispatch<SetStateAction<null | string>>;
 };

@@ -140,13 +140,11 @@ const ProfileAddresses = (user: Customer): ReactElement => {
         addresses={addresses}
         close={closeEditAddressModal}
         editAddress={editAddress}
-        // editDefaultBilling={editDefaultBilling}
-        // editDefaultShipping={editDefaultShipping}
         form={form}
         opened={modalEditAddressOpened}
         setAddresses={setAddresses}
-        // setBilling={setDefaultBillingAddress}
-        // setShipping={setDefaultShippingAddress}
+        setBilling={setDefaultBillingAddress}
+        setShipping={setDefaultShippingAddress}
       />
     </>
   );
