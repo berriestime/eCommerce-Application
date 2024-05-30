@@ -31,14 +31,25 @@ async function getAllProducts({
 
 async function getProductsByCategoryId(
   categoryId: string,
+  options?: { priceFrom?: number; priceTo?: number },
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
-  return getProductsWithFilter([`categories.id:"${categoryId}"`]);
+  const filter = [`categories.id:"${categoryId}"`];
+  if (options?.priceFrom || options?.priceTo) {
+    filter.push(`variants.price.centAmount:range(${options?.priceFrom || '*'} to ${options?.priceTo || '*'})`);
+  }
+
+  return getProductsWithFilter(filter);
 }
 
 async function getProductsByCategorySubtree(
   categoryId: string,
+  { priceFrom, priceTo }: { priceFrom: number; priceTo: number },
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
-  return getProductsWithFilter([`categories.id: subtree("${categoryId}")`], ['categories[*]']);
+  const filter = [`categories.id: subtree("${categoryId}")`];
+  if (priceFrom || priceTo) {
+    filter.push(`variants.price.centAmount:range (${priceFrom || '*'} to ${priceTo || '*'})`);
+  }
+  return getProductsWithFilter(filter, ['categories[*]']);
 }
 
 async function getProductsWithFilter(
