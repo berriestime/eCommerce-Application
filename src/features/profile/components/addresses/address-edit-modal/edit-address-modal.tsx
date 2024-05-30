@@ -1,46 +1,19 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
-import { Address } from '@commercetools/platform-sdk';
 import { Button, Checkbox, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
+import { AddressEditModalProps } from '@/features/profile/types/edit-modal-props';
+import { UserAddress } from '@/features/profile/types/user-address';
 import { addNotification } from '@/utils/show-notification';
 
-import {
-  UserAddress,
-  postChangeAddress,
-  postDefaultBillingAddress,
-  postDefaultShippingAddress,
-} from '../../../api/address-api';
-import { EditAddress } from '../address-card';
+import { postChangeAddress, postDefaultBillingAddress, postDefaultShippingAddress } from '../../../api/address-api';
 
 import classes from '@/components/modals/modal.module.css';
 
 const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
-
-type AddressModalProps = {
-  addresses: Address[];
-  close: () => void;
-  editAddress: EditAddress;
-  // editDefaultBilling: boolean;
-  // editDefaultShipping: boolean;
-  form: UseFormReturnType<{
-    city: string;
-    country: string;
-    defaultBillingAddress: boolean;
-    defaultShippingAddress: boolean;
-    id: string | undefined;
-    postalCode: string;
-    streetName: string;
-  }>;
-  opened: boolean;
-  setAddresses: Dispatch<SetStateAction<Address[]>>;
-  // setBilling: Dispatch<SetStateAction<null | string>>;
-  // setShipping: Dispatch<SetStateAction<null | string>>;
-};
 
 const EditAddressModal = ({
   addresses,
@@ -49,7 +22,7 @@ const EditAddressModal = ({
   form,
   opened,
   setAddresses,
-}: AddressModalProps): JSX.Element => {
+}: AddressEditModalProps): JSX.Element => {
   const [visible, setVisible] = useState(false);
 
   const toggle = (): void => {

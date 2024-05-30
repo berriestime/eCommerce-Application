@@ -11,17 +11,8 @@ import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import { defineApiRoot } from '@/lib/commerstools/define-client';
 
+import { UserAddress } from '../types/user-address';
 import { getVersionUpdate } from './version';
-
-export type UserAddress = {
-  city: string;
-  country: string;
-  defaultBillingAddress: boolean;
-  defaultShippingAddress: boolean;
-  id?: string;
-  postalCode: string;
-  streetName: string;
-};
 
 async function postAddUserAddress({
   city,

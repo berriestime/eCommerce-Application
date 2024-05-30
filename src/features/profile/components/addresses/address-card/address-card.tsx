@@ -1,46 +1,11 @@
-import { Dispatch, ReactElement, SetStateAction } from 'react';
+import { ReactElement } from 'react';
 
-import { Address } from '@commercetools/platform-sdk';
 import { Button, Flex, Menu, Title } from '@mantine/core';
-import { SetValues } from 'node_modules/@mantine/form/lib/types';
 
 import { postRemoveUserAddress } from '@/features/profile/api/address-api';
+import { AddressCardProps } from '@/features/profile/types/address-card-props';
 
 import classes from './address-card.module.css';
-
-export type EditAddress = {
-  city: string | undefined;
-  country: string;
-  defaultBillingAddress: boolean;
-  defaultShippingAddress: boolean;
-  id: string | undefined;
-  postalCode: string | undefined;
-  streetName: string | undefined;
-};
-
-type AddressCardProps = {
-  addresses: Address[];
-  city?: string;
-  country: string;
-  defaultBilling: null | string;
-  defaultShipping: null | string;
-  editAddress: EditAddress | undefined;
-  id?: string;
-  openEditModal: () => void;
-  postalCode?: string;
-  setAddresses: Dispatch<SetStateAction<Address[]>>;
-  setEditAddress: Dispatch<SetStateAction<EditAddress>>;
-  setValues: SetValues<{
-    city: string;
-    country: string;
-    defaultBillingAddress: boolean;
-    defaultShippingAddress: boolean;
-    id: string | undefined;
-    postalCode: string;
-    streetName: string;
-  }>;
-  streetName?: string;
-};
 
 const transformCountryCodeIntoCountry = (country: string): string => {
   switch (country) {
@@ -95,8 +60,6 @@ function AddressCard(props: AddressCardProps): ReactElement {
             <Button
               onClick={() => {
                 props.setEditAddress(address);
-                // props.setEditDefaultBilling(props.id === props.defaultBilling);
-                // props.setEditDefaultShipping(props.id === props.defaultShipping);
               }}
             >
               menu

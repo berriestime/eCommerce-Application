@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
 import { Address } from '@commercetools/platform-sdk';
 import { Button, Checkbox, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
@@ -8,27 +8,15 @@ import { postcodeValidator } from 'postcode-validator';
 import { BaseButton } from '@/components/base-button';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
+import { type AddressAddModalProps } from '@/features/profile/types/add-modal-props';
+import { UserAddress } from '@/features/profile/types/user-address';
 import { addNotification } from '@/utils/show-notification';
 
-import {
-  UserAddress,
-  postAddUserAddress,
-  postDefaultBillingAddress,
-  postDefaultShippingAddress,
-} from '../../../api/address-api';
+import { postAddUserAddress, postDefaultBillingAddress, postDefaultShippingAddress } from '../../../api/address-api';
 
 import classes from '@/components/modals/modal.module.css';
 
 const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
-
-type AddressModalProps = {
-  addresses: Address[];
-  close: () => void;
-  opened: boolean;
-  setAddresses: Dispatch<SetStateAction<Address[]>>;
-  setBilling: Dispatch<SetStateAction<null | string>>;
-  setShipping: Dispatch<SetStateAction<null | string>>;
-};
 
 const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required field');
 
@@ -76,7 +64,7 @@ const AddAddressModal = ({
   setAddresses,
   setBilling,
   setShipping,
-}: AddressModalProps): JSX.Element => {
+}: AddressAddModalProps): JSX.Element => {
   const [visible, setVisible] = useState(false);
 
   const toggle = (): void => {

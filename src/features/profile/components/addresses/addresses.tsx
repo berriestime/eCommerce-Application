@@ -9,7 +9,8 @@ import { postcodeValidator } from 'postcode-validator';
 import { BaseButton } from '@/components/base-button';
 import { AddAddressModal } from '@/features/profile/components/addresses/add-address-modal';
 
-import { AddressCard, EditAddress } from './address-card/address-cars';
+import { EditAddress } from '../../types/edit-address';
+import { AddressCard } from './address-card/address-card';
 import { EditAddressModal } from './address-edit-modal/edit-address-modal';
 
 const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];

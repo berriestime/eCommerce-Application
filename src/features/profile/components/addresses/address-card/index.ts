@@ -1,1 +1,1 @@
-export * from './address-cars';
+export * from './address-card';
