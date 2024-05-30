@@ -86,4 +86,28 @@ async function postUserDateOfBirth(date: string): Promise<ClientResponse> {
   return response;
 }
 
-export { getUserData, postUserDateOfBirth, postUserFirstName, postUserLastName };
+async function postUserNewEmail(email: string): Promise<ClientResponse> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerUpdate = {
+    actions: [
+      {
+        action: 'changeEmail',
+        email,
+      },
+    ],
+    version,
+  };
+
+  const response = await apiRoot
+    .me()
+    .post({
+      body: updateActions,
+    })
+    .execute();
+
+  return response;
+}
+
+export { getUserData, postUserDateOfBirth, postUserFirstName, postUserLastName, postUserNewEmail };
