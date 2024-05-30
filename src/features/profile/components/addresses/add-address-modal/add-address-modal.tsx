@@ -2,60 +2,24 @@ import { useState } from 'react';
 
 import { Address } from '@commercetools/platform-sdk';
 import { Button, Checkbox, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
-import { UseFormReturnType, useForm } from '@mantine/form';
-import { postcodeValidator } from 'postcode-validator';
+import { useForm } from '@mantine/form';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
+import { COUNTRIES } from '@/constants/countries';
 import { type AddressAddModalProps } from '@/features/profile/types/add-modal-props';
 import { UserAddress } from '@/features/profile/types/user-address';
 import { addNotification } from '@/utils/show-notification';
+import { isProperCountry } from '@/utils/validate/is-proper-country';
+import { isProperPostcode } from '@/utils/validate/is-proper-postcode';
+import { notEmpty } from '@/utils/validate/not-empty';
+import { onlyLetters } from '@/utils/validate/only-letters';
+import { transformCountryIntoCountryCode } from '@/utils/validate/transform-country';
 
 import { postAddUserAddress, postDefaultBillingAddress, postDefaultShippingAddress } from '../../../api/address-api';
 
 import classes from '@/components/modals/modal.module.css';
-
-const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
-
-const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required field');
-
-const onlyLetters =
-  (message: string) =>
-  (value: string): null | string => {
-    if (!value) {
-      return 'Required field';
-    }
-    if (!/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value)) {
-      return message;
-    }
-    return null;
-  };
-
-const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
-
-const transformCountryIntoCountryCode = (country: string): string => {
-  switch (country) {
-    case 'Germany':
-      return 'DE';
-    case 'United Kingdom':
-      return 'UK';
-    case 'United States':
-      return 'US';
-    default:
-      return '';
-  }
-};
-
-const isProperPostcode =
-  <K extends string, T extends Record<K, string>>(countryField: K) =>
-  (value: string, values: UseFormReturnType<T>['values']): null | string => {
-    const code = transformCountryIntoCountryCode(values[countryField]);
-    if (!code) {
-      return 'Invalid country';
-    }
-    return postcodeValidator(value, code) ? null : 'Invalid postcode';
-  };
 
 const AddAddressModal = ({
   addresses,

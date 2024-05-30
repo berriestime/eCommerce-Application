@@ -2,56 +2,20 @@ import { ReactElement, useState } from 'react';
 
 import { Customer } from '@commercetools/platform-sdk';
 import { Container, Flex, Title } from '@mantine/core';
-import { UseFormReturnType, useForm } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-import { postcodeValidator } from 'postcode-validator';
 
 import { BaseButton } from '@/components/base-button';
 import { AddAddressModal } from '@/features/profile/components/addresses/add-address-modal';
+import { isProperCountry } from '@/utils/validate/is-proper-country';
+import { isProperPostcode } from '@/utils/validate/is-proper-postcode';
+import { notEmpty } from '@/utils/validate/not-empty';
+import { onlyLetters } from '@/utils/validate/only-letters';
+import { transformCountryIntoCountryCode } from '@/utils/validate/transform-country';
 
 import { EditAddress } from '../../types/edit-address';
 import { AddressCard } from './address-card/address-card';
 import { EditAddressModal } from './address-edit-modal/edit-address-modal';
-
-const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
-const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required field');
-
-const onlyLetters =
-  (message: string) =>
-  (value: string): null | string => {
-    if (!value) {
-      return 'Required field';
-    }
-    if (!/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value)) {
-      return message;
-    }
-    return null;
-  };
-
-const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
-
-const transformCountryIntoCountryCode = (country: string): string => {
-  switch (country) {
-    case 'Germany':
-      return 'DE';
-    case 'United Kingdom':
-      return 'UK';
-    case 'United States':
-      return 'US';
-    default:
-      return '';
-  }
-};
-
-const isProperPostcode =
-  <K extends string, T extends Record<K, string>>(countryField: K) =>
-  (value: string, values: UseFormReturnType<T>['values']): null | string => {
-    const code = transformCountryIntoCountryCode(values[countryField]);
-    if (!code) {
-      return 'Invalid country';
-    }
-    return postcodeValidator(value, code) ? null : 'Invalid postcode';
-  };
 
 const ProfileAddresses = (user: Customer): ReactElement => {
   const [modalAddAddressOpened, { close: closeAddAddressModal, open: openAddAddressModal }] = useDisclosure(false);

@@ -10,20 +10,11 @@ import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { setAuthState } from '@/features/auth/authSlice';
 import { type AuthState } from '@/types/authState';
+import { validatePassword } from '@/utils';
 import { addNotification } from '@/utils/show-notification';
-import { validatePassword } from '@/utils/validate-password';
+import { isEmail } from '@/utils/validate/isEmail';
 
 import { postCustomerLogin } from '../api';
-
-const isEmail =
-  (message: string) =>
-  (value: string): null | string => {
-    if (!value) {
-      return 'Required field';
-    }
-
-    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? null : message;
-  };
 
 const LoginForm: FC = () => {
   const form = useForm({
