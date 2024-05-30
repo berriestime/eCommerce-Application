@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
-import { createRefreshFlowClient } from './lib/commerstools/create-refresh-client';
+import { apiRootRefresh, createRefreshFlowClient } from './lib/commerstools/create-refresh-client';
 import { getRefreshToken } from './lib/commerstools/token-cache';
 
 import './index.css';
@@ -13,7 +13,7 @@ if (!node) {
 }
 
 const isRefresh = getRefreshToken();
-if (isRefresh) {
+if (isRefresh && apiRootRefresh === null) {
   createRefreshFlowClient();
 }
 
