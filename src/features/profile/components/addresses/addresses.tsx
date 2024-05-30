@@ -60,8 +60,8 @@ const ProfileAddresses = (user: Customer): ReactElement => {
   const initialAddress = {
     city: '',
     country: '',
-    defaultBillingAddress: false,
-    defaultShippingAddress: false,
+    defaultBillingAddress: '',
+    defaultShippingAddress: '',
     id: '',
     postalCode: '',
     streetName: '',
@@ -79,8 +79,8 @@ const ProfileAddresses = (user: Customer): ReactElement => {
     initialValues: {
       city: editAddress.city ? editAddress.city : '',
       country: editAddress.country,
-      defaultBillingAddress: false,
-      defaultShippingAddress: false,
+      defaultBillingAddress: editAddress.defaultBillingAddress,
+      defaultShippingAddress: editAddress.defaultShippingAddress,
       id: editAddress.id,
       postalCode: editAddress.postalCode ? editAddress.postalCode : '',
       streetName: editAddress.streetName ? editAddress.streetName : '',
@@ -100,7 +100,6 @@ const ProfileAddresses = (user: Customer): ReactElement => {
     },
     validateInputOnChange: true,
   });
-  // form.setValues({ city: editAddress.city });
 
   return (
     <>
@@ -140,11 +139,13 @@ const ProfileAddresses = (user: Customer): ReactElement => {
         addresses={addresses}
         close={closeEditAddressModal}
         editAddress={editAddress}
+        // editDefaultBilling={editDefaultBilling}
+        // editDefaultShipping={editDefaultShipping}
         form={form}
         opened={modalEditAddressOpened}
         setAddresses={setAddresses}
-        setBilling={setDefaultBillingAddress}
-        setShipping={setDefaultShippingAddress}
+        // setBilling={setDefaultBillingAddress}
+        // setShipping={setDefaultShippingAddress}
       />
     </>
   );

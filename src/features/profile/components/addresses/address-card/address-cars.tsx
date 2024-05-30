@@ -11,8 +11,8 @@ import classes from './address-card.module.css';
 export type EditAddress = {
   city: string | undefined;
   country: string;
-  defaultBilling: boolean;
-  defaultShipping: boolean;
+  defaultBillingAddress: boolean;
+  defaultShippingAddress: boolean;
   id: string | undefined;
   postalCode: string | undefined;
   streetName: string | undefined;
@@ -60,8 +60,8 @@ function AddressCard(props: AddressCardProps): ReactElement {
   const address = {
     city: props.city,
     country: transformCountryCodeIntoCountry(props.country),
-    defaultBilling: props.id === props.defaultBilling,
-    defaultShipping: props.id === props.defaultShipping,
+    defaultBillingAddress: props.defaultBilling === props.id,
+    defaultShippingAddress: props.defaultShipping === props.id,
     id: props.id,
     postalCode: props.postalCode,
     streetName: props.streetName,
@@ -92,7 +92,15 @@ function AddressCard(props: AddressCardProps): ReactElement {
         <p className={props.id === props.defaultShipping ? '' : classes.hidden}>Default Shipping Address</p>
         <Menu position={'bottom-end'} shadow="md" width={200}>
           <Menu.Target>
-            <Button onClick={() => props.setEditAddress(address)}>menu</Button>
+            <Button
+              onClick={() => {
+                props.setEditAddress(address);
+                // props.setEditDefaultBilling(props.id === props.defaultBilling);
+                // props.setEditDefaultShipping(props.id === props.defaultShipping);
+              }}
+            >
+              menu
+            </Button>
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item onClick={handleClickEdit}>Edit</Menu.Item>

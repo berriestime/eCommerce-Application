@@ -25,6 +25,8 @@ type AddressModalProps = {
   addresses: Address[];
   close: () => void;
   editAddress: EditAddress;
+  // editDefaultBilling: boolean;
+  // editDefaultShipping: boolean;
   form: UseFormReturnType<{
     city: string;
     country: string;
@@ -36,8 +38,8 @@ type AddressModalProps = {
   }>;
   opened: boolean;
   setAddresses: Dispatch<SetStateAction<Address[]>>;
-  setBilling: Dispatch<SetStateAction<null | string>>;
-  setShipping: Dispatch<SetStateAction<null | string>>;
+  // setBilling: Dispatch<SetStateAction<null | string>>;
+  // setShipping: Dispatch<SetStateAction<null | string>>;
 };
 
 const EditAddressModal = ({
@@ -47,8 +49,6 @@ const EditAddressModal = ({
   form,
   opened,
   setAddresses,
-  setBilling,
-  setShipping,
 }: AddressModalProps): JSX.Element => {
   const [visible, setVisible] = useState(false);
 
@@ -66,12 +66,10 @@ const EditAddressModal = ({
 
         if (address.defaultBillingAddress) {
           await postDefaultBillingAddress(id);
-          setBilling(id);
         }
 
         if (address.defaultShippingAddress) {
           await postDefaultShippingAddress(id);
-          setShipping(id);
         }
 
         const index = addresses.findIndex((address) => address.id === id);
@@ -150,7 +148,6 @@ const EditAddressModal = ({
               />
             </SimpleGrid>
             <Checkbox
-              checked={editAddress.defaultShipping}
               key={form.key('defaultShippingAddress')}
               {...form.getInputProps('defaultShippingAddress', { type: 'checkbox' })}
               color="rgba(243, 231, 228, 1)"
@@ -159,7 +156,6 @@ const EditAddressModal = ({
               variant="outline"
             />
             <Checkbox
-              checked={editAddress.defaultBilling}
               key={form.key('defaultBillingAddress')}
               {...form.getInputProps('defaultBillingAddress', { type: 'checkbox' })}
               color="rgba(243, 231, 228, 1)"
