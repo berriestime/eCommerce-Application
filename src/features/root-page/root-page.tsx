@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import { Box } from '@mantine/core';
 
 import { Footer } from '@/components/footer';
-import { APP_ROUTES } from '@/routes/routes';
+import { APP_ROUTE } from '@/routes/routes';
 
 import imgAstroRed from './assets/astro/lava_lamp_vioet_red.webp';
 import imgAstroBlue from './assets/astro/platinum_vinyl_lava_lamp_blue.webp';
@@ -21,19 +21,19 @@ const bestData = [
     image: imgBestGreen,
     price: '$46.00',
     title: 'Fireflow candle lava lamp: Copper',
-    to: `/${APP_ROUTES.Store}/lamps/candle/fireflow-candle-lava-lamp-cooper-blue-yellow`,
+    to: `/${APP_ROUTE.Store}/lamps/candle/fireflow-candle-lava-lamp-cooper-blue-yellow`,
   },
   {
     image: imgBestBlue,
     price: '$85.00',
     title: 'Neo lava lamp for children & all ages: Copper',
-    to: `/${APP_ROUTES.Store}/lamps/new/neo-lava-cooper-blue-turquoise`,
+    to: `/${APP_ROUTE.Store}/lamps/new/neo-lava-cooper-blue-turquoise`,
   },
   {
     image: imgBestYellow,
     price: '$48.00',
     title: 'Pod candle lava lamp: Copper',
-    to: `/${APP_ROUTES.Store}/lamps/candle/pod-candle-lava-lamp-cooper-yellow-orange`,
+    to: `/${APP_ROUTE.Store}/lamps/candle/pod-candle-lava-lamp-cooper-yellow-orange`,
   },
 ];
 
@@ -42,19 +42,19 @@ const classicData = [
     image: imgAstroBlue,
     price: '$95.00',
     title: 'Astro Platinum Vinyl lava lamp',
-    to: `/${APP_ROUTES.Store}/lamps/1960/astro-original-platinum-violet-turquoise`,
+    to: `/${APP_ROUTE.Store}/lamps/1960/astro-original-platinum-violet-turquoise`,
   },
   {
     image: imgAstroYellow,
     price: '$95.00',
     title: 'Astro Vinyl lava lamp',
-    to: `/${APP_ROUTES.Store}/lamps/1960/astro-original-black-vinyl-yellow-white`,
+    to: `/${APP_ROUTE.Store}/lamps/1960/astro-original-black-vinyl-yellow-white`,
   },
   {
     image: imgAstroRed,
     price: '$87.00',
     title: 'Astro the original lava lamp: Silver',
-    to: `/${APP_ROUTES.Store}/lamps/1960/astro-original-silver-violet-red`,
+    to: `/${APP_ROUTE.Store}/lamps/1960/astro-original-silver-violet-red`,
   },
 ];
 

@@ -8,13 +8,18 @@ import {
 } from '@commercetools/platform-sdk';
 
 import { getCategoryByKey, getSubcategoryIds } from '../api/category-api';
-import { getProductsByCategoryIds } from '../api/product-api';
+import { getProductsByCategorySubtree } from '../api/product-api';
 
-async function loader({ params }: LoaderFunctionArgs): Promise<{
+async function loader({ params, request }: LoaderFunctionArgs): Promise<{
   categoryData: Category;
   productsData: ProductProjectionPagedQueryResponse;
   subcategoriesData: CategoryPagedQueryResponse;
 }> {
+  const url = new URL(request.url);
+  const priceFrom = parseInt(url.searchParams.get('priceFrom') ?? '');
+  const priceTo = parseInt(url.searchParams.get('priceTo') ?? '');
+  const lavaColor = url.searchParams.get('lavaColor') ?? '';
+
   const { categoryId: categoryKey } = params as { categoryId: string };
   const categoryResponse: ClientResponse<Category> = await getCategoryByKey(categoryKey);
   const categoryData: Category = categoryResponse.body;
@@ -22,10 +27,7 @@ async function loader({ params }: LoaderFunctionArgs): Promise<{
   const subcategoriesResponse: ClientResponse<CategoryPagedQueryResponse> = await getSubcategoryIds(categoryData.id);
   const subcategoriesData: CategoryPagedQueryResponse = subcategoriesResponse.body;
 
-  const subcategoryIds = subcategoriesData.results.map((category) => category.id);
-
-  const productsResponse: ClientResponse<ProductProjectionPagedQueryResponse> =
-    await getProductsByCategoryIds(subcategoryIds);
+  const productsResponse = await getProductsByCategorySubtree(categoryData.id, { lavaColor, priceFrom, priceTo });
   const productsData: ProductProjectionPagedQueryResponse = productsResponse.body;
 
   return { categoryData, productsData, subcategoriesData };

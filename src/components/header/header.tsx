@@ -28,7 +28,7 @@ import { logoutUser } from '@/features/auth/logout-user';
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
-import { APP_ROUTES } from '@/routes/routes';
+import { APP_ROUTE } from '@/routes/routes';
 
 import classes from './header.module.css';
 
@@ -44,19 +44,19 @@ const Header: FC = () => {
   const [drawerOpened, { close: closeDrawer, toggle: toggleDrawer }] = useDisclosure(false);
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const nav = [
-    { name: 'Main', to: APP_ROUTES.Main },
-    { name: 'Store', to: `/${APP_ROUTES.Store}` },
-    { name: 'Cart', to: `/${APP_ROUTES.Cart}` },
-    { name: 'Our Team', to: `/${APP_ROUTES.Team}` },
+    { name: 'Main', to: APP_ROUTE.Main },
+    { name: 'Store', to: `/${APP_ROUTE.Store}` },
+    { name: 'Cart', to: `/${APP_ROUTE.Cart}` },
+    { name: 'Our Team', to: `/${APP_ROUTE.Team}` },
   ];
 
   const auth = [
-    { name: 'Log In', to: `/${APP_ROUTES.Login}` },
-    { name: 'Sign Up', to: `/${APP_ROUTES.Registration}` },
+    { name: 'Log In', to: `/${APP_ROUTE.Login}` },
+    { name: 'Sign Up', to: `/${APP_ROUTE.Registration}` },
   ];
 
   const profile = [
-    { icon: <ProfileIcon size={28} />, name: 'Profile', to: `/${APP_ROUTES.Profile}` },
+    { icon: <ProfileIcon size={28} />, name: 'Profile', to: `/${APP_ROUTE.Profile}` },
     { icon: <LogoutIcon size={26} />, name: 'Logout' },
   ];
 
