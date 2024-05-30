@@ -21,6 +21,7 @@ import { addNotification } from '@/utils/show-notification';
 import { isProperCountry } from '@/utils/validate/is-proper-country';
 import { isProperPostcode } from '@/utils/validate/is-proper-postcode';
 import { isEmail } from '@/utils/validate/isEmail';
+import { matchesPassword } from '@/utils/validate/match-password';
 import { notEmpty } from '@/utils/validate/not-empty';
 import { onlyLetters } from '@/utils/validate/only-letters';
 import { transformCountryIntoCountryCode } from '@/utils/validate/transform-country';
@@ -44,13 +45,6 @@ interface CheckboxProps {
 
 const TODAY = new Date();
 const ONE_HUNDRED_AND_THIRTY_YEARS_AGO = dayjs(new Date()).subtract(130, 'year').toDate();
-
-const matchesPassword = (value: string, values: { password: string }): null | string => {
-  if (!value) {
-    return 'Required field';
-  }
-  return value !== values.password ? 'Passwords did not match' : null;
-};
 
 const wrapSameAddressCheck =
   <T extends { isSameAddress: boolean }>(cb: (value: string, values: T) => null | string) =>
