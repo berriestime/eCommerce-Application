@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { RangeSlider, Select, SimpleGrid } from '@mantine/core';
+import { Select, SimpleGrid } from '@mantine/core';
 
 import classes from './filters.module.css';
 
@@ -9,33 +9,50 @@ const Filters = (): JSX.Element => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const priceFrom = parseInt(searchParams.get('priceFrom') ?? '') / 100;
-  const priceTo = parseInt(searchParams.get('priceTo') ?? '') / 100;
+
+  const parsePriceValue = (value: null | string, defaultValue: number): number => {
+    if (value !== null) {
+      const parsed = parseInt(value);
+      return isNaN(parsed) ? defaultValue : parsed / 100;
+    }
+    return defaultValue;
+  };
+
+  const priceFrom = parsePriceValue(searchParams.get('priceFrom'), 0);
+  const priceTo = parsePriceValue(searchParams.get('priceTo'), 2500);
   const lavaColor = searchParams.get('lavaColor') ?? '';
 
   const [priceValue, setPriceValue] = useState<[number, number]>([priceFrom || 0, priceTo || 2500]);
   const [lavaColorValue, setLavaColorValue] = useState<null | string>(lavaColor);
 
+  const priceOptions = [
+    { label: '$0 - $50', value: '0-50' },
+    { label: '$51 - $100', value: '51-100' },
+    { label: '$101 - $260', value: '101-260' },
+    { label: '$151 - $2500', value: '151-2500' },
+  ];
+
+  const handlePriceChange = (selectedValue: null | string): void => {
+    if (selectedValue) {
+      const [priceFromString, priceToString] = selectedValue.split('-').map((str) => Number(str)) as [number, number];
+      setPriceValue([priceFromString, priceToString]);
+      const targetSearchParams = new URLSearchParams(location.search);
+      targetSearchParams.set('priceFrom', (priceFromString * 100).toString());
+      targetSearchParams.set('priceTo', (priceToString * 100).toString());
+      navigate(`?${targetSearchParams.toString()}`);
+    }
+  };
+
   return (
     <div className={classes.contentWrapper}>
       <SimpleGrid cols={3} flex={1}>
         <div>
-          Filter by price
-          <RangeSlider
-            label={(value) => `${value} $`}
-            max={2500}
-            min={0}
-            onChange={([priceFrom, priceTo]) => {
-              setPriceValue([priceFrom, priceTo]);
-            }}
-            onChangeEnd={([priceFrom, priceTo]) => {
-              const targetSearchParams = new URLSearchParams(location.search);
-              targetSearchParams.set('priceFrom', (priceFrom * 100).toString());
-              targetSearchParams.set('priceTo', (priceTo * 100).toString());
-              navigate(`?${targetSearchParams.toString()}`);
-            }}
-            step={1}
-            value={priceValue}
+          <Select
+            data={priceOptions}
+            label="Price range"
+            onChange={handlePriceChange}
+            placeholder="Select price range"
+            value={`${priceValue[0]}-${priceValue[1]}`}
           />
         </div>
         <Select
