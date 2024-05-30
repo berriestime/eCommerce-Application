@@ -8,6 +8,7 @@ import { Breadcrumbs } from '@/components/brearcrumbs';
 import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
 
+import { Filters } from '../components/filters';
 import { Tabs } from './components';
 
 // import classes from './category-page.module.css';
@@ -36,6 +37,7 @@ const CategoryPage: FC = () => {
   return (
     <Box className="wrapper">
       <Breadcrumbs />
+      <Filters />
       <Tabs />
       <Box className="middleContainer">
         <Title c="bright">Category page: {categoryData.name['en-US']}</Title>

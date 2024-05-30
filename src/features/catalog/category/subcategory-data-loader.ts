@@ -10,7 +10,7 @@ import {
 import { getCategoryByKey, getSubcategoryIds } from '../api/category-api';
 import { getProductsByCategoryId } from '../api/product-api';
 
-async function loader({ params }: LoaderFunctionArgs): Promise<{
+async function loader({ params, request }: LoaderFunctionArgs): Promise<{
   categoryData: Category;
   productsData: ProductProjectionPagedQueryResponse;
   subcategoriesData: CategoryPagedQueryResponse;
@@ -20,6 +20,11 @@ async function loader({ params }: LoaderFunctionArgs): Promise<{
     categoryId: string;
     subcategoryId: string;
   };
+  const url = new URL(request.url);
+  const priceFrom = parseInt(url.searchParams.get('priceFrom') ?? '');
+  const priceTo = parseInt(url.searchParams.get('priceTo') ?? '');
+  const lavaColor = url.searchParams.get('lavaColor') ?? '';
+
   const categoryResponse: ClientResponse<Category> = await getCategoryByKey(categoryKey);
   const categoryData: Category = categoryResponse.body;
 
@@ -31,6 +36,7 @@ async function loader({ params }: LoaderFunctionArgs): Promise<{
 
   const productsResponse: ClientResponse<ProductProjectionPagedQueryResponse> = await getProductsByCategoryId(
     subcategoryData.id,
+    { lavaColor, priceFrom, priceTo },
   );
   const productsData: ProductProjectionPagedQueryResponse = productsResponse.body;
 

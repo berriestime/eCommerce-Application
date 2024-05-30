@@ -5,6 +5,8 @@ import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import { defineApiRoot } from '@/lib/commerstools/define-client';
 
+type ParsedQueryParams = { lavaColor?: string; priceFrom?: number; priceTo?: number };
+
 const getProductById = (): Promise<ClientResponse<Product>> => {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   return apiRoot.products().withId({ ID: '1' }).get().execute();
@@ -15,36 +17,50 @@ const getProductByKey = (productKey: string): Promise<ClientResponse<Product>> =
   return apiRoot.products().withKey({ key: productKey }).get().execute();
 };
 
-async function getAllProducts({
-  priceFrom,
-  priceTo,
-}: {
-  priceFrom: number;
-  priceTo: number;
-}): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
-  const filter = [];
-  if (priceFrom || priceTo) {
-    filter.push(`variants.price.centAmount:range (${priceFrom || '*'} to ${priceTo || '*'})`);
-  }
-  return getProductsWithFilter(filter, ['categories[*]']);
+async function getAllProducts(
+  parsedQueryParams: ParsedQueryParams,
+): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+  return getProductsWithFilter({ expand: ['categories[*]'], parsedQueryParams });
 }
 
 async function getProductsByCategoryId(
   categoryId: string,
+  parsedQueryParams?: ParsedQueryParams,
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
-  return getProductsWithFilter([`categories.id:"${categoryId}"`]);
+  const filter = [`categories.id:"${categoryId}"`];
+
+  return getProductsWithFilter({ filter, parsedQueryParams });
 }
 
 async function getProductsByCategorySubtree(
   categoryId: string,
+  parsedQueryParams: ParsedQueryParams,
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
-  return getProductsWithFilter([`categories.id: subtree("${categoryId}")`], ['categories[*]']);
+  const filter = [`categories.id: subtree("${categoryId}")`];
+  return getProductsWithFilter({
+    expand: ['categories[*]'],
+    filter,
+    parsedQueryParams,
+  });
 }
 
-async function getProductsWithFilter(
-  filter: string[],
-  expand?: string[],
-): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+async function getProductsWithFilter({
+  expand,
+  filter = [],
+  parsedQueryParams,
+}: {
+  expand?: string[];
+  filter?: string[];
+  parsedQueryParams?: ParsedQueryParams;
+}): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
+  if (parsedQueryParams?.priceFrom || parsedQueryParams?.priceTo) {
+    filter.push(
+      `variants.price.centAmount:range(${parsedQueryParams?.priceFrom || '*'} to ${parsedQueryParams?.priceTo || '*'})`,
+    );
+  }
+  if (parsedQueryParams?.lavaColor) {
+    filter.push(`variants.attributes.lava-color-enum.key:"${parsedQueryParams?.lavaColor}"`);
+  }
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const response = await apiRoot
     .productProjections()
@@ -58,6 +74,7 @@ async function getProductsWithFilter(
       },
     })
     .execute();
+
   return response;
 }
 
