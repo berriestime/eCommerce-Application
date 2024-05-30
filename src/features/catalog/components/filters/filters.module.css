@@ -1,0 +1,17 @@
+.contentWrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 100px;
+  user-select: none;
+  display: flex;
+  flex-wrap: wrap;
+
+  @media (width <= 1200px) {
+    padding: 16px 32px;
+  }
+
+  @media (width <= 600px) {
+    padding: 16px;
+  }
+}
