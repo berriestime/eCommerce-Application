@@ -1,4 +1,10 @@
-import { ClientResponse, Customer, MyCustomerUpdate } from '@commercetools/platform-sdk';
+import {
+  Address,
+  ClientResponse,
+  Customer,
+  MyCustomerChangeAddressAction,
+  MyCustomerUpdate,
+} from '@commercetools/platform-sdk';
 
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin } from '@/lib/commerstools/create-password-client';
@@ -133,4 +139,35 @@ async function postDefaultShippingAddress(id: string): Promise<ClientResponse<Cu
   return response;
 }
 
-export { postAddUserAddress, postDefaultBillingAddress, postDefaultShippingAddress, postRemoveUserAddress };
+async function postChangeAddress(id: string, address: Address): Promise<ClientResponse<Customer>> {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const customerId = (await apiRoot.me().get().execute()).body.id;
+  const version = await getVersionUpdate();
+
+  const updateActions: MyCustomerChangeAddressAction = {
+    action: 'changeAddress',
+    address,
+    addressId: id,
+  };
+
+  const response = await apiRoot
+    .customers()
+    .withId({ ID: customerId })
+    .post({
+      body: {
+        actions: [updateActions],
+        version,
+      },
+    })
+    .execute();
+
+  return response;
+}
+
+export {
+  postAddUserAddress,
+  postChangeAddress,
+  postDefaultBillingAddress,
+  postDefaultShippingAddress,
+  postRemoveUserAddress,
+};

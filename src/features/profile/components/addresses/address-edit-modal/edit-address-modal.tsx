@@ -2,8 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 
 import { Address } from '@commercetools/platform-sdk';
 import { Button, Checkbox, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
-import { UseFormReturnType, useForm } from '@mantine/form';
-import { postcodeValidator } from 'postcode-validator';
+import { UseFormReturnType } from '@mantine/form';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomSelect } from '@/components/custom-select';
@@ -12,7 +11,7 @@ import { addNotification } from '@/utils/show-notification';
 
 import {
   UserAddress,
-  postAddUserAddress,
+  postChangeAddress,
   postDefaultBillingAddress,
   postDefaultShippingAddress,
 } from '../../../api/address-api';
@@ -24,54 +23,27 @@ const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
 type AddressModalProps = {
   addresses: Address[];
   close: () => void;
+  editAddress: Address;
+  form: UseFormReturnType<{
+    city: string;
+    country: string;
+    defaultBillingAddress: boolean;
+    defaultShippingAddress: boolean;
+    id: string | undefined;
+    postalCode: string;
+    streetName: string;
+  }>;
   opened: boolean;
   setAddresses: Dispatch<SetStateAction<Address[]>>;
   setBilling: Dispatch<SetStateAction<null | string>>;
   setShipping: Dispatch<SetStateAction<null | string>>;
 };
 
-const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required field');
-
-const onlyLetters =
-  (message: string) =>
-  (value: string): null | string => {
-    if (!value) {
-      return 'Required field';
-    }
-    if (!/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value)) {
-      return message;
-    }
-    return null;
-  };
-
-const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
-
-const transformCountryIntoCountryCode = (country: string): string => {
-  switch (country) {
-    case 'Germany':
-      return 'DE';
-    case 'United Kingdom':
-      return 'UK';
-    case 'United States':
-      return 'US';
-    default:
-      return '';
-  }
-};
-
-const isProperPostcode =
-  <K extends string, T extends Record<K, string>>(countryField: K) =>
-  (value: string, values: UseFormReturnType<T>['values']): null | string => {
-    const code = transformCountryIntoCountryCode(values[countryField]);
-    if (!code) {
-      return 'Invalid country';
-    }
-    return postcodeValidator(value, code) ? null : 'Invalid postcode';
-  };
-
-const AddressModal = ({
+const EditAddressModal = ({
   addresses,
   close,
+  editAddress,
+  form,
   opened,
   setAddresses,
   setBilling,
@@ -83,44 +55,18 @@ const AddressModal = ({
     setVisible((prev) => !prev);
   };
 
-  const form = useForm({
-    initialValues: {
-      city: '',
-      country: '',
-      defaultBillingAddress: false,
-      defaultShippingAddress: false,
-      id: '',
-      postalCode: '',
-      streetName: '',
-    },
-    mode: 'uncontrolled',
-    transformValues: (values) => {
-      return {
-        ...values,
-        country: transformCountryIntoCountryCode(values.country),
-      };
-    },
-    validate: {
-      city: onlyLetters('Only letters'),
-      country: isProperCountry,
-      postalCode: isProperPostcode('country'),
-      streetName: notEmpty,
-    },
-    validateInputOnChange: true,
-  });
-
-  const handleSubmit = (address: UserAddress): void => {
+  const handleSubmit = (id: string, address: UserAddress): void => {
     toggle();
-    postAddUserAddress(address)
-      .then(async (response) => {
+    postChangeAddress(id, address)
+      .then(async () => {
         form.reset();
         form.clearErrors();
         close();
 
-        const isId = response.body.addresses.at(-1)?.id;
-        const id = isId ? isId : '';
-        const addressWithId = { ...address };
-        addressWithId.id = id;
+        // const isId = response.body.addresses.at(-1)?.id;
+        // const id = isId ? isId : '';
+        // const addressWithId = { ...address };
+        // addressWithId.id = id;
 
         if (address.defaultBillingAddress) {
           await postDefaultBillingAddress(id);
@@ -132,8 +78,15 @@ const AddressModal = ({
           setShipping(id);
         }
 
-        const newAddresses: Address[] = [...addresses, addressWithId];
-        setAddresses(newAddresses);
+        const index = addresses.findIndex((address) => address.id === id);
+        setAddresses(
+          addresses.map((addressElement, i) => {
+            if (i === index) {
+              return (addressElement = address);
+            }
+            return addressElement;
+          }),
+        );
       })
       .catch((error: unknown) => {
         const errorMessage = error instanceof Error ? error.message : String(error);
@@ -167,14 +120,38 @@ const AddressModal = ({
         <Modal.Body c="bright" className={classes.body}>
           <form
             onSubmit={form.onSubmit((address) => {
-              handleSubmit(address);
+              const id = editAddress.id ? editAddress.id : '';
+              handleSubmit(id, address);
             })}
           >
             <SimpleGrid cols={{ base: 1, sm: 2 }}>
-              <CustomTextInput label="Street" mt={10} withAsterisk {...form.getInputProps('streetName')} />
-              <CustomTextInput label="City" mt={10} withAsterisk {...form.getInputProps('city')} />
-              <CustomSelect label="Country" withAsterisk {...form.getInputProps('country')} data={COUNTRIES} />
-              <CustomTextInput label="PostalCode" withAsterisk {...form.getInputProps('postalCode')} />
+              <CustomTextInput
+                label="Street"
+                mt={10}
+                placeholder={editAddress.streetName}
+                withAsterisk
+                {...form.getInputProps('streetName')}
+              />
+              <CustomTextInput
+                label="City"
+                mt={10}
+                placeholder={editAddress.city}
+                withAsterisk
+                {...form.getInputProps('city')}
+              />
+              <CustomSelect
+                label="Country"
+                placeholder={editAddress.country}
+                withAsterisk
+                {...form.getInputProps('country')}
+                data={COUNTRIES}
+              />
+              <CustomTextInput
+                label="PostalCode"
+                placeholder={editAddress.postalCode}
+                withAsterisk
+                {...form.getInputProps('postalCode')}
+              />
             </SimpleGrid>
             <Checkbox
               key={form.key('defaultShippingAddress')}
@@ -215,4 +192,4 @@ const AddressModal = ({
   );
 };
 
-export { AddressModal };
+export { EditAddressModal };
