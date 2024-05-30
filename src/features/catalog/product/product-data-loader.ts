@@ -2,6 +2,8 @@ import type { LoaderFunctionArgs } from 'react-router-dom';
 
 import { Category, ClientResponse, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 
+import { ID_LENGTH } from '@/constants/catalog-constants';
+
 import { getCategoryById, getCategoryByKey } from '../api/category-api';
 import { getProductByKey, getProductsByCategoryId } from '../api/product-api';
 
@@ -21,7 +23,7 @@ async function loader({ params }: LoaderFunctionArgs): Promise<{
   const productData: Product = productResponse.body;
 
   const categoryResponse: ClientResponse<Category> =
-    categoryKey.length > 11 ? await getCategoryById(categoryKey) : await getCategoryByKey(categoryKey);
+    categoryKey.length < ID_LENGTH ? await getCategoryByKey(categoryKey) : await getCategoryById(categoryKey);
   const categoryData: Category = categoryResponse.body;
 
   const subcategoryResponse: ClientResponse<Category> = await getCategoryByKey(subcategoryKey);

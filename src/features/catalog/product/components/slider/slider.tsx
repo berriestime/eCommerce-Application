@@ -4,6 +4,8 @@ import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
 import { Modal } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
+import { BREAKPOINT } from '@/constants/media-query';
+
 import classes from './slider.module.css';
 
 type ModalProps = {
@@ -14,7 +16,7 @@ type ModalProps = {
 };
 
 const BigSlider = ({ close, currentImageUrl, images, opened }: ModalProps): JSX.Element => {
-  const matches = useMediaQuery('(width > 37.5em)');
+  const matches = useMediaQuery(`(width > ${BREAKPOINT.XS_CUSTOM})`);
   const TRANSITION_DURATION = 200;
   const [emblaBig, setEmblaBig] = useState<Embla | null>(null);
   useAnimationOffsetEffect(emblaBig, TRANSITION_DURATION);

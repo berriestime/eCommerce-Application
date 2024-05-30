@@ -12,6 +12,7 @@ import { Breadcrumbs } from '@/components/brearcrumbs';
 import { CustomSelect } from '@/components/custom-select';
 import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
+import { BREAKPOINT } from '@/constants/media-query';
 import { CategoriesSection } from '@/features/root-page/components/categories-section';
 import { getPrice } from '@/utils/formate-price';
 
@@ -27,9 +28,9 @@ const ProductPage = (): JSX.Element => {
   }>();
 
   const data = useLoaderData();
-  const matchesLg = useMediaQuery('(width >= 62em)');
-  const matchesMd = useMediaQuery('(width < 62em) and (width >= 36em)');
-  const matchesXxs = useMediaQuery('(width < 25em)');
+  const matchesLg = useMediaQuery(`(width >= ${BREAKPOINT.MD})`);
+  const matchesMd = useMediaQuery(`(width < ${BREAKPOINT.MD}) and (width >= ${BREAKPOINT.XS})`);
+  const matchesXxs = useMediaQuery(`(width < ${BREAKPOINT.XXS})`);
 
   const { cardsData, categoryData, productData } = data as {
     cardsData: ProductProjectionPagedQueryResponse;
