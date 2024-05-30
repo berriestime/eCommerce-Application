@@ -1,22 +1,28 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { Product } from '@commercetools/platform-sdk';
+import { ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel, Embla } from '@mantine/carousel';
 import { Box, Image } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
+import { BREAKPOINT } from '@/constants/media-query';
+
 import classes from './mini-slider.module.css';
 
 type MiniSliderProps = {
-  data: Product;
+  data: ProductProjection;
   onImageChange: (url: string) => void;
 };
 
 const MiniSlider = ({ data, onImageChange }: MiniSliderProps): JSX.Element => {
-  const matchesMd = useMediaQuery('(width < 62em) and (width >= 36em)');
-  const matchesXxs = useMediaQuery('(width < 25em)');
-  const images = useMemo(() => data.masterData.current.masterVariant.images || [], [data]);
+  const matchesMd = useMediaQuery(`(width < ${BREAKPOINT.MD}) and (width >= ${BREAKPOINT.XS})`);
+  const matchesXxs = useMediaQuery(`(width < ${BREAKPOINT.XXS})`);
+  const images = useMemo(() => data.masterVariant.images || [], [data]);
   const [embla, setEmbla] = useState<Embla | null>(null);
+
+  const SLIDE_SIZE = 60;
+  const MAX_HEIGHT = 220;
+  const SPACE = 40;
 
   useEffect(() => {
     if (images.length === 1) {
@@ -35,8 +41,8 @@ const MiniSlider = ({ data, onImageChange }: MiniSliderProps): JSX.Element => {
   }, [embla, images, onImageChange]);
 
   const slides = images.map((image, i) => (
-    <Carousel.Slide key={image.url} w={60}>
-      <Box w={60}>
+    <Carousel.Slide key={image.url} w={SLIDE_SIZE}>
+      <Box w={SLIDE_SIZE}>
         <Image alt={'photo' + i} fit="contain" src={image.url} />
       </Box>
     </Carousel.Slide>
@@ -45,7 +51,7 @@ const MiniSlider = ({ data, onImageChange }: MiniSliderProps): JSX.Element => {
   return (
     <>
       {images.length > 1 && (
-        <Box h="100%" ml={matchesMd || matchesXxs ? 40 : 0} mt={matchesMd || matchesXxs ? 0 : 40}>
+        <Box h="100%" ml={matchesMd || matchesXxs ? SPACE : 0} mt={matchesMd || matchesXxs ? 0 : SPACE}>
           <Carousel
             align="start"
             classNames={{
@@ -57,12 +63,12 @@ const MiniSlider = ({ data, onImageChange }: MiniSliderProps): JSX.Element => {
               root: classes.carousel,
             }}
             getEmblaApi={setEmbla}
-            height={matchesMd || matchesXxs ? 60 : 220}
+            height={matchesMd || matchesXxs ? SLIDE_SIZE : MAX_HEIGHT}
             orientation={matchesMd || matchesXxs ? 'horizontal' : 'vertical'}
             slideGap={{ base: 0 }}
-            slideSize={60}
+            slideSize={SLIDE_SIZE}
             slidesToScroll={1}
-            w={matchesMd || matchesXxs ? 'calc(100% - 40px)' : 60}
+            w={matchesMd || matchesXxs ? `calc(100% - ${SPACE}px)` : SLIDE_SIZE}
           >
             {slides}
           </Carousel>

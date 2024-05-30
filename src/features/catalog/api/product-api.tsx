@@ -1,5 +1,6 @@
-import { ClientResponse, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import { ClientResponse, ProductProjection, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 
+import { ITEMS_PER_PAGE } from '@/constants/catalog-constants';
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
@@ -7,14 +8,9 @@ import { defineApiRoot } from '@/lib/commerstools/define-client';
 
 type ParsedQueryParams = { lavaColor?: string; priceFrom?: number; priceTo?: number };
 
-const getProductById = (): Promise<ClientResponse<Product>> => {
+const getProductByKey = (productKey: string): Promise<ClientResponse<ProductProjection>> => {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  return apiRoot.products().withId({ ID: '1' }).get().execute();
-};
-
-const getProductByKey = (productKey: string): Promise<ClientResponse<Product>> => {
-  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  return apiRoot.products().withKey({ key: productKey }).get().execute();
+  return apiRoot.productProjections().withKey({ key: productKey }).get().execute();
 };
 
 async function getAllProducts(
@@ -26,10 +22,13 @@ async function getAllProducts(
 async function getProductsByCategoryId(
   categoryId: string,
   parsedQueryParams?: ParsedQueryParams,
+  limit = ITEMS_PER_PAGE,
+  productId?: string,
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
   const filter = [`categories.id:"${categoryId}"`];
+  const filterQuery = productId ? [`id:"${productId}"`] : [];
 
-  return getProductsWithFilter({ filter, parsedQueryParams });
+  return getProductsWithFilter({ filter, filterQuery, limit, parsedQueryParams });
 }
 
 async function getProductsByCategorySubtree(
@@ -47,10 +46,14 @@ async function getProductsByCategorySubtree(
 async function getProductsWithFilter({
   expand,
   filter = [],
+  filterQuery = [],
+  limit = ITEMS_PER_PAGE,
   parsedQueryParams,
 }: {
   expand?: string[];
   filter?: string[];
+  filterQuery?: string[];
+  limit?: number;
   parsedQueryParams?: ParsedQueryParams;
 }): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
   if (parsedQueryParams?.priceFrom || parsedQueryParams?.priceTo) {
@@ -69,7 +72,8 @@ async function getProductsWithFilter({
       queryArgs: {
         expand,
         filter,
-        limit: 12,
+        filterQuery,
+        limit: limit,
         offset: 0,
       },
     })
@@ -78,4 +82,4 @@ async function getProductsWithFilter({
   return response;
 }
 
-export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId, getProductsByCategorySubtree };
+export { getAllProducts, getProductByKey, getProductsByCategoryId, getProductsByCategorySubtree };

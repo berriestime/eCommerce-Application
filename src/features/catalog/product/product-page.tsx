@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 
-import { Category, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import { Category, ProductProjection, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Skeleton, Spoiler, Text, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
@@ -12,6 +12,7 @@ import { Breadcrumbs } from '@/components/brearcrumbs';
 import { CustomSelect } from '@/components/custom-select';
 import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
+import { BREAKPOINT } from '@/constants/media-query';
 import { CategoriesSection } from '@/features/root-page/components/categories-section';
 import { getPrice } from '@/utils/formate-price';
 
@@ -27,21 +28,21 @@ const ProductPage = (): JSX.Element => {
   }>();
 
   const data = useLoaderData();
-  const matchesLg = useMediaQuery('(width >= 62em)');
-  const matchesMd = useMediaQuery('(width < 62em) and (width >= 36em)');
-  const matchesXxs = useMediaQuery('(width < 25em)');
+  const matchesLg = useMediaQuery(`(width >= ${BREAKPOINT.MD})`);
+  const matchesMd = useMediaQuery(`(width < ${BREAKPOINT.MD}) and (width >= ${BREAKPOINT.XS})`);
+  const matchesXxs = useMediaQuery(`(width < ${BREAKPOINT.XXS})`);
 
   const { cardsData, categoryData, productData } = data as {
     cardsData: ProductProjectionPagedQueryResponse;
     categoryData: Category;
-    productData: Product;
+    productData: ProductProjection;
   };
   const { results: cards } = cardsData;
   const { discountPrice, price } = getPrice(productData);
 
   const [bigSliderOpened, setOpened] = useState(false);
 
-  const images = productData.masterData.current.masterVariant.images || [];
+  const images = productData.masterVariant.images || [];
   const [currentImageUrl, setCurrentImageUrl] = useState<string>(images[0]?.url || '');
   const [loading, setLoading] = useState(true);
 
@@ -64,7 +65,7 @@ const ProductPage = (): JSX.Element => {
 
   const title = (
     <Title c="bright" className={classes.productTitle} mt={matchesLg || matchesMd ? 0 : 40}>
-      {productData.masterData.current.name['en-US']}
+      {productData.name['en-US']}
     </Title>
   );
 
@@ -138,7 +139,7 @@ const ProductPage = (): JSX.Element => {
               showLabel="Show more"
             >
               <Text c="bright" className="commonText">
-                {productData?.masterData?.current?.description?.['en-US'] || 'No description available'}
+                {productData?.description?.['en-US'] || 'No description available'}
               </Text>
             </Spoiler>
 

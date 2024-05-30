@@ -24,6 +24,10 @@
   color: #aa9f9c;
   overflow-wrap: break-word;
   white-space: normal;
+
+  @media (width <= 600px) {
+    font-size: 0.8rem;
+  }
 }
 
 .bc a {

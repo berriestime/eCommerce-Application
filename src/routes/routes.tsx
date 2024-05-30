@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { Category, Product } from '@commercetools/platform-sdk';
+import { Category, ProductProjection } from '@commercetools/platform-sdk';
 
 import { Layout } from '@/components/layout';
 
@@ -112,7 +112,7 @@ export const routes = [
             subcategoryData,
           }: {
             categoryData: Category;
-            productData: Product;
+            productData: ProductProjection;
             subcategoryData: Category;
           }) => [
             <Link key="1" to={`/${APP_ROUTE.Store}`}>
@@ -124,7 +124,7 @@ export const routes = [
             <Link key="3" to={`/${APP_ROUTE.Store}/${categoryData.key}/${subcategoryData.key}`}>
               {subcategoryData.name['en-US']}
             </Link>,
-            <span key="4">{productData.masterData.current.name['en-US']}</span>,
+            <span key="4">{productData.name['en-US']}</span>,
           ],
         },
         loader: ProductLoader,
