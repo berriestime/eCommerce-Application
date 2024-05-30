@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react';
 
-import { Address, Customer } from '@commercetools/platform-sdk';
+import { Customer } from '@commercetools/platform-sdk';
 import { Container, Flex, Title } from '@mantine/core';
 import { UseFormReturnType, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
@@ -9,7 +9,7 @@ import { postcodeValidator } from 'postcode-validator';
 import { BaseButton } from '@/components/base-button';
 import { AddAddressModal } from '@/features/profile/components/addresses/add-address-modal';
 
-import { AddressCard } from './address-card/address-cars';
+import { AddressCard, EditAddress } from './address-card/address-cars';
 import { EditAddressModal } from './address-edit-modal/edit-address-modal';
 
 const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
@@ -65,7 +65,7 @@ const ProfileAddresses = (user: Customer): ReactElement => {
     id: '',
     postalCode: '',
     streetName: '',
-  } as Address;
+  } as unknown as EditAddress;
   const [editAddress, setEditAddress] = useState(initialAddress);
 
   const [defaultBillingAddress, setDefaultBillingAddress] = useState(

@@ -15,6 +15,7 @@ import {
   postDefaultBillingAddress,
   postDefaultShippingAddress,
 } from '../../../api/address-api';
+import { EditAddress } from '../address-card';
 
 import classes from '@/components/modals/modal.module.css';
 
@@ -23,7 +24,7 @@ const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
 type AddressModalProps = {
   addresses: Address[];
   close: () => void;
-  editAddress: Address;
+  editAddress: EditAddress;
   form: UseFormReturnType<{
     city: string;
     country: string;
@@ -62,11 +63,6 @@ const EditAddressModal = ({
         form.reset();
         form.clearErrors();
         close();
-
-        // const isId = response.body.addresses.at(-1)?.id;
-        // const id = isId ? isId : '';
-        // const addressWithId = { ...address };
-        // addressWithId.id = id;
 
         if (address.defaultBillingAddress) {
           await postDefaultBillingAddress(id);
@@ -154,6 +150,7 @@ const EditAddressModal = ({
               />
             </SimpleGrid>
             <Checkbox
+              checked={editAddress.defaultShipping}
               key={form.key('defaultShippingAddress')}
               {...form.getInputProps('defaultShippingAddress', { type: 'checkbox' })}
               color="rgba(243, 231, 228, 1)"
@@ -162,6 +159,7 @@ const EditAddressModal = ({
               variant="outline"
             />
             <Checkbox
+              checked={editAddress.defaultBilling}
               key={form.key('defaultBillingAddress')}
               {...form.getInputProps('defaultBillingAddress', { type: 'checkbox' })}
               color="rgba(243, 231, 228, 1)"

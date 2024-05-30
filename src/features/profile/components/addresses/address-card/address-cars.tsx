@@ -8,18 +8,28 @@ import { postRemoveUserAddress } from '@/features/profile/api/address-api';
 
 import classes from './address-card.module.css';
 
+export type EditAddress = {
+  city: string | undefined;
+  country: string;
+  defaultBilling: boolean;
+  defaultShipping: boolean;
+  id: string | undefined;
+  postalCode: string | undefined;
+  streetName: string | undefined;
+};
+
 type AddressCardProps = {
   addresses: Address[];
   city?: string;
   country: string;
   defaultBilling: null | string;
   defaultShipping: null | string;
-  editAddress: Address | undefined;
+  editAddress: EditAddress | undefined;
   id?: string;
   openEditModal: () => void;
   postalCode?: string;
   setAddresses: Dispatch<SetStateAction<Address[]>>;
-  setEditAddress: Dispatch<SetStateAction<Address>>;
+  setEditAddress: Dispatch<SetStateAction<EditAddress>>;
   setValues: SetValues<{
     city: string;
     country: string;
@@ -50,6 +60,8 @@ function AddressCard(props: AddressCardProps): ReactElement {
   const address = {
     city: props.city,
     country: transformCountryCodeIntoCountry(props.country),
+    defaultBilling: props.id === props.defaultBilling,
+    defaultShipping: props.id === props.defaultShipping,
     id: props.id,
     postalCode: props.postalCode,
     streetName: props.streetName,
