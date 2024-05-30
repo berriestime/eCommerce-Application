@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { Product } from '@commercetools/platform-sdk';
+import { ProductProjection } from '@commercetools/platform-sdk';
 import { Carousel, Embla } from '@mantine/carousel';
 import { Box, Image } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
@@ -10,14 +10,14 @@ import { BREAKPOINT } from '@/constants/media-query';
 import classes from './mini-slider.module.css';
 
 type MiniSliderProps = {
-  data: Product;
+  data: ProductProjection;
   onImageChange: (url: string) => void;
 };
 
 const MiniSlider = ({ data, onImageChange }: MiniSliderProps): JSX.Element => {
   const matchesMd = useMediaQuery(`(width < ${BREAKPOINT.MD}) and (width >= ${BREAKPOINT.XS})`);
   const matchesXxs = useMediaQuery(`(width < ${BREAKPOINT.XXS})`);
-  const images = useMemo(() => data.masterData.current.masterVariant.images || [], [data]);
+  const images = useMemo(() => data.masterVariant.images || [], [data]);
   const [embla, setEmbla] = useState<Embla | null>(null);
 
   const SLIDE_SIZE = 60;

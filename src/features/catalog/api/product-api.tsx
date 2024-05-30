@@ -1,4 +1,4 @@
-import { ClientResponse, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import { ClientResponse, ProductProjection, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin } from '@/lib/commerstools/create-password-client';
@@ -7,14 +7,9 @@ import { defineApiRoot } from '@/lib/commerstools/define-client';
 
 type ParsedQueryParams = { lavaColor?: string; priceFrom?: number; priceTo?: number };
 
-const getProductById = (): Promise<ClientResponse<Product>> => {
+const getProductByKey = (productKey: string): Promise<ClientResponse<ProductProjection>> => {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  return apiRoot.products().withId({ ID: '1' }).get().execute();
-};
-
-const getProductByKey = (productKey: string): Promise<ClientResponse<Product>> => {
-  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  return apiRoot.products().withKey({ key: productKey }).get().execute();
+  return apiRoot.productProjections().withKey({ key: productKey }).get().execute();
 };
 
 async function getAllProducts(
@@ -78,4 +73,4 @@ async function getProductsWithFilter({
   return response;
 }
 
-export { getAllProducts, getProductById, getProductByKey, getProductsByCategoryId, getProductsByCategorySubtree };
+export { getAllProducts, getProductByKey, getProductsByCategoryId, getProductsByCategorySubtree };

@@ -6,7 +6,7 @@ import { Badge, Card, Image, Skeleton, Text } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
-import { getProductPrice } from '@/utils/formate-price';
+import { getPrice } from '@/utils/formate-price';
 
 import classes from './common-card.module.css';
 
@@ -21,7 +21,7 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
 
   const { masterVariant, metaDescription, name } = data;
   const { images } = masterVariant;
-  const { discountPrice, price } = getProductPrice(data);
+  const { discountPrice, price } = getPrice(data);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 
-import { Category, Product, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import { Category, ProductProjection, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Skeleton, Spoiler, Text, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
@@ -35,14 +35,14 @@ const ProductPage = (): JSX.Element => {
   const { cardsData, categoryData, productData } = data as {
     cardsData: ProductProjectionPagedQueryResponse;
     categoryData: Category;
-    productData: Product;
+    productData: ProductProjection;
   };
   const { results: cards } = cardsData;
   const { discountPrice, price } = getPrice(productData);
 
   const [bigSliderOpened, setOpened] = useState(false);
 
-  const images = productData.masterData.current.masterVariant.images || [];
+  const images = productData.masterVariant.images || [];
   const [currentImageUrl, setCurrentImageUrl] = useState<string>(images[0]?.url || '');
   const [loading, setLoading] = useState(true);
 
@@ -65,7 +65,7 @@ const ProductPage = (): JSX.Element => {
 
   const title = (
     <Title c="bright" className={classes.productTitle} mt={matchesLg || matchesMd ? 0 : 40}>
-      {productData.masterData.current.name['en-US']}
+      {productData.name['en-US']}
     </Title>
   );
 
@@ -139,7 +139,7 @@ const ProductPage = (): JSX.Element => {
               showLabel="Show more"
             >
               <Text c="bright" className="commonText">
-                {productData?.masterData?.current?.description?.['en-US'] || 'No description available'}
+                {productData?.description?.['en-US'] || 'No description available'}
               </Text>
             </Spoiler>
 
