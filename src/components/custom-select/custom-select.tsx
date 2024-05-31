@@ -1,10 +1,18 @@
 import { LegacyRef, ReactElement, forwardRef } from 'react';
 
 import { Select, SelectProps } from '@mantine/core';
+import clsx from 'clsx';
 
 import classes from './custom-select.module.css';
 
-const CustomSelect = forwardRef(function MyInput(props: SelectProps, ref: LegacyRef<HTMLInputElement>): ReactElement {
+type Props = {
+  inline?: boolean;
+} & SelectProps;
+
+const CustomSelect = forwardRef(function MyInput(
+  { inline = false, ...props }: Props,
+  ref: LegacyRef<HTMLInputElement>,
+): ReactElement {
   return (
     <Select
       {...props}
@@ -12,7 +20,7 @@ const CustomSelect = forwardRef(function MyInput(props: SelectProps, ref: Legacy
         error: classes.error,
         input: classes.input,
         label: classes.label,
-        root: classes.root,
+        root: clsx({ [classes.root!]: true, [classes.rootInline!]: inline }),
         wrapper: classes.wrapper,
       }}
       ref={ref}

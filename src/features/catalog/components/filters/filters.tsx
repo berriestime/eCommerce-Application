@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Select, SimpleGrid } from '@mantine/core';
+import { Divider, Group, UnstyledButton } from '@mantine/core';
 import { useDebouncedCallback } from '@mantine/hooks';
+import { IconSearch, IconX } from '@tabler/icons-react';
 
+import { Chevron } from '@/components/chevron';
+import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
 
 import classes from './filters.module.css';
@@ -44,7 +47,7 @@ const Filters = (): JSX.Element => {
     { label: '$0 - $50', value: '0-50' },
     { label: '$51 - $100', value: '51-100' },
     { label: '$101 - $260', value: '101-260' },
-    { label: '$151 - $2500', value: '151-2500' },
+    { label: '$260 - $2500', value: '260-2500' },
   ];
 
   const handlePriceChange = (selectedValue: null | string): void => {
@@ -80,18 +83,35 @@ const Filters = (): JSX.Element => {
     }
   };
 
+  const icon = <Chevron rotated={false} />;
+
   return (
     <div className={classes.contentWrapper}>
-      <SimpleGrid cols={3} flex={1}>
-        <div>
-          <Select
-            data={priceOptions}
-            label="Price range"
-            onChange={handlePriceChange}
-            value={`${priceValue[0]}-${priceValue[1]}`}
-          />
-        </div>
-        <Select
+      <Divider color={'white'} orientation="horizontal" size="xs" />
+      <CustomTextInput
+        inline
+        leftSection={<IconSearch size={12} />}
+        mb={'sm'}
+        onChange={(event) => {
+          setSearchValue(event.currentTarget.value);
+          debouncedSearch(event.currentTarget.value);
+        }}
+        placeholder="Search..."
+        value={searchValue}
+      />
+
+      <Group mb={'sm'}>
+        <CustomSelect
+          data={priceOptions}
+          inline
+          onChange={handlePriceChange}
+          placeholder="Price range"
+          rightSection={icon}
+          value={`${priceValue[0]}-${priceValue[1]}`}
+        />
+
+        <Divider orientation="vertical" size="sm" />
+        <CustomSelect
           data={[
             { label: 'Green & Red', value: 'green-red' },
             'violet-white',
@@ -112,7 +132,7 @@ const Filters = (): JSX.Element => {
             'pink-blue',
             'blue-terquoise',
           ]}
-          label="Lava color"
+          inline
           onChange={(value) => {
             if (!value) {
               return;
@@ -122,9 +142,12 @@ const Filters = (): JSX.Element => {
             targetSearchParams.set('lavaColor', value);
             navigate(`?${targetSearchParams.toString()}`);
           }}
+          placeholder="Lava color"
+          rightSection={icon}
           value={lavaColorValue}
-        ></Select>
-        <Select
+        />
+        <Divider orientation="vertical" size="sm" />
+        <CustomSelect
           data={[
             { label: 'Silver', value: 'silver' },
             'cooper',
@@ -134,7 +157,7 @@ const Filters = (): JSX.Element => {
             'black-vinyl',
             'orange',
           ]}
-          label="Lamp color"
+          inline
           onChange={(value) => {
             if (!value) {
               return;
@@ -144,33 +167,29 @@ const Filters = (): JSX.Element => {
             targetSearchParams.set('lampColor', value);
             navigate(`?${targetSearchParams.toString()}`);
           }}
+          placeholder="Lamp color"
+          rightSection={icon}
           value={lampColorValue}
-        ></Select>
-        <div>
-          <Select
-            data={[
-              { label: 'Price low to high', value: 'price-asc' },
-              { label: 'Price high to low', value: 'price-desc' },
-              { label: 'Name A-Z', value: 'name-asc' },
-              { label: 'Name Z-A', value: 'name-desc' },
-            ]}
-            label="Sort by"
-            onChange={handleSortChange}
-            value={sortValue}
-          ></Select>
-          <CustomTextInput
-            label="Search"
-            onChange={(event) => {
-              setSearchValue(event.currentTarget.value);
-              debouncedSearch(event.currentTarget.value);
-            }}
-            value={searchValue}
-          />
-        </div>
-        <div>
-          <button onClick={handleResetClick}>Reset filters</button>
-        </div>
-      </SimpleGrid>
+        />
+        <Divider orientation="vertical" size="sm" />
+        <UnstyledButton onClick={handleResetClick}>
+          Reset filter <IconX size={20} />
+        </UnstyledButton>
+      </Group>
+      <CustomSelect
+        data={[
+          { label: 'Price low to high', value: 'price-asc' },
+          { label: 'Price high to low', value: 'price-desc' },
+          { label: 'Name A-Z', value: 'name-asc' },
+          { label: 'Name Z-A', value: 'name-desc' },
+        ]}
+        inline
+        mb={'sm'}
+        onChange={handleSortChange}
+        placeholder="Sort by"
+        rightSection={icon}
+        value={sortValue}
+      />
     </div>
   );
 };

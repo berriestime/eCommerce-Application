@@ -5,6 +5,7 @@
   padding: 16px 100px;
   user-select: none;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
 
   @media (width <= 1200px) {
