@@ -22,7 +22,6 @@
   transition: all 0.3s ease;
   margin: 8px 0;
   color: #aa9f9c;
-  overflow-wrap: break-word;
   white-space: normal;
 
   @media (width <= 600px) {
