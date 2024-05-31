@@ -12,6 +12,7 @@ import { Breadcrumbs } from '@/components/brearcrumbs';
 import { CustomSelect } from '@/components/custom-select';
 import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
+import { LANGUAGE } from '@/constants/catalog-constants';
 import { BREAKPOINT } from '@/constants/media-query';
 import { CategoriesSection } from '@/features/root-page/components/categories-section';
 import { getPrice } from '@/utils/formate-price';
@@ -65,7 +66,7 @@ const ProductPage = (): JSX.Element => {
 
   const title = (
     <Title c="bright" className={classes.productTitle} mt={matchesLg || matchesMd ? 0 : 40}>
-      {productData.name['en-US']}
+      {productData.name[LANGUAGE]}
     </Title>
   );
 
@@ -139,7 +140,7 @@ const ProductPage = (): JSX.Element => {
               showLabel="Show more"
             >
               <Text c="bright" className="commonText">
-                {productData?.description?.['en-US'] || 'No description available'}
+                {productData?.description?.[LANGUAGE] || 'No description available'}
               </Text>
             </Spoiler>
 
