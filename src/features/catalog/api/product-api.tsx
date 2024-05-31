@@ -6,7 +6,7 @@ import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import { defineApiRoot } from '@/lib/commerstools/define-client';
 
-type ParsedQueryParams = { lavaColor?: string; priceFrom?: number; priceTo?: number };
+type ParsedQueryParams = { lampColor?: string; lavaColor?: string; priceFrom?: number; priceTo?: number };
 
 const getProductByKey = (productKey: string): Promise<ClientResponse<ProductProjection>> => {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
@@ -63,6 +63,9 @@ async function getProductsWithFilter({
   }
   if (parsedQueryParams?.lavaColor) {
     filter.push(`variants.attributes.lava-color-enum.key:"${parsedQueryParams?.lavaColor}"`);
+  }
+  if (parsedQueryParams?.lampColor) {
+    filter.push(`variants.attributes.lamp-color-enum.key:"${parsedQueryParams?.lampColor}"`);
   }
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const response = await apiRoot
