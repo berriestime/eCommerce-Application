@@ -36,15 +36,20 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
   const [buttonState, setButtonState] = useState(BUTTON_TEXT_EDIT);
   const [inputState, setInputState] = useState(true);
 
+  const popup = undefined as boolean | undefined;
+  const [popupState, setPopupOpened] = useState(popup);
+
   const handleClick = (dateOfBirth: Date): void => {
     const date = dayjs(dateOfBirth).format('YYYY-MM-DD');
 
     if (buttonState === BUTTON_TEXT_EDIT) {
+      setPopupOpened(undefined);
       setButtonState(BUTTON_TEXT_SAVE);
       setInputState(false);
     } else {
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
+      setPopupOpened(false);
       postUserDateOfBirth(date)
         .then(() =>
           addNotification({ message: 'Birthday was successfully changed', title: 'Birthday change', type: 'success' }),
@@ -59,11 +64,15 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
   return (
     <form
       onSubmit={form.onSubmit((user) => {
-        //TODO add close date picker here
         handleClick(user.dateOfBirth);
       })}
     >
-      <CustomDateInput disabled={inputState} label="Birthday" {...form.getInputProps('dateOfBirth')} />
+      <CustomDateInput
+        disabled={inputState}
+        label="Birthday"
+        popoverProps={{ opened: popupState }}
+        {...form.getInputProps('dateOfBirth')}
+      />
       <BaseButton type="submit">{buttonState}</BaseButton>
     </form>
   );
