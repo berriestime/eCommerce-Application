@@ -9,7 +9,6 @@ import { ProfileInfo } from './components/personal-info/personal-info';
 
 const Profile: FC = () => {
   const user = useLoaderData() as Customer;
-  console.log(user);
   return (
     <Flex direction="column">
       <Center>

@@ -37,7 +37,6 @@ const ProfileLastName = (user: Customer): ReactElement => {
     } else {
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
-      console.log(lastName);
       postUserLastName(lastName)
         .then(() =>
           addNotification({
