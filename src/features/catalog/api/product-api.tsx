@@ -11,6 +11,7 @@ type ParsedQueryParams = {
   lavaColor?: string;
   priceFrom?: number;
   priceTo?: number;
+  search?: string;
   sort?: string;
 };
 
@@ -21,8 +22,9 @@ const parseUrl = (request: Request): ParsedQueryParams => {
   const lavaColor = url.searchParams.get('lavaColor') ?? '';
   const lampColor = url.searchParams.get('lampColor') ?? '';
   const sort = url.searchParams.get('sort') ?? '';
+  const search = url.searchParams.get('search') ?? '';
 
-  return { lampColor, lavaColor, priceFrom, priceTo, sort };
+  return { lampColor, lavaColor, priceFrom, priceTo, search, sort };
 };
 
 const getProductByKey = (productKey: string): Promise<ClientResponse<ProductProjection>> => {
@@ -92,8 +94,13 @@ async function getProductsWithFilter({
     case 'price-desc':
       sort.push('price desc');
       break;
+    case 'name-asc':
+      sort.push('name.en-US asc');
+      break;
+    case 'name-desc':
+      sort.push('name.en-US desc');
+      break;
   }
-  sort.push('name.en-US asc');
   sort.push('id asc');
 
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
@@ -108,6 +115,7 @@ async function getProductsWithFilter({
         limit: limit,
         offset: 0,
         sort,
+        'text.en-US': parsedQueryParams?.search,
       },
     })
     .execute();

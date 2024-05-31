@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Select, SimpleGrid } from '@mantine/core';
+import { useDebouncedCallback } from '@mantine/hooks';
+
+import { CustomTextInput } from '@/components/custom-text-input';
 
 import classes from './filters.module.css';
 
@@ -23,11 +26,19 @@ const Filters = (): JSX.Element => {
   const lavaColor = searchParams.get('lavaColor') ?? '';
   const lampColor = searchParams.get('lampColor') ?? '';
   const sort = searchParams.get('sort') ?? '';
+  const search = searchParams.get('search') ?? '';
 
   const [priceValue, setPriceValue] = useState<[number, number]>([priceFrom || 0, priceTo || 2500]);
   const [lavaColorValue, setLavaColorValue] = useState<null | string>(lavaColor);
   const [lampColorValue, setLampColorValue] = useState<null | string>(lampColor);
   const [sortValue, setSortValue] = useState<null | string>(sort);
+  const [searchValue, setSearchValue] = useState<string>(search);
+
+  const debouncedSearch = useDebouncedCallback((value: string) => {
+    const targetSearchParams = new URLSearchParams(location.search);
+    targetSearchParams.set('search', value);
+    navigate(`?${targetSearchParams.toString()}`);
+  }, 1000);
 
   const priceOptions = [
     { label: '$0 - $50', value: '0-50' },
@@ -137,11 +148,24 @@ const Filters = (): JSX.Element => {
         ></Select>
         <div>
           <Select
-            data={['price-asc', 'price-desc']}
+            data={[
+              { label: 'Price low to high', value: 'price-asc' },
+              { label: 'Price high to low', value: 'price-desc' },
+              { label: 'Name A-Z', value: 'name-asc' },
+              { label: 'Name Z-A', value: 'name-desc' },
+            ]}
             label="Sort by"
             onChange={handleSortChange}
             value={sortValue}
           ></Select>
+          <CustomTextInput
+            label="Search"
+            onChange={(event) => {
+              setSearchValue(event.currentTarget.value);
+              debouncedSearch(event.currentTarget.value);
+            }}
+            value={searchValue}
+          />
         </div>
         <div>
           <button onClick={handleResetClick}>Reset filters</button>
