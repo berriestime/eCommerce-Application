@@ -6,6 +6,7 @@ import { Badge, Card, Image, Skeleton, Text } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
+import { DISCOUNT_SIZE, LANGUAGE } from '@/constants/catalog-constants';
 import { getPrice } from '@/utils/formate-price';
 
 import classes from './common-card.module.css';
@@ -41,12 +42,12 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
       <Card.Section className={classes.imageSection}>
         <Skeleton mih={200} visible={loading}>
           {images && images.length > 0 && (
-            <Image alt={name['en-US']} className={classes.image} fit="cover" src={images[0]?.url} />
+            <Image alt={name[LANGUAGE]} className={classes.image} fit="cover" src={images[0]?.url} />
           )}
 
           {discountPrice && (
             <Badge className={classes.badge} size="xl" variant="transparent">
-              - 15%
+              {DISCOUNT_SIZE}
             </Badge>
           )}
         </Skeleton>
@@ -54,12 +55,12 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
 
       <Card.Section className={classes.info}>
         <Text className={classes.title} mt={24}>
-          {name['en-US']}
+          {name[LANGUAGE]}
         </Text>
 
-        {metaDescription?.['en-US'] && (
+        {metaDescription?.[LANGUAGE] && (
           <Text className={classes.description} mt={12}>
-            {metaDescription['en-US']}
+            {metaDescription[LANGUAGE]}
           </Text>
         )}
 

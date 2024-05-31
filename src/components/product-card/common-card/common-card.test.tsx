@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { CentPrecisionMoney, Price, ProductProjection } from '@commercetools/platform-sdk';
 import { describe, expect, test } from 'vitest';
 
+import { LANGUAGE } from '@/constants/catalog-constants';
 import { customRender, screen } from '@/test-utils';
 
 import { CommonCard } from './common-card';
@@ -44,11 +45,11 @@ describe('CommonCard', () => {
       </MemoryRouter>,
     );
 
-    const productName = cardData.name['en-US'];
+    const productName = cardData.name[LANGUAGE];
     expect(productName).toBeDefined();
 
-    if (cardData.metaDescription && cardData.metaDescription['en-US']) {
-      const productDescription = cardData.metaDescription['en-US'];
+    if (cardData.metaDescription && cardData.metaDescription[LANGUAGE]) {
+      const productDescription = cardData.metaDescription[LANGUAGE];
       expect(screen.getByText(productDescription)).toBeInTheDocument();
     }
 

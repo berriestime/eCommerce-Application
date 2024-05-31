@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Category, ProductProjection } from '@commercetools/platform-sdk';
 
 import { Layout } from '@/components/layout';
+import { LANGUAGE } from '@/constants/catalog-constants';
 
 import { AuthRouteGuard } from './AuthRouteGuard';
 import {
@@ -81,7 +82,7 @@ export const routes = [
             <Link key="1" to={`/${APP_ROUTE.Store}`}>
               Store
             </Link>,
-            <span key="2">{categoryData.name['en-US']}</span>,
+            <span key="2">{categoryData.name[LANGUAGE]}</span>,
           ],
         },
         loader: CategoryLoader,
@@ -95,9 +96,9 @@ export const routes = [
               Store
             </Link>,
             <Link key="2" to={`/${APP_ROUTE.Store}/${categoryData.key}`}>
-              {categoryData.name['en-US']}
+              {categoryData.name[LANGUAGE]}
             </Link>,
-            <span key="3"> {subcategoryData.name['en-US']}</span>,
+            <span key="3"> {subcategoryData.name[LANGUAGE]}</span>,
           ],
         },
         loader: SubcategoryLoader,
@@ -119,12 +120,12 @@ export const routes = [
               Store
             </Link>,
             <Link key="2" to={`/${APP_ROUTE.Store}/${categoryData.key}`}>
-              {categoryData.name['en-US']}
+              {categoryData.name[LANGUAGE]}
             </Link>,
             <Link key="3" to={`/${APP_ROUTE.Store}/${categoryData.key}/${subcategoryData.key}`}>
-              {subcategoryData.name['en-US']}
+              {subcategoryData.name[LANGUAGE]}
             </Link>,
-            <span key="4">{productData.name['en-US']}</span>,
+            <span key="4">{productData.name[LANGUAGE]}</span>,
           ],
         },
         loader: ProductLoader,
