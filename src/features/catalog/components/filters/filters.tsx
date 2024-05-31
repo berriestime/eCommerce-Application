@@ -43,6 +43,16 @@ const Filters = (): JSX.Element => {
     }
   };
 
+  const handleResetClick = (): void => {
+    setPriceValue([0, 2500]);
+    setLavaColorValue(null);
+    const targetSearchParams = new URLSearchParams(location.search);
+    targetSearchParams.delete('priceFrom');
+    targetSearchParams.delete('priceTo');
+    targetSearchParams.delete('lavaColor');
+    navigate(`?${targetSearchParams.toString()}`);
+  };
+
   return (
     <div className={classes.contentWrapper}>
       <SimpleGrid cols={3} flex={1}>
@@ -88,6 +98,9 @@ const Filters = (): JSX.Element => {
           }}
           value={lavaColorValue}
         ></Select>
+        <div>
+          <button onClick={handleResetClick}>Reset filters</button>
+        </div>
       </SimpleGrid>
     </div>
   );
