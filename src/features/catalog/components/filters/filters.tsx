@@ -22,10 +22,12 @@ const Filters = (): JSX.Element => {
   const priceTo = parsePriceValue(searchParams.get('priceTo'), 2500);
   const lavaColor = searchParams.get('lavaColor') ?? '';
   const lampColor = searchParams.get('lampColor') ?? '';
+  const sort = searchParams.get('sort') ?? '';
 
   const [priceValue, setPriceValue] = useState<[number, number]>([priceFrom || 0, priceTo || 2500]);
   const [lavaColorValue, setLavaColorValue] = useState<null | string>(lavaColor);
   const [lampColorValue, setLampColorValue] = useState<null | string>(lampColor);
+  const [sortValue, setSortValue] = useState<null | string>(sort);
 
   const priceOptions = [
     { label: '$0 - $50', value: '0-50' },
@@ -48,12 +50,23 @@ const Filters = (): JSX.Element => {
   const handleResetClick = (): void => {
     setPriceValue([0, 2500]);
     setLavaColorValue(null);
+    setSortValue(null);
     const targetSearchParams = new URLSearchParams(location.search);
     targetSearchParams.delete('priceFrom');
     targetSearchParams.delete('priceTo');
     targetSearchParams.delete('lavaColor');
     targetSearchParams.delete('lampColor');
+    targetSearchParams.delete('sort');
     navigate(`?${targetSearchParams.toString()}`);
+  };
+
+  const handleSortChange = (selectedValue: null | string): void => {
+    if (selectedValue) {
+      setSortValue(selectedValue);
+      const targetSearchParams = new URLSearchParams(location.search);
+      targetSearchParams.set('sort', selectedValue);
+      navigate(`?${targetSearchParams.toString()}`);
+    }
   };
 
   return (
@@ -69,7 +82,7 @@ const Filters = (): JSX.Element => {
         </div>
         <Select
           data={[
-            'green-red',
+            { label: 'Green & Red', value: 'green-red' },
             'violet-white',
             'yellow-white',
             'violet-red',
@@ -101,7 +114,15 @@ const Filters = (): JSX.Element => {
           value={lavaColorValue}
         ></Select>
         <Select
-          data={['silver', 'cooper', 'black', 'platinum', 'matt-black', 'black-vinyl', 'orange']}
+          data={[
+            { label: 'Silver', value: 'silver' },
+            'cooper',
+            'black',
+            'platinum',
+            'matt-black',
+            'black-vinyl',
+            'orange',
+          ]}
           label="Lamp color"
           onChange={(value) => {
             if (!value) {
@@ -114,6 +135,14 @@ const Filters = (): JSX.Element => {
           }}
           value={lampColorValue}
         ></Select>
+        <div>
+          <Select
+            data={['price-asc', 'price-desc']}
+            label="Sort by"
+            onChange={handleSortChange}
+            value={sortValue}
+          ></Select>
+        </div>
         <div>
           <button onClick={handleResetClick}>Reset filters</button>
         </div>

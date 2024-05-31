@@ -6,7 +6,24 @@ import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import { defineApiRoot } from '@/lib/commerstools/define-client';
 
-type ParsedQueryParams = { lampColor?: string; lavaColor?: string; priceFrom?: number; priceTo?: number };
+type ParsedQueryParams = {
+  lampColor?: string;
+  lavaColor?: string;
+  priceFrom?: number;
+  priceTo?: number;
+  sort?: string;
+};
+
+const parseUrl = (request: Request): ParsedQueryParams => {
+  const url = new URL(request.url);
+  const priceFrom = parseInt(url.searchParams.get('priceFrom') ?? '');
+  const priceTo = parseInt(url.searchParams.get('priceTo') ?? '');
+  const lavaColor = url.searchParams.get('lavaColor') ?? '';
+  const lampColor = url.searchParams.get('lampColor') ?? '';
+  const sort = url.searchParams.get('sort') ?? '';
+
+  return { lampColor, lavaColor, priceFrom, priceTo, sort };
+};
 
 const getProductByKey = (productKey: string): Promise<ClientResponse<ProductProjection>> => {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
@@ -67,6 +84,18 @@ async function getProductsWithFilter({
   if (parsedQueryParams?.lampColor) {
     filter.push(`variants.attributes.lamp-color-enum.key:"${parsedQueryParams?.lampColor}"`);
   }
+  const sort = [];
+  switch (parsedQueryParams?.sort) {
+    case 'price-asc':
+      sort.push('price asc');
+      break;
+    case 'price-desc':
+      sort.push('price desc');
+      break;
+  }
+  sort.push('name.en-US asc');
+  sort.push('id asc');
+
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const response = await apiRoot
     .productProjections()
@@ -78,6 +107,7 @@ async function getProductsWithFilter({
         filterQuery,
         limit: limit,
         offset: 0,
+        sort,
       },
     })
     .execute();
@@ -85,4 +115,4 @@ async function getProductsWithFilter({
   return response;
 }
 
-export { getAllProducts, getProductByKey, getProductsByCategoryId, getProductsByCategorySubtree };
+export { getAllProducts, getProductByKey, getProductsByCategoryId, getProductsByCategorySubtree, parseUrl };
