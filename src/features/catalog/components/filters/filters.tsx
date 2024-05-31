@@ -21,9 +21,11 @@ const Filters = (): JSX.Element => {
   const priceFrom = parsePriceValue(searchParams.get('priceFrom'), 0);
   const priceTo = parsePriceValue(searchParams.get('priceTo'), 2500);
   const lavaColor = searchParams.get('lavaColor') ?? '';
+  const lampColor = searchParams.get('lampColor') ?? '';
 
   const [priceValue, setPriceValue] = useState<[number, number]>([priceFrom || 0, priceTo || 2500]);
   const [lavaColorValue, setLavaColorValue] = useState<null | string>(lavaColor);
+  const [lampColorValue, setLampColorValue] = useState<null | string>(lampColor);
 
   const priceOptions = [
     { label: '$0 - $50', value: '0-50' },
@@ -50,6 +52,7 @@ const Filters = (): JSX.Element => {
     targetSearchParams.delete('priceFrom');
     targetSearchParams.delete('priceTo');
     targetSearchParams.delete('lavaColor');
+    targetSearchParams.delete('lampColor');
     navigate(`?${targetSearchParams.toString()}`);
   };
 
@@ -61,7 +64,6 @@ const Filters = (): JSX.Element => {
             data={priceOptions}
             label="Price range"
             onChange={handlePriceChange}
-            placeholder="Select price range"
             value={`${priceValue[0]}-${priceValue[1]}`}
           />
         </div>
@@ -97,6 +99,20 @@ const Filters = (): JSX.Element => {
             navigate(`?${targetSearchParams.toString()}`);
           }}
           value={lavaColorValue}
+        ></Select>
+        <Select
+          data={['silver', 'cooper', 'black', 'platinum', 'matt-black', 'black-vinyl', 'orange']}
+          label="Lamp color"
+          onChange={(value) => {
+            if (!value) {
+              return;
+            }
+            setLampColorValue(value);
+            const targetSearchParams = new URLSearchParams(location.search);
+            targetSearchParams.set('lampColor', value);
+            navigate(`?${targetSearchParams.toString()}`);
+          }}
+          value={lampColorValue}
         ></Select>
         <div>
           <button onClick={handleResetClick}>Reset filters</button>

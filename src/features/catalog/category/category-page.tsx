@@ -16,8 +16,6 @@ import { Tabs } from './components';
 const CategoryPage: FC = () => {
   const data = useLoaderData();
 
-  console.log(data);
-
   const { categoryData, productsData, subcategoryData } = data as {
     categoryData: Category;
     productsData: ProductProjectionPagedQueryResponse;

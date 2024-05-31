@@ -13,8 +13,10 @@ const loader: LoaderFunction = async ({
   const priceFrom = parseInt(url.searchParams.get('priceFrom') ?? '');
   const priceTo = parseInt(url.searchParams.get('priceTo') ?? '');
   const lavaColor = url.searchParams.get('lavaColor') ?? '';
+  const lampColor = url.searchParams.get('lampColor') ?? '';
 
   const productsResponse: ClientResponse<ProductProjectionPagedQueryResponse> = await getAllProducts({
+    lampColor,
     lavaColor,
     priceFrom,
     priceTo,
