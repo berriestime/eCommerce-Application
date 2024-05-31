@@ -12,18 +12,24 @@ import { ProfileEmail } from './email';
 import { ProfileFirstName } from './first-name';
 import { ProfileLastName } from './last-name';
 
+import classes from './profile-info.module.css';
+
 const ProfileInfo = (user: Customer): ReactElement => {
   const [modalChangePasswordOpened, { close: closeChangePasswordModal, open: openChangePasswordModal }] =
     useDisclosure(false);
 
   return (
     <Container>
-      <Title order={2}>PERSONAL INFO</Title>
+      <Title className={classes.title} order={2}>
+        Personal Information
+      </Title>
       <ProfileFirstName {...user} />
       <ProfileLastName {...user} />
       <ProfileDateOfBirth {...user} />
       <ProfileEmail {...user} />
-      <BaseButton onClick={openChangePasswordModal}>Change Password</BaseButton>
+      <BaseButton className={classes.passwordButton} onClick={openChangePasswordModal}>
+        Change Password
+      </BaseButton>
       <ChangePasswordModal close={closeChangePasswordModal} opened={modalChangePasswordOpened} user={user} />
     </Container>
   );

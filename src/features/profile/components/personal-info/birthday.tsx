@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react';
 
 import { Customer } from '@commercetools/platform-sdk';
 import { useForm } from '@mantine/form';
+import { clsx } from 'clsx';
 import dayjs from 'dayjs';
 
 import { BaseButton } from '@/components/base-button';
@@ -9,6 +10,8 @@ import { CustomDateInput } from '@/components/custom-date-input';
 import { addNotification } from '@/utils/show-notification';
 
 import { postUserDateOfBirth } from '../../api/user-api';
+
+import classes from './profile-info.module.css';
 
 const BUTTON_TEXT_EDIT = 'Edit';
 const BUTTON_TEXT_SAVE = 'Save';
@@ -61,8 +64,14 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
     }
   };
 
+  const buttonStyle = clsx({
+    [classes.editButton as string]: true,
+    [classes.isSave as string]: !inputState,
+  });
+
   return (
     <form
+      className={classes.form}
       onSubmit={form.onSubmit((user) => {
         handleClick(user.dateOfBirth);
       })}
@@ -73,7 +82,9 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
         popoverProps={{ opened: popupState }}
         {...form.getInputProps('dateOfBirth')}
       />
-      <BaseButton type="submit">{buttonState}</BaseButton>
+      <BaseButton className={buttonStyle} type="submit">
+        {buttonState}
+      </BaseButton>
     </form>
   );
 };

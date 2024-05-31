@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react';
 
 import { Customer } from '@commercetools/platform-sdk';
 import { useForm } from '@mantine/form';
+import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomTextInput } from '@/components/custom-text-input';
@@ -9,6 +10,8 @@ import { addNotification } from '@/utils/show-notification';
 import { isEmail } from '@/utils/validate/isEmail';
 
 import { postUserNewEmail } from '../../api/user-api';
+
+import classes from './profile-info.module.css';
 
 const BUTTON_TEXT_EDIT = 'Edit';
 const BUTTON_TEXT_SAVE = 'Save';
@@ -49,14 +52,22 @@ const ProfileEmail = (user: Customer): ReactElement => {
     }
   };
 
+  const buttonStyle = clsx({
+    [classes.editButton as string]: true,
+    [classes.isSave as string]: !inputState,
+  });
+
   return (
     <form
+      className={classes.form}
       onSubmit={form.onSubmit((user) => {
         handleClick(user.email);
       })}
     >
       <CustomTextInput disabled={inputState} label="Email" {...form.getInputProps('email')} />
-      <BaseButton type="submit">{buttonState}</BaseButton>
+      <BaseButton className={buttonStyle} type="submit">
+        {buttonState}
+      </BaseButton>
     </form>
   );
 };

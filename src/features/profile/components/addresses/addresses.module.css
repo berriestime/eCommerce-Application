@@ -1,0 +1,20 @@
+.title {
+  color: var(--mantine-color-bright);
+  font-size: 30;
+  margin: 2rem 0 2rem 0;
+  font-weight: 400;
+  text-align: center;
+}
+
+.addButton {
+  margin: 1.5rem 0 4rem 0;
+  width: 100%;
+}
+
+.addressWrapper {
+  width: 368px;
+
+  @media (width <=386px) {
+    width: 100%;
+  }
+}

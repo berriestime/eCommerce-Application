@@ -17,6 +17,8 @@ import { EditAddress } from '../../types/edit-address';
 import { AddressCard } from './address-card/address-card';
 import { EditAddressModal } from './address-edit-modal/edit-address-modal';
 
+import classes from './addresses.module.css';
+
 const ProfileAddresses = (user: Customer): ReactElement => {
   const [modalAddAddressOpened, { close: closeAddAddressModal, open: openAddAddressModal }] = useDisclosure(false);
   const [modalEditAddressOpened, { close: closeEditAddressModal, open: openEditAddressModal }] = useDisclosure(false);
@@ -68,8 +70,10 @@ const ProfileAddresses = (user: Customer): ReactElement => {
 
   return (
     <>
-      <Container>
-        <Title order={2}>YOUR ADDRESSES</Title>
+      <Container className={classes.addressWrapper}>
+        <Title className={classes.title} order={2}>
+          Addresses
+        </Title>
         <Flex direction={'column'} mt="md">
           {addresses.map((address) => (
             <AddressCard
@@ -90,7 +94,9 @@ const ProfileAddresses = (user: Customer): ReactElement => {
             />
           ))}
         </Flex>
-        <BaseButton onClick={openAddAddressModal}>Add new address</BaseButton>
+        <BaseButton className={classes.addButton} onClick={openAddAddressModal}>
+          Add new address
+        </BaseButton>
       </Container>
       <AddAddressModal
         addresses={addresses}
