@@ -102,7 +102,7 @@ const EditAddressModal = ({
         <LoadingOverlay loaderProps={{ type: 'oval' }} visible={visible} zIndex="2000" />
         <Modal.Header className={classes.header}>
           <Modal.Title c="bright" className={classes.title}>
-            Add address
+            Edit address
           </Modal.Title>
           <Modal.CloseButton />
         </Modal.Header>
@@ -160,7 +160,7 @@ const EditAddressModal = ({
             />
             <Group grow justify="center" mt="xl">
               <BaseButton c="bright" type="submit">
-                Add
+                Edit
               </BaseButton>
               <Button
                 onClick={() => {

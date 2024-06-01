@@ -13,6 +13,7 @@
 
 .addressWrapper {
   max-width: 30rem;
+  min-width: 30rem;
 
   @media (width <=480px) {
     min-width: 80%;
