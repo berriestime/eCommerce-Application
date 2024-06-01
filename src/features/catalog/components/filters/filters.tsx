@@ -3,11 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Divider, Group, UnstyledButton } from '@mantine/core';
 import { useDebouncedCallback } from '@mantine/hooks';
-import { IconSearch, IconX } from '@tabler/icons-react';
 
 import { Chevron } from '@/components/chevron';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
+import { CloseIcon } from '@/components/icons/close';
+import { SearchIcon } from '@/components/icons/search';
 
 import classes from './filters.module.css';
 
@@ -90,7 +91,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
       <Divider color={'white'} orientation="horizontal" size="xs" />
       <CustomTextInput
         inline
-        leftSection={<IconSearch size={18} />}
+        leftSection={<SearchIcon size={18} />}
         mb={'sm'}
         onChange={(event) => {
           setSearchValue(event.currentTarget.value);
@@ -188,7 +189,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
         )}
 
         <UnstyledButton className={classes.resetButton} onClick={handleResetClick}>
-          Reset filter <IconX size={20} />
+          Reset filter <CloseIcon size={20} />
         </UnstyledButton>
       </Group>
       <Group>

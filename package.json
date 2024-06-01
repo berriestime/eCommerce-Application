@@ -76,7 +76,6 @@
     "@mantine/modals": "^7.10.1",
     "@mantine/notifications": "^7.10.1",
     "@reduxjs/toolkit": "^2.2.3",
-    "@tabler/icons-react": "^3.5.0",
     "axios": "^1.6.8",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",

@@ -33,7 +33,7 @@ const Layout = (): JSX.Element => {
         <Header />
       </AppShell.Header>
 
-      <AppShell.Main bg="customBg" c="customColor">
+      <AppShell.Main bg="customBg" c="customColor" pos="relative">
         <Suspense
           fallback={
             <Box className={classes.box}>
@@ -41,19 +41,17 @@ const Layout = (): JSX.Element => {
             </Box>
           }
         >
-          {loading && (
-            <Box className={classes.box}>
-              <Loader />
-            </Box>
-          )}
+          <>
+            {loading && (
+              <Box className={classes.box} pos="fixed">
+                <Loader />
+              </Box>
+            )}
+            <Notifications bg="customBg" c="customColor" />
 
-          {!loading && (
-            <>
-              <Notifications bg="customBg" c="customColor" />
+            <Outlet />
+          </>
 
-              <Outlet />
-            </>
-          )}
           <ScrollRestoration />
         </Suspense>
       </AppShell.Main>
