@@ -22,6 +22,8 @@ const CategoryPage: FC = () => {
     subcategoryData?: Category;
   };
 
+  const showLavaFilters = categoryData.key === 'lamps';
+
   const { results: productResult } = productsData;
 
   const productCards = productResult.map((product) => {
@@ -35,7 +37,7 @@ const CategoryPage: FC = () => {
   return (
     <Box className="wrapper">
       <Breadcrumbs />
-      <Filters />
+      <Filters showLavaFilters={showLavaFilters} />
       <Tabs />
       <Box className="middleContainer">
         <Title c="bright">Category page: {categoryData.name['en-US']}</Title>
