@@ -94,7 +94,12 @@ const ProductPage = (): JSX.Element => {
           gutter={matchesLg ? 60 : 20}
           pb={100}
         >
-          <Grid.Col className={classes.col} pos="relative" span={{ base: 12, md: 7, sm: 6, xs: 6 }}>
+          <Grid.Col
+            className={classes.col}
+            mt={{ base: 20, xs: 0 }}
+            pos="relative"
+            span={{ base: 12, md: 7, sm: 6, xs: 6 }}
+          >
             <Flex
               direction={matchesMd || matchesXxs ? 'column' : 'row'}
               gap={{ base: 'sm', lg: 60, md: 20 }}

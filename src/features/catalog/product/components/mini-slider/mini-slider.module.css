@@ -55,4 +55,8 @@
 
 .carouselContainer {
   gap: 20px;
+
+  @media (width <= 600px) {
+    margin-top: 20px;
+  }
 }
