@@ -77,6 +77,7 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
       })}
     >
       <CustomDateInput
+        className={classes.customInput}
         disabled={inputState}
         label="Birthday"
         popoverProps={{ opened: popupState }}

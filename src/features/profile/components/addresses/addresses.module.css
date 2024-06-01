@@ -12,9 +12,9 @@
 }
 
 .addressWrapper {
-  width: 368px;
+  max-width: 30rem;
 
-  @media (width <=386px) {
-    width: 100%;
+  @media (width <=480px) {
+    min-width: 80%;
   }
 }

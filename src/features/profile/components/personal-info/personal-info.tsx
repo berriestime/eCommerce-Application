@@ -19,7 +19,7 @@ const ProfileInfo = (user: Customer): ReactElement => {
     useDisclosure(false);
 
   return (
-    <Container>
+    <Container className={classes.infoWrapper}>
       <Title className={classes.title} order={2}>
         Personal Information
       </Title>

@@ -67,7 +67,12 @@ const ProfileFirstName = (user: Customer): ReactElement => {
         handleClick(user.firstName);
       })}
     >
-      <CustomTextInput disabled={inputState} label="First Name" {...form.getInputProps('firstName')} />
+      <CustomTextInput
+        className={classes.customInput}
+        disabled={inputState}
+        label="First Name"
+        {...form.getInputProps('firstName')}
+      />
       <BaseButton className={buttonStyle} type="submit">
         {buttonState}
       </BaseButton>

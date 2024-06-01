@@ -13,15 +13,19 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
-  padding: 1.5rem 1rem;
+  padding: 1rem;
   font-size: 16px;
   color: var(--mantine-color-bright);
   border: 1px solid #3d3d3d;
   transition: 0.3s;
 }
 
-.card:hover {
+.card:hover .menu {
   background-color: #3d3d3d32;
+}
+
+.card:hover .menu:hover {
+  background-color: #3d3d3d82;
 }
 
 .address {
@@ -30,12 +34,9 @@
 }
 
 .menu {
+  align-self: flex-start;
   padding: 0;
   min-width: 2rem;
   background-color: #242424;
   transition: 0.3s;
-}
-
-.menu:hover {
-  background-color: #3d3d3d7b;
 }

@@ -59,17 +59,17 @@ function AddressCard(props: AddressCardProps): ReactElement {
 
   return (
     <Flex className={classes.card}>
-      <Text className={classes.address}>
-        <Flex direction={'column'}>
-          <p className={props.id === props.defaultBilling ? classes.default : classes.hidden}>
-            Default Billing Address
-          </p>
-          <p className={props.id === props.defaultShipping ? classes.default : classes.hidden}>
-            Default Shipping Address
-          </p>
+      <Flex className={classes.address} direction={'column'}>
+        <Flex wrap={'wrap'}>
+          <Text className={props.id === props.defaultBilling ? classes.default : classes.hidden} mr="1rem">
+            {'\u2713'} Billing Address
+          </Text>
+          <Text className={props.id === props.defaultShipping ? classes.default : classes.hidden}>
+            {'\u2713'} Shipping Address
+          </Text>
         </Flex>
         {addressTitle}
-      </Text>
+      </Flex>
 
       <Menu position={'bottom-end'} shadow="md" width={200}>
         <Menu.Target>

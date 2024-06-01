@@ -64,7 +64,12 @@ const ProfileEmail = (user: Customer): ReactElement => {
         handleClick(user.email);
       })}
     >
-      <CustomTextInput disabled={inputState} label="Email" {...form.getInputProps('email')} />
+      <CustomTextInput
+        className={classes.customInput}
+        disabled={inputState}
+        label="Email"
+        {...form.getInputProps('email')}
+      />
       <BaseButton className={buttonStyle} type="submit">
         {buttonState}
       </BaseButton>
