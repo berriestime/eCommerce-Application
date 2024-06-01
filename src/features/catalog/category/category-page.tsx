@@ -37,8 +37,8 @@ const CategoryPage: FC = () => {
   return (
     <Box className="wrapper">
       <Breadcrumbs />
-      <Filters showLavaFilters={showLavaFilters} />
       <Tabs />
+      <Filters showLavaFilters={showLavaFilters} />
       <Box className="middleContainer">
         <Title c="bright">Category page: {categoryData.name['en-US']}</Title>
 

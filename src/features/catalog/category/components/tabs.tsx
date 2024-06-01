@@ -1,8 +1,8 @@
 import type { FC, ReactNode } from 'react';
-import { NavLink, useLoaderData } from 'react-router-dom';
+import { NavLink as RouterNavLink, useLoaderData } from 'react-router-dom';
 
 import { Category, CategoryPagedQueryResponse } from '@commercetools/platform-sdk';
-import { Box } from '@mantine/core';
+import { Box, Group, NavLink, Stack } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import classes from './tabs.module.css';
@@ -22,9 +22,18 @@ const Tabs: FC = () => {
   ];
 
   const categoriesNav = mainCategories.map((el) => (
-    <NavLink className={({ isActive }) => clsx({ [classes.active || '']: isActive })} key={el.name} to={el.url}>
-      {el.name}
-    </NavLink>
+    <NavLink
+      color="whiteTint"
+      component={RouterNavLink}
+      end={el.name === 'All products'}
+      h={56}
+      key={el.name}
+      label={el.name}
+      py="sm"
+      ta="center"
+      to={el.url}
+      variant="filled"
+    />
   ));
 
   let subcategoriesNav: ReactNode[] = [];
@@ -34,27 +43,40 @@ const Tabs: FC = () => {
 
     subcategoriesNav = subcategoriesResult.map((subcategory) => (
       <NavLink
-        className={({ isActive }) => clsx({ [classes.active || '']: isActive })}
+        classNames={{
+          label: classes.navLinkLabel,
+        }}
+        component={RouterNavLink}
+        h={70}
         key={subcategory.key}
+        label={subcategory.name['en-US']}
+        noWrap
+        ta="center"
         to={`/store/${categoryData.key}/${subcategory.key}`}
-      >
-        {subcategory.name['en-US']}
-      </NavLink>
+        variant="subtle"
+      />
     ));
   }
 
   return (
-    <Box>
-      <Box className={classes.categoriesWrapper} py={12}>
-        <Box className={clsx(classes.categories, classes.contentWrapper)}>{categoriesNav}</Box>
+    <Stack gap={0}>
+      <Box className={classes.categoriesWrapper}>
+        <Group className={clsx(classes.categories, classes.contentWrapper)} gap={0} grow>
+          {categoriesNav}
+        </Group>
       </Box>
-
       {subcategoriesNav.length > 0 && (
-        <Box className={clsx(classes.contentWrapper)}>
-          <Box className={classes.categories}>{subcategoriesNav}</Box>{' '}
-        </Box>
+        <Group
+          className={clsx(classes.contentWrapper, classes.categories)}
+          gap={0}
+          grow
+          preventGrowOverflow={false}
+          wrap="nowrap"
+        >
+          {subcategoriesNav}
+        </Group>
       )}
-    </Box>
+    </Stack>
   );
 };
 

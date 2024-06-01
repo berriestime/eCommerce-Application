@@ -6,6 +6,7 @@
   user-select: none;
   display: inline-flex;
   flex-wrap: wrap;
+  height: 57px;
 
   @media (width <= 1200px) {
     padding: 16px 32px;
@@ -23,6 +24,7 @@
   margin: 8px 0;
   color: #aa9f9c;
   white-space: normal;
+  font-size: 14px;
 
   @media (width <= 600px) {
     font-size: 0.8rem;

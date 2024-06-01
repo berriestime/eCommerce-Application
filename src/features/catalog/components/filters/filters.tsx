@@ -90,7 +90,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
       <Divider color={'white'} orientation="horizontal" size="xs" />
       <CustomTextInput
         inline
-        leftSection={<IconSearch size={12} />}
+        leftSection={<IconSearch size={18} />}
         mb={'sm'}
         onChange={(event) => {
           setSearchValue(event.currentTarget.value);
@@ -103,6 +103,9 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
       <Group mb={'sm'}>
         <div>Filter:</div>
         <CustomSelect
+          classNames={{
+            input: classes.priceFilter,
+          }}
           data={priceOptions}
           inline
           onChange={handlePriceChange}
@@ -115,6 +118,9 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
         {showLavaFilters && (
           <>
             <CustomSelect
+              classNames={{
+                input: classes.lavaFilter,
+              }}
               data={[
                 { label: 'Green & Red', value: 'green-red' },
                 { label: 'Violet & White', value: 'violet-white' },
@@ -151,6 +157,9 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
             />
             <Divider orientation="vertical" size="sm" />
             <CustomSelect
+              classNames={{
+                input: classes.lampFilter,
+              }}
               data={[
                 { label: 'Silver', value: 'silver' },
                 { label: 'Cooper', value: 'cooper' },
@@ -178,13 +187,16 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
           </>
         )}
 
-        <UnstyledButton onClick={handleResetClick}>
+        <UnstyledButton className={classes.resetButton} onClick={handleResetClick}>
           Reset filter <IconX size={20} />
         </UnstyledButton>
       </Group>
       <Group>
         <div>Sort by:</div>
         <CustomSelect
+          classNames={{
+            input: classes.sort,
+          }}
           data={[
             { label: 'Price low to high', value: 'price-asc' },
             { label: 'Price high to low', value: 'price-desc' },
@@ -194,6 +206,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
           inline
           mb={'sm'}
           onChange={handleSortChange}
+          placeholder="Sort by"
           rightSection={icon}
           value={sortValue}
         />

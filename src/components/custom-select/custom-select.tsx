@@ -10,18 +10,22 @@ type Props = {
 } & SelectProps;
 
 const CustomSelect = forwardRef(function MyInput(
-  { inline = false, ...props }: Props,
+  { classNames, inline = false, ...props }: Props,
   ref: LegacyRef<HTMLInputElement>,
 ): ReactElement {
+  if (classNames instanceof Function) {
+    throw new Error('Unsupported!');
+  }
   return (
     <Select
       {...props}
       classNames={{
-        error: classes.error,
-        input: classes.input,
-        label: classes.label,
-        root: clsx({ [classes.root!]: true, [classes.rootInline!]: inline }),
-        wrapper: classes.wrapper,
+        ...classNames,
+        error: clsx(classes.error, classNames?.error),
+        input: clsx(classes.input, classNames?.input),
+        label: clsx(classes.label, classNames?.label),
+        root: clsx({ [classes.root!]: true, [classes.rootInline!]: inline }, classNames?.root),
+        wrapper: clsx(classes.wrapper, classNames?.wrapper),
       }}
       ref={ref}
     />

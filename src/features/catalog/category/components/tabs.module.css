@@ -1,32 +1,24 @@
 .categoriesWrapper {
-  background-color: #aa9f9c38;
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
 .contentWrapper {
+  max-width: 1000px;
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 100px;
   user-select: none;
-  display: flex;
-  flex-wrap: wrap;
-
-  @media (width <= 1200px) {
-    padding: 16px 32px;
-  }
-
-  @media (width <= 600px) {
-    padding: 16px;
-  }
 }
 
 .active {
-  color: #aa9f9c;
-  font-weight: 600;
-  cursor: default;
+  background-color: rgba(243, 231, 228, 0.05);
 }
 
 .categories {
-  display: flex;
-  gap: 40px;
+  text-align: center;
+}
+
+:where([data-active], [aria-current='page']) .navLinkLabel {
+  background: linear-gradient(to bottom left, #f9bf08, #ff4000);
+  background-clip: text;
+  color: transparent;
 }
