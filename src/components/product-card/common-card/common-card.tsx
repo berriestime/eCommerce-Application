@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { Badge, Card, Image, Skeleton, Text } from '@mantine/core';
+import { Badge, Box, Card, Image, Skeleton, Text } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
@@ -63,8 +63,10 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
             {metaDescription[LANGUAGE]}
           </Text>
         )}
+      </Card.Section>
 
-        <Text mb={20} mt={12}>
+      <Box mt="auto">
+        <Text mb={20} mt={24}>
           {discountPrice ? (
             <>
               <span className={clsx(classes.price, classes.discount)}>${price}</span>
@@ -74,19 +76,17 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
             <span className={classes.price}>${price}</span>
           )}
         </Text>
-      </Card.Section>
-
-      <BaseButton
-        c="bright"
-        className="addToCartButton"
-        fullWidth
-        mt="auto"
-        onClick={(event) => {
-          event.preventDefault();
-        }}
-      >
-        Add To Cart
-      </BaseButton>
+        <BaseButton
+          c="bright"
+          className="addToCartButton"
+          fullWidth
+          onClick={(event) => {
+            event.preventDefault();
+          }}
+        >
+          Add To Cart
+        </BaseButton>
+      </Box>
     </Card>
   );
 };

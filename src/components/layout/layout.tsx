@@ -43,7 +43,7 @@ const Layout = (): JSX.Element => {
         >
           <>
             {loading && (
-              <Box className={classes.box} pos="fixed">
+              <Box className={classes.boxFull} pos="fixed">
                 <Loader />
               </Box>
             )}
