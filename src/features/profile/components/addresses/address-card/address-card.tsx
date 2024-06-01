@@ -23,7 +23,7 @@ const transformCountryCodeIntoCountry = (country: string): string => {
 };
 
 function AddressCard(props: AddressCardProps): ReactElement {
-  const addressTitle = `${props.postalCode}, ${props.country}, ${props.city}, ${props.streetName}`;
+  const addressTitle = `${props.postalCode}, ${transformCountryCodeIntoCountry(props.country)}, ${props.city}, ${props.streetName}`;
   const address = {
     city: props.city,
     country: transformCountryCodeIntoCountry(props.country),
