@@ -71,7 +71,7 @@ const Tabs: FC = () => {
           gap={0}
           grow
           preventGrowOverflow={false}
-          wrap="nowrap"
+          wrap="wrap"
         >
           {subcategoriesNav}
         </Group>

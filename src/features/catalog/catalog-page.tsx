@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
 import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
-import { Box, SimpleGrid, Title } from '@mantine/core';
+import { Box, SimpleGrid } from '@mantine/core';
 
 import { Breadcrumbs } from '@/components/brearcrumbs';
 import { Footer } from '@/components/footer';
@@ -36,12 +36,8 @@ const CatalogPage: FC = () => {
       <Breadcrumbs />
       <Tabs />
       <Filters />
-      <Box className="middleContainer">
-        <Title c="bright">Store page</Title>
-        <Title c="bright" mb={20} mt={16} order={2}>
-          Products
-        </Title>
-        <SimpleGrid cols={{ base: 1, sm: 3, xs: 2 }} mt="xl" spacing="60">
+      <Box className="middleContainer" pt="0">
+        <SimpleGrid cols={{ base: 1, sm: 3, xs: 2 }} spacing="60">
           {productCards}
         </SimpleGrid>
       </Box>
