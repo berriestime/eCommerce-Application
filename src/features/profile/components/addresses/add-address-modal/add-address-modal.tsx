@@ -87,6 +87,9 @@ const AddAddressModal = ({
         const newAddresses: Address[] = [...addresses, addressWithId];
         setAddresses(newAddresses);
       })
+      .then(() =>
+        addNotification({ message: 'Address was successfully added', title: 'Address added', type: 'success' }),
+      )
       .catch((error: unknown) => {
         const errorMessage = error instanceof Error ? error.message : String(error);
         addNotification({ message: errorMessage, title: 'Error', type: 'error' });

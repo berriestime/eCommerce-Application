@@ -1,0 +1,63 @@
+.infoWrapper {
+  min-width: 30rem;
+
+  @media (width <=500px) {
+    min-width: 100%;
+  }
+}
+
+.form {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+
+  label {
+    font-size: 12px;
+    font-weight: 300;
+    opacity: 0.5;
+  }
+
+  div {
+    width: 100%;
+  }
+
+  input {
+    font-size: 16px;
+    padding: 0;
+    text-indent: 10px;
+    transition: 0.3s;
+    background-color: #7c7c7c23 !important;
+    border-bottom: 1px solid #3d3d3d !important;
+  }
+
+  input:disabled {
+    text-indent: 0;
+    cursor: default !important;
+    opacity: 1 !important;
+    color: var(--mantine-color-bright) !important;
+    background-color: var(--mantine-color-bg) !important;
+  }
+}
+
+.editButton {
+  position: relative;
+  top: 3px;
+  width: 100px;
+}
+
+.isSave {
+  background-color: #7c7c7c23 !important;
+}
+
+.title {
+  color: var(--mantine-color-bright);
+  font-size: 30;
+  margin: 4rem 0 2rem 0;
+  font-weight: 400;
+  text-align: center;
+}
+
+.passwordButton {
+  margin: 1.5rem 0;
+  width: 100%;
+}

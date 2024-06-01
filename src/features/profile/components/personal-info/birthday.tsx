@@ -2,12 +2,16 @@ import { ReactElement, useState } from 'react';
 
 import { Customer } from '@commercetools/platform-sdk';
 import { useForm } from '@mantine/form';
+import { clsx } from 'clsx';
 import dayjs from 'dayjs';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomDateInput } from '@/components/custom-date-input';
+import { addNotification } from '@/utils/show-notification';
 
 import { postUserDateOfBirth } from '../../api/user-api';
+
+import classes from './profile-info.module.css';
 
 const BUTTON_TEXT_EDIT = 'Edit';
 const BUTTON_TEXT_SAVE = 'Save';
@@ -35,28 +39,53 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
   const [buttonState, setButtonState] = useState(BUTTON_TEXT_EDIT);
   const [inputState, setInputState] = useState(true);
 
+  const popup = undefined as boolean | undefined;
+  const [popupState, setPopupOpened] = useState(popup);
+
   const handleClick = (dateOfBirth: Date): void => {
     const date = dayjs(dateOfBirth).format('YYYY-MM-DD');
 
     if (buttonState === BUTTON_TEXT_EDIT) {
+      setPopupOpened(undefined);
       setButtonState(BUTTON_TEXT_SAVE);
       setInputState(false);
     } else {
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
-      postUserDateOfBirth(date).catch(console.error);
+      setPopupOpened(false);
+      postUserDateOfBirth(date)
+        .then(() =>
+          addNotification({ message: 'Birthday was successfully changed', title: 'Birthday change', type: 'success' }),
+        )
+        .catch((error: unknown) => {
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          addNotification({ message: errorMessage, title: 'Error', type: 'error' });
+        });
     }
   };
 
+  const buttonStyle = clsx({
+    [classes.editButton as string]: true,
+    [classes.isSave as string]: !inputState,
+  });
+
   return (
     <form
+      className={classes.form}
       onSubmit={form.onSubmit((user) => {
-        //TODO add close date picker here
         handleClick(user.dateOfBirth);
       })}
     >
-      <CustomDateInput disabled={inputState} label="Birthday" {...form.getInputProps('dateOfBirth')} />
-      <BaseButton type="submit">{buttonState}</BaseButton>
+      <CustomDateInput
+        className={classes.customInput}
+        disabled={inputState}
+        label="Birthday"
+        popoverProps={{ opened: popupState }}
+        {...form.getInputProps('dateOfBirth')}
+      />
+      <BaseButton className={buttonStyle} type="submit">
+        {buttonState}
+      </BaseButton>
     </form>
   );
 };

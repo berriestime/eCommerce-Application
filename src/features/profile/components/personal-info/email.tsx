@@ -7,25 +7,26 @@ import { clsx } from 'clsx';
 import { BaseButton } from '@/components/base-button';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { addNotification } from '@/utils/show-notification';
+import { isEmail } from '@/utils/validate/isEmail';
 
-import { postUserFirstName } from '../../api/user-api';
+import { postUserNewEmail } from '../../api/user-api';
 
 import classes from './profile-info.module.css';
 
 const BUTTON_TEXT_EDIT = 'Edit';
 const BUTTON_TEXT_SAVE = 'Save';
 
-const ProfileFirstName = (user: Customer): ReactElement => {
-  const firstName = user.firstName ? user.firstName : '';
+const ProfileEmail = (user: Customer): ReactElement => {
+  const email = user.email ? user.email : '';
 
   const form = useForm({
     initialValues: {
-      firstName,
+      email,
     },
     mode: 'uncontrolled',
 
     validate: {
-      firstName: (value) => (/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value) ? null : 'Invalid name'),
+      email: isEmail('Invalid email'),
     },
     validateInputOnChange: true,
   });
@@ -33,20 +34,16 @@ const ProfileFirstName = (user: Customer): ReactElement => {
   const [buttonState, setButtonState] = useState(BUTTON_TEXT_EDIT);
   const [inputState, setInputState] = useState(true);
 
-  const handleClick = (firstName: string): void => {
+  const handleClick = (email: string): void => {
     if (buttonState === BUTTON_TEXT_EDIT) {
       setButtonState(BUTTON_TEXT_SAVE);
       setInputState(false);
     } else {
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
-      postUserFirstName(firstName)
+      postUserNewEmail(email)
         .then(() =>
-          addNotification({
-            message: 'First name has been successfully changed',
-            title: 'First name change',
-            type: 'success',
-          }),
+          addNotification({ message: 'Email has been successfully changed', title: 'Email change', type: 'success' }),
         )
         .catch((error: unknown) => {
           const errorMessage = error instanceof Error ? error.message : String(error);
@@ -64,14 +61,14 @@ const ProfileFirstName = (user: Customer): ReactElement => {
     <form
       className={classes.form}
       onSubmit={form.onSubmit((user) => {
-        handleClick(user.firstName);
+        handleClick(user.email);
       })}
     >
       <CustomTextInput
         className={classes.customInput}
         disabled={inputState}
-        label="First Name"
-        {...form.getInputProps('firstName')}
+        label="Email"
+        {...form.getInputProps('email')}
       />
       <BaseButton className={buttonStyle} type="submit">
         {buttonState}
@@ -80,4 +77,4 @@ const ProfileFirstName = (user: Customer): ReactElement => {
   );
 };
 
-export { ProfileFirstName };
+export { ProfileEmail };

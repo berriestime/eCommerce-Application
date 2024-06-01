@@ -1,9 +1,11 @@
 import { ReactElement } from 'react';
 
-import { Button, Flex, Menu, Title } from '@mantine/core';
+import { Button, Flex, Menu, Text } from '@mantine/core';
 
+import { MenuIcon } from '@/components/icons/menu';
 import { postRemoveUserAddress } from '@/features/profile/api/address-api';
 import { AddressCardProps } from '@/features/profile/types/address-card-props';
+import { addNotification } from '@/utils/show-notification';
 
 import classes from './address-card.module.css';
 
@@ -21,7 +23,7 @@ const transformCountryCodeIntoCountry = (country: string): string => {
 };
 
 function AddressCard(props: AddressCardProps): ReactElement {
-  const addressTitle = `${props.postalCode}, ${props.country}, ${props.city}, ${props.streetName}`;
+  const addressTitle = `${props.postalCode}, ${transformCountryCodeIntoCountry(props.country)}, ${props.city}, ${props.streetName}`;
   const address = {
     city: props.city,
     country: transformCountryCodeIntoCountry(props.country),
@@ -45,34 +47,48 @@ function AddressCard(props: AddressCardProps): ReactElement {
           const newAddresses = props.addresses.filter((address) => address.id !== props.id);
           props.setAddresses(newAddresses);
         })
-        .catch(console.warn);
+        .then(() =>
+          addNotification({ message: 'Address was successfully deleted', title: 'Delete address', type: 'success' }),
+        )
+        .catch((error: unknown) => {
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          addNotification({ message: errorMessage, title: 'Error', type: 'error' });
+        });
     }
   };
 
   return (
-    <>
-      <Flex>
-        <Title order={3}>{addressTitle}</Title>
-        <p className={props.id === props.defaultBilling ? '' : classes.hidden}>Default Billing Address</p>
-        <p className={props.id === props.defaultShipping ? '' : classes.hidden}>Default Shipping Address</p>
-        <Menu position={'bottom-end'} shadow="md" width={200}>
-          <Menu.Target>
-            <Button
-              onClick={() => {
-                props.setEditAddress(address);
-              }}
-            >
-              menu
-            </Button>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item onClick={handleClickEdit}>Edit</Menu.Item>
-            <Menu.Divider />
-            <Menu.Item onClick={handleClickRemove}>Remove</Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
+    <Flex className={classes.card}>
+      <Flex className={classes.address} direction={'column'}>
+        <Flex wrap={'wrap'}>
+          <Text className={props.id === props.defaultBilling ? classes.default : classes.hidden} mr="1rem">
+            {'\u2713'} Billing Address
+          </Text>
+          <Text className={props.id === props.defaultShipping ? classes.default : classes.hidden}>
+            {'\u2713'} Shipping Address
+          </Text>
+        </Flex>
+        {addressTitle}
       </Flex>
-    </>
+
+      <Menu position={'bottom-end'} shadow="md" width={200}>
+        <Menu.Target>
+          <Button
+            className={classes.menu}
+            onClick={() => {
+              props.setEditAddress(address);
+            }}
+          >
+            <MenuIcon />
+          </Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item onClick={handleClickEdit}>Edit</Menu.Item>
+          <Menu.Divider />
+          <Menu.Item onClick={handleClickRemove}>Delete</Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+    </Flex>
   );
 }
 
