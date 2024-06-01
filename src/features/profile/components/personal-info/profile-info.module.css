@@ -1,7 +1,7 @@
 .infoWrapper {
   min-width: 30rem;
 
-  @media (width <=480px) {
+  @media (width <=500px) {
     min-width: 100%;
   }
 }

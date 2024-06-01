@@ -15,7 +15,8 @@
   max-width: 30rem;
   min-width: 30rem;
 
-  @media (width <=480px) {
-    min-width: 80%;
+  @media (width <=500px) {
+    /* max-width: 80%; */
+    min-width: 100%;
   }
 }
