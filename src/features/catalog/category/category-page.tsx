@@ -16,13 +16,13 @@ import { Tabs } from './components';
 const CategoryPage: FC = () => {
   const data = useLoaderData();
 
-  console.log(data);
-
   const { categoryData, productsData, subcategoryData } = data as {
     categoryData: Category;
     productsData: ProductProjectionPagedQueryResponse;
     subcategoryData?: Category;
   };
+
+  const showLavaFilters = categoryData.key === 'lamps';
 
   const { results: productResult } = productsData;
 
@@ -37,8 +37,8 @@ const CategoryPage: FC = () => {
   return (
     <Box className="wrapper">
       <Breadcrumbs />
-      <Filters />
       <Tabs />
+      <Filters showLavaFilters={showLavaFilters} />
       <Box className="middleContainer">
         <Title c="bright">Category page: {categoryData.name['en-US']}</Title>
 

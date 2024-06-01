@@ -1,17 +1,32 @@
 .contentWrapper {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding: 16px 100px;
   user-select: none;
-  display: flex;
-  flex-wrap: wrap;
+}
 
-  @media (width <= 1200px) {
-    padding: 16px 32px;
-  }
+.resetButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
 
-  @media (width <= 600px) {
-    padding: 16px;
-  }
+.priceFilter {
+  width: 140px;
+  border-bottom: unset;
+}
+
+.lavaFilter {
+  width: 170px;
+  border-bottom: unset;
+}
+
+.lampFilter {
+  width: 130px;
+  border-bottom: unset;
+}
+
+.sort {
+  width: 170px;
+  border-bottom: unset;
 }

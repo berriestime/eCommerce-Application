@@ -16,6 +16,10 @@
   min-height: 80.19px;
 }
 
+.root.rootInline {
+  min-height: unset;
+}
+
 .error {
   text-wrap: nowrap;
 }

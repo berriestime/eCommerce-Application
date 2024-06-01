@@ -38,6 +38,18 @@ export const theme = createTheme({
       light: '#1f1b1b',
       name: 'customColor',
     }),
+    whiteTint: [
+      '#f5f4f4',
+      '#e6e6e6',
+      '#cccccc',
+      '#b0b0b0',
+      '#989898',
+      '#888888',
+      '#818181',
+      '#6f6f6f',
+      '#646262',
+      '#5a5353',
+    ],
   },
   components: {
     Loader: Loader.extend({
