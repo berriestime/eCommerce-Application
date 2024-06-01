@@ -101,6 +101,7 @@ const Filters = (): JSX.Element => {
       />
 
       <Group mb={'sm'}>
+        <div>Filter:</div>
         <CustomSelect
           data={priceOptions}
           inline
@@ -114,23 +115,23 @@ const Filters = (): JSX.Element => {
         <CustomSelect
           data={[
             { label: 'Green & Red', value: 'green-red' },
-            'violet-white',
-            'yellow-white',
-            'violet-red',
-            'blue-green',
-            'yellow-orange',
-            'blue-pink',
-            'violet-orange',
-            'violet-turquoise',
-            'clear-plum',
-            'blue-turquoise',
-            'violet-pink',
-            'yellow-pink',
-            'blue-yellow',
-            'yellow-red',
-            'clear-red',
-            'pink-blue',
-            'blue-terquoise',
+            { label: 'Violet & White', value: 'violet-white' },
+            { label: 'Yellow & White', value: 'yellow-white' },
+            { label: 'Violet & Red', value: 'violet-red' },
+            { label: 'Blue & Green', value: 'blue-green' },
+            { label: 'Yellow & Orange', value: 'yellow-orange' },
+            { label: 'Blue & Pink', value: 'blue-pink' },
+            { label: 'Violet & Orange', value: 'violet-orange' },
+            { label: 'Violet & Turquoise', value: 'violet-turquoise' },
+            { label: 'Clear & Plum', value: 'clear-plum' },
+            { label: 'Blue & Turquoise', value: 'blue-turquoise' },
+            { label: 'Violet & Pink', value: 'violet-pink' },
+            { label: 'Yellow & Pink', value: 'yellow-pink' },
+            { label: 'Blue & Yellow', value: 'blue-yellow' },
+            { label: 'Yellow & Red', value: 'yellow-red' },
+            { label: 'Clear & Red', value: 'clear-red' },
+            { label: 'Pink & Blue', value: 'pink-blue' },
+            { label: 'Blue & Turquoise', value: 'blue-terquoise' },
           ]}
           inline
           onChange={(value) => {
@@ -150,12 +151,12 @@ const Filters = (): JSX.Element => {
         <CustomSelect
           data={[
             { label: 'Silver', value: 'silver' },
-            'cooper',
-            'black',
-            'platinum',
-            'matt-black',
-            'black-vinyl',
-            'orange',
+            { label: 'Cooper', value: 'cooper' },
+            { label: 'Black', value: 'black' },
+            { label: 'Platinum', value: 'platinum' },
+            { label: 'Matt Black', value: 'matt-black' },
+            { label: 'Black Vinyl', value: 'black-vinyl' },
+            { label: 'Orange', value: 'orange' },
           ]}
           inline
           onChange={(value) => {
@@ -176,20 +177,22 @@ const Filters = (): JSX.Element => {
           Reset filter <IconX size={20} />
         </UnstyledButton>
       </Group>
-      <CustomSelect
-        data={[
-          { label: 'Price low to high', value: 'price-asc' },
-          { label: 'Price high to low', value: 'price-desc' },
-          { label: 'Name A-Z', value: 'name-asc' },
-          { label: 'Name Z-A', value: 'name-desc' },
-        ]}
-        inline
-        mb={'sm'}
-        onChange={handleSortChange}
-        placeholder="Sort by"
-        rightSection={icon}
-        value={sortValue}
-      />
+      <Group>
+        <div>Sort by:</div>
+        <CustomSelect
+          data={[
+            { label: 'Price low to high', value: 'price-asc' },
+            { label: 'Price high to low', value: 'price-desc' },
+            { label: 'Name A-Z', value: 'name-asc' },
+            { label: 'Name Z-A', value: 'name-desc' },
+          ]}
+          inline
+          mb={'sm'}
+          onChange={handleSortChange}
+          rightSection={icon}
+          value={sortValue}
+        />
+      </Group>
     </div>
   );
 };
