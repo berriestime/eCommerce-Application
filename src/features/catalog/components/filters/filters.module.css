@@ -15,6 +15,11 @@
   }
 }
 
+.resetButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .priceFilter {
   border-bottom: unset;
   background-color: #2b2b2b;

@@ -31,6 +31,11 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
   const lampColor = searchParams.get('lampColor') ?? '';
   const sort = searchParams.get('sort') ?? '';
   const search = searchParams.get('search') ?? '';
+  const isResetButtonActive =
+    searchParams.get('priceFrom') ||
+    searchParams.get('priceTo') ||
+    searchParams.get('lampColor') ||
+    searchParams.get('lavaColor');
 
   const [priceValue, setPriceValue] = useState<[number, number]>([priceFrom || 0, priceTo || 2500]);
   const [lavaColorValue, setLavaColorValue] = useState<null | string>(lavaColor);
@@ -185,7 +190,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
               />
             </>
           )}
-          <UnstyledButton className={classes.resetButton} onClick={handleResetClick}>
+          <UnstyledButton className={classes.resetButton} disabled={!isResetButtonActive} onClick={handleResetClick}>
             Reset filter <CloseIcon size={20} />
           </UnstyledButton>
         </Flex>
