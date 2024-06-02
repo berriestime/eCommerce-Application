@@ -64,8 +64,8 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     }
     setPriceValue(selectedValue);
     const [priceFromString, priceToString] = selectedValue.split('-').map((str) => Number(str)) as [number, number];
-    setPriceFromValue(priceFromString.toString()); // Обновляем состояние priceFromValue
-    setPriceToValue(priceToString.toString()); // Обновляем состояние priceToValue
+    setPriceFromValue(priceFromString.toString());
+    setPriceToValue(priceToString.toString());
 
     const targetSearchParams = new URLSearchParams(location.search);
     targetSearchParams.set('priceFrom', (priceFromString * 100).toString());
