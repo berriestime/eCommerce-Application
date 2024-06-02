@@ -147,24 +147,23 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
                   input: classes.lavaFilter,
                 }}
                 data={[
-                  { label: 'Green & Red', value: 'green-red' },
-                  { label: 'Violet & White', value: 'violet-white' },
-                  { label: 'Yellow & White', value: 'yellow-white' },
-                  { label: 'Violet & Red', value: 'violet-red' },
                   { label: 'Blue & Green', value: 'blue-green' },
-                  { label: 'Yellow & Orange', value: 'yellow-orange' },
                   { label: 'Blue & Pink', value: 'blue-pink' },
-                  { label: 'Violet & Orange', value: 'violet-orange' },
-                  { label: 'Violet & Turquoise', value: 'violet-turquoise' },
-                  { label: 'Clear & Plum', value: 'clear-plum' },
                   { label: 'Blue & Turquoise', value: 'blue-turquoise' },
-                  { label: 'Violet & Pink', value: 'violet-pink' },
-                  { label: 'Yellow & Pink', value: 'yellow-pink' },
                   { label: 'Blue & Yellow', value: 'blue-yellow' },
-                  { label: 'Yellow & Red', value: 'yellow-red' },
+                  { label: 'Clear & Plum', value: 'clear-plum' },
                   { label: 'Clear & Red', value: 'clear-red' },
+                  { label: 'Green & Red', value: 'green-red' },
                   { label: 'Pink & Blue', value: 'pink-blue' },
-                  { label: 'Blue & Turquoise', value: 'blue-terquoise' },
+                  { label: 'Violet & White', value: 'violet-white' },
+                  { label: 'Violet & Orange', value: 'violet-orange' },
+                  { label: 'Violet & Pink', value: 'violet-pink' },
+                  { label: 'Violet & Red', value: 'violet-red' },
+                  { label: 'Violet & Turquoise', value: 'violet-turquoise' },
+                  { label: 'Yellow & Orange', value: 'yellow-orange' },
+                  { label: 'Yellow & Pink', value: 'yellow-pink' },
+                  { label: 'Yellow & Red', value: 'yellow-red' },
+                  { label: 'Yellow & White', value: 'yellow-white' },
                 ]}
                 inline
                 onChange={(value) => {
@@ -186,13 +185,13 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
                   input: classes.lampFilter,
                 }}
                 data={[
-                  { label: 'Silver', value: 'silver' },
-                  { label: 'Cooper', value: 'cooper' },
                   { label: 'Black', value: 'black' },
-                  { label: 'Platinum', value: 'platinum' },
-                  { label: 'Matt Black', value: 'matt-black' },
                   { label: 'Black Vinyl', value: 'black-vinyl' },
+                  { label: 'Cooper', value: 'cooper' },
+                  { label: 'Matt Black', value: 'matt-black' },
                   { label: 'Orange', value: 'orange' },
+                  { label: 'Platinum', value: 'platinum' },
+                  { label: 'Silver', value: 'silver' },
                 ]}
                 inline
                 onChange={(value) => {
