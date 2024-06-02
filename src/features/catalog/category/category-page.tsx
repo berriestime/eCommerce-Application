@@ -12,8 +12,6 @@ import { CommonCard } from '@/components/product-card/common-card';
 import { Filters } from '../components/filters';
 import { Tabs } from './components';
 
-// import classes from './category-page.module.css';
-
 const CategoryPage: FC = () => {
   const data = useLoaderData();
 

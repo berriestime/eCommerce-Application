@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Box, Divider, Flex, UnstyledButton } from '@mantine/core';
@@ -24,6 +24,18 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     }
     return defaultValue;
   };
+
+  const prevLocationKey = useRef(location.pathname);
+
+  useEffect(() => {
+    if (location.pathname !== prevLocationKey.current) {
+      setPriceValue(null);
+      setLavaColorValue(null);
+      setLampColorValue(null);
+      setSearchValue('');
+      setSortValue(null);
+    }
+  }, [location.pathname]);
 
   const priceFrom = parsePriceValue(searchParams.get('priceFrom'), 0);
   const priceTo = parsePriceValue(searchParams.get('priceTo'), 2500);
