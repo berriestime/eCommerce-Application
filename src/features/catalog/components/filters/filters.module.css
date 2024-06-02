@@ -3,30 +3,49 @@
   max-width: 1000px;
   margin: 0 auto;
   user-select: none;
+  padding: 0 1rem;
 }
 
 .resetButton {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  @media screen and (width < 992) {
+    margin-top: 12px;
+  }
+}
+
+.resetButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .priceFilter {
-  width: 140px;
   border-bottom: unset;
+  background-color: #2b2b2b;
 }
 
 .lavaFilter {
-  width: 170px;
   border-bottom: unset;
+  background-color: #2b2b2b;
 }
 
 .lampFilter {
-  width: 130px;
+  background-color: #2b2b2b;
   border-bottom: unset;
 }
 
 .sort {
-  width: 170px;
+  background-color: #2b2b2b;
   border-bottom: unset;
+}
+
+.filtersWrapper {
+  @media screen and (width < 992) {
+    min-width: 47%;
+  }
+}
+
+.searchFilter {
+  border-bottom: rgba(243, 231, 228, 0.05) 2px solid;
 }

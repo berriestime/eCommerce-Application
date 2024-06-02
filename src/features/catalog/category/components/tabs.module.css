@@ -7,6 +7,11 @@
   width: 100%;
   margin: 0 auto;
   user-select: none;
+  padding: 0 1rem;
+
+  a {
+    width: auto;
+  }
 }
 
 .active {
@@ -21,4 +26,16 @@
   background: linear-gradient(to bottom left, #f9bf08, #ff4000);
   background-clip: text;
   color: transparent;
+}
+
+:where([data-active], [aria-current='page']) {
+  pointer-events: none;
+}
+
+.navLinkRoot:hover {
+  background-color: rgba(243, 231, 228, 0.05);
+}
+
+.navLinkRoot {
+  transition: all 0.3s linear;
 }

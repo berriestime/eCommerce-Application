@@ -23,7 +23,8 @@ const Tabs: FC = () => {
 
   const categoriesNav = mainCategories.map((el) => (
     <NavLink
-      color="whiteTint"
+      autoContrast={false}
+      color="rgba(255, 255, 255, 0.03)"
       component={RouterNavLink}
       end={el.name === 'All products'}
       h={56}
@@ -45,6 +46,7 @@ const Tabs: FC = () => {
       <NavLink
         classNames={{
           label: classes.navLinkLabel,
+          root: classes.navLinkRoot,
         }}
         component={RouterNavLink}
         h={70}
@@ -56,6 +58,23 @@ const Tabs: FC = () => {
         variant="subtle"
       />
     ));
+    subcategoriesNav.unshift(
+      <NavLink
+        classNames={{
+          label: classes.navLinkLabel,
+          root: classes.navLinkRoot,
+        }}
+        component={RouterNavLink}
+        end
+        h={70}
+        key={'all'}
+        label={'All products'}
+        noWrap
+        ta="center"
+        to={`/store/${categoryData.key}`}
+        variant="subtle"
+      />,
+    );
   }
 
   return (
@@ -71,7 +90,7 @@ const Tabs: FC = () => {
           gap={0}
           grow
           preventGrowOverflow={false}
-          wrap="nowrap"
+          wrap="wrap"
         >
           {subcategoriesNav}
         </Group>
