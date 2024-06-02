@@ -131,15 +131,15 @@ async function postDefaultShippingAddress(id: string): Promise<ClientResponse<Cu
   return response;
 }
 
-async function postRemoveDefaultBillingAddress(id: string): Promise<ClientResponse<Customer>> {
+async function postRemoveDefaultBillingAddress(): Promise<ClientResponse<Customer>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const version = await getVersionUpdate();
 
   const updateActions: MyCustomerUpdate = {
     actions: [
       {
-        action: 'removeBillingAddressId',
-        addressId: id,
+        action: 'setDefaultBillingAddress',
+        addressId: undefined,
       },
     ],
     version,
@@ -155,15 +155,15 @@ async function postRemoveDefaultBillingAddress(id: string): Promise<ClientRespon
   return response;
 }
 
-async function postRemoveDefaultShippingAddress(id: string): Promise<ClientResponse<Customer>> {
+async function postRemoveDefaultShippingAddress(): Promise<ClientResponse<Customer>> {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const version = await getVersionUpdate();
 
   const updateActions: MyCustomerUpdate = {
     actions: [
       {
-        action: 'removeShippingAddressId',
-        addressId: id,
+        action: 'setDefaultShippingAddress',
+        addressId: undefined,
       },
     ],
     version,

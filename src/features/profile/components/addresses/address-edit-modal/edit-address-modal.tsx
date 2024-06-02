@@ -50,7 +50,7 @@ const EditAddressModal = ({
           setBilling(id);
         }
         if (!address.defaultBillingAddress && editAddress.defaultBillingAddress) {
-          await postRemoveDefaultBillingAddress(id);
+          await postRemoveDefaultBillingAddress();
           setBilling(null);
         }
 
@@ -59,7 +59,7 @@ const EditAddressModal = ({
           setShipping(id);
         }
         if (!address.defaultShippingAddress && editAddress.defaultShippingAddress) {
-          await postRemoveDefaultShippingAddress(id);
+          await postRemoveDefaultShippingAddress();
           setShipping(null);
         }
 
