@@ -1,7 +1,8 @@
+import type { Category, ProductProjection, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+
 import { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 
-import { Category, ProductProjection, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Flex, Grid, Image, SimpleGrid, Skeleton, Spoiler, Text, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';

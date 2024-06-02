@@ -1,4 +1,4 @@
-import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
+import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
 import { createAnonymousFlowClient } from './create-anonymous-client';
 import { createRefreshFlowClient } from './create-refresh-client';

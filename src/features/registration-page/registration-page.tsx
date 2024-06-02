@@ -1,12 +1,16 @@
-import { FC, useState } from 'react';
+import type { Address } from '@commercetools/platform-sdk';
+
+import type { FC } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Address } from '@commercetools/platform-sdk';
 import { Anchor, Checkbox, Container, LoadingOverlay, SimpleGrid, Text, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
+
+import type { AuthState } from '@/types/authState';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomDateInput } from '@/components/custom-date-input';
@@ -15,7 +19,6 @@ import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { COUNTRIES } from '@/constants/countries';
 import { createCustomer } from '@/lib/commerstools/customer-creator';
-import { AuthState } from '@/types/authState';
 import { validatePassword } from '@/utils';
 import { addNotification } from '@/utils/show-notification';
 import { isProperCountry } from '@/utils/validate/is-proper-country';

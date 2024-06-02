@@ -1,15 +1,17 @@
+import type { Address } from '@commercetools/platform-sdk';
+
 import { useState } from 'react';
 
-import { Address } from '@commercetools/platform-sdk';
 import { Button, Checkbox, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
 import { useForm } from '@mantine/form';
+
+import type { UserAddress } from '@/features/profile/types/user-address';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { COUNTRIES } from '@/constants/countries';
 import { type AddressAddModalProps } from '@/features/profile/types/add-modal-props';
-import { UserAddress } from '@/features/profile/types/user-address';
 import { addNotification } from '@/utils/show-notification';
 import { isProperCountry } from '@/utils/validate/is-proper-country';
 import { isProperPostcode } from '@/utils/validate/is-proper-postcode';

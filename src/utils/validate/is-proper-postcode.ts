@@ -1,4 +1,5 @@
-import { UseFormReturnType } from '@mantine/form';
+import type { UseFormReturnType } from '@mantine/form';
+
 import { postcodeValidator } from 'postcode-validator';
 
 import { transformCountryIntoCountryCode } from './transform-country';

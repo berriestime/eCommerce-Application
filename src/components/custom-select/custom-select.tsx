@@ -1,7 +1,7 @@
-import { LegacyRef, ReactElement, forwardRef } from 'react';
+import { type LegacyRef, type ReactElement, forwardRef } from 'react';
 
-import { Select, SelectProps } from '@mantine/core';
-import clsx from 'clsx';
+import { Select, type SelectProps } from '@mantine/core';
+import { clsx } from 'clsx';
 
 import { ChevronIcon } from '../icons/chevron';
 

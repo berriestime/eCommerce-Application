@@ -1,6 +1,7 @@
+import type { CentPrecisionMoney, Price, ProductProjection } from '@commercetools/platform-sdk';
+
 import { MemoryRouter } from 'react-router-dom';
 
-import { CentPrecisionMoney, Price, ProductProjection } from '@commercetools/platform-sdk';
 import { describe, expect, test } from 'vitest';
 
 import { LANGUAGE } from '@/constants/catalog-constants';

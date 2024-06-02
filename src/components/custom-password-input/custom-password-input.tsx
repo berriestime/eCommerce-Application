@@ -1,6 +1,6 @@
-import { LegacyRef, ReactElement, forwardRef } from 'react';
+import { type LegacyRef, type ReactElement, forwardRef } from 'react';
 
-import { PasswordInput, PasswordInputProps } from '@mantine/core';
+import { PasswordInput, type PasswordInputProps } from '@mantine/core';
 
 import classes from './custom-password-input.module.css';
 

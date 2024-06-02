@@ -1,4 +1,4 @@
-import {
+import type {
   Address,
   ClientResponse,
   Customer,
@@ -11,7 +11,8 @@ import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import { defineApiRoot } from '@/lib/commerstools/define-client';
 
-import { UserAddress } from '../types/user-address';
+import type { UserAddress } from '../types/user-address';
+
 import { getVersionUpdate } from './version';
 
 async function postAddUserAddress({

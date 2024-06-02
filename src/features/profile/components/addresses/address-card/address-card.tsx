@@ -1,10 +1,11 @@
-import { ReactElement } from 'react';
+import type { ReactElement } from 'react';
 
 import { Button, Flex, Menu, Text } from '@mantine/core';
 
+import type { AddressCardProps } from '@/features/profile/types/address-card-props';
+
 import { MenuIcon } from '@/components/icons/menu';
 import { postRemoveUserAddress } from '@/features/profile/api/address-api';
-import { AddressCardProps } from '@/features/profile/types/address-card-props';
 import { addNotification } from '@/utils/show-notification';
 
 import classes from './address-card.module.css';

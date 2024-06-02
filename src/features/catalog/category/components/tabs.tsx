@@ -1,7 +1,8 @@
+import type { Category, CategoryPagedQueryResponse } from '@commercetools/platform-sdk';
+
 import type { FC, ReactNode } from 'react';
 import { NavLink as RouterNavLink, useLoaderData } from 'react-router-dom';
 
-import { Category, CategoryPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, Group, NavLink, Stack } from '@mantine/core';
 import { clsx } from 'clsx';
 

@@ -1,6 +1,7 @@
+import type { Customer } from '@commercetools/platform-sdk';
+
 import { useState } from 'react';
 
-import { Customer } from '@commercetools/platform-sdk';
 import { Button, Flex, Group, LoadingOverlay, Modal } from '@mantine/core';
 import { useForm } from '@mantine/form';
 

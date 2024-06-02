@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Address } from '@commercetools/platform-sdk';
+import type { UseFormReturnType } from '@mantine/form';
 
-import { Address } from '@commercetools/platform-sdk';
-import { UseFormReturnType } from '@mantine/form';
+import type { Dispatch, SetStateAction } from 'react';
 
-import { EditAddress } from './edit-address';
+import type { EditAddress } from './edit-address';
 
 export type AddressEditModalProps = {
   addresses: Address[];

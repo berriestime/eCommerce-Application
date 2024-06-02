@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ProductProjection } from '@commercetools/platform-sdk';
+import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Badge, Box, Card, Image, Skeleton, Text } from '@mantine/core';
 import { clsx } from 'clsx';
 

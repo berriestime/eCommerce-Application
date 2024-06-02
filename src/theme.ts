@@ -1,11 +1,6 @@
-import {
-  Loader,
-  VariantColorsResolver,
-  createTheme,
-  defaultVariantColorsResolver,
-  rem,
-  virtualColor,
-} from '@mantine/core';
+import type { VariantColorsResolver } from '@mantine/core';
+
+import { Loader, createTheme, defaultVariantColorsResolver, rem, virtualColor } from '@mantine/core';
 
 import { CssLoader } from './components/loader/loader';
 

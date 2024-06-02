@@ -1,7 +1,7 @@
-import { LegacyRef, ReactElement, forwardRef } from 'react';
+import { type LegacyRef, type ReactElement, forwardRef } from 'react';
 
-import { TextInput, TextInputProps } from '@mantine/core';
-import clsx from 'clsx';
+import { TextInput, type TextInputProps } from '@mantine/core';
+import { clsx } from 'clsx';
 
 import classes from './custom-text-input.module.css';
 

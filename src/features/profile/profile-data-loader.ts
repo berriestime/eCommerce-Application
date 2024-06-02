@@ -1,4 +1,4 @@
-import { Customer } from '@commercetools/platform-sdk';
+import type { Customer } from '@commercetools/platform-sdk';
 
 import { getUserData } from './api/user-api';
 

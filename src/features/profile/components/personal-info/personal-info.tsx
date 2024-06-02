@@ -1,6 +1,7 @@
-import { ReactElement } from 'react';
+import type { Customer } from '@commercetools/platform-sdk';
 
-import { Customer } from '@commercetools/platform-sdk';
+import type { ReactElement } from 'react';
+
 import { Container, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 

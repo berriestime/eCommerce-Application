@@ -1,6 +1,8 @@
-import { ReactElement, useState } from 'react';
+import type { Customer } from '@commercetools/platform-sdk';
 
-import { Customer } from '@commercetools/platform-sdk';
+import type { ReactElement } from 'react';
+import { useState } from 'react';
+
 import { useForm } from '@mantine/form';
 import { clsx } from 'clsx';
 

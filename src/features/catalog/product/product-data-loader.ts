@@ -1,11 +1,11 @@
-import type { LoaderFunctionArgs } from 'react-router-dom';
-
-import {
+import type {
   Category,
   ClientResponse,
   ProductProjection,
   ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
+
+import type { LoaderFunctionArgs } from 'react-router-dom';
 
 import { ID_LENGTH, MAX_CARDS_LENGTH } from '@/constants/catalog-constants';
 

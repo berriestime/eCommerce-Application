@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Address } from '@commercetools/platform-sdk';
+import type { SetValues } from 'node_modules/@mantine/form/lib/types';
 
-import { Address } from '@commercetools/platform-sdk';
-import { SetValues } from 'node_modules/@mantine/form/lib/types';
+import type { Dispatch, SetStateAction } from 'react';
 
-import { EditAddress } from './edit-address';
+import type { EditAddress } from './edit-address';
 
 export type AddressCardProps = {
   addresses: Address[];

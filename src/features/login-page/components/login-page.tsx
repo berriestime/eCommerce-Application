@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Anchor, Container, Paper, Text, Title } from '@mantine/core';

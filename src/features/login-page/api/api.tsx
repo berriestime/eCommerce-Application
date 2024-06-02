@@ -1,4 +1,4 @@
-import { ClientResponse, type CustomerSignin } from '@commercetools/platform-sdk';
+import type { ClientResponse, CustomerSignin } from '@commercetools/platform-sdk';
 
 import { createPasswordFlowClient } from '@/lib/commerstools/create-password-client';
 

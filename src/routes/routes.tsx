@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import type { Category, ProductProjection } from '@commercetools/platform-sdk';
 
-import { Category, ProductProjection } from '@commercetools/platform-sdk';
+import { Link } from 'react-router-dom';
 
 import { Layout } from '@/components/layout';
 import { LANGUAGE } from '@/constants/catalog-constants';

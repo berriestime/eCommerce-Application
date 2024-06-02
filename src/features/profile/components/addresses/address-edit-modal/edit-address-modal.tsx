@@ -2,12 +2,13 @@ import { useState } from 'react';
 
 import { Button, Checkbox, Group, LoadingOverlay, Modal, SimpleGrid } from '@mantine/core';
 
+import type { AddressEditModalProps } from '@/features/profile/types/edit-modal-props';
+import type { UserAddress } from '@/features/profile/types/user-address';
+
 import { BaseButton } from '@/components/base-button';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { COUNTRIES } from '@/constants/countries';
-import { AddressEditModalProps } from '@/features/profile/types/edit-modal-props';
-import { UserAddress } from '@/features/profile/types/user-address';
 import { addNotification } from '@/utils/show-notification';
 
 import {
