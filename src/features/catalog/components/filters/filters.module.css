@@ -45,3 +45,7 @@
     min-width: 47%;
   }
 }
+
+.searchFilter {
+  border-bottom: rgba(243, 231, 228, 0.05) 2px solid;
+}

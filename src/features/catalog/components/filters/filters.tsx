@@ -93,8 +93,11 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
 
   return (
     <div className={classes.contentWrapper}>
-      <Divider color={'white'} orientation="horizontal" size="xs" />
+      <Divider color={'rgba(243, 231, 228, 0.05)'} orientation="horizontal" size="sm" />
       <CustomTextInput
+        classNames={{
+          input: classes.searchFilter,
+        }}
         inline
         leftSection={<SearchIcon size={18} />}
         mb={'sm'}
