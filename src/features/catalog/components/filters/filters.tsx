@@ -71,6 +71,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     setPriceValue([0, 2500]);
     setLavaColorValue(null);
     setSortValue(null);
+    setLampColorValue(null);
     const targetSearchParams = new URLSearchParams(location.search);
     targetSearchParams.delete('priceFrom');
     targetSearchParams.delete('priceTo');
