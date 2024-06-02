@@ -3,6 +3,8 @@ import { LegacyRef, ReactElement, forwardRef } from 'react';
 import { Select, SelectProps } from '@mantine/core';
 import clsx from 'clsx';
 
+import { ChevronIcon } from '../icons/chevron';
+
 import classes from './custom-select.module.css';
 
 type Props = {
@@ -28,6 +30,7 @@ const CustomSelect = forwardRef(function MyInput(
         wrapper: clsx(classes.wrapper, classNames?.wrapper),
       }}
       ref={ref}
+      rightSection={<ChevronIcon size={12} />}
     />
   );
 });

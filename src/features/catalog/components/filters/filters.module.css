@@ -1,9 +1,9 @@
 .contentWrapper {
   width: 100%;
-  max-width: 1060px;
+  max-width: 1000px;
   margin: 0 auto;
   user-select: none;
-  padding: 0 30px;
+  padding: 0 1rem;
 }
 
 .resetButton {
