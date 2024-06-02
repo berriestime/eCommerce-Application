@@ -45,24 +45,22 @@ const EditAddressModal = ({
         form.clearErrors();
         close();
 
-        if (address.defaultBillingAddress) {
+        if (address.defaultBillingAddress && !editAddress.defaultBillingAddress) {
           await postDefaultBillingAddress(id);
           setBilling(id);
-        } else {
-          if (id === address.id) {
-            await postRemoveDefaultBillingAddress(id);
-            setBilling(null);
-          }
+        }
+        if (!address.defaultBillingAddress && editAddress.defaultBillingAddress) {
+          await postRemoveDefaultBillingAddress(id);
+          setBilling(null);
         }
 
-        if (address.defaultShippingAddress) {
+        if (address.defaultShippingAddress && !editAddress.defaultShippingAddress) {
           await postDefaultShippingAddress(id);
           setShipping(id);
-        } else {
-          if (id === address.id) {
-            await postRemoveDefaultShippingAddress(id);
-            setShipping(null);
-          }
+        }
+        if (!address.defaultShippingAddress && editAddress.defaultShippingAddress) {
+          await postRemoveDefaultShippingAddress(id);
+          setShipping(null);
         }
 
         const index = addresses.findIndex((address) => address.id === id);
