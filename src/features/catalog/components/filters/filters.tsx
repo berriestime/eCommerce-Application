@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Divider, Group, UnstyledButton } from '@mantine/core';
+import { Box, Divider, Flex, UnstyledButton } from '@mantine/core';
 import { useDebouncedCallback } from '@mantine/hooks';
 
 import { Chevron } from '@/components/chevron';
@@ -100,9 +100,9 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
         placeholder="Search..."
         value={searchValue}
       />
-      <Group mb={'sm'}>
-        <div>Filter:</div>
-        <>
+      <Flex direction={{ base: 'column', md: 'column', xs: 'row' }} gap={'sm'} justify={'space-between'} mb={'sm'}>
+        <Flex className={classes.filtersWrapper} direction={{ base: 'column', md: 'row', xs: 'column' }} gap={'sm'}>
+          <Box mt={8}>Filter:</Box>
           <CustomSelect
             classNames={{
               input: classes.priceFilter,
@@ -114,10 +114,8 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
             rightSection={icon}
             value={`${priceValue[0]}-${priceValue[1]}`}
           />
-          <Divider orientation="vertical" size="sm" />
-        </>
-        {showLavaFilters && (
-          <>
+
+          {showLavaFilters && (
             <>
               <CustomSelect
                 classNames={{
@@ -157,9 +155,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
                 rightSection={icon}
                 value={lavaColorValue}
               />
-              <Divider orientation="vertical" size="sm" />
-            </>
-            <>
+
               <CustomSelect
                 classNames={{
                   input: classes.lampFilter,
@@ -187,35 +183,33 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
                 rightSection={icon}
                 value={lampColorValue}
               />
-              <Divider orientation="vertical" size="sm" />
             </>
-          </>
-        )}
-
-        <UnstyledButton className={classes.resetButton} onClick={handleResetClick}>
-          Reset filter <CloseIcon size={20} />
-        </UnstyledButton>
-      </Group>
-      <Group>
-        <div>Sort by:</div>
-        <CustomSelect
-          classNames={{
-            input: classes.sort,
-          }}
-          data={[
-            { label: 'Price low to high', value: 'price-asc' },
-            { label: 'Price high to low', value: 'price-desc' },
-            { label: 'Name A-Z', value: 'name-asc' },
-            { label: 'Name Z-A', value: 'name-desc' },
-          ]}
-          inline
-          mb={'sm'}
-          onChange={handleSortChange}
-          placeholder="Sort by"
-          rightSection={icon}
-          value={sortValue}
-        />
-      </Group>
+          )}
+          <UnstyledButton className={classes.resetButton} onClick={handleResetClick}>
+            Reset filter <CloseIcon size={20} />
+          </UnstyledButton>
+        </Flex>
+        <Flex className={classes.filtersWrapper} direction={{ base: 'column', md: 'row', xs: 'column' }} gap={'sm'}>
+          <Box mt={8}>Sort by:</Box>
+          <CustomSelect
+            classNames={{
+              input: classes.sort,
+            }}
+            data={[
+              { label: 'Price low to high', value: 'price-asc' },
+              { label: 'Price high to low', value: 'price-desc' },
+              { label: 'Name A-Z', value: 'name-asc' },
+              { label: 'Name Z-A', value: 'name-desc' },
+            ]}
+            inline
+            mb={'sm'}
+            onChange={handleSortChange}
+            placeholder="Sort by"
+            rightSection={icon}
+            value={sortValue}
+          />
+        </Flex>
+      </Flex>
     </div>
   );
 };

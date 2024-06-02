@@ -10,6 +10,9 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  @media screen and (width < 992) {
+    margin-top: 12px;
+  }
 }
 
 .priceFilter {
@@ -30,4 +33,10 @@
 .sort {
   background-color: #2b2b2b;
   border-bottom: unset;
+}
+
+.filtersWrapper {
+  @media screen and (width < 992) {
+    min-width: 47%;
+  }
 }

@@ -23,7 +23,8 @@ const Tabs: FC = () => {
 
   const categoriesNav = mainCategories.map((el) => (
     <NavLink
-      color="whiteTint"
+      autoContrast={false}
+      color="rgba(255, 255, 255, 0.03)"
       component={RouterNavLink}
       end={el.name === 'All products'}
       h={56}
@@ -45,6 +46,7 @@ const Tabs: FC = () => {
       <NavLink
         classNames={{
           label: classes.navLinkLabel,
+          root: classes.navLinkRoot,
         }}
         component={RouterNavLink}
         h={70}

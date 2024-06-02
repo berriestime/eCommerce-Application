@@ -27,3 +27,11 @@
   background-clip: text;
   color: transparent;
 }
+
+.navLinkRoot:hover {
+  background-color: rgba(243, 231, 228, 0.05);
+}
+
+.navLinkRoot {
+  transition: all 0.3s linear;
+}
