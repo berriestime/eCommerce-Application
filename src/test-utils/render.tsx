@@ -1,8 +1,10 @@
+import type { Queries, RenderResult } from '@testing-library/react';
+
 import type { ReactNode } from 'react';
 import { Provider } from 'react-redux';
 
 import { MantineProvider } from '@mantine/core';
-import { Queries, RenderResult, render as testingLibraryRender } from '@testing-library/react';
+import { render as testingLibraryRender } from '@testing-library/react';
 
 import { store } from '@/store';
 

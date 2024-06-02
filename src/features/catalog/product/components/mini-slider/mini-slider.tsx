@@ -1,7 +1,9 @@
+import type { ProductProjection } from '@commercetools/platform-sdk';
+import type { Embla } from '@mantine/carousel';
+
 import { useEffect, useMemo, useState } from 'react';
 
-import { ProductProjection } from '@commercetools/platform-sdk';
-import { Carousel, Embla } from '@mantine/carousel';
+import { Carousel } from '@mantine/carousel';
 import { Box, Image } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 

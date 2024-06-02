@@ -1,4 +1,4 @@
-import { ClientResponse, CustomerChangePassword } from '@commercetools/platform-sdk';
+import type { ClientResponse, CustomerChangePassword } from '@commercetools/platform-sdk';
 
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin, createPasswordFlowClient } from '@/lib/commerstools/create-password-client';

@@ -1,6 +1,6 @@
-import { LoaderFunction } from 'react-router-dom';
+import type { ClientResponse, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 
-import { ClientResponse, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import type { LoaderFunction } from 'react-router-dom';
 
 import { getAllProducts, parseUrl } from './api/product-api';
 

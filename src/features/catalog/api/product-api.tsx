@@ -1,4 +1,8 @@
-import { ClientResponse, ProductProjection, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import type {
+  ClientResponse,
+  ProductProjection,
+  ProductProjectionPagedQueryResponse,
+} from '@commercetools/platform-sdk';
 
 import { ITEMS_PER_PAGE } from '@/constants/catalog-constants';
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';

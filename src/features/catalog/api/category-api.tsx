@@ -1,4 +1,4 @@
-import { Category, CategoryPagedQueryResponse, ClientResponse } from '@commercetools/platform-sdk';
+import type { Category, CategoryPagedQueryResponse, ClientResponse } from '@commercetools/platform-sdk';
 
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin } from '@/lib/commerstools/create-password-client';

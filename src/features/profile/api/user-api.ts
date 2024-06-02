@@ -1,4 +1,4 @@
-import { type ClientResponse, Customer, type MyCustomerUpdate } from '@commercetools/platform-sdk';
+import type { ClientResponse, Customer, MyCustomerUpdate } from '@commercetools/platform-sdk';
 
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin } from '@/lib/commerstools/create-password-client';

@@ -1,11 +1,11 @@
-import type { LoaderFunctionArgs } from 'react-router-dom';
-
-import {
+import type {
   Category,
   CategoryPagedQueryResponse,
   ClientResponse,
   ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
+
+import type { LoaderFunctionArgs } from 'react-router-dom';
 
 import { getCategoryByKey, getSubcategoryIds } from '../api/category-api';
 import { getProductsByCategorySubtree, parseUrl } from '../api/product-api';

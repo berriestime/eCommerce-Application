@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import type { Customer } from '@commercetools/platform-sdk';
+
+import type { FC } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
-import { Customer } from '@commercetools/platform-sdk';
 import { Flex } from '@mantine/core';
 
 import { ProfileAddresses } from './components/addresses/addresses';

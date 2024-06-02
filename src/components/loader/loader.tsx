@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { Box, MantineLoaderComponent } from '@mantine/core';
+import { Box, type MantineLoaderComponent } from '@mantine/core';
 import { clsx } from 'clsx';
 
 import classes from './loader.module.css';

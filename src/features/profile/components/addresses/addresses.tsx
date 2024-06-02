@@ -1,6 +1,8 @@
-import { ReactElement, useState } from 'react';
+import type { Customer } from '@commercetools/platform-sdk';
 
-import { Customer } from '@commercetools/platform-sdk';
+import type { ReactElement } from 'react';
+import { useState } from 'react';
+
 import { Container, Flex, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
@@ -13,7 +15,8 @@ import { notEmpty } from '@/utils/validate/not-empty';
 import { onlyLetters } from '@/utils/validate/only-letters';
 import { transformCountryIntoCountryCode } from '@/utils/validate/transform-country';
 
-import { EditAddress } from '../../types/edit-address';
+import type { EditAddress } from '../../types/edit-address';
+
 import { AddressCard } from './address-card/address-card';
 import { EditAddressModal } from './address-edit-modal/edit-address-modal';
 

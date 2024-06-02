@@ -1,4 +1,4 @@
-import { ClientResponse, CustomerDraft, CustomerSignInResult } from '@commercetools/platform-sdk';
+import type { ClientResponse, CustomerDraft, CustomerSignInResult } from '@commercetools/platform-sdk';
 
 import { apiRootAnonymous } from './create-anonymous-client';
 import { apiRootLogin } from './create-password-client';

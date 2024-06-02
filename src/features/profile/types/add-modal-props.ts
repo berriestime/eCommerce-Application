@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
+import type { Address } from '@commercetools/platform-sdk';
 
-import { Address } from '@commercetools/platform-sdk';
+import type { Dispatch, SetStateAction } from 'react';
 
 export type AddressAddModalProps = {
   addresses: Address[];

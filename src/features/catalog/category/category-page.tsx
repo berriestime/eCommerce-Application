@@ -1,7 +1,8 @@
+import type { Category, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+
 import type { FC } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
-import { Category, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 import { Box, SimpleGrid, Text } from '@mantine/core';
 
 import { Breadcrumbs } from '@/components/brearcrumbs';

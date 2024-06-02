@@ -1,6 +1,8 @@
+import type { Embla } from '@mantine/carousel';
+
 import { useEffect, useState } from 'react';
 
-import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel';
+import { Carousel, useAnimationOffsetEffect } from '@mantine/carousel';
 import { Modal } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
