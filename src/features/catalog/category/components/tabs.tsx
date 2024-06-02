@@ -58,6 +58,23 @@ const Tabs: FC = () => {
         variant="subtle"
       />
     ));
+    subcategoriesNav.unshift(
+      <NavLink
+        classNames={{
+          label: classes.navLinkLabel,
+          root: classes.navLinkRoot,
+        }}
+        component={RouterNavLink}
+        end
+        h={70}
+        key={'all'}
+        label={'All products'}
+        noWrap
+        ta="center"
+        to={`/store/${categoryData.key}`}
+        variant="subtle"
+      />,
+    );
   }
 
   return (
