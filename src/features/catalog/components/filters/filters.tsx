@@ -77,7 +77,6 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     targetSearchParams.delete('priceTo');
     targetSearchParams.delete('lavaColor');
     targetSearchParams.delete('lampColor');
-    targetSearchParams.delete('sort');
     navigate(`?${targetSearchParams.toString()}`);
   };
 
