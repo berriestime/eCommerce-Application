@@ -37,7 +37,9 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     searchParams.get('lampColor') ||
     searchParams.get('lavaColor');
 
-  const [priceValue, setPriceValue] = useState<[number, number]>([priceFrom || 0, priceTo || 2500]);
+  const [priceFromValue, setPriceFromValue] = useState<string>(priceFrom.toString());
+  const [priceToValue, setPriceToValue] = useState<string>(priceTo.toString());
+  const [priceValue, setPriceValue] = useState<null | string>(`${priceFromValue}-${priceToValue}`);
   const [lavaColorValue, setLavaColorValue] = useState<null | string>(lavaColor);
   const [lampColorValue, setLampColorValue] = useState<null | string>(lampColor);
   const [sortValue, setSortValue] = useState<null | string>(sort);
@@ -57,18 +59,22 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
   ];
 
   const handlePriceChange = (selectedValue: null | string): void => {
-    if (selectedValue) {
-      const [priceFromString, priceToString] = selectedValue.split('-').map((str) => Number(str)) as [number, number];
-      setPriceValue([priceFromString, priceToString]);
-      const targetSearchParams = new URLSearchParams(location.search);
-      targetSearchParams.set('priceFrom', (priceFromString * 100).toString());
-      targetSearchParams.set('priceTo', (priceToString * 100).toString());
-      navigate(`?${targetSearchParams.toString()}`);
+    if (!selectedValue) {
+      return;
     }
+    setPriceValue(selectedValue);
+    const [priceFromString, priceToString] = selectedValue.split('-').map((str) => Number(str)) as [number, number];
+    setPriceFromValue(priceFromString.toString()); // Обновляем состояние priceFromValue
+    setPriceToValue(priceToString.toString()); // Обновляем состояние priceToValue
+
+    const targetSearchParams = new URLSearchParams(location.search);
+    targetSearchParams.set('priceFrom', (priceFromString * 100).toString());
+    targetSearchParams.set('priceTo', (priceToString * 100).toString());
+    navigate(`?${targetSearchParams.toString()}`);
   };
 
   const handleResetClick = (): void => {
-    setPriceValue([0, 2500]);
+    setPriceValue(null);
     setLavaColorValue(null);
     setSortValue(null);
     setLampColorValue(null);
@@ -120,7 +126,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
             onChange={handlePriceChange}
             placeholder="Price range"
             rightSection={icon}
-            value={`${priceValue[0]}-${priceValue[1]}`}
+            value={priceValue}
           />
 
           {showLavaFilters && (
