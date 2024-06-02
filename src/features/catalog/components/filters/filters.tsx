@@ -76,7 +76,6 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
   const handleResetClick = (): void => {
     setPriceValue(null);
     setLavaColorValue(null);
-    setSortValue(null);
     setLampColorValue(null);
     const targetSearchParams = new URLSearchParams(location.search);
     targetSearchParams.delete('priceFrom');
