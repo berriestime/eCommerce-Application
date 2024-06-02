@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
 import { Category, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
-import { Box, SimpleGrid } from '@mantine/core';
+import { Box, SimpleGrid, Text } from '@mantine/core';
 
 import { Breadcrumbs } from '@/components/brearcrumbs';
 import { Footer } from '@/components/footer';
@@ -40,9 +40,15 @@ const CategoryPage: FC = () => {
       <Tabs />
       <Filters showLavaFilters={showLavaFilters} />
       <Box className="middleContainer" pt="0">
-        <SimpleGrid cols={{ base: 1, sm: 3, xs: 2 }} spacing="60">
-          {productCards}
-        </SimpleGrid>
+        {(productCards.length && (
+          <SimpleGrid cols={{ base: 1, sm: 3, xs: 2 }} spacing="60">
+            {productCards}
+          </SimpleGrid>
+        )) || (
+          <Text mt={'xl'} size={'xl'} ta="center">
+            Sorry, there are no products matching your search
+          </Text>
+        )}
       </Box>
       <Footer />
     </Box>
