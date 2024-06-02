@@ -1,7 +1,7 @@
 import type { Customer } from '@commercetools/platform-sdk';
 
 import type { ReactElement } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useForm } from '@mantine/form';
 import { clsx } from 'clsx';
@@ -40,21 +40,18 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
 
   const [buttonState, setButtonState] = useState(BUTTON_TEXT_EDIT);
   const [inputState, setInputState] = useState(true);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const popup = undefined as boolean | undefined;
-  const [popupState, setPopupOpened] = useState(popup);
-
-  const handleClick = (dateOfBirth: Date): void => {
+  const handleSubmit = (dateOfBirth: Date): void => {
     const date = dayjs(dateOfBirth).format('YYYY-MM-DD');
 
     if (buttonState === BUTTON_TEXT_EDIT) {
-      setPopupOpened(undefined);
       setButtonState(BUTTON_TEXT_SAVE);
       setInputState(false);
     } else {
+      inputRef.current?.blur();
       setButtonState(BUTTON_TEXT_EDIT);
       setInputState(true);
-      setPopupOpened(false);
       postUserDateOfBirth(date)
         .then(() =>
           addNotification({ message: 'Birthday was successfully changed', title: 'Birthday change', type: 'success' }),
@@ -67,22 +64,22 @@ const ProfileDateOfBirth = (user: Customer): ReactElement => {
   };
 
   const buttonStyle = clsx({
-    [classes.editButton as string]: true,
-    [classes.isSave as string]: !inputState,
+    [classes.editButton!]: true,
+    [classes.isSave!]: !inputState,
   });
 
   return (
     <form
       className={classes.form}
       onSubmit={form.onSubmit((user) => {
-        handleClick(user.dateOfBirth);
+        handleSubmit(user.dateOfBirth);
       })}
     >
       <CustomDateInput
         className={classes.customInput}
         disabled={inputState}
         label="Birthday"
-        popoverProps={{ opened: popupState }}
+        ref={inputRef}
         {...form.getInputProps('dateOfBirth')}
       />
       <BaseButton className={buttonStyle} type="submit">
