@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Box, Divider, Flex, UnstyledButton } from '@mantine/core';
@@ -25,6 +25,18 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     return defaultValue;
   };
 
+  const prevLocationKey = useRef(location.pathname);
+
+  useEffect(() => {
+    if (location.pathname !== prevLocationKey.current) {
+      setPriceValue(null);
+      setLavaColorValue(null);
+      setLampColorValue(null);
+      setSearchValue('');
+      setSortValue(null);
+    }
+  }, [location.pathname]);
+
   const priceFrom = parsePriceValue(searchParams.get('priceFrom'), 0);
   const priceTo = parsePriceValue(searchParams.get('priceTo'), 2500);
   const lavaColor = searchParams.get('lavaColor') ?? '';
@@ -37,7 +49,9 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     searchParams.get('lampColor') ||
     searchParams.get('lavaColor');
 
-  const [priceValue, setPriceValue] = useState<[number, number]>([priceFrom || 0, priceTo || 2500]);
+  const [priceFromValue, setPriceFromValue] = useState<string>(priceFrom.toString());
+  const [priceToValue, setPriceToValue] = useState<string>(priceTo.toString());
+  const [priceValue, setPriceValue] = useState<null | string>(`${priceFromValue}-${priceToValue}`);
   const [lavaColorValue, setLavaColorValue] = useState<null | string>(lavaColor);
   const [lampColorValue, setLampColorValue] = useState<null | string>(lampColor);
   const [sortValue, setSortValue] = useState<null | string>(sort);
@@ -57,26 +71,29 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
   ];
 
   const handlePriceChange = (selectedValue: null | string): void => {
-    if (selectedValue) {
-      const [priceFromString, priceToString] = selectedValue.split('-').map((str) => Number(str)) as [number, number];
-      setPriceValue([priceFromString, priceToString]);
-      const targetSearchParams = new URLSearchParams(location.search);
-      targetSearchParams.set('priceFrom', (priceFromString * 100).toString());
-      targetSearchParams.set('priceTo', (priceToString * 100).toString());
-      navigate(`?${targetSearchParams.toString()}`);
+    if (!selectedValue) {
+      return;
     }
+    setPriceValue(selectedValue);
+    const [priceFromString, priceToString] = selectedValue.split('-').map((str) => Number(str)) as [number, number];
+    setPriceFromValue(priceFromString.toString());
+    setPriceToValue(priceToString.toString());
+
+    const targetSearchParams = new URLSearchParams(location.search);
+    targetSearchParams.set('priceFrom', (priceFromString * 100).toString());
+    targetSearchParams.set('priceTo', (priceToString * 100).toString());
+    navigate(`?${targetSearchParams.toString()}`);
   };
 
   const handleResetClick = (): void => {
-    setPriceValue([0, 2500]);
+    setPriceValue(null);
     setLavaColorValue(null);
-    setSortValue(null);
+    setLampColorValue(null);
     const targetSearchParams = new URLSearchParams(location.search);
     targetSearchParams.delete('priceFrom');
     targetSearchParams.delete('priceTo');
     targetSearchParams.delete('lavaColor');
     targetSearchParams.delete('lampColor');
-    targetSearchParams.delete('sort');
     navigate(`?${targetSearchParams.toString()}`);
   };
 
@@ -120,7 +137,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
             onChange={handlePriceChange}
             placeholder="Price range"
             rightSection={icon}
-            value={`${priceValue[0]}-${priceValue[1]}`}
+            value={priceValue}
           />
 
           {showLavaFilters && (
@@ -130,24 +147,23 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
                   input: classes.lavaFilter,
                 }}
                 data={[
-                  { label: 'Green & Red', value: 'green-red' },
-                  { label: 'Violet & White', value: 'violet-white' },
-                  { label: 'Yellow & White', value: 'yellow-white' },
-                  { label: 'Violet & Red', value: 'violet-red' },
                   { label: 'Blue & Green', value: 'blue-green' },
-                  { label: 'Yellow & Orange', value: 'yellow-orange' },
                   { label: 'Blue & Pink', value: 'blue-pink' },
-                  { label: 'Violet & Orange', value: 'violet-orange' },
-                  { label: 'Violet & Turquoise', value: 'violet-turquoise' },
-                  { label: 'Clear & Plum', value: 'clear-plum' },
                   { label: 'Blue & Turquoise', value: 'blue-turquoise' },
-                  { label: 'Violet & Pink', value: 'violet-pink' },
-                  { label: 'Yellow & Pink', value: 'yellow-pink' },
                   { label: 'Blue & Yellow', value: 'blue-yellow' },
-                  { label: 'Yellow & Red', value: 'yellow-red' },
+                  { label: 'Clear & Plum', value: 'clear-plum' },
                   { label: 'Clear & Red', value: 'clear-red' },
+                  { label: 'Green & Red', value: 'green-red' },
                   { label: 'Pink & Blue', value: 'pink-blue' },
-                  { label: 'Blue & Turquoise', value: 'blue-terquoise' },
+                  { label: 'Violet & White', value: 'violet-white' },
+                  { label: 'Violet & Orange', value: 'violet-orange' },
+                  { label: 'Violet & Pink', value: 'violet-pink' },
+                  { label: 'Violet & Red', value: 'violet-red' },
+                  { label: 'Violet & Turquoise', value: 'violet-turquoise' },
+                  { label: 'Yellow & Orange', value: 'yellow-orange' },
+                  { label: 'Yellow & Pink', value: 'yellow-pink' },
+                  { label: 'Yellow & Red', value: 'yellow-red' },
+                  { label: 'Yellow & White', value: 'yellow-white' },
                 ]}
                 inline
                 onChange={(value) => {
@@ -169,13 +185,13 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
                   input: classes.lampFilter,
                 }}
                 data={[
-                  { label: 'Silver', value: 'silver' },
-                  { label: 'Cooper', value: 'cooper' },
                   { label: 'Black', value: 'black' },
-                  { label: 'Platinum', value: 'platinum' },
-                  { label: 'Matt Black', value: 'matt-black' },
                   { label: 'Black Vinyl', value: 'black-vinyl' },
+                  { label: 'Cooper', value: 'cooper' },
+                  { label: 'Matt Black', value: 'matt-black' },
                   { label: 'Orange', value: 'orange' },
+                  { label: 'Platinum', value: 'platinum' },
+                  { label: 'Silver', value: 'silver' },
                 ]}
                 inline
                 onChange={(value) => {
