@@ -167,18 +167,18 @@ const RegistrationPage: FC = () => {
     const getAddresses = (values: typeof form.values): Address[] => {
       const addresses = [
         {
-          additionalStreetInfo: values.shippingStreet,
           city: values.shippingCity,
           country: values.shippingCountry,
           postalCode: values.shippingPostalCode,
+          streetName: values.shippingStreet,
         },
       ];
       if (!values.isSameAddress) {
         addresses.push({
-          additionalStreetInfo: values.billingStreet,
           city: values.billingCity,
           country: values.billingCountry,
           postalCode: values.billingPostalCode,
+          streetName: values.billingStreet,
         });
       }
       return addresses;
