@@ -97,6 +97,9 @@ const ProfileAddresses = (user: Customer): ReactElement => {
             />
           ))}
         </Flex>
+        <Flex className={addresses.length > 0 ? classes.hidden : ''} justify={'center'} mb="12px" opacity={0.5}>
+          You don&apos;t have any saved addresses
+        </Flex>
         <BaseButton className={classes.addButton} onClick={openAddAddressModal}>
           Add new address
         </BaseButton>
