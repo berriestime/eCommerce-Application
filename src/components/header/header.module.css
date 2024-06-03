@@ -98,6 +98,7 @@
   color: #aa9f9c;
   font-weight: 600;
   cursor: default;
+  user-select: none;
 }
 
 .drawer header {
