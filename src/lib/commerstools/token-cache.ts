@@ -1,7 +1,7 @@
 import { type TokenCache, type TokenStore } from '@commercetools/sdk-client-v2';
 import { z } from 'zod';
 
-const TOKEN_STORAGE_KEY = 'lava-lamps-refresh-token';
+export type TokenKey = 'lava-lamps-anonymous-token' | 'lava-lamps-password-token';
 
 const schemaToken = z.object({
   expirationTime: z.number(),
@@ -9,12 +9,12 @@ const schemaToken = z.object({
   token: z.string(),
 });
 
-function makeTokenCache(): TokenCache {
+function makeTokenCache(token: TokenKey): TokenCache {
   let current: TokenStore;
 
   return {
     get: () => {
-      const storedValue = localStorage.getItem(TOKEN_STORAGE_KEY);
+      const storedValue = localStorage.getItem(token);
       if (storedValue) {
         try {
           const parsedToken: unknown = JSON.parse(storedValue);
@@ -22,7 +22,7 @@ function makeTokenCache(): TokenCache {
           if (correctToken.expirationTime >= Date.now()) {
             current = correctToken;
           } else {
-            localStorage.removeItem(TOKEN_STORAGE_KEY);
+            localStorage.removeItem(token);
             current = {
               expirationTime: -1,
               token: '',
@@ -31,7 +31,7 @@ function makeTokenCache(): TokenCache {
           return current;
         } catch (err) {
           console.error(err);
-          localStorage.removeItem(TOKEN_STORAGE_KEY);
+          localStorage.removeItem(token);
         }
       }
       return {
@@ -41,14 +41,14 @@ function makeTokenCache(): TokenCache {
     },
     set: (newValue: TokenStore) => {
       current = newValue;
-      localStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(current));
+      localStorage.setItem(token, JSON.stringify(current));
       return current;
     },
   };
 }
 
-const getRefreshToken = (): string => {
-  const tokenCache = makeTokenCache();
+const getRefreshToken = (token: TokenKey): string => {
+  const tokenCache = makeTokenCache(token);
   const refreshToken = tokenCache.get().refreshToken;
 
   if (refreshToken) {
@@ -58,10 +58,10 @@ const getRefreshToken = (): string => {
   return '';
 };
 
-const deleteToken = (): void => {
-  const storedValue = localStorage.getItem(TOKEN_STORAGE_KEY);
+const deleteToken = (token: TokenKey): void => {
+  const storedValue = localStorage.getItem(token);
   if (storedValue) {
-    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(token);
   }
 };
 

@@ -3,7 +3,7 @@ import { type ApiRoots } from '@/lib/commerstools/define-client';
 import { deleteToken } from '@/lib/commerstools/token-cache';
 
 const logoutUser = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRoots): ApiRoots => {
-  deleteToken();
+  deleteToken('lava-lamps-password-token');
   apiRootLogin = null;
   apiRootRefresh = null;
 
