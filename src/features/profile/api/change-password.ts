@@ -26,7 +26,7 @@ async function postChangePassword(
 
   const response = await apiRoot.me().password().post({ body: updateActions }).execute();
 
-  deleteToken();
+  deleteToken('lava-lamps-password-token');
   const newClient = createPasswordFlowClient({ email, password: newPassword });
   newClient.get().execute().catch(console.warn);
 
