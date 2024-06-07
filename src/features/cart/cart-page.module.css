@@ -1,3 +1,13 @@
 .container {
+  composes: commonContainer from '../../index.css';
+
   display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.1;
 }
