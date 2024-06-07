@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Box, Divider, Flex, UnstyledButton } from '@mantine/core';
+import { Box, Flex, UnstyledButton } from '@mantine/core';
 import { useDebouncedCallback } from '@mantine/hooks';
 
 import { Chevron } from '@/components/chevron';
@@ -110,7 +110,6 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
 
   return (
     <div className={classes.contentWrapper}>
-      <Divider color={'rgba(243, 231, 228, 0.05)'} orientation="horizontal" size="sm" />
       <CustomTextInput
         classNames={{
           input: classes.searchFilter,

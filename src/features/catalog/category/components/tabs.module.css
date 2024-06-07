@@ -3,14 +3,22 @@
 }
 
 .contentWrapper {
-  max-width: 1000px;
   width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 100px;
   user-select: none;
-  padding: 0 1rem;
 
   a {
     width: auto;
+  }
+
+  @media (width <= 1200px) {
+    padding: 0 32px;
+  }
+
+  @media (width <= 600px) {
+    padding: 0 16px;
   }
 }
 
