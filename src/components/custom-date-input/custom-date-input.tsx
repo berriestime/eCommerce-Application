@@ -1,13 +1,10 @@
-import { LegacyRef, ReactElement, forwardRef } from 'react';
+import { type ReactElement, forwardRef } from 'react';
 
-import { DateInput, DateInputProps } from '@mantine/dates';
+import { DateInput, type DateInputProps } from '@mantine/dates';
 
 import classes from './custom-date-input.module.css';
 
-const CustomDateInput = forwardRef(function MyInput(
-  props: DateInputProps,
-  ref: LegacyRef<HTMLInputElement>,
-): ReactElement {
+const CustomDateInput = forwardRef<HTMLInputElement, DateInputProps>(function MyInput(props, ref): ReactElement {
   return (
     <DateInput
       {...props}

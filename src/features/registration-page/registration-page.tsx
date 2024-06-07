@@ -1,23 +1,33 @@
-import { FC, useState } from 'react';
+import type { Address } from '@commercetools/platform-sdk';
+
+import type { FC } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Address } from '@commercetools/platform-sdk';
 import { Anchor, Checkbox, Container, LoadingOverlay, SimpleGrid, Text, Title } from '@mantine/core';
-import { UseFormReturnType, useForm } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
-import { postcodeValidator } from 'postcode-validator';
+
+import type { AuthState } from '@/types/authState';
 
 import { BaseButton } from '@/components/base-button';
 import { CustomDateInput } from '@/components/custom-date-input';
 import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
+import { COUNTRIES } from '@/constants/countries';
 import { createCustomer } from '@/lib/commerstools/customer-creator';
-import { AuthState } from '@/types/authState';
+import { validatePassword } from '@/utils';
 import { addNotification } from '@/utils/show-notification';
-import { validatePassword } from '@/utils/validate-password';
+import { isProperCountry } from '@/utils/validate/is-proper-country';
+import { isProperPostcode } from '@/utils/validate/is-proper-postcode';
+import { isEmail } from '@/utils/validate/isEmail';
+import { matchesPassword } from '@/utils/validate/match-password';
+import { notEmpty } from '@/utils/validate/not-empty';
+import { onlyLetters } from '@/utils/validate/only-letters';
+import { transformCountryIntoCountryCode } from '@/utils/validate/transform-country';
 
 import { setAuthState } from '../auth/authSlice';
 import { postCustomerLogin } from '../login-page/api';
@@ -36,54 +46,8 @@ interface CheckboxProps {
   value?: string;
 }
 
-const COUNTRIES = ['United Kingdom', 'Germany', 'United States'];
 const TODAY = new Date();
 const ONE_HUNDRED_AND_THIRTY_YEARS_AGO = dayjs(new Date()).subtract(130, 'year').toDate();
-const notEmpty = (value: string): null | string => (value.trim() ? null : 'Required field');
-
-const onlyLetters =
-  (message: string) =>
-  (value: string): null | string => {
-    if (!value) {
-      return 'Required field';
-    }
-    if (!/^[A-Za-zäöüßÄÖÜА-Яа-я]+$/.test(value)) {
-      return message;
-    }
-    return null;
-  };
-
-const isEmail =
-  (message: string) =>
-  (value: string): null | string => {
-    if (!value) {
-      return 'Required field';
-    }
-
-    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? null : message;
-  };
-
-const matchesPassword = (value: string, values: { password: string }): null | string => {
-  if (!value) {
-    return 'Required field';
-  }
-  return value !== values.password ? 'Passwords did not match' : null;
-};
-
-const isProperCountry = (value: string): null | string => (COUNTRIES.includes(value) ? null : 'Invalid country');
-
-const transformCountryIntoCountryCode = (country: string): string => {
-  switch (country) {
-    case 'Germany':
-      return 'DE';
-    case 'United Kingdom':
-      return 'UK';
-    case 'United States':
-      return 'US';
-    default:
-      return '';
-  }
-};
 
 const wrapSameAddressCheck =
   <T extends { isSameAddress: boolean }>(cb: (value: string, values: T) => null | string) =>
@@ -92,16 +56,6 @@ const wrapSameAddressCheck =
       return null;
     }
     return cb(value, values);
-  };
-
-const isProperPostcode =
-  <K extends string, T extends Record<K, string>>(countryField: K) =>
-  (value: string, values: UseFormReturnType<T>['values']): null | string => {
-    const code = transformCountryIntoCountryCode(values[countryField]);
-    if (!code) {
-      return 'Invalid country';
-    }
-    return postcodeValidator(value, code) ? null : 'Invalid postcode';
   };
 
 const RegistrationPage: FC = () => {
@@ -213,18 +167,18 @@ const RegistrationPage: FC = () => {
     const getAddresses = (values: typeof form.values): Address[] => {
       const addresses = [
         {
-          additionalStreetInfo: values.shippingStreet,
           city: values.shippingCity,
           country: values.shippingCountry,
           postalCode: values.shippingPostalCode,
+          streetName: values.shippingStreet,
         },
       ];
       if (!values.isSameAddress) {
         addresses.push({
-          additionalStreetInfo: values.billingStreet,
           city: values.billingCity,
           country: values.billingCountry,
           postalCode: values.billingPostalCode,
+          streetName: values.billingStreet,
         });
       }
       return addresses;
@@ -418,7 +372,7 @@ const RegistrationPage: FC = () => {
               {...form.getInputProps('billingPostalCode')}
             />
           </SimpleGrid>
-          <BaseButton fullWidth mb={40} mt={30} type="submit">
+          <BaseButton c="bright" fullWidth mb={40} mt={30} type="submit">
             Sign Up
           </BaseButton>
         </form>

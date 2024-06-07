@@ -1,22 +1,31 @@
-import { LegacyRef, ReactElement, forwardRef } from 'react';
+import { type LegacyRef, type ReactElement, forwardRef } from 'react';
 
-import { TextInput, TextInputProps } from '@mantine/core';
+import { TextInput, type TextInputProps } from '@mantine/core';
+import { clsx } from 'clsx';
 
 import classes from './custom-text-input.module.css';
 
+type Props = {
+  inline?: boolean;
+} & TextInputProps;
+
 const CustomTextInput = forwardRef(function MyInput(
-  props: TextInputProps,
+  { classNames, inline = false, ...props }: Props,
   ref: LegacyRef<HTMLInputElement>,
 ): ReactElement {
+  if (classNames instanceof Function) {
+    throw new Error('Unsupported!');
+  }
   return (
     <TextInput
       {...props}
       classNames={{
-        error: classes.error,
-        input: classes.input,
-        label: classes.label,
-        root: classes.root,
-        wrapper: classes.wrapper,
+        ...classNames,
+        error: clsx(classes.error, classNames?.error),
+        input: clsx(classes.input, classNames?.input),
+        label: clsx(classes.label, classNames?.label),
+        root: clsx({ [classes.root!]: true, [classes.rootInline!]: inline }, classNames?.root),
+        wrapper: clsx(classes.wrapper, classNames?.wrapper),
       }}
       ref={ref}
     />

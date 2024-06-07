@@ -1,4 +1,5 @@
-import { FC, useState } from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,20 +11,11 @@ import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { setAuthState } from '@/features/auth/authSlice';
 import { type AuthState } from '@/types/authState';
+import { validatePassword } from '@/utils';
 import { addNotification } from '@/utils/show-notification';
-import { validatePassword } from '@/utils/validate-password';
+import { isEmail } from '@/utils/validate/isEmail';
 
 import { postCustomerLogin } from '../api';
-
-const isEmail =
-  (message: string) =>
-  (value: string): null | string => {
-    if (!value) {
-      return 'Required field';
-    }
-
-    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? null : message;
-  };
 
 const LoginForm: FC = () => {
   const form = useForm({
@@ -77,7 +69,7 @@ const LoginForm: FC = () => {
       >
         <CustomTextInput label="Email" withAsterisk {...form.getInputProps('email')}></CustomTextInput>
         <CustomPasswordInput label="Password" withAsterisk {...form.getInputProps('password')}></CustomPasswordInput>
-        <BaseButton fullWidth mt={25} type="submit">
+        <BaseButton c="bright" fullWidth mt={25} type="submit">
           Sign in
         </BaseButton>
       </form>

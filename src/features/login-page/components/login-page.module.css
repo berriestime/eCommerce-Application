@@ -4,20 +4,15 @@
 }
 
 .title {
-  color: #f3e7e4;
   font-size: 40px;
   font-weight: 300;
   line-height: 1.1;
 }
 
-.text {
-  color: #f3e7e4;
-}
-
 .authLink {
   padding: 10px 0;
   text-decoration: none;
-  color: #f3e7e4;
+  color: var(--mantine-color-bright);
   transition: all 0.3s linear;
 }
 

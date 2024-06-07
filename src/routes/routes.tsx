@@ -1,8 +1,14 @@
+import type { Category, ProductProjection } from '@commercetools/platform-sdk';
+
+import { Link } from 'react-router-dom';
+
 import { Layout } from '@/components/layout';
+import { LANGUAGE } from '@/constants/catalog-constants';
 
 import { AuthRouteGuard } from './AuthRouteGuard';
 import {
   CartPage,
+  CatalogPage,
   CategoryPage,
   LoginPage,
   NotFoundPage,
@@ -12,6 +18,23 @@ import {
   RootPage,
   TeamPage,
 } from './lazy';
+
+export const APP_ROUTE = {
+  Cart: 'cart',
+  Login: 'login',
+  Main: '/',
+  Profile: 'profile',
+  Registration: 'registration',
+  Store: 'store',
+  Team: 'team',
+} as const;
+
+import { loader as StoreLoader } from '@/features/catalog/catalog-data-loader';
+import { loader as CategoryLoader } from '@/features/catalog/category/category-data-loader';
+import { loader as SubcategoryLoader } from '@/features/catalog/category/subcategory-data-loader';
+import { loader as ProductLoader } from '@/features/catalog/product/product-data-loader';
+import { ErrorProfile } from '@/features/profile/components/error-profile';
+import { loader as ProfileLoader } from '@/features/profile/profile-data-loader';
 
 export const routes = [
   {
@@ -26,7 +49,7 @@ export const routes = [
             <LoginPage />
           </AuthRouteGuard>
         ),
-        path: 'login',
+        path: APP_ROUTE.Login,
       },
       {
         element: (
@@ -34,7 +57,7 @@ export const routes = [
             <RegistrationPage />
           </AuthRouteGuard>
         ),
-        path: 'registration',
+        path: APP_ROUTE.Registration,
       },
       {
         element: (
@@ -42,29 +65,86 @@ export const routes = [
             <Profile />
           </AuthRouteGuard>
         ),
-        path: 'dashboard',
+        errorElement: <ErrorProfile />,
+        loader: ProfileLoader,
+        path: APP_ROUTE.Profile,
       },
       {
-        children: [
-          {
-            element: <ProductPage />,
-            path: 'catalog/:productId',
-          },
-        ],
-        element: <CategoryPage />,
-        path: 'catalog',
+        element: <CatalogPage />,
+        handle: {
+          crumb: () => <span key="1">Store</span>,
+        },
+        loader: StoreLoader,
+        path: APP_ROUTE.Store,
       },
+      {
+        element: <CategoryPage />,
+        handle: {
+          crumb: ({ categoryData }: { categoryData: Category }) => [
+            <Link key="1" to={`/${APP_ROUTE.Store}`}>
+              Store
+            </Link>,
+            <span key="2">{categoryData.name[LANGUAGE]}</span>,
+          ],
+        },
+        loader: CategoryLoader,
+        path: `${APP_ROUTE.Store}/:categoryId`,
+      },
+      {
+        element: <CategoryPage />,
+        handle: {
+          crumb: ({ categoryData, subcategoryData }: { categoryData: Category; subcategoryData: Category }) => [
+            <Link key="1" to={`/${APP_ROUTE.Store}`}>
+              Store
+            </Link>,
+            <Link key="2" to={`/${APP_ROUTE.Store}/${categoryData.key}`}>
+              {categoryData.name[LANGUAGE]}
+            </Link>,
+            <span key="3"> {subcategoryData.name[LANGUAGE]}</span>,
+          ],
+        },
+        loader: SubcategoryLoader,
+        path: `${APP_ROUTE.Store}/:categoryId/:subcategoryId`,
+      },
+      {
+        element: <ProductPage />,
+        handle: {
+          crumb: ({
+            categoryData,
+            productData,
+            subcategoryData,
+          }: {
+            categoryData: Category;
+            productData: ProductProjection;
+            subcategoryData: Category;
+          }) => [
+            <Link key="1" to={`/${APP_ROUTE.Store}`}>
+              Store
+            </Link>,
+            <Link key="2" to={`/${APP_ROUTE.Store}/${categoryData.key}`}>
+              {categoryData.name[LANGUAGE]}
+            </Link>,
+            <Link key="3" to={`/${APP_ROUTE.Store}/${categoryData.key}/${subcategoryData.key}`}>
+              {subcategoryData.name[LANGUAGE]}
+            </Link>,
+            <span key="4">{productData.name[LANGUAGE]}</span>,
+          ],
+        },
+        loader: ProductLoader,
+        path: `${APP_ROUTE.Store}/:categoryId/:subcategoryId/:productId`,
+      },
+
       {
         element: <TeamPage />,
-        path: 'team',
+        path: APP_ROUTE.Team,
       },
       {
         element: <CartPage />,
-        path: 'cart',
+        path: APP_ROUTE.Cart,
       },
     ],
     element: <Layout />,
     errorElement: <NotFoundPage />,
-    path: '/',
+    path: APP_ROUTE.Main,
   },
 ];

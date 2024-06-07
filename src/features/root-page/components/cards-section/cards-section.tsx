@@ -2,14 +2,13 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Carousel } from '@mantine/carousel';
-import { Box, SimpleGrid, rem } from '@mantine/core';
+import { Box, SimpleGrid, Text, rem } from '@mantine/core';
 import { clsx } from 'clsx';
 import Autoplay from 'embla-carousel-autoplay';
 
-import { type CardData, SimpleCard } from '@/components/simple-card';
+import { type CardData, SimpleCard } from '@/components/product-card/simple-card';
 
-import classes from '../../root-page.module.css';
-import cardClasses from '@/components/simple-card/simple-card.module.css';
+import classes from './cards-section.module.css';
 
 type Info = {
   mockdata: CardData[];
@@ -22,7 +21,7 @@ const CardsSection = (props: Info): JSX.Element => {
   const autoplay = useRef(Autoplay({ delay: 5000 }));
 
   const productCards = mockdata.map((productCard) => (
-    <Link className={cardClasses.link} key={productCard.title} to={productCard.to}>
+    <Link className={classes.link} key={productCard.title} to={productCard.to}>
       <SimpleCard {...productCard} />
     </Link>
   ));
@@ -32,19 +31,21 @@ const CardsSection = (props: Info): JSX.Element => {
   return (
     <Box className={classes.container}>
       <h3 className={clsx(classes.title, classes.infoContent, { [classes.textPadding || '']: !text })}>{title}</h3>
-      <p className={clsx(classes.text, classes.infoContent, { [classes.textPadding || '']: text })}>{text}</p>
+      <Text c="bright" className={clsx(classes.text, classes.infoContent, { [classes.textPadding || '']: text })}>
+        {text}
+      </Text>
 
-      <SimpleGrid className={cardClasses.cardsGap} cols={3} mt="md" visibleFrom="md">
+      <SimpleGrid className={classes.cardsGap} cols={3} mt="md" visibleFrom="md">
         {productCards}
       </SimpleGrid>
 
       <Carousel
         align="start"
         classNames={{
-          controls: cardClasses.carouselControls,
-          indicator: cardClasses.carouselIndicator,
-          indicators: cardClasses.carouselIndicators,
-          root: cardClasses.carousel,
+          controls: classes.carouselControls,
+          indicator: classes.carouselIndicator,
+          indicators: classes.carouselIndicators,
+          root: classes.carousel,
         }}
         hiddenFrom="md"
         loop

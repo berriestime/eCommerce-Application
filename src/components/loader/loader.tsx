@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
-import { Box, MantineLoaderComponent } from '@mantine/core';
-import cx from 'clsx';
+import { Box, type MantineLoaderComponent } from '@mantine/core';
+import { clsx } from 'clsx';
 
 import classes from './loader.module.css';
 
@@ -10,7 +10,7 @@ interface CssLoaderProps {
 }
 
 export const CssLoader: MantineLoaderComponent = forwardRef(({ className, ...others }: CssLoaderProps, ref) => (
-  <Box className={cx(classes.loader, className)} component="span" {...others} ref={ref} />
+  <Box className={clsx(classes.loader, className)} component="span" {...others} ref={ref} />
 ));
 
 CssLoader.displayName = 'CssLoader';

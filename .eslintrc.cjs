@@ -37,6 +37,8 @@ module.exports = {
   plugins: ['@typescript-eslint', 'react-refresh'],
   root: true,
   rules: {
+    '@typescript-eslint/consistent-type-exports': 'error',
+    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/explicit-function-return-type': [
       'error',
       {

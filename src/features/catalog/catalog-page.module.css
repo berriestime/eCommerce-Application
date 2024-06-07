@@ -1,0 +1,10 @@
+.active {
+  color: #aa9f9c;
+  font-weight: 600;
+  cursor: default;
+}
+
+.categories {
+  display: flex;
+  gap: 40px;
+}

@@ -6,15 +6,19 @@ import { useViewportSize } from '@mantine/hooks';
 
 import { BaseButton } from '@/components/base-button';
 import { Header } from '@/components/header';
+import { BREAKPOINT_SM, HEADER_HEIGHT_DESKTOP, HEADER_HEIGHT_MOBILE } from '@/constants/header-height';
 
-import classes from './error-page.module.css';
+import classes from './not-found-page.module.css';
 
 const NotFoundPage: FC = () => {
   const { width } = useViewportSize();
 
   return (
-    <AppShell header={{ height: width > 767 ? 100 : 64 }} withBorder={false}>
-      <AppShell.Header>
+    <AppShell
+      header={{ height: width > BREAKPOINT_SM ? HEADER_HEIGHT_DESKTOP : HEADER_HEIGHT_MOBILE }}
+      withBorder={false}
+    >
+      <AppShell.Header className="mainHeader">
         <Header />
       </AppShell.Header>
 
@@ -24,14 +28,16 @@ const NotFoundPage: FC = () => {
             <div className={classes.error}></div>
 
             <div className={classes.text}>
-              <Title className={classes.title}>Something is not right...</Title>
+              <Title c="bright" className={classes.title}>
+                Something is not right...
+              </Title>
               <Text className={classes.message} size="lg">
                 Page you are trying to open was not found. You may have mistyped the address, or the page has been moved
                 to another URL.
               </Text>
 
               <Link className={classes.button} to="/">
-                <BaseButton fullWidth size="md">
+                <BaseButton c="bright" fullWidth size="md">
                   Get back to home page
                 </BaseButton>
               </Link>

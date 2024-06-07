@@ -1,0 +1,52 @@
+.main {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  composes: commonContainer from '../../index.css';
+  margin: 2rem auto;
+}
+
+.title {
+  font-weight: 300;
+  font-size: 20px;
+  text-transform: uppercase;
+
+  @media (width <= 767px) {
+    font-size: rem(20px);
+  }
+}
+
+.message {
+  font-size: 16px;
+  color: #aa9f9c;
+}
+
+.error {
+  background: url('../../assets/lava.webp');
+  mask-image: url('./assets/404.svg');
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  @media (width <= 767px) {
+    height: 6em;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  gap: 2rem;
+  max-width: 600px;
+  font-size: 16px;
+}
+
+.button {
+  text-decoration: none;
+
+  @media (width >= 768px) {
+    align-self: self-start;
+  }
+}

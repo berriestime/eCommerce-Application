@@ -1,0 +1,47 @@
+.container {
+  composes: container from '../hero/hero.module.css';
+}
+
+.secondHero {
+  min-height: 470px;
+  padding-bottom: calc(var(--mantine-spacing-xl) * 5);
+  gap: 1rem;
+}
+
+.title {
+  composes: title from '../hero/hero.module.css';
+}
+
+.textSize {
+  composes: textSize from '../hero/hero.module.css';
+}
+
+.text {
+  composes: text from '../hero/hero.module.css';
+}
+
+.link {
+  margin-left: 3.5rem;
+  text-decoration: none;
+  position: relative;
+  color: #f3e7e4;
+  transition: all 0.3s ease;
+
+  @media (width <= 900px) {
+    margin-left: calc(var(--mantine-spacing-xl) * 2.5);
+  }
+}
+
+.link:before {
+  bottom: -4px;
+  content: '';
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #aa9f9c;
+}
+
+.link:hover {
+  color: #aa9f9c;
+}
