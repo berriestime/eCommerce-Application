@@ -25,7 +25,7 @@ const createPasswordFlowClient = (customer: { email: string; password: string })
     host: VITE_AUTH_URL,
     projectKey: VITE_PROJECT_KEY,
     scopes,
-    tokenCache: makeTokenCache(),
+    tokenCache: makeTokenCache('lava-lamps-password-token'),
   };
 
   const ctpClientBuilder = new ClientBuilder()
@@ -35,6 +35,7 @@ const createPasswordFlowClient = (customer: { email: string; password: string })
   const ctpClient = import.meta.env.PROD ? ctpClientBuilder.build() : ctpClientBuilder.withLoggerMiddleware().build();
 
   apiRootLogin = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
+  console.log('password-client flow');
 
   return apiRootLogin;
 };

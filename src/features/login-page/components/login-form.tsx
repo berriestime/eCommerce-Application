@@ -10,6 +10,7 @@ import { BaseButton } from '@/components/base-button';
 import { CustomPasswordInput } from '@/components/custom-password-input';
 import { CustomTextInput } from '@/components/custom-text-input';
 import { setAuthState } from '@/features/auth/authSlice';
+import { deleteToken } from '@/lib/commerstools/token-cache';
 import { type AuthState } from '@/types/authState';
 import { validatePassword } from '@/utils';
 import { addNotification } from '@/utils/show-notification';
@@ -52,6 +53,7 @@ const LoginForm: FC = () => {
           postCustomerLogin(customer)
             .then(() => {
               changeAuthState();
+              deleteToken('lava-lamps-anonymous-token');
               navigate('/');
             })
             .catch((err) => {

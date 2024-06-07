@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 
 import { setAuthState } from '@/features/auth/authSlice';
-import { apiRootLogin } from '@/lib/commerstools/create-password-client';
-import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
+import { getRefreshToken } from '@/lib/commerstools/token-cache';
 import { store } from '@/store';
 
 export const useAuthStateChange = (): void => {
   useEffect(() => {
-    const authState = apiRootLogin === null && apiRootRefresh === null ? 'UNAUTHENTICATED' : 'AUTHENTICATED';
+    const isPassword = getRefreshToken('lava-lamps-password-token');
+    const authState = isPassword ? 'AUTHENTICATED' : 'UNAUTHENTICATED';
+
     store.dispatch(setAuthState(authState));
   }, []);
 };
