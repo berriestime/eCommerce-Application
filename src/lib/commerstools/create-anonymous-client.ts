@@ -5,6 +5,8 @@ import {
   type HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 
+import { makeTokenCache } from './token-cache';
+
 const { VITE_API_URL, VITE_AUTH_URL, VITE_CLIENT_ID, VITE_CLIENT_SECRET, VITE_PROJECT_KEY, VITE_SCOPES } = import.meta
   .env;
 const projectKey = VITE_PROJECT_KEY;
@@ -27,6 +29,7 @@ const createAnonymousFlowClient = (): ByProjectKeyRequestBuilder => {
     host: VITE_AUTH_URL,
     projectKey,
     scopes,
+    tokenCache: makeTokenCache('lava-lamps-anonymous-token'),
   };
 
   const ctpClientBuilder = new ClientBuilder()
@@ -36,6 +39,7 @@ const createAnonymousFlowClient = (): ByProjectKeyRequestBuilder => {
   const ctpClient = import.meta.env.PROD ? ctpClientBuilder.build() : ctpClientBuilder.withLoggerMiddleware().build();
 
   apiRootAnonymous = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
+  console.log('anon-client flow');
 
   return apiRootAnonymous;
 };

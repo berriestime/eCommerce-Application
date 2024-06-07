@@ -11,7 +11,8 @@ export type ApiRoots = {
 };
 
 const defineApiRoot = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRoots): ByProjectKeyRequestBuilder => {
-  const isRefresh = getRefreshToken();
+  const isRefreshPassword = getRefreshToken('lava-lamps-password-token');
+  const isRefreshAnonymous = getRefreshToken('lava-lamps-anonymous-token');
 
   if (apiRootLogin) {
     return apiRootLogin;
@@ -25,8 +26,10 @@ const defineApiRoot = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRo
     return apiRootAnonymous;
   }
 
-  if (isRefresh && apiRootRefresh === null) {
-    return createRefreshFlowClient();
+  if (isRefreshPassword && apiRootRefresh === null) {
+    return createRefreshFlowClient('lava-lamps-password-token');
+  } else if (isRefreshAnonymous && apiRootRefresh === null) {
+    return createRefreshFlowClient('lava-lamps-anonymous-token');
   } else {
     return createAnonymousFlowClient();
   }

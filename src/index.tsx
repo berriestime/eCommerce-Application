@@ -12,9 +12,14 @@ if (!node) {
   throw new Error('You forgot to add root node to index.html');
 }
 
-const isRefresh = getRefreshToken();
-if (isRefresh && apiRootRefresh === null) {
-  createRefreshFlowClient();
+const isRefreshPassword = getRefreshToken('lava-lamps-password-token');
+const isRefreshAnonymous = getRefreshToken('lava-lamps-anonymous-token');
+
+if (isRefreshPassword && apiRootRefresh === null) {
+  createRefreshFlowClient('lava-lamps-password-token');
+}
+if (isRefreshAnonymous && apiRootRefresh === null) {
+  createRefreshFlowClient('lava-lamps-anonymous-token');
 }
 
 const root = createRoot(node);
