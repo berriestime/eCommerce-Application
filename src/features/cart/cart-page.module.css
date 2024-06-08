@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.head {
+  justify-content: space-between;
+}
+
 .title {
   font-size: 40px;
   font-weight: 300;
@@ -26,4 +30,8 @@
   @media (width <= 600px) {
     padding: 0 16px;
   }
+}
+
+.clearText {
+  font-weight: 300;
 }

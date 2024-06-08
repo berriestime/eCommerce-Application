@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 
 import { Box, CloseButton, Divider, Flex, Image, Skeleton, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
@@ -11,10 +12,13 @@ import { removeItem, updateItemQuantity } from '@/features/cart/cartSlice';
 import { type CartProduct } from '@/types/productTypes';
 import { getPrice } from '@/utils/formate-price';
 
+import { RemoveModal } from '../remove-modal';
+
 import classes from './product.module.css';
 
 const Product = ({ data }: { data: CartProduct }): JSX.Element => {
   const dispatch = useDispatch();
+  const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
 
   const { product, quantity } = data;
   const { masterVariant, name } = product;
@@ -84,9 +88,19 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
           classNames={{
             root: classes.closeBtn,
           }}
-          onClick={() => dispatch(removeItem(product.id))}
+          onClick={() => openModal()}
         />
       </Flex>
+
+      <RemoveModal
+        close={closeModal}
+        opened={modalOpened}
+        submit={() => {
+          dispatch(removeItem(product.id));
+        }}
+        text={`Are you sure you want to remove ${name[LANGUAGE]} ?`}
+        title="Remove from cart"
+      />
 
       <Divider mt={20} />
     </Box>
