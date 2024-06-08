@@ -19,6 +19,6 @@ describe('ClearCartModal', () => {
         />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Are you sure you want to clear cart?')).toBeInTheDocument();
+    expect(screen.getByText('Are you sure you want to clear shopping cart?')).toBeInTheDocument();
   });
 });
