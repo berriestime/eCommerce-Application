@@ -13,6 +13,6 @@ describe('CartPage', () => {
         <CartPage />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Cart page')).toBeInTheDocument();
+    expect(screen.getByText('Your Cart')).toBeInTheDocument();
   });
 });
