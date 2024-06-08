@@ -125,7 +125,7 @@ const getCartByCustomerId = createAsyncThunk('cart/getCartByCustomerId', async (
       .get()
       .execute()
       .catch(async (error) => {
-        if (error instanceof Error && error.name !== 'NotFound') {
+        if (error instanceof Error && 'code' in error && error.code !== 404) {
           throw error;
         }
 
