@@ -14,6 +14,7 @@ import { clearCart } from '@/features/cart/cartSlice';
 import { type CartProduct } from '@/types/productTypes';
 
 import { EmptyCart } from './components/empty-cart';
+import { OrderModal } from './components/order-modal';
 import { Product } from './components/product';
 import { RemoveModal as ClearCartModal } from './components/remove-modal';
 
@@ -23,6 +24,7 @@ const CartPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const products: CartProduct[] = useSelector((state: RootState) => state.cart.items);
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
+  const [modalOrderOpened, { close: closeOrderModal, open: openOrderModal }] = useDisclosure(false);
 
   const productCards = products.map((item) => <Product data={item} key={item.product.id} />);
 
@@ -77,7 +79,7 @@ const CartPage = (): JSX.Element => {
                 <Text c="#aa9f9c">Total Cost</Text> <Text c="bright">$1000</Text>
               </Flex>
 
-              <BaseButton onClick={() => openModal()}>Make An Order</BaseButton>
+              <BaseButton onClick={() => openOrderModal()}>Make An Order</BaseButton>
             </Flex>
           )}
         </Box>
@@ -90,6 +92,16 @@ const CartPage = (): JSX.Element => {
           }}
           text="Are you sure you want to clear shopping cart?"
           title="Clear Shopping Cart"
+        />
+
+        <OrderModal
+          close={closeOrderModal}
+          opened={modalOrderOpened}
+          submit={() => {
+            closeOrderModal();
+          }}
+          text="Sorry! Sorry! We have a lot of orders :("
+          title="Make An Order"
         />
       </Box>
       <Footer />
