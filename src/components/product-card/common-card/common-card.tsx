@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { type ProductProjection } from '@commercetools/platform-sdk';
@@ -8,14 +7,16 @@ import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
 import { DISCOUNT_SIZE, LANGUAGE } from '@/constants/catalog-constants';
+import { addProductToCart } from '@/features/cart/cart-slice';
 import { addItem } from '@/features/cart/cartSlice';
+import { useAppDispatch } from '@/store';
 import { getPrice } from '@/utils/formate-price';
 
 import classes from './common-card.module.css';
 
 const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JSX.Element => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleCardClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     if (!(event.target as HTMLElement).closest('.addToCartButton')) {
@@ -87,6 +88,7 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
           fullWidth
           onClick={(event) => {
             event.preventDefault();
+            void dispatch(addProductToCart({ productId: data.id, quantity: 1, variantId: data.masterVariant.id }));
           }}
         >
           Add To Cart
