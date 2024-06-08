@@ -41,7 +41,7 @@ const CartPage = (): JSX.Element => {
           </Title>
 
           {products.length > 0 && (
-            <Button c="#aa9f9c" onClick={() => openModal()} variant="transparent">
+            <Button c="#aa9f9c" className={classes.clearBtn} onClick={() => openModal()} variant="transparent">
               <Text className={classes.clearText} mr={8}>
                 Clear Shopping Cart
               </Text>
