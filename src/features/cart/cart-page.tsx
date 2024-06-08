@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Box, Button, Divider, Flex, Text, Title } from '@mantine/core';
+import { Box, Button, Divider, Flex, Text, TextInput, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
 import type { RootState } from '@/store/store';
 
+import { BaseButton } from '@/components/base-button';
 import { Footer } from '@/components/footer';
 import { CloseIcon } from '@/components/icons/close';
 import { clearCart } from '@/features/cart/cartSlice';
@@ -23,6 +25,11 @@ const CartPage = (): JSX.Element => {
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
 
   const productCards = products.map((item) => <Product data={item} key={item.product.id} />);
+
+  const [focused, setFocused] = useState(false);
+  const [value, setValue] = useState('');
+  const floating = value.trim().length !== 0 || focused || undefined;
+
   return (
     <Box className="wrapper">
       <Box className={classes.container}>
@@ -43,8 +50,36 @@ const CartPage = (): JSX.Element => {
 
         <Divider mb={20} size="sm" />
 
-        <Box className={classes.contentWrapper} mb={56}>
-          {products && products.length > 0 ? productCards : <EmptyCart />}
+        <Box className={classes.contentWrapper}>{products && products.length > 0 ? productCards : <EmptyCart />}</Box>
+
+        <Box className={classes.contentWrapper} my={56}>
+          {products && products.length && (
+            <Flex align="center" className={classes.total}>
+              <TextInput
+                autoComplete="nope"
+                classNames={{
+                  input: classes.input,
+                  label: classes.label,
+                  root: classes.root,
+                  wrapper: classes.wrapper,
+                }}
+                data-floating={floating}
+                label="Apply Promo Code"
+                labelProps={{ 'data-floating': floating }}
+                onBlur={() => setFocused(false)}
+                onChange={(event) => setValue(event.currentTarget.value)}
+                onFocus={() => setFocused(true)}
+                radius={0}
+                value={value}
+              />
+
+              <Flex align="center" gap={16}>
+                <Text c="#aa9f9c">Total Cost</Text> <Text c="bright">$1000</Text>
+              </Flex>
+
+              <BaseButton onClick={() => openModal()}>Make An Order</BaseButton>
+            </Flex>
+          )}
         </Box>
 
         <ClearCartModal
