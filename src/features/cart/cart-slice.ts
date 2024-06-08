@@ -8,14 +8,12 @@ import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import { defineApiRoot } from '@/lib/commerstools/define-client';
 
-// Define a type for the cart item
 interface CartItem {
   productId: string;
   quantity: number;
   variantId: number;
 }
 
-// Define the initial cart state
 interface CartState {
   error: null | string;
   id: null | string; // You need to store the cart id to update it
@@ -118,6 +116,31 @@ const removeProductFromCart = createAsyncThunk(
   },
 );
 
+const getCartByCustomerId = createAsyncThunk('cart/getCartByCustomerId', async (_: unknown, { rejectWithValue }) => {
+  try {
+    const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+    const response = await apiRoot
+      .me()
+      .activeCart()
+      .get()
+      .execute()
+      .catch(async (error) => {
+        if (error instanceof Error && error.name !== 'NotFound') {
+          throw error;
+        }
+
+        return await apiRoot
+          .me()
+          .carts()
+          .post({ body: { currency: 'USD', taxMode: 'External' } })
+          .execute();
+      });
+    return response.body;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
 // The cart slice
 const cartSlice = createSlice({
   extraReducers: (builder) => {
@@ -148,22 +171,26 @@ const cartSlice = createSlice({
       state.loading = false;
       state.error = action.payload as string;
     });
+
+    // get cart by customer id
+    builder.addCase(getCartByCustomerId.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getCartByCustomerId.fulfilled, (state, action: PayloadAction<Cart>) => {
+      state.loading = false;
+      state.id = action.payload.id;
+      state.version = action.payload.version;
+      state.items = action.payload.lineItems;
+    });
+    builder.addCase(getCartByCustomerId.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
   },
   initialState,
   name: 'cart',
-  reducers: {
-    // Reducers for synchronous actions can be added here if needed
-    // For example, setting the initial cart data from an API response
-    setCartData: (state, action: PayloadAction<{ id: string; items: LineItem[]; version: number }>) => {
-      state.id = action.payload.id;
-      state.version = action.payload.version;
-      state.items = action.payload.items;
-    },
-  },
+  reducers: {},
 });
 
-export { addProductToCart, cartSlice, removeProductFromCart };
-
-// Export the reducer and actions
-export const { setCartData } = cartSlice.actions;
+export { addProductToCart, cartSlice, getCartByCustomerId, removeProductFromCart };
 export default cartSlice.reducer;

@@ -3,16 +3,24 @@ import { useNavigate } from 'react-router-dom';
 
 import { type ProductProjection } from '@commercetools/platform-sdk';
 import { Badge, Box, Card, Image, Skeleton, Text } from '@mantine/core';
+import { createSelector } from '@reduxjs/toolkit';
 import { clsx } from 'clsx';
+
+import type { RootState } from '@/store';
 
 import { BaseButton } from '@/components/base-button';
 import { DISCOUNT_SIZE, LANGUAGE } from '@/constants/catalog-constants';
-import { addProductToCart } from '@/features/cart/cart-slice';
+import { addProductToCart, removeProductFromCart } from '@/features/cart/cart-slice';
 import { addItem } from '@/features/cart/cartSlice';
-import { useAppDispatch } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { getPrice } from '@/utils/formate-price';
 
 import classes from './common-card.module.css';
+
+const selectLineItemFromCartByID = createSelector(
+  [(state: RootState) => state.cart.items, (_: RootState, currentItemId: string) => currentItemId],
+  (items, currentItemId) => items.find((item) => item.productId === currentItemId),
+);
 
 const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JSX.Element => {
   const navigate = useNavigate();
@@ -42,6 +50,10 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
       setLoading(false);
     }
   }, [images]);
+
+  const isCartPending = useAppSelector((state) => state.cart.loading);
+  const lineItemFromCart = useAppSelector((state) => selectLineItemFromCartByID(state, data.id));
+  const isItemInCart = !!lineItemFromCart;
 
   return (
     <Card bg="customBg" className={classes.card} onClick={handleCardClick} pt={20} w="100%">
@@ -82,17 +94,42 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
             <span className={classes.price}>${price}</span>
           )}
         </Text>
-        <BaseButton
-          c="bright"
-          className="addToCartButton"
-          fullWidth
-          onClick={(event) => {
-            event.preventDefault();
-            void dispatch(addProductToCart({ productId: data.id, quantity: 1, variantId: data.masterVariant.id }));
-          }}
-        >
-          Add To Cart
-        </BaseButton>
+        {isItemInCart && (
+          <BaseButton
+            c="bright"
+            className="addToCartButton"
+            disabled={isCartPending}
+            fullWidth
+            justify="space-between"
+            leftSection={<></>}
+            onClick={(event) => {
+              event.preventDefault();
+              void dispatch(
+                removeProductFromCart({ lineItemId: lineItemFromCart.id, quantity: lineItemFromCart.quantity }),
+              );
+            }}
+            rightSection={isCartPending ? <Text>троббер</Text> : <></>}
+          >
+            Remove Item From Cart
+          </BaseButton>
+        )}
+        {!isItemInCart && (
+          <BaseButton
+            c="bright"
+            className="addToCartButton"
+            disabled={isCartPending}
+            fullWidth
+            justify="space-between"
+            leftSection={<></>}
+            onClick={(event) => {
+              event.preventDefault();
+              void dispatch(addProductToCart({ productId: data.id, quantity: 1, variantId: data.masterVariant.id }));
+            }}
+            rightSection={isCartPending ? <Text>троббер</Text> : <></>}
+          >
+            Add To Cart
+          </BaseButton>
+        )}
       </Box>
     </Card>
   );
