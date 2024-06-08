@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { type ReactElement, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
 
-import { Box, Button, Divider, Flex, Image, Skeleton, Text, Tooltip } from '@mantine/core';
+import { Box, Button, Divider, Flex, Group, Image, Skeleton, Text, Tooltip } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
@@ -39,13 +38,50 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
     }
   }, [images]);
 
+  const priceText = (text: string): ReactElement => {
+    return (
+      <Text c="#aa9f9c" fz={12} miw="100%">
+        {text}
+      </Text>
+    );
+  };
+
+  const priceSection = ({
+    discountPriceValue,
+    priceValue,
+    text,
+  }: {
+    discountPriceValue: null | string;
+    priceValue: string;
+    text: string;
+  }): ReactElement => {
+    return (
+      <Flex align="center" className={classes.priceContainer} wrap="wrap">
+        {discountPriceValue ? (
+          <>
+            <Text className={clsx(classes.price, classes.discount)} mr={8}>
+              ${priceValue}
+            </Text>
+            <Text className={classes.price}>${discountPriceValue}</Text>
+            {priceText(text)}
+          </>
+        ) : (
+          <>
+            <span className={classes.price}>${priceValue}</span>
+            {priceText(text)}
+          </>
+        )}
+      </Flex>
+    );
+  };
+
   return (
     <Box className={classes.card} mt={{ base: 0, xs: 40 }}>
       <Divider mb={20} />
 
-      <Flex align="center" className={classes.content} gap={32}>
+      <Group align="center" className={classes.content} justify="space-between">
         <Flex align="center" className={classes.title} gap={32}>
-          <Skeleton mah={88} maw={88} visible={loading}>
+          <Skeleton mah={88} maw={88} miw={88} visible={loading}>
             {images && images.length > 0 && (
               <Image alt={name[LANGUAGE]} className={classes.image} fit="contain" src={images[0]?.url} />
             )}
@@ -53,18 +89,11 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
           <Text c="bright">{name[LANGUAGE]}</Text>
         </Flex>
 
-        <Flex align="center" className={classes.priceContainer} gap={16}>
-          {discountPrice ? (
-            <>
-              <span className={clsx(classes.price, classes.discount)}>${price}</span>
-              <span className={classes.price}>${discountPrice}</span>
-            </>
-          ) : (
-            <span className={classes.price}>${price}</span>
-          )}
-        </Flex>
+        <Box className={classes.priceWrapper}>
+          {priceSection({ discountPriceValue: discountPrice, priceValue: price, text: 'individual price' })}
+        </Box>
 
-        <Flex align="center" className={classes.counterContainer} gap={8}>
+        <Group align="center" className={classes.counterContainer} gap={8} justify="space-between">
           <BaseButton
             disabled={quantity === 0}
             onClick={() => dispatch(updateItemQuantity({ id: product.id, quantity: quantity - 1 }))}
@@ -75,25 +104,18 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
           <BaseButton onClick={() => dispatch(updateItemQuantity({ id: product.id, quantity: quantity + 1 }))}>
             +
           </BaseButton>
-        </Flex>
+        </Group>
 
-        <Flex align="center" className={classes.priceContainer} gap={16}>
-          {discountPrice ? (
-            <>
-              <span className={clsx(classes.price, classes.discount)}>${price}</span>
-              <span className={classes.price}>${discountPrice}</span>
-            </>
-          ) : (
-            <span className={classes.price}>${price}</span>
-          )}
-        </Flex>
+        <Box className={classes.totalPriceWrapper}>
+          {priceSection({ discountPriceValue: discountPrice, priceValue: price, text: 'Total cost' })}
+        </Box>
 
         <Tooltip color="gray" label="Remove from cart" transitionProps={{ duration: 500, transition: 'fade-up' }}>
-          <Button c="#aa9f9c" onClick={() => openModal()} variant="transparent">
+          <Button c="#aa9f9c" className={classes.cancelBtn} onClick={() => openModal()} variant="transparent">
             <CloseIcon size={20} />
           </Button>
         </Tooltip>
-      </Flex>
+      </Group>
 
       <RemoveModal
         close={closeModal}
