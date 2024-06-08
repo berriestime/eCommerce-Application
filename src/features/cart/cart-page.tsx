@@ -37,7 +37,7 @@ const CartPage = (): JSX.Element => {
       <Box className={classes.container}>
         <Flex align="center" className={clsx(classes.contentWrapper, classes.head)} my={56}>
           <Title c="bright" className={classes.title} order={1}>
-            Cart page
+            Your Cart
           </Title>
 
           {products.length > 0 && (
