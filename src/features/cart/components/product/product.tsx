@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 
-import { Box, CloseButton, Divider, Flex, Image, Skeleton, Text } from '@mantine/core';
+import { Box, Button, Divider, Flex, Image, Skeleton, Text, Tooltip } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
+import { CloseIcon } from '@/components/icons/close';
 import { LANGUAGE } from '@/constants/catalog-constants';
 import { removeItem, updateItemQuantity } from '@/features/cart/cartSlice';
 import { type CartProduct } from '@/types/productTypes';
@@ -84,12 +85,11 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
           )}
         </Flex>
 
-        <CloseButton
-          classNames={{
-            root: classes.closeBtn,
-          }}
-          onClick={() => openModal()}
-        />
+        <Tooltip color="gray" label="Remove from cart" transitionProps={{ duration: 500, transition: 'fade-up' }}>
+          <Button c="#aa9f9c" onClick={() => openModal()} variant="transparent">
+            <CloseIcon size={20} />
+          </Button>
+        </Tooltip>
       </Flex>
 
       <RemoveModal
