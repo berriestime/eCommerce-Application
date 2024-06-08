@@ -65,7 +65,10 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
         </Flex>
 
         <Flex align="center" className={classes.counterContainer} gap={8}>
-          <BaseButton onClick={() => dispatch(updateItemQuantity({ id: product.id, quantity: quantity - 1 }))}>
+          <BaseButton
+            disabled={quantity === 0}
+            onClick={() => dispatch(updateItemQuantity({ id: product.id, quantity: quantity - 1 }))}
+          >
             -
           </BaseButton>
           {quantity}
