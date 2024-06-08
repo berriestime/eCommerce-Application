@@ -50,7 +50,7 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
               <Image alt={name[LANGUAGE]} className={classes.image} fit="contain" src={images[0]?.url} />
             )}
           </Skeleton>
-          <Text>{name[LANGUAGE]}</Text>
+          <Text c="bright">{name[LANGUAGE]}</Text>
         </Flex>
 
         <Flex align="center" className={classes.priceContainer} gap={16}>
@@ -71,7 +71,7 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
           >
             -
           </BaseButton>
-          {quantity}
+          <Text c="bright">{quantity}</Text>
           <BaseButton onClick={() => dispatch(updateItemQuantity({ id: product.id, quantity: quantity + 1 }))}>
             +
           </BaseButton>
