@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import authReducer from '@/features/auth/authSlice';
-import cartReduser from '@/features/cart/cartSlice';
+import { cartReducer, getCartByCustomerId } from '@/features/cart/store/cart-slice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    cart: cartReduser,
+    cart: cartReducer,
   },
 });
+
+void store.dispatch(getCartByCustomerId(undefined));
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
