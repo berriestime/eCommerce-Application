@@ -1,4 +1,4 @@
-import type { ProductProjection } from '@commercetools/platform-sdk';
+import type { LineItem, Price, ProductProjection } from '@commercetools/platform-sdk';
 
 import type { Prices } from '@/types/productTypes';
 
@@ -7,8 +7,17 @@ const formatPrice = (price: string, digit: number): string => {
   return formattedPrice;
 };
 
-export const getPrice = (productData: ProductProjection): Prices => {
+const getPricesFromLineItem = (lineItem: LineItem): Prices => {
+  const curPriceData = lineItem.price;
+  return transformSdkPriceIntoPrices(curPriceData);
+};
+
+const getPricesFromProductProjection = (productData: ProductProjection): Prices => {
   const curPriceData = productData.masterVariant.prices?.[0];
+  return transformSdkPriceIntoPrices(curPriceData);
+};
+
+const transformSdkPriceIntoPrices = (curPriceData: Price | undefined): Prices => {
   if (!curPriceData) {
     return {
       discountPrice: '0.00',
@@ -31,3 +40,5 @@ export const getPrice = (productData: ProductProjection): Prices => {
 
   return pricesData;
 };
+
+export { getPricesFromLineItem, getPricesFromProductProjection };
