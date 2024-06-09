@@ -2,12 +2,9 @@ import type { CartUpdateAction } from '@commercetools/platform-sdk';
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
-import { apiRootLogin } from '@/lib/commerstools/create-password-client';
-import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
-import { defineApiRoot } from '@/lib/commerstools/define-client';
-
 import type { CartState, RemoveLineItemPayload } from './types';
+
+import { postCartWithId } from '../api';
 
 // Async thunk to remove a line item from the cart
 const removeProductFromCart = createAsyncThunk(
@@ -31,19 +28,7 @@ const removeProductFromCart = createAsyncThunk(
     ];
 
     try {
-      const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-      const response = await apiRoot
-        .carts()
-        .withId({ ID: id })
-        .post({
-          body: {
-            actions: updateActions,
-            version: version,
-          },
-        })
-        .execute();
-
-      return response.body;
+      return postCartWithId(id, updateActions, version);
     } catch (error) {
       return rejectWithValue(error);
     }
