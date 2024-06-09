@@ -55,7 +55,7 @@ const CartPage = (): JSX.Element => {
         <Box className={classes.contentWrapper}>{products && products.length > 0 ? productCards : <EmptyCart />}</Box>
 
         <Box className={classes.contentWrapper} my={56}>
-          {products && products.length && (
+          {products.length > 0 && (
             <Flex align="center" className={classes.total}>
               <TextInput
                 autoComplete="nope"
