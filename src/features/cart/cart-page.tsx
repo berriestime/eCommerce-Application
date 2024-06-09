@@ -17,7 +17,7 @@ import { RemoveModal as ClearCartModal } from './components/remove-modal';
 import classes from './cart-page.module.css';
 
 const CartPage = (): JSX.Element => {
-  // const dispatch = useAppDispatch(); // TODO dispatch clear cart
+  // const dispatch = useAppDispatch(); // TODO dispatch clear cart function
   const lineItems = useAppSelector((state) => state.cart.items);
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const [modalOrderOpened, { close: closeOrderModal, open: openOrderModal }] = useDisclosure(false);

@@ -1,4 +1,4 @@
-import type { Cart, CartUpdateAction, LineItem } from '@commercetools/platform-sdk';
+import type { Cart } from '@commercetools/platform-sdk';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
@@ -8,19 +8,10 @@ import { apiRootLogin } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
 import { defineApiRoot } from '@/lib/commerstools/define-client';
 
-interface CartItem {
-  productId: string;
-  quantity: number;
-  variantId: number;
-}
+import type { CartState } from './types';
 
-interface CartState {
-  error: null | string;
-  id: null | string; // You need to store the cart id to update it
-  items: LineItem[];
-  loading: boolean;
-  version: number; // You also need the cart version for update actions
-}
+import { addProductToCart } from './add-product-to-cart';
+import { removeProductFromCart } from './remove-product-from-cart';
 
 const initialState: CartState = {
   error: null,
@@ -29,92 +20,6 @@ const initialState: CartState = {
   loading: false,
   version: 0,
 };
-
-// Async thunk to add a product to the cart
-const addProductToCart = createAsyncThunk(
-  'cart/addProduct',
-  async (product: CartItem, { getState, rejectWithValue }) => {
-    const state = getState() as { cart: CartState };
-    const { id, version } = state.cart;
-
-    if (!id || version === undefined) {
-      return rejectWithValue('Cart ID or version is missing');
-    }
-
-    const updateActions: CartUpdateAction[] = [
-      {
-        action: 'addLineItem',
-        productId: product.productId,
-        quantity: product.quantity,
-        variantId: product.variantId,
-      },
-    ];
-
-    try {
-      const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-      const response = await apiRoot
-        .carts()
-        .withId({ ID: id })
-        .post({
-          body: {
-            actions: updateActions,
-            version: version,
-          },
-        })
-        .execute();
-
-      return response.body;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  },
-);
-
-interface RemoveLineItemPayload {
-  lineItemId: string;
-  quantity: number; // Optional - specify if you want to remove a specific quantity
-}
-
-// Async thunk to remove a line item from the cart
-const removeProductFromCart = createAsyncThunk(
-  'cart/removeProduct',
-  async ({ lineItemId, quantity }: RemoveLineItemPayload, { getState, rejectWithValue }) => {
-    const state = getState() as { cart: CartState };
-    const { id, version } = state.cart;
-
-    if (!id || version === undefined) {
-      return rejectWithValue('Cart ID or version is missing');
-    }
-
-    // The update action for removing a line item
-    const updateActions: CartUpdateAction[] = [
-      {
-        action: 'removeLineItem',
-        lineItemId: lineItemId,
-        // Include the quantity field only if a specific quantity should be removed
-        ...(quantity && { quantity: quantity }),
-      },
-    ];
-
-    try {
-      const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-      const response = await apiRoot
-        .carts()
-        .withId({ ID: id })
-        .post({
-          body: {
-            actions: updateActions,
-            version: version,
-          },
-        })
-        .execute();
-
-      return response.body;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  },
-);
 
 const getCartByCustomerId = createAsyncThunk('cart/getCartByCustomerId', async (_: unknown, { rejectWithValue }) => {
   try {
@@ -192,5 +97,5 @@ const cartSlice = createSlice({
   reducers: {},
 });
 
-export { addProductToCart, cartSlice, getCartByCustomerId, removeProductFromCart };
+export { cartSlice, getCartByCustomerId };
 export default cartSlice.reducer;
