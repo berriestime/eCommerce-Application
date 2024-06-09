@@ -12,8 +12,8 @@ import { LANGUAGE } from '@/constants/catalog-constants';
 import { useAppDispatch } from '@/store';
 import { getPricesFromLineItem } from '@/utils/formate-price';
 
-import { addProductToCart } from '../../api/add-product-to-cart';
-import { removeProductFromCart } from '../../api/remove-product-from-cart';
+import { addProductToCart } from '../../store/add-product-to-cart';
+import { removeProductFromCart } from '../../store/remove-product-from-cart';
 import { RemoveModal } from '../remove-modal';
 
 import classes from './product.module.css';
