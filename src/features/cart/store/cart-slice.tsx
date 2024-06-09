@@ -20,7 +20,7 @@ const initialState: CartState = {
 const getCartByCustomerId = createAsyncThunk('cart/getCartByCustomerId', async (_: unknown, { rejectWithValue }) => {
   try {
     try {
-      return getActiveCart();
+      return await getActiveCart();
     } catch (error) {
       if (error instanceof Error && 'code' in error && error.code !== 404) {
         throw error;
