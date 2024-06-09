@@ -19,8 +19,7 @@ import { clsx } from 'clsx';
 
 import type { RootState } from '@/store/store';
 
-import { LogoutIcon } from '@/components/icons/logout';
-import { ProfileIcon } from '@/components/icons/profile';
+import { CartIcon, LogoutIcon, ProfileIcon } from '@/components/icons';
 import { Logo } from '@/components/logo';
 import { LogoutModal } from '@/components/modals/logout-modal';
 import { setAuthState } from '@/features/auth/authSlice';
@@ -46,7 +45,7 @@ const Header: FC = () => {
   const nav = [
     { name: 'Main', to: APP_ROUTE.Main },
     { name: 'Store', to: `/${APP_ROUTE.Store}` },
-    { name: 'Cart', to: `/${APP_ROUTE.Cart}` },
+    // { name: 'Cart', to: `/${APP_ROUTE.Cart}` },
     { name: 'Our Team', to: `/${APP_ROUTE.Team}` },
   ];
 
@@ -56,6 +55,7 @@ const Header: FC = () => {
   ];
 
   const profile = [
+    { icon: <CartIcon size={28} />, name: 'Cart1', to: `/${APP_ROUTE.Cart}` },
     { icon: <ProfileIcon size={28} />, name: 'Profile', to: `/${APP_ROUTE.Profile}` },
     { icon: <LogoutIcon size={26} />, name: 'Logout' },
   ];

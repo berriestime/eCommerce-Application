@@ -7,8 +7,7 @@ import { useDebouncedCallback } from '@mantine/hooks';
 import { Chevron } from '@/components/chevron';
 import { CustomSelect } from '@/components/custom-select';
 import { CustomTextInput } from '@/components/custom-text-input';
-import { CloseIcon } from '@/components/icons/close';
-import { SearchIcon } from '@/components/icons/search';
+import { CloseIcon, SearchIcon } from '@/components/icons';
 
 import classes from './filters.module.css';
 

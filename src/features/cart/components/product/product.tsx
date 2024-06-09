@@ -6,7 +6,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
-import { CloseIcon } from '@/components/icons/close';
+import { CloseIcon } from '@/components/icons';
 import { LANGUAGE } from '@/constants/catalog-constants';
 import { removeItem, updateItemQuantity } from '@/features/cart/cartSlice';
 import { type CartProduct } from '@/types/productTypes';

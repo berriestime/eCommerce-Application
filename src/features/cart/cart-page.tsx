@@ -9,7 +9,7 @@ import type { RootState } from '@/store/store';
 
 import { BaseButton } from '@/components/base-button';
 import { Footer } from '@/components/footer';
-import { CloseIcon } from '@/components/icons/close';
+import { CloseIcon } from '@/components/icons';
 import { clearCart } from '@/features/cart/cartSlice';
 import { type CartProduct } from '@/types/productTypes';
 
