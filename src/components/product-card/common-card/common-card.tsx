@@ -13,7 +13,7 @@ import { DISCOUNT_SIZE, LANGUAGE } from '@/constants/catalog-constants';
 import { addProductToCart, removeProductFromCart } from '@/features/cart/cart-slice';
 import { addItem } from '@/features/cart/cartSlice';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { getPrice } from '@/utils/formate-price';
+import { getPricesFromProductProjection } from '@/utils/formate-price';
 
 import classes from './common-card.module.css';
 
@@ -36,7 +36,7 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
 
   const { masterVariant, metaDescription, name } = data;
   const { images } = masterVariant;
-  const { discountPrice, price } = getPrice(data);
+  const { discountPrice, price } = getPricesFromProductProjection(data);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {

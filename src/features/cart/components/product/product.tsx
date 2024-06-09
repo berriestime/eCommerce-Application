@@ -1,5 +1,6 @@
+import type { LineItem } from '@commercetools/platform-sdk';
+
 import { type ReactElement, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { Box, Button, Divider, Flex, Group, Image, Skeleton, Text, Tooltip } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -8,22 +9,23 @@ import { clsx } from 'clsx';
 import { BaseButton } from '@/components/base-button';
 import { CloseIcon } from '@/components/icons';
 import { LANGUAGE } from '@/constants/catalog-constants';
-import { removeItem, updateItemQuantity } from '@/features/cart/cartSlice';
-import { type CartProduct } from '@/types/productTypes';
-import { getPrice } from '@/utils/formate-price';
+import { updateItemQuantity } from '@/features/cart/cartSlice';
+import { useAppDispatch } from '@/store';
+import { getPricesFromLineItem } from '@/utils/formate-price';
 
 import { RemoveModal } from '../remove-modal';
 
 import classes from './product.module.css';
 
-const Product = ({ data }: { data: CartProduct }): JSX.Element => {
-  const dispatch = useDispatch();
+const Product = ({ data }: { data: LineItem }): JSX.Element => {
+  const dispatch = useAppDispatch();
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
 
-  const { product, quantity } = data;
-  const { masterVariant, name } = product;
-  const { images } = masterVariant;
-  const { discountPrice, price } = getPrice(product);
+  const { quantity } = data;
+  const { discountPrice, price } = getPricesFromLineItem(data);
+  const productId = data.productId;
+  const name = data.name;
+  const images = data.variant.images;
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -96,12 +98,12 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
         <Group align="center" className={classes.counterContainer} gap={8} justify="space-between">
           <BaseButton
             disabled={quantity === 0}
-            onClick={() => dispatch(updateItemQuantity({ id: product.id, quantity: quantity - 1 }))}
+            onClick={() => dispatch(updateItemQuantity({ id: productId, quantity: quantity - 1 }))}
           >
             -
           </BaseButton>
           <Text c="bright">{quantity}</Text>
-          <BaseButton onClick={() => dispatch(updateItemQuantity({ id: product.id, quantity: quantity + 1 }))}>
+          <BaseButton onClick={() => dispatch(updateItemQuantity({ id: productId, quantity: quantity + 1 }))}>
             +
           </BaseButton>
         </Group>
@@ -121,7 +123,8 @@ const Product = ({ data }: { data: CartProduct }): JSX.Element => {
         close={closeModal}
         opened={modalOpened}
         submit={() => {
-          dispatch(removeItem(product.id));
+          // dispatch(removeItem(productId));
+          throw new Error('dispatch(removeItem(productId));');
         }}
         text={`Are you sure you want to remove ${name[LANGUAGE]} ?`}
         title="Remove from cart"

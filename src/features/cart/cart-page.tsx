@@ -1,17 +1,13 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Button, Divider, Flex, Text, TextInput, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
-import type { RootState } from '@/store/store';
-
 import { BaseButton } from '@/components/base-button';
 import { Footer } from '@/components/footer';
 import { CloseIcon } from '@/components/icons';
-import { clearCart } from '@/features/cart/cartSlice';
-import { type CartProduct } from '@/types/productTypes';
+import { useAppSelector } from '@/store';
 
 import { EmptyCart } from './components/empty-cart';
 import { OrderModal } from './components/order-modal';
@@ -21,12 +17,12 @@ import { RemoveModal as ClearCartModal } from './components/remove-modal';
 import classes from './cart-page.module.css';
 
 const CartPage = (): JSX.Element => {
-  const dispatch = useDispatch();
-  const products: CartProduct[] = useSelector((state: RootState) => state.cart.items);
+  // const dispatch = useAppDispatch();
+  const lineItems = useAppSelector((state) => state.cart.items);
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const [modalOrderOpened, { close: closeOrderModal, open: openOrderModal }] = useDisclosure(false);
 
-  const productCards = products.map((item) => <Product data={item} key={item.product.id} />);
+  const productCards = lineItems.map((item) => <Product data={item} key={item.productId} />);
 
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState('');
@@ -40,7 +36,7 @@ const CartPage = (): JSX.Element => {
             Your Cart
           </Title>
 
-          {products.length > 0 && (
+          {lineItems.length > 0 && (
             <Button c="#aa9f9c" className={classes.clearBtn} onClick={() => openModal()} variant="transparent">
               <Text className={classes.clearText} mr={8}>
                 Clear Shopping Cart
@@ -52,10 +48,10 @@ const CartPage = (): JSX.Element => {
 
         <Divider mb={20} size="sm" />
 
-        <Box className={classes.contentWrapper}>{products && products.length > 0 ? productCards : <EmptyCart />}</Box>
+        <Box className={classes.contentWrapper}>{lineItems && lineItems.length > 0 ? productCards : <EmptyCart />}</Box>
 
         <Box className={classes.contentWrapper} my={56}>
-          {products.length > 0 && (
+          {lineItems.length > 0 && (
             <Flex align="center" className={classes.total}>
               <TextInput
                 autoComplete="nope"
@@ -88,7 +84,7 @@ const CartPage = (): JSX.Element => {
           close={closeModal}
           opened={modalOpened}
           submit={() => {
-            dispatch(clearCart());
+            throw new Error('dispatch(clearCart());');
           }}
           text="Are you sure you want to clear shopping cart?"
           title="Clear Shopping Cart"
