@@ -10,7 +10,8 @@ import type { RootState } from '@/store';
 
 import { BaseButton } from '@/components/base-button';
 import { DISCOUNT_SIZE, LANGUAGE } from '@/constants/catalog-constants';
-import { addProductToCart, removeProductFromCart } from '@/features/cart/cart-slice';
+import { addProductToCart } from '@/features/cart/api/add-product-to-cart';
+import { removeProductFromCart } from '@/features/cart/api/remove-product-from-cart';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getPricesFromProductProjection } from '@/utils/formate-price';
 
