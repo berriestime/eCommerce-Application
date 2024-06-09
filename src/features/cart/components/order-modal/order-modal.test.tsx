@@ -4,15 +4,15 @@ import { describe, expect, test } from 'vitest';
 
 import { customRender, screen } from '@/test-utils';
 
-import { CartPage } from './cart-page';
+import { OrderModal } from './order-modal';
 
-describe('CartPage', () => {
+describe('OrderModal', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
-        <CartPage />
+        <OrderModal close={() => {}} opened={true} submit={() => {}} text="Sorry!" title="Make An Order" />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Your Cart')).toBeInTheDocument();
+    expect(screen.getByText('Make An Order')).toBeInTheDocument();
   });
 });

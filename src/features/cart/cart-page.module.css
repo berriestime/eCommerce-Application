@@ -1,3 +1,96 @@
 .container {
+  composes: commonContainer from '../../index.css';
+
   display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.head {
+  justify-content: space-between;
+
+  @media (width <= 450px) {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+.contentWrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 100px;
+  user-select: none;
+
+  @media (width <= 1200px) {
+    padding: 0 32px;
+  }
+
+  @media (width <= 600px) {
+    padding: 0 16px;
+  }
+}
+
+.clearBtn {
+  padding: 0;
+}
+
+.clearText {
+  font-weight: 300;
+}
+
+.total {
+  justify-content: space-between;
+
+  @media (width <= 768px) {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+.root {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  z-index: 2;
+  top: 7px;
+  left: var(--mantine-spacing-sm);
+  pointer-events: none;
+  color: #aa9f9c;
+  transition:
+    transform 300ms ease,
+    font-size 300ms ease;
+
+  &[data-floating] {
+    transform: translate(calc(var(--mantine-spacing-sm) * -1), -28px);
+    font-size: var(--mantine-font-size-xs);
+    font-weight: 500;
+    color: #aa9f9c;
+  }
+}
+
+.input {
+  &::placeholder {
+    transition: color 150ms ease;
+    color: transparent;
+  }
+
+  &[data-floating] {
+    &::placeholder {
+      color: var(--mantine-color-placeholder);
+    }
+  }
+}
+
+.wrapper {
+  --input-bd-focus: #aa9f9c !important;
+  --input-bg: transparent !important;
 }

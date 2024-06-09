@@ -8,7 +8,9 @@ import {
   // Button,
   Divider,
   Drawer,
+  Flex,
   Group,
+  Indicator,
   ScrollArea,
   UnstyledButton,
   rem,
@@ -19,8 +21,7 @@ import { clsx } from 'clsx';
 
 import type { RootState } from '@/store/store';
 
-import { LogoutIcon } from '@/components/icons/logout';
-import { ProfileIcon } from '@/components/icons/profile';
+import { CartIcon, LogoutIcon, ProfileIcon } from '@/components/icons';
 import { Logo } from '@/components/logo';
 import { LogoutModal } from '@/components/modals/logout-modal';
 import { setAuthState } from '@/features/auth/authSlice';
@@ -46,18 +47,35 @@ const Header: FC = () => {
   const nav = [
     { name: 'Main', to: APP_ROUTE.Main },
     { name: 'Store', to: `/${APP_ROUTE.Store}` },
-    { name: 'Cart', to: `/${APP_ROUTE.Cart}` },
     { name: 'Our Team', to: `/${APP_ROUTE.Team}` },
   ];
 
+  const cart = (
+    <Indicator classNames={{ indicator: classes.indicator }} color="#aa9f9c" label="25" size={20}>
+      <CartIcon size={28} />
+    </Indicator>
+  );
+
   const auth = [
+    {
+      icon: cart,
+      isIcon: true,
+      name: 'Cart',
+      to: `/${APP_ROUTE.Cart}`,
+    },
     { name: 'Log In', to: `/${APP_ROUTE.Login}` },
     { name: 'Sign Up', to: `/${APP_ROUTE.Registration}` },
   ];
 
   const profile = [
+    {
+      icon: cart,
+      isIcon: true,
+      name: 'Cart',
+      to: `/${APP_ROUTE.Cart}`,
+    },
     { icon: <ProfileIcon size={28} />, name: 'Profile', to: `/${APP_ROUTE.Profile}` },
-    { icon: <LogoutIcon size={26} />, name: 'Logout' },
+    { icon: <LogoutIcon size={26} />, isIcon: true, name: 'Logout' },
   ];
 
   const matches = useMediaQuery('(width < 48em)');
@@ -65,6 +83,7 @@ const Header: FC = () => {
   const getItems = (
     elements: {
       icon?: ReactElement;
+      isIcon?: boolean;
       name: string;
       to?: string;
     }[],
@@ -79,7 +98,11 @@ const Header: FC = () => {
         );
       }
 
-      const linkContents = el.icon ? (
+      const linkContents = el.isIcon ? (
+        <>
+          {el.icon} {matches ? el.name : ''}
+        </>
+      ) : el.icon && !el.isIcon ? (
         <>
           {el.icon} {el.name}
         </>
@@ -140,9 +163,9 @@ const Header: FC = () => {
 
           <Divider my="sm" />
 
-          <Group grow justify="center" pb="xl">
+          <Flex align="center" direction="column" gap={24} justify="center" mt={32} pb="xl">
             {isAuth ? getItems(profile, classes.profileLink) : getItems(auth, classes.authLink)}
-          </Group>
+          </Flex>
         </ScrollArea>
       </Drawer>
 

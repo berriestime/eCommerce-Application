@@ -4,15 +4,15 @@ import { describe, expect, test } from 'vitest';
 
 import { customRender, screen } from '@/test-utils';
 
-import { CartPage } from './cart-page';
+import { EmptyCart } from './empty-cart';
 
-describe('CartPage', () => {
+describe('EmptyCart', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
-        <CartPage />
+        <EmptyCart />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Your Cart')).toBeInTheDocument();
+    expect(screen.getByText('YOUR CART IS CURRENTLY EMPTY')).toBeInTheDocument();
   });
 });

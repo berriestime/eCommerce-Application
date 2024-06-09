@@ -1,6 +1,6 @@
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-import type { Prices } from '@/types/prodectTypes';
+import type { Prices } from '@/types/productTypes';
 
 const fomatPrice = (price: string, digit: number): string => {
   const formattedPrice = `${price.slice(0, digit)}.${price.slice(digit)}`;

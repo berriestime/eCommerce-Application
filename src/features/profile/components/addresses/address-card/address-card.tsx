@@ -4,7 +4,7 @@ import { Button, Flex, Menu, Text } from '@mantine/core';
 
 import type { AddressCardProps } from '@/features/profile/types/address-card-props';
 
-import { MenuIcon } from '@/components/icons/menu';
+import { MenuIcon } from '@/components/icons';
 import { postRemoveUserAddress } from '@/features/profile/api/address-api';
 import { addNotification } from '@/utils/show-notification';
 
