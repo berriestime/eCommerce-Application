@@ -124,3 +124,7 @@
 .drawer .link {
   margin: 1.5rem auto;
 }
+
+.indicator {
+  font-weight: 600;
+}

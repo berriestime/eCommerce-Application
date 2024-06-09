@@ -10,6 +10,7 @@ import {
   Drawer,
   Flex,
   Group,
+  Indicator,
   ScrollArea,
   UnstyledButton,
   rem,
@@ -49,14 +50,30 @@ const Header: FC = () => {
     { name: 'Our Team', to: `/${APP_ROUTE.Team}` },
   ];
 
+  const cart = (
+    <Indicator classNames={{ indicator: classes.indicator }} color="#aa9f9c" label="25" size={20}>
+      <CartIcon size={28} />
+    </Indicator>
+  );
+
   const auth = [
-    { icon: <CartIcon size={28} />, isIcon: true, name: 'Cart', to: `/${APP_ROUTE.Cart}` },
+    {
+      icon: cart,
+      isIcon: true,
+      name: 'Cart',
+      to: `/${APP_ROUTE.Cart}`,
+    },
     { name: 'Log In', to: `/${APP_ROUTE.Login}` },
     { name: 'Sign Up', to: `/${APP_ROUTE.Registration}` },
   ];
 
   const profile = [
-    { icon: <CartIcon size={28} />, isIcon: true, name: 'Cart', to: `/${APP_ROUTE.Cart}` },
+    {
+      icon: cart,
+      isIcon: true,
+      name: 'Cart',
+      to: `/${APP_ROUTE.Cart}`,
+    },
     { icon: <ProfileIcon size={28} />, name: 'Profile', to: `/${APP_ROUTE.Profile}` },
     { icon: <LogoutIcon size={26} />, isIcon: true, name: 'Logout' },
   ];
@@ -146,7 +163,7 @@ const Header: FC = () => {
 
           <Divider my="sm" />
 
-          <Flex align="center" direction="column" gap={24} justify="center" mt={24} pb="xl">
+          <Flex align="center" direction="column" gap={24} justify="center" mt={32} pb="xl">
             {isAuth ? getItems(profile, classes.profileLink) : getItems(auth, classes.authLink)}
           </Flex>
         </ScrollArea>
