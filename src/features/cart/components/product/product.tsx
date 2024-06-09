@@ -9,10 +9,10 @@ import { clsx } from 'clsx';
 import { BaseButton } from '@/components/base-button';
 import { CloseIcon } from '@/components/icons';
 import { LANGUAGE } from '@/constants/catalog-constants';
-import { updateItemQuantity } from '@/features/cart/cartSlice';
 import { useAppDispatch } from '@/store';
 import { getPricesFromLineItem } from '@/utils/formate-price';
 
+import { addProductToCart, removeProductFromCart } from '../../cart-slice';
 import { RemoveModal } from '../remove-modal';
 
 import classes from './product.module.css';
@@ -98,12 +98,18 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
         <Group align="center" className={classes.counterContainer} gap={8} justify="space-between">
           <BaseButton
             disabled={quantity === 0}
-            onClick={() => dispatch(updateItemQuantity({ id: productId, quantity: quantity - 1 }))}
+            onClick={() => {
+              void dispatch(removeProductFromCart({ lineItemId: data.id, quantity: 1 }));
+            }}
           >
             -
           </BaseButton>
           <Text c="bright">{quantity}</Text>
-          <BaseButton onClick={() => dispatch(updateItemQuantity({ id: productId, quantity: quantity + 1 }))}>
+          <BaseButton
+            onClick={() => {
+              void dispatch(addProductToCart({ productId, quantity: 1, variantId: data.variant.id }));
+            }}
+          >
             +
           </BaseButton>
         </Group>
@@ -123,8 +129,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
         close={closeModal}
         opened={modalOpened}
         submit={() => {
-          // dispatch(removeItem(productId));
-          throw new Error('dispatch(removeItem(productId));');
+          void dispatch(removeProductFromCart({ lineItemId: data.id, quantity }));
         }}
         text={`Are you sure you want to remove ${name[LANGUAGE]} ?`}
         title="Remove from cart"

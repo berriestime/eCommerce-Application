@@ -11,7 +11,6 @@ import type { RootState } from '@/store';
 import { BaseButton } from '@/components/base-button';
 import { DISCOUNT_SIZE, LANGUAGE } from '@/constants/catalog-constants';
 import { addProductToCart, removeProductFromCart } from '@/features/cart/cart-slice';
-import { addItem } from '@/features/cart/cartSlice';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getPricesFromProductProjection } from '@/utils/formate-price';
 
@@ -29,8 +28,6 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
   const handleCardClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     if (!(event.target as HTMLElement).closest('.addToCartButton')) {
       navigate(url);
-    } else {
-      dispatch(addItem({ product: data, quantity: 1, url }));
     }
   };
 
