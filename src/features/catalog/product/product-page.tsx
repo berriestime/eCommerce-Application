@@ -16,7 +16,7 @@ import { CommonCard } from '@/components/product-card/common-card';
 import { LANGUAGE } from '@/constants/catalog-constants';
 import { BREAKPOINT } from '@/constants/media-query';
 import { CategoriesSection } from '@/features/root-page/components/categories-section';
-import { getPrice } from '@/utils/formate-price';
+import { getPricesFromProductProjection } from '@/utils/formate-price';
 
 import { MiniSlider } from './components/mini-slider';
 import { BigSlider } from './components/slider';
@@ -40,7 +40,7 @@ const ProductPage = (): JSX.Element => {
     productData: ProductProjection;
   };
   const { results: cards } = cardsData;
-  const { discountPrice, price } = getPrice(productData);
+  const { discountPrice, price } = getPricesFromProductProjection(productData);
 
   const [bigSliderOpened, setOpened] = useState(false);
 
