@@ -1,6 +1,6 @@
-import type { ReactElement } from 'react';
+import { type ReactElement, useEffect, useState } from 'react';
 
-import { Flex, Image, Text, Title } from '@mantine/core';
+import { Flex, Image, Skeleton, Text, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
@@ -21,6 +21,17 @@ type TeamContentBlock = {
 const TeamContentBlock = (props: TeamContentBlock): ReactElement => {
   const matchesMd = useMediaQuery(`(width < ${BREAKPOINT.SM})`);
 
+  const { srcImage } = props;
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = srcImage!;
+    img.onload = () => {
+      setLoading(false);
+    };
+  });
+
   return (
     <Flex<'a'>
       className={classes.container}
@@ -30,8 +41,11 @@ const TeamContentBlock = (props: TeamContentBlock): ReactElement => {
       href={props.link}
       target="_blank"
     >
-      <Image className={clsx(classes.image, props.srcImage ? '' : classes.hidden)} src={props.srcImage}></Image>
-      <Flex align={props.isCenter || matchesMd ? 'center' : 'start'} direction={'column'}>
+      <Skeleton display={srcImage ? 'block' : 'none'} h={'15rem'} visible={loading} w={'15rem'}>
+        <Image className={clsx(classes.image, props.srcImage ? '' : classes.hidden)} src={props.srcImage}></Image>
+      </Skeleton>
+
+      <Flex align={props.isCenter || matchesMd ? 'center' : 'start'} className={classes.wrapper} direction={'column'}>
         <Title
           className={clsx(classes.title)}
           mb={'1rem'}
