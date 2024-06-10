@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 
-import { Box, Flex, Image, List, Text, Title } from '@mantine/core';
+import { Flex, Image, List, Text, Title } from '@mantine/core';
 
 import { GithubIcon } from '@/components/icons/github';
 
@@ -18,10 +18,13 @@ type MemberProps = {
 
 const Member = (props: MemberProps): ReactElement => {
   return (
-    <Flex className={classes.member} gap={'3rem'} mx={'1rem'} px={'2rem'}>
-      <Image src={props.photoSrc} w={'14.5rem'}></Image>
-      <Flex className={classes.container} direction={'column'}>
-        <Flex align={'center'} gap={'1rem'}>
+    <Flex className={classes.member}>
+      <Flex className={classes.photo}>
+        <Image src={props.photoSrc} w={'14.5rem'}></Image>
+      </Flex>
+
+      <Flex className={classes.nameAndTitle} direction={'column'} gap={'1rem'}>
+        <Flex align={'center'} className={classes.nameAndLink} direction={'row-reverse'} gap={'1rem'} justify={'start'}>
           <Title className={classes.name} order={3}>
             {props.name}
           </Title>
@@ -29,21 +32,25 @@ const Member = (props: MemberProps): ReactElement => {
             <GithubIcon size={36} /> {props.github}
           </Text>
         </Flex>
-        <Text className={classes.title} mb={'0.5rem'} mt={'0.3rem'}>
-          {props.title}
-        </Text>
-        <Text className={classes.text} mb={'0.5rem'}>
+        <Text className={classes.title}>{props.title}</Text>
+      </Flex>
+
+      <Flex className={classes.bio}>
+        <Text mb={'0.5rem'}>
           <span className={classes.bold}>Biography: </span>
           {props.biography}
         </Text>
-        <Box className={classes.text}>
-          <span className={classes.bold}>Contribution: </span>
-          <List className={classes.text}>
-            {props.contributions.map((elem) => (
-              <List.Item key={elem}>{elem} </List.Item>
-            ))}
-          </List>
-        </Box>
+      </Flex>
+
+      <Flex className={classes.contribution} direction={'column'}>
+        <span className={classes.bold}>Contribution: </span>
+        <List className={classes.text}>
+          {props.contributions.map((elem) => (
+            <List.Item className={classes.text} key={elem}>
+              {elem}
+            </List.Item>
+          ))}
+        </List>
       </Flex>
     </Flex>
   );
