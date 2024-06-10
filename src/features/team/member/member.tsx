@@ -1,6 +1,6 @@
-import type { ReactElement } from 'react';
+import { type ReactElement, useEffect, useState } from 'react';
 
-import { Flex, Image, List, Text, Title } from '@mantine/core';
+import { Flex, Image, List, Skeleton, Text, Title } from '@mantine/core';
 
 import { GithubIcon } from '@/components/icons/github';
 
@@ -17,9 +17,21 @@ type MemberProps = {
 };
 
 const Member = (props: MemberProps): ReactElement => {
+  const { photoSrc } = props;
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = photoSrc;
+    img.onload = () => {
+      setLoading(false);
+    };
+  });
+
   return (
     <Flex className={classes.member}>
       <Flex className={classes.photo}>
+        <Skeleton h={'24rem'} visible={loading} w={'14.5rem'}></Skeleton>
         <Image src={props.photoSrc} w={'14.5rem'}></Image>
       </Flex>
 
