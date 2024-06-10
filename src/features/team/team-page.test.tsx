@@ -13,6 +13,6 @@ describe('TeamPage', () => {
         <TeamPage />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Team page')).toBeInTheDocument();
+    expect(screen.getByText('Our Team')).toBeInTheDocument();
   });
 });
