@@ -8,6 +8,10 @@
   text-decoration: none;
 }
 
+.wrapper {
+  width: 40rem;
+}
+
 .image {
   width: 15rem;
 }
