@@ -14,6 +14,7 @@ import imgBestYellow from './assets/best/yellow.webp';
 import { CardsSection } from './components/cards-section';
 import { CategoriesSection } from './components/categories-section';
 import { FirstHero } from './components/first-hero';
+import { Promo } from './components/promo';
 import { SecondHero } from './components/second-hero';
 
 const bestData = [
@@ -64,11 +65,14 @@ const RootPage: FC = () => {
       <FirstHero />
       <CardsSection mockdata={bestData} title="BEST SELLERS" />
       <SecondHero />
+      <Promo />
+
       <CardsSection
         mockdata={classicData}
         text="The first and original lava lamp is a Pop Design classic. Timeless and time-tested choice."
         title="ASTRO LAVA LAMP"
       />
+
       <CategoriesSection />
       <Footer />
     </Box>
