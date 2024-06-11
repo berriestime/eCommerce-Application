@@ -2,3 +2,10 @@
   z-index: 210;
   user-select: none;
 }
+
+.title {
+  color: #0000;
+  background: linear-gradient(to bottom left, #d8a70a, #ff0000);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
