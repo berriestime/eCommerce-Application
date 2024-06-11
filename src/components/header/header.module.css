@@ -121,6 +121,13 @@
   }
 }
 
+.authLink {
+  @media (width <= 767px) {
+    justify-content: center;
+    padding: 0;
+  }
+}
+
 .drawer .link {
   margin: 1.5rem auto;
 }
