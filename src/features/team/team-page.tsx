@@ -50,7 +50,9 @@ const TeamPage: FC = () => {
 
       <Hero>
         <Container className={classes.container} size="md">
-          <Title className={classes.title}>Why We Do This Project</Title>
+          <Title className={classes.title} ta={'center'}>
+            Why We Do This Project
+          </Title>
         </Container>
       </Hero>
 
