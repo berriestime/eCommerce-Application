@@ -168,7 +168,7 @@ const ProductPage = (): JSX.Element => {
           YOU MAY ALSO LIKE...
         </Text>
 
-        <SimpleGrid cols={{ base: 1, sm: 3, xs: 2 }} mt="xl" spacing="60">
+        <SimpleGrid cols={{ base: 1, sm: 3, xs: 2 }} mb={120} mt="xl" spacing="60">
           {productCards}
         </SimpleGrid>
       </Box>
