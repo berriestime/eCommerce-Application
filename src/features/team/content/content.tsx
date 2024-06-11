@@ -1,12 +1,10 @@
-import { type ReactElement, useEffect, useState } from 'react';
+import { type ReactElement, useEffect, useRef, useState } from 'react';
 
 import { Flex, Image, Skeleton, Text, Title } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
+import { useIntersection, useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
 import { BREAKPOINT } from '@/constants/media-query';
-
-// import teamLogo from '../assets/ranger-logo.png';
 
 import classes from './content.module.css';
 
@@ -32,13 +30,28 @@ const TeamContentBlock = (props: TeamContentBlock): ReactElement => {
     };
   });
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { entry, ref } = useIntersection({
+    root: containerRef.current,
+    threshold: 0.8,
+  });
+
+  const [animation, setAnimationState] = useState(false);
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      setAnimationState(true);
+    }
+  }, [animation, entry?.isIntersecting]);
+
   return (
     <Flex<'a'>
-      className={classes.container}
+      className={clsx(classes.container, animation ? classes.animation : '')}
       component="a"
       direction={matchesMd ? 'column' : 'row'}
       gap={'3rem'}
       href={props.link}
+      ref={ref}
       target="_blank"
     >
       <Skeleton display={srcImage ? 'block' : 'none'} h={'15rem'} visible={loading} w={'15rem'}>
@@ -48,7 +61,7 @@ const TeamContentBlock = (props: TeamContentBlock): ReactElement => {
       <Flex
         align={props.isCenter || matchesMd ? 'center' : 'start'}
         direction={'column'}
-        w={srcImage ? '40rem' : 'auto'}
+        // w={srcImage ? '40rem' : 'auto'}
       >
         <Title
           className={clsx(classes.title)}

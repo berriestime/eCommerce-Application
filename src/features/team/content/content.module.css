@@ -6,6 +6,42 @@
   padding: 0 2rem;
   color: #f3e7e4;
   text-decoration: none;
+  transition: 1s;
+  opacity: 0;
+
+  .image {
+    width: 15rem;
+    transition: 1s;
+  }
+}
+
+.container:hover {
+  .image {
+    animation-name: circle;
+    animation-duration: 1s;
+  }
+}
+
+.container.animation {
+  opacity: 1;
+}
+
+@keyframes circle {
+  from {
+    transform: rotate(0deg);
+  }
+
+  33% {
+    transform: rotate(10deg);
+  }
+
+  66% {
+    transform: rotate(-10deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
 }
 
 .wrapper {
@@ -14,10 +50,6 @@
   @media (width < 50rem) {
     width: auto;
   }
-}
-
-.image {
-  width: 15rem;
 }
 
 .title {
