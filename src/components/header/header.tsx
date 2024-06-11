@@ -2,20 +2,7 @@ import type { FC, ReactElement } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import {
-  Box,
-  Burger,
-  // Button,
-  Divider,
-  Drawer,
-  Flex,
-  Group,
-  Indicator,
-  ScrollArea,
-  UnstyledButton,
-  rem,
-  // useMantineColorScheme,
-} from '@mantine/core';
+import { Box, Burger, Divider, Drawer, Flex, Group, Indicator, ScrollArea, UnstyledButton, rem } from '@mantine/core';
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
@@ -34,8 +21,6 @@ import { APP_ROUTE } from '@/routes/routes';
 import classes from './header.module.css';
 
 const Header: FC = () => {
-  // const { setColorScheme } = useMantineColorScheme();
-
   const authData = useSelector((state: RootState) => state.auth.authState);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -136,12 +121,6 @@ const Header: FC = () => {
 
         <Group visibleFrom="sm">
           {isAuth ? getItems(profile, classes.profileLink) : getItems(auth, classes.authLink)}{' '}
-          {/* <Button lightHidden onClick={() => setColorScheme('light')}>
-            Light
-          </Button>
-          <Button darkHidden onClick={() => setColorScheme('dark')}>
-            Dark
-          </Button> */}
         </Group>
 
         <Burger hiddenFrom="sm" onClick={toggleDrawer} opened={drawerOpened} />
@@ -163,7 +142,7 @@ const Header: FC = () => {
 
           <Divider my="sm" />
 
-          <Flex align="center" direction="column" gap={24} justify="center" mt={32} pb="xl">
+          <Flex align="center" direction="column" gap={24} justify="center" mt={32} pb="xl" ta="center">
             {isAuth ? getItems(profile, classes.profileLink) : getItems(auth, classes.authLink)}
           </Flex>
         </ScrollArea>
