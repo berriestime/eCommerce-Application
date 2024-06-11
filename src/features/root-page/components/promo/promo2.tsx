@@ -1,31 +1,20 @@
 import { useRef } from 'react';
 
 import { Carousel } from '@mantine/carousel';
-import { BackgroundImage, Box, Flex, Overlay, Text, Title, rem } from '@mantine/core';
+import { Box, Flex, Overlay, Text, Title, rem } from '@mantine/core';
 import Autoplay from 'embla-carousel-autoplay';
 
 import { PROMO_1, PROMO_2, PROMO_3 } from '@/constants/catalog-constants';
 
-import promo1 from '../../assets/promo/1.webp';
-import promo2 from '../../assets/promo/2.webp';
-import promo3 from '../../assets/promo/3.webp';
-
 import classes from './promo.module.css';
 
-const Promo = (): JSX.Element => {
+const Promo2 = (): JSX.Element => {
   const autoplay = useRef(Autoplay({ delay: 5000 }));
 
-  const mockdata = [
-    { ...PROMO_1, url: promo1 },
-    { ...PROMO_2, url: promo2 },
-    { ...PROMO_3, url: promo3 },
-  ];
+  const mockdata = [{ ...PROMO_2 }, { ...PROMO_3 }, { ...PROMO_1 }];
 
   const cards = mockdata.map((card) => (
-    <Box key={card.id} mb={40}>
-      <BackgroundImage h={{ base: 300, sm: 200 }} radius={0} src={card.url}>
-        <Overlay backgroundOpacity={0.3} color="#000000" />
-      </BackgroundImage>
+    <Box h={{ base: 300, sm: 200 }} key={card.id}>
       <Flex
         align="center"
         className={classes.text}
@@ -35,25 +24,33 @@ const Promo = (): JSX.Element => {
         p="xl"
         pos="relative"
       >
-        <Title c="bright" fw={300} fz={{ base: 28, sm: 60 }} order={3}>
+        <Title c="bright" className={classes.title} fw={300} fz={{ base: 28, sm: 60 }} order={3}>
           {card.title}
         </Title>
         <Box>
-          <Text c="white" fz={{ base: 16, sm: 20 }} size="lg" ta="center">
+          <Text c="bright" fz={{ base: 16, sm: 20 }} size="lg" ta="center">
             {card.text}
           </Text>
-          <Text c="white" fw={300} fz={{ base: 28, sm: 36 }} mt={{ base: 20, sm: 0 }} size="lg" ta="center">
+          <Text
+            className={classes.title}
+            fw={600}
+            fz={{ base: 28, sm: 36 }}
+            mt={{ base: 20, sm: 0 }}
+            size="lg"
+            ta="center"
+          >
             {card.promocode}
           </Text>
         </Box>
       </Flex>
+      <Overlay backgroundOpacity={0.1} color="#000000" />
     </Box>
   ));
 
   const slides = cards.map((item, i) => <Carousel.Slide key={i}>{item}</Carousel.Slide>);
 
   return (
-    <Box mt={80}>
+    <Box>
       <Carousel
         align="start"
         loop
@@ -72,4 +69,4 @@ const Promo = (): JSX.Element => {
   );
 };
 
-export { Promo };
+export { Promo2 };

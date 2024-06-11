@@ -15,6 +15,7 @@ import { CardsSection } from './components/cards-section';
 import { CategoriesSection } from './components/categories-section';
 import { FirstHero } from './components/first-hero';
 import { Promo } from './components/promo';
+import { Promo2 } from './components/promo/promo2';
 import { SecondHero } from './components/second-hero';
 
 const bestData = [
@@ -65,14 +66,15 @@ const RootPage: FC = () => {
       <FirstHero />
       <CardsSection mockdata={bestData} title="BEST SELLERS" />
       <SecondHero />
-      <Promo />
+      <Promo2 />
+      <Box mt={60}></Box>
 
       <CardsSection
         mockdata={classicData}
         text="The first and original lava lamp is a Pop Design classic. Timeless and time-tested choice."
         title="ASTRO LAVA LAMP"
       />
-
+      <Promo />
       <CategoriesSection />
       <Footer />
     </Box>
