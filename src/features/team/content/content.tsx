@@ -45,7 +45,11 @@ const TeamContentBlock = (props: TeamContentBlock): ReactElement => {
         <Image className={clsx(classes.image, props.srcImage ? '' : classes.hidden)} src={props.srcImage}></Image>
       </Skeleton>
 
-      <Flex align={props.isCenter || matchesMd ? 'center' : 'start'} className={classes.wrapper} direction={'column'}>
+      <Flex
+        align={props.isCenter || matchesMd ? 'center' : 'start'}
+        direction={'column'}
+        w={srcImage ? '40rem' : 'auto'}
+      >
         <Title
           className={clsx(classes.title)}
           mb={'1rem'}
