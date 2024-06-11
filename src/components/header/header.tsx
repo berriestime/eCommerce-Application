@@ -22,6 +22,12 @@ import classes from './header.module.css';
 
 const Header: FC = () => {
   const authData = useSelector((state: RootState) => state.auth.authState);
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  let cartItemsQuantity = 0;
+  if (cartItems.length) {
+    cartItemsQuantity = cartItems.reduce((acc, el) => acc + el.quantity, 0);
+  }
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -36,7 +42,7 @@ const Header: FC = () => {
   ];
 
   const cart = (
-    <Indicator classNames={{ indicator: classes.indicator }} color="#aa9f9c" label="25" size={20}>
+    <Indicator classNames={{ indicator: classes.indicator }} color="#aa9f9c" label={cartItemsQuantity} size={20}>
       <CartIcon size={28} />
     </Indicator>
   );
