@@ -30,7 +30,7 @@ const removeProductFromCart = createAsyncThunk(
     try {
       return postCartWithId(id, updateActions, version);
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(String(error));
     }
   },
 );
