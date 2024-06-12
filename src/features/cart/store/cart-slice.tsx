@@ -1,12 +1,12 @@
 import type { Cart } from '@commercetools/platform-sdk';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import type { CartState } from './types';
 
-import { createNewCart, getActiveCart } from '../api';
 import { addProductToCart } from './add-product-to-cart';
+import { getCartByCustomerId } from './get-cart-by-customer-id';
 import { removeProductFromCart } from './remove-product-from-cart';
 
 const initialState: CartState = {
@@ -16,21 +16,6 @@ const initialState: CartState = {
   loading: false,
   version: 0,
 };
-
-const getCartByCustomerId = createAsyncThunk('cart/getCartByCustomerId', async (_: unknown, { rejectWithValue }) => {
-  try {
-    try {
-      return await getActiveCart();
-    } catch (error) {
-      if (error instanceof Error && 'code' in error && error.code !== 404) {
-        throw error;
-      }
-      return await createNewCart();
-    }
-  } catch (error) {
-    return rejectWithValue(error);
-  }
-});
 
 // The cart slice
 const cartSlice = createSlice({
@@ -84,4 +69,4 @@ const cartSlice = createSlice({
 });
 
 const { reducer: cartReducer } = cartSlice;
-export { cartReducer, cartSlice, getCartByCustomerId };
+export { cartReducer, cartSlice };
