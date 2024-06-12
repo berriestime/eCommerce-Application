@@ -26,6 +26,7 @@ const cartSlice = createSlice({
     });
     builder.addCase(addProductToCart.fulfilled, (state, action: PayloadAction<Cart>) => {
       state.loading = false;
+      state.id = action.payload.id;
       state.version = action.payload.version; // Update the version
       state.items = action.payload.lineItems; // Assuming the API returns the updated line items
     });
@@ -65,8 +66,20 @@ const cartSlice = createSlice({
   },
   initialState,
   name: 'cart',
-  reducers: {},
+  reducers: {
+    forceSetCartState: (state, action: PayloadAction<Cart | undefined>) => {
+      if (!action.payload) {
+        return;
+      }
+      state.id = action.payload.id;
+      state.version = action.payload.version;
+      state.items = action.payload.lineItems;
+    },
+  },
 });
 
-const { reducer: cartReducer } = cartSlice;
-export { cartReducer, cartSlice };
+const {
+  actions: { forceSetCartState },
+  reducer: cartReducer,
+} = cartSlice;
+export { cartReducer, cartSlice, forceSetCartState };
