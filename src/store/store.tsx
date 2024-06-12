@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import authReducer from '@/features/auth/authSlice';
-import { cartReducer, getCartByCustomerId } from '@/features/cart/store/cart-slice';
+import { cartReducer } from '@/features/cart/store/cart-slice';
+import { getCartByCustomerId } from '@/features/cart/store/get-cart-by-customer-id';
 
 const store = configureStore({
   reducer: {
