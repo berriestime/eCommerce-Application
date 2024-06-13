@@ -64,10 +64,7 @@ const Member = (props: MemberProps): ReactElement => {
       </Flex>
 
       <Flex className={classes.bio}>
-        <Text mb={'0.5rem'}>
-          <span className={classes.bold}>Biography: </span>
-          {props.biography}
-        </Text>
+        <Text mb={'0.5rem'}>{props.biography}</Text>
       </Flex>
 
       <Flex className={classes.contribution} direction={'column'}>
