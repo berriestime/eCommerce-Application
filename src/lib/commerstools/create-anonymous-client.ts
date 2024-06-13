@@ -44,4 +44,8 @@ const createAnonymousFlowClient = (): ByProjectKeyRequestBuilder => {
   return apiRootAnonymous;
 };
 
-export { apiRootAnonymous, createAnonymousFlowClient, httpMiddlewareOptions };
+const destroyAnonymousFlowClient = (): void => {
+  apiRootAnonymous = null;
+};
+
+export { apiRootAnonymous, createAnonymousFlowClient, destroyAnonymousFlowClient, httpMiddlewareOptions };

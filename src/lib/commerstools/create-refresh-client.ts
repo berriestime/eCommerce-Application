@@ -33,4 +33,8 @@ const createRefreshFlowClient = (token: TokenKey): ByProjectKeyRequestBuilder =>
   return apiRootRefresh;
 };
 
-export { apiRootRefresh, createRefreshFlowClient };
+const destroyRefreshFlowClient = (): void => {
+  apiRootRefresh = null;
+};
+
+export { apiRootRefresh, createRefreshFlowClient, destroyRefreshFlowClient };
