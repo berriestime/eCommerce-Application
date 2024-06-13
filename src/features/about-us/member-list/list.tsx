@@ -44,7 +44,7 @@ const MemberList = (): ReactElement => {
       />
 
       <Member
-        biography="Biography:  Idea generator and team inspirer. Master of Figma and SDK."
+        biography="Idea generator and team inspirer. Master of Figma and SDK."
         contributions={[
           'Created the idea for our store and all page design.',
           'Implemented a login page',
