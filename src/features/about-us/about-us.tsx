@@ -11,7 +11,7 @@ import mathmosLogo from './assets/uk-mathmos-logo 2.png';
 import { TeamContentBlock } from './content';
 import { MemberList } from './member-list';
 
-import classes from './team-page.module.css';
+import classes from './about-us.module.css';
 
 const TEAM_TITLE = 'The Redux Rangers Team';
 const TEXT_TEAM_1 =
@@ -33,12 +33,12 @@ const TEXT_MATHMOS_1 =
 const TEXT_MATHMOS_2 =
   'For this site, we found immense inspiration from Mathmos lava lamps. Their captivating visuals and innovative design principles sparked our creativity and motivated us to infuse a similar sense of wonder and quality into our final project for RS School.';
 
-const TeamPage: FC = () => {
+const AboutUs: FC = () => {
   return (
     <>
       <Hero>
         <Container className={classes.container} size="md">
-          <Title className={classes.title}>Our Team</Title>
+          <Title className={classes.title}>About Us</Title>
         </Container>
       </Hero>
 
@@ -70,4 +70,4 @@ const TeamPage: FC = () => {
   );
 };
 
-export { TeamPage };
+export { AboutUs };
