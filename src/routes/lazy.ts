@@ -23,6 +23,6 @@ export const RegistrationPage = lazy(() =>
   import('@/features/registration-page').then((module) => ({ default: module.RegistrationPage })),
 );
 export const RootPage = lazy(() => import('@/features/root-page').then((module) => ({ default: module.RootPage })));
-export const TeamPage = lazy(() =>
-  import('@/features/team/team-page').then((module) => ({ default: module.TeamPage })),
+export const AboutUs = lazy(() =>
+  import('@/features/about-us/about-us').then((module) => ({ default: module.AboutUs })),
 );

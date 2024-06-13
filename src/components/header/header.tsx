@@ -38,7 +38,7 @@ const Header: FC = () => {
   const nav = [
     { name: 'Main', to: APP_ROUTE.Main },
     { name: 'Store', to: `/${APP_ROUTE.Store}` },
-    { name: 'Our Team', to: `/${APP_ROUTE.Team}` },
+    { name: 'About Us', to: `/${APP_ROUTE.AboutUs}` },
   ];
 
   const cart = (
