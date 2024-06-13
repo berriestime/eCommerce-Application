@@ -4,18 +4,20 @@ import { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
 
 import { Box, Flex, Grid, Image, SimpleGrid, Skeleton, Spoiler, Text, Title } from '@mantine/core';
-import { useForm } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
+import { createSelector } from '@reduxjs/toolkit';
 import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
 import { Breadcrumbs } from '@/components/brearcrumbs';
-import { CustomSelect } from '@/components/custom-select';
 import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
 import { LANGUAGE } from '@/constants/catalog-constants';
 import { BREAKPOINT } from '@/constants/media-query';
+import { addProductToCart } from '@/features/cart/store/add-product-to-cart';
+import { removeProductFromCart } from '@/features/cart/store/remove-product-from-cart';
 import { CategoriesSection } from '@/features/root-page/components/categories-section';
+import { type RootState, useAppDispatch, useAppSelector } from '@/store';
 import { getPricesFromProductProjection } from '@/utils/formate-price';
 
 import { MiniSlider } from './components/mini-slider';
@@ -48,6 +50,15 @@ const ProductPage = (): JSX.Element => {
   const [currentImageUrl, setCurrentImageUrl] = useState<string>(images[0]?.url || '');
   const [loading, setLoading] = useState(true);
 
+  const selectLineItemFromCartByID = createSelector(
+    [(state: RootState) => state.cart.items, (_: RootState, currentItemId: string) => currentItemId],
+    (items, currentItemId) => items.find((item) => item.productId === currentItemId),
+  );
+
+  const dispatch = useAppDispatch();
+  const isCartPending = useAppSelector((state) => state.cart.loading);
+  const lineItemFromCart = useAppSelector((state) => selectLineItemFromCartByID(state, productData.id));
+
   useEffect(() => {
     if (currentImageUrl) {
       setLoading(true);
@@ -70,13 +81,6 @@ const ProductPage = (): JSX.Element => {
       {productData.name[LANGUAGE]}
     </Title>
   );
-
-  const form = useForm({
-    initialValues: {
-      quantity: '1',
-    },
-    mode: 'controlled',
-  });
 
   const productCards = cards.map((productCard) => {
     const { key } = productCard;
@@ -142,7 +146,7 @@ const ProductPage = (): JSX.Element => {
                 control: classes.spoilerControl,
               }}
               hideLabel="Hide"
-              maxHeight={120}
+              maxHeight={176}
               showLabel="Show more"
             >
               <Text c="bright" className="commonText">
@@ -150,17 +154,45 @@ const ProductPage = (): JSX.Element => {
               </Text>
             </Spoiler>
 
-            <CustomSelect
-              data={['1', '2', '3', '4', '5']}
-              label="Quantity"
-              maw={68}
-              mt={60}
-              {...form.getInputProps('quantity')}
-            />
+            {!lineItemFromCart && (
+              <BaseButton
+                c="bright"
+                fullWidth
+                loaderProps={{ type: 'dots' }}
+                loading={isCartPending}
+                mt={60}
+                onClick={(event) => {
+                  event.preventDefault();
+                  void dispatch(
+                    addProductToCart({
+                      productId: productData.id,
+                      quantity: 1,
+                      variantId: productData.masterVariant.id,
+                    }),
+                  );
+                }}
+              >
+                Add To Cart
+              </BaseButton>
+            )}
 
-            <BaseButton c="bright" fullWidth mt={10}>
-              Add To Cart
-            </BaseButton>
+            {lineItemFromCart && (
+              <BaseButton
+                c="bright"
+                fullWidth
+                loaderProps={{ type: 'dots' }}
+                loading={isCartPending}
+                mt={60}
+                onClick={(event) => {
+                  event.preventDefault();
+                  void dispatch(
+                    removeProductFromCart({ lineItemId: lineItemFromCart.id, quantity: lineItemFromCart.quantity }),
+                  );
+                }}
+              >
+                Remove From Cart
+              </BaseButton>
+            )}
           </Grid.Col>
         </Grid>
 
