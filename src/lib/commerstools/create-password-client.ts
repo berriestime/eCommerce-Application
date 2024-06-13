@@ -40,4 +40,8 @@ const createPasswordFlowClient = (customer: { email: string; password: string })
   return apiRootLogin;
 };
 
-export { apiRootLogin, createPasswordFlowClient };
+const destroyPasswordFlowClient = (): void => {
+  apiRootLogin = null;
+};
+
+export { apiRootLogin, createPasswordFlowClient, destroyPasswordFlowClient };

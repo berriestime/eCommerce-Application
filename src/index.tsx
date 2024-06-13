@@ -2,8 +2,10 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
-import { apiRootRefresh, createRefreshFlowClient } from './lib/commerstools/create-refresh-client';
-import { getRefreshToken } from './lib/commerstools/token-cache';
+import { apiRootAnonymous } from './lib/commerstools/create-anonymous-client';
+import { apiRootLogin } from './lib/commerstools/create-password-client';
+import { apiRootRefresh } from './lib/commerstools/create-refresh-client';
+import { defineApiRoot } from './lib/commerstools/define-client';
 
 import './index.css';
 
@@ -12,15 +14,7 @@ if (!node) {
   throw new Error('You forgot to add root node to index.html');
 }
 
-const isRefreshPassword = getRefreshToken('lava-lamps-password-token');
-const isRefreshAnonymous = getRefreshToken('lava-lamps-anonymous-token');
-
-if (isRefreshPassword && apiRootRefresh === null) {
-  createRefreshFlowClient('lava-lamps-password-token');
-}
-if (isRefreshAnonymous && apiRootRefresh === null) {
-  createRefreshFlowClient('lava-lamps-anonymous-token');
-}
+defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
 
 const root = createRoot(node);
 root.render(
