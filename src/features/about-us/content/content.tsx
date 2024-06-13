@@ -1,12 +1,10 @@
-import type { ReactElement } from 'react';
+import { type ReactElement, useEffect, useRef, useState } from 'react';
 
-import { Flex, Image, Text, Title } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
+import { Flex, Image, Skeleton, Text, Title } from '@mantine/core';
+import { useIntersection, useMediaQuery } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
 import { BREAKPOINT } from '@/constants/media-query';
-
-// import teamLogo from '../assets/ranger-logo.png';
 
 import classes from './content.module.css';
 
@@ -21,16 +19,45 @@ type TeamContentBlock = {
 const TeamContentBlock = (props: TeamContentBlock): ReactElement => {
   const matchesMd = useMediaQuery(`(width < ${BREAKPOINT.SM})`);
 
+  const { srcImage } = props;
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = srcImage!;
+    img.onload = () => {
+      setLoading(false);
+    };
+  });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { entry, ref } = useIntersection({
+    root: containerRef.current,
+    threshold: 0.8,
+  });
+
+  const [animation, setAnimationState] = useState(false);
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      setAnimationState(true);
+    }
+  }, [animation, entry?.isIntersecting]);
+
   return (
     <Flex<'a'>
-      className={classes.container}
+      className={clsx(classes.container, animation ? classes.animation : '')}
       component="a"
       direction={matchesMd ? 'column' : 'row'}
       gap={'3rem'}
       href={props.link}
+      ref={ref}
       target="_blank"
     >
-      <Image className={clsx(classes.image, props.srcImage ? '' : classes.hidden)} src={props.srcImage}></Image>
+      <Skeleton display={srcImage ? 'block' : 'none'} h={'15rem'} visible={loading} w={'15rem'}>
+        <Image className={clsx(classes.image, props.srcImage ? '' : classes.hidden)} src={props.srcImage}></Image>
+      </Skeleton>
+
       <Flex align={props.isCenter || matchesMd ? 'center' : 'start'} direction={'column'}>
         <Title
           className={clsx(classes.title)}

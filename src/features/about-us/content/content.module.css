@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin: 7rem auto;
+  max-width: 62.75rem;
+  padding: 0 2rem;
+  color: #f3e7e4;
+  text-decoration: none;
+  transition: 1s;
+  opacity: 0;
+
+  .image {
+    width: 15rem;
+    transition: 1s;
+  }
+}
+
+.container:hover {
+  .image {
+    animation-name: circle;
+    animation-duration: 1s;
+  }
+}
+
+.container.animation {
+  opacity: 1;
+}
+
+@keyframes circle {
+  from {
+    transform: rotate(0deg);
+  }
+
+  33% {
+    transform: rotate(10deg);
+  }
+
+  66% {
+    transform: rotate(-10deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.wrapper {
+  width: 40rem;
+
+  @media (width < 50rem) {
+    width: auto;
+  }
+}
+
+.title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.text {
+  font-weight: 300;
+  line-height: 20px;
+}
+
+.hidden {
+  display: none;
+}

@@ -7,6 +7,7 @@ import { LANGUAGE } from '@/constants/catalog-constants';
 
 import { AuthRouteGuard } from './AuthRouteGuard';
 import {
+  AboutUs,
   CartPage,
   CatalogPage,
   CategoryPage,
@@ -16,17 +17,16 @@ import {
   Profile,
   RegistrationPage,
   RootPage,
-  TeamPage,
 } from './lazy';
 
 export const APP_ROUTE = {
+  AboutUs: 'about-us',
   Cart: 'cart',
   Login: 'login',
   Main: '/',
   Profile: 'profile',
   Registration: 'registration',
   Store: 'store',
-  Team: 'team',
 } as const;
 
 import { loader as StoreLoader } from '@/features/catalog/catalog-data-loader';
@@ -135,8 +135,8 @@ export const routes = [
       },
 
       {
-        element: <TeamPage />,
-        path: APP_ROUTE.Team,
+        element: <AboutUs />,
+        path: APP_ROUTE.AboutUs,
       },
       {
         element: <CartPage />,

@@ -5,10 +5,17 @@
   row-gap: 1rem;
   column-gap: 3rem;
   margin: 0 2rem;
-  padding: 0 2rem 0 0;
+  padding: 0 2rem 0 2rem;
   max-width: 62.75rem;
   min-height: 340px;
   color: #f3e7e4;
+  opacity: 0;
+  transition: 1.5s;
+  transform: translateX(-40%);
+
+  @media (width < 64rem) {
+    padding: 0;
+  }
 
   @media (width < 48rem) {
     column-gap: 2rem;
@@ -27,6 +34,11 @@
       width: 100% !important;
     }
   }
+}
+
+.member.animation {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .photo {

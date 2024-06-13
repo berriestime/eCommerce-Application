@@ -1,6 +1,8 @@
-import type { ReactElement } from 'react';
+import { type ReactElement, useEffect, useRef, useState } from 'react';
 
-import { Flex, Image, List, Text, Title } from '@mantine/core';
+import { Flex, Image, List, Skeleton, Text, Title } from '@mantine/core';
+import { useIntersection } from '@mantine/hooks';
+import { clsx } from 'clsx';
 
 import { GithubIcon } from '@/components/icons/github';
 
@@ -17,9 +19,35 @@ type MemberProps = {
 };
 
 const Member = (props: MemberProps): ReactElement => {
+  const { photoSrc } = props;
+
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = photoSrc;
+    img.onload = () => {
+      setLoading(false);
+    };
+  });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { entry, ref } = useIntersection({
+    root: containerRef.current,
+    threshold: 0.4,
+  });
+
+  const [animation, setAnimationState] = useState(false);
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      setAnimationState(true);
+    }
+  }, [animation, entry?.isIntersecting]);
+
   return (
-    <Flex className={classes.member}>
+    <Flex className={clsx(classes.member, animation ? classes.animation : '')} ref={ref}>
       <Flex className={classes.photo}>
+        <Skeleton h={'24rem'} visible={loading} w={'14.5rem'}></Skeleton>
         <Image src={props.photoSrc} w={'14.5rem'}></Image>
       </Flex>
 
@@ -36,10 +64,7 @@ const Member = (props: MemberProps): ReactElement => {
       </Flex>
 
       <Flex className={classes.bio}>
-        <Text mb={'0.5rem'}>
-          <span className={classes.bold}>Biography: </span>
-          {props.biography}
-        </Text>
+        <Text mb={'0.5rem'}>{props.biography}</Text>
       </Flex>
 
       <Flex className={classes.contribution} direction={'column'}>
