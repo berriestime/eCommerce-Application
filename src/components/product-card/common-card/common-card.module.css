@@ -107,3 +107,7 @@
   margin-right: 16px;
   color: #aa9f9c;
 }
+
+.userSelect {
+  user-select: none;
+}
