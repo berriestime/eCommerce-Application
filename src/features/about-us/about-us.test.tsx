@@ -4,7 +4,7 @@ import { describe, expect, test, vi } from 'vitest';
 
 import { customRender, screen } from '@/test-utils';
 
-import { TeamPage } from './team-page';
+import { AboutUs } from './about-us';
 
 const IntersectionObserverMock = vi.fn(() => ({
   disconnect: vi.fn(),
@@ -15,13 +15,13 @@ const IntersectionObserverMock = vi.fn(() => ({
 
 vi.stubGlobal('IntersectionObserver', IntersectionObserverMock);
 
-describe('TeamPage', () => {
+describe('AboutUs', () => {
   test('should render', () => {
     customRender(
       <MemoryRouter>
-        <TeamPage />
+        <AboutUs />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Our Team')).toBeInTheDocument();
+    expect(screen.getByText('About Us')).toBeInTheDocument();
   });
 });
