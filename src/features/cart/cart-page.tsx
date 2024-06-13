@@ -52,31 +52,40 @@ const CartPage = (): JSX.Element => {
 
         <Box className={classes.contentWrapper} my={56}>
           {lineItems.length > 0 && (
-            <Flex align="center" className={classes.total}>
-              <TextInput
-                autoComplete="nope"
-                classNames={{
-                  input: classes.input,
-                  label: classes.label,
-                  root: classes.root,
-                  wrapper: classes.wrapper,
-                }}
-                data-floating={floating}
-                label="Apply Promo Code"
-                labelProps={{ 'data-floating': floating }}
-                onBlur={() => setFocused(false)}
-                onChange={(event) => setValue(event.currentTarget.value)}
-                onFocus={() => setFocused(true)}
-                radius={0}
-                value={value}
-              />
+            <Box className={classes.wrapper}>
+              <Flex align="center" className={classes.total} gap={32}>
+                <Flex gap={32}>
+                  <TextInput
+                    autoComplete="nope"
+                    classNames={{
+                      input: classes.input,
+                      label: classes.label,
+                      root: classes.root,
+                      wrapper: classes.wrapper,
+                    }}
+                    data-floating={floating}
+                    label="Promo Code"
+                    labelProps={{ 'data-floating': floating }}
+                    onBlur={() => setFocused(false)}
+                    onChange={(event) => setValue(event.currentTarget.value)}
+                    onFocus={() => setFocused(true)}
+                    radius={0}
+                    value={value}
+                  />
+                  <BaseButton disabled={value.trim().length === 0} onClick={() => console.log('Apply')}>
+                    Apply
+                  </BaseButton>
+                </Flex>
 
-              <Flex align="center" gap={16}>
-                <Text c="#aa9f9c">Total Cost</Text> <Text c="bright">$1000</Text>
+                <Flex align="center" gap={16}>
+                  <Text c="#aa9f9c">Total Cost</Text> <Text c="bright">$1000</Text>
+                </Flex>
               </Flex>
 
-              <BaseButton onClick={() => openOrderModal()}>Make An Order</BaseButton>
-            </Flex>
+              <BaseButton className={classes.orderBtn} onClick={() => openOrderModal()}>
+                Make An Order
+              </BaseButton>
+            </Box>
           )}
         </Box>
 
