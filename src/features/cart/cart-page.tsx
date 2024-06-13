@@ -19,6 +19,7 @@ import classes from './cart-page.module.css';
 const CartPage = (): JSX.Element => {
   // const dispatch = useAppDispatch(); // TODO dispatch clear cart function
   const lineItems = useAppSelector((state) => state.cart.items);
+  const isCartPending = useAppSelector((state) => state.cart.loading);
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const [modalOrderOpened, { close: closeOrderModal, open: openOrderModal }] = useDisclosure(false);
 
@@ -72,7 +73,10 @@ const CartPage = (): JSX.Element => {
                     radius={0}
                     value={value}
                   />
-                  <BaseButton disabled={value.trim().length === 0} onClick={() => console.log('Apply')}>
+                  <BaseButton
+                    disabled={value.trim().length === 0 || isCartPending}
+                    onClick={() => console.log('Apply')}
+                  >
                     Apply
                   </BaseButton>
                 </Flex>
