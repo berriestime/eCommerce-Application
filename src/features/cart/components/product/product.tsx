@@ -98,6 +98,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
 
         <Group align="center" className={classes.counterContainer} gap={8} justify="space-between">
           <BaseButton
+            className={classes.btn}
             disabled={quantity === 0}
             onClick={() => {
               void dispatch(removeProductFromCart({ lineItemId: data.id, quantity: 1 }));
@@ -107,6 +108,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
           </BaseButton>
           <Text c="bright">{quantity}</Text>
           <BaseButton
+            className={classes.btn}
             onClick={() => {
               void dispatch(addProductToCart({ productId, quantity: 1, variantId: data.variant.id }));
             }}

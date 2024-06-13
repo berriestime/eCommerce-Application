@@ -95,3 +95,7 @@
   text-decoration: line-through;
   color: #aa9f9c;
 }
+
+.btn {
+  font-family: monospace;
+}
