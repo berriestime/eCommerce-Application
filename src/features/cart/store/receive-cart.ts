@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { getActiveCart } from '../api';
 
-const getCartByCustomerId = createAsyncThunk('cart/getCartByCustomerId', async (_: unknown, { rejectWithValue }) => {
+const receiveCart = createAsyncThunk('cart/getCartByCustomerId', async (_: unknown, { rejectWithValue }) => {
   try {
     return await getActiveCart();
   } catch (error) {
@@ -10,4 +10,4 @@ const getCartByCustomerId = createAsyncThunk('cart/getCartByCustomerId', async (
   }
 });
 
-export { getCartByCustomerId };
+export { receiveCart };
