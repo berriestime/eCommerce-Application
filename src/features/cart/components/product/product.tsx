@@ -9,7 +9,7 @@ import { clsx } from 'clsx';
 import { BaseButton } from '@/components/base-button';
 import { CloseIcon } from '@/components/icons';
 import { LANGUAGE } from '@/constants/catalog-constants';
-import { useAppDispatch } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { getPricesFromLineItem } from '@/utils/formate-price';
 
 import { addProductToCart } from '../../store/add-product-to-cart';
@@ -27,6 +27,8 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
   const productId = data.productId;
   const name = data.name;
   const images = data.variant.images;
+
+  const isCartPending = useAppSelector((state) => state.cart.loading);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -99,7 +101,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
         <Group align="center" className={classes.counterContainer} gap={8} justify="space-between">
           <BaseButton
             className={classes.btn}
-            disabled={quantity === 0}
+            disabled={quantity === 0 || isCartPending}
             onClick={() => {
               void dispatch(removeProductFromCart({ lineItemId: data.id, quantity: 1 }));
             }}
@@ -109,6 +111,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
           <Text c="bright">{quantity}</Text>
           <BaseButton
             className={classes.btn}
+            disabled={isCartPending}
             onClick={() => {
               void dispatch(addProductToCart({ productId, quantity: 1, variantId: data.variant.id }));
             }}
@@ -122,7 +125,13 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
         </Box>
 
         <Tooltip color="gray" label="Remove from cart" transitionProps={{ duration: 500, transition: 'fade-up' }}>
-          <Button c="#aa9f9c" className={classes.cancelBtn} onClick={() => openModal()} variant="transparent">
+          <Button
+            c="#aa9f9c"
+            className={classes.cancelBtn}
+            disabled={isCartPending}
+            onClick={() => openModal()}
+            variant="transparent"
+          >
             <CloseIcon size={20} />
           </Button>
         </Tooltip>
