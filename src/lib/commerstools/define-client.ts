@@ -1,8 +1,9 @@
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 
-import { createAnonymousFlowClient } from './create-anonymous-client';
-import { createRefreshFlowClient } from './create-refresh-client';
-import { getRefreshToken } from './token-cache';
+import { createAnonymousFlowClient, destroyAnonymousFlowClient } from './create-anonymous-client';
+import { destroyPasswordFlowClient } from './create-password-client';
+import { createRefreshFlowClient, destroyRefreshFlowClient } from './create-refresh-client';
+import { deleteToken, getRefreshToken } from './token-cache';
 
 export type ApiRoots = {
   apiRootAnonymous: ByProjectKeyRequestBuilder | null;
@@ -35,4 +36,12 @@ const defineApiRoot = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRo
   }
 };
 
-export { defineApiRoot };
+const destroyApiRoots = (): void => {
+  deleteToken('lava-lamps-password-token');
+  deleteToken('lava-lamps-anonymous-token');
+  destroyAnonymousFlowClient();
+  destroyPasswordFlowClient();
+  destroyRefreshFlowClient();
+};
+
+export { defineApiRoot, destroyApiRoots };

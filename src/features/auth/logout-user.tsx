@@ -1,14 +1,16 @@
 import { createAnonymousFlowClient } from '@/lib/commerstools/create-anonymous-client';
-import { type ApiRoots } from '@/lib/commerstools/define-client';
-import { deleteToken } from '@/lib/commerstools/token-cache';
+import { type ApiRoots, destroyApiRoots } from '@/lib/commerstools/define-client';
+import { store } from '@/store';
+
+import { forceSetCartState } from '../cart/store/cart-slice';
 
 const logoutUser = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRoots): ApiRoots => {
-  deleteToken('lava-lamps-password-token');
-  apiRootLogin = null;
-  apiRootRefresh = null;
+  destroyApiRoots();
 
-  apiRootAnonymous = createAnonymousFlowClient();
-  apiRootAnonymous.get().execute().catch(console.error);
+  createAnonymousFlowClient();
+  // apiRootAnonymous.get().execute().catch(console.error);
+
+  store.dispatch(forceSetCartState({ id: null, lineItems: [], version: 0 }));
 
   return { apiRootAnonymous, apiRootLogin, apiRootRefresh };
 };

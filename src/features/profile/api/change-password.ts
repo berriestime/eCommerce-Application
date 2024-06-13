@@ -3,8 +3,7 @@ import type { ClientResponse, CustomerChangePassword } from '@commercetools/plat
 import { apiRootAnonymous } from '@/lib/commerstools/create-anonymous-client';
 import { apiRootLogin, createPasswordFlowClient } from '@/lib/commerstools/create-password-client';
 import { apiRootRefresh } from '@/lib/commerstools/create-refresh-client';
-import { defineApiRoot } from '@/lib/commerstools/define-client';
-import { deleteToken } from '@/lib/commerstools/token-cache';
+import { defineApiRoot, destroyApiRoots } from '@/lib/commerstools/define-client';
 
 import { getVersionUpdate } from './version';
 
@@ -26,7 +25,7 @@ async function postChangePassword(
 
   const response = await apiRoot.me().password().post({ body: updateActions }).execute();
 
-  deleteToken('lava-lamps-password-token');
+  destroyApiRoots();
   const newClient = createPasswordFlowClient({ email, password: newPassword });
   newClient.get().execute().catch(console.warn);
 

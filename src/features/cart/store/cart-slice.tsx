@@ -1,4 +1,4 @@
-import type { Cart } from '@commercetools/platform-sdk';
+import type { Cart, LineItem } from '@commercetools/platform-sdk';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { createSlice } from '@reduxjs/toolkit';
@@ -67,7 +67,10 @@ const cartSlice = createSlice({
   initialState,
   name: 'cart',
   reducers: {
-    forceSetCartState: (state, action: PayloadAction<Cart | undefined>) => {
+    forceSetCartState: (
+      state,
+      action: PayloadAction<{ id: null | string; lineItems: LineItem[]; version: number } | undefined>,
+    ) => {
       if (!action.payload) {
         return;
       }
