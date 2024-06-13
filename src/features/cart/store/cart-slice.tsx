@@ -6,7 +6,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { CartState } from './types';
 
 import { addProductToCart } from './add-product-to-cart';
-import { getCartByCustomerId } from './get-cart-by-customer-id';
+import { receiveCart } from './receive-cart';
 import { removeProductFromCart } from './remove-product-from-cart';
 
 const initialState: CartState = {
@@ -50,16 +50,16 @@ const cartSlice = createSlice({
     });
 
     // get cart by customer id
-    builder.addCase(getCartByCustomerId.pending, (state) => {
+    builder.addCase(receiveCart.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getCartByCustomerId.fulfilled, (state, action: PayloadAction<Cart>) => {
+    builder.addCase(receiveCart.fulfilled, (state, action: PayloadAction<Cart>) => {
       state.loading = false;
       state.id = action.payload.id;
       state.version = action.payload.version;
       state.items = action.payload.lineItems;
     });
-    builder.addCase(getCartByCustomerId.rejected, (state, action) => {
+    builder.addCase(receiveCart.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
     });
