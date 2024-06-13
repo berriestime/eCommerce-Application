@@ -26,12 +26,6 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleCardClick = (event: React.MouseEvent<HTMLDivElement>): void => {
-    if (!(event.target as HTMLElement).closest('.addToCartButton')) {
-      navigate(url);
-    }
-  };
-
   const { masterVariant, metaDescription, name } = data;
   const { images } = masterVariant;
   const { discountPrice, price } = getPricesFromProductProjection(data);
@@ -53,8 +47,24 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
   const lineItemFromCart = useAppSelector((state) => selectLineItemFromCartByID(state, data.id));
   const isItemInCart = !!lineItemFromCart;
 
+  const [loadingBtn, setLoadingBtn] = useState(false);
+
+  const handleCardClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+    if (!(event.target as HTMLElement).closest('.addToCartButton') && !isCartPending) {
+      navigate(url);
+    } else {
+      setLoadingBtn(true);
+    }
+  };
+
   return (
-    <Card bg="customBg" className={classes.card} onClick={handleCardClick} pt={20} w="100%">
+    <Card
+      bg="customBg"
+      className={clsx(classes.card, { [classes.userSelect || '']: isCartPending })}
+      onClick={handleCardClick}
+      pt={20}
+      w="100%"
+    >
       <Card.Section className={classes.imageSection}>
         <Skeleton mih={200} visible={loading}>
           {images && images.length > 0 && (
@@ -95,35 +105,36 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
         {isItemInCart && (
           <BaseButton
             c="bright"
-            className="addToCartButton"
+            className={clsx('addToCartButton', { [classes.userSelect || '']: isCartPending })}
             disabled={isCartPending}
             fullWidth
-            justify="space-between"
-            leftSection={<></>}
+            loaderProps={{ type: 'dots' }}
+            loading={loadingBtn}
             onClick={(event) => {
               event.preventDefault();
+
               void dispatch(
                 removeProductFromCart({ lineItemId: lineItemFromCart.id, quantity: lineItemFromCart.quantity }),
-              );
+              ).then(() => setLoadingBtn(false));
             }}
-            rightSection={isCartPending ? <Text>троббер</Text> : <></>}
           >
-            Remove Item From Cart
+            Remove From Cart
           </BaseButton>
         )}
         {!isItemInCart && (
           <BaseButton
             c="bright"
-            className="addToCartButton"
+            className={clsx('addToCartButton', { [classes.userSelect || '']: isCartPending })}
             disabled={isCartPending}
             fullWidth
-            justify="space-between"
-            leftSection={<></>}
+            loaderProps={{ type: 'dots' }}
+            loading={loadingBtn}
             onClick={(event) => {
               event.preventDefault();
-              void dispatch(addProductToCart({ productId: data.id, quantity: 1, variantId: data.masterVariant.id }));
+              void dispatch(
+                addProductToCart({ productId: data.id, quantity: 1, variantId: data.masterVariant.id }),
+              ).then(() => setLoadingBtn(false));
             }}
-            rightSection={isCartPending ? <Text>троббер</Text> : <></>}
           >
             Add To Cart
           </BaseButton>
