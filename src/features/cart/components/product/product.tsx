@@ -1,10 +1,9 @@
 import type { LineItem } from '@commercetools/platform-sdk';
 
-import { type ReactElement, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Button, Divider, Flex, Group, Image, Skeleton, Text, Tooltip } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { clsx } from 'clsx';
 
 import { BaseButton } from '@/components/base-button';
 import { CloseIcon } from '@/components/icons';
@@ -14,6 +13,7 @@ import { getPricesFromLineItem } from '@/utils/formate-price';
 
 import { addProductToCart } from '../../store/add-product-to-cart';
 import { removeProductFromCart } from '../../store/remove-product-from-cart';
+import { PriceSection } from '../price-section';
 import { RemoveModal } from '../remove-modal';
 
 import classes from './product.module.css';
@@ -44,43 +44,6 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
     }
   }, [images]);
 
-  const priceText = (text: string): ReactElement => {
-    return (
-      <Text c="#aa9f9c" fz={12} miw="100%">
-        {text}
-      </Text>
-    );
-  };
-
-  const priceSection = ({
-    discountPriceValue,
-    priceValue,
-    text,
-  }: {
-    discountPriceValue: null | string;
-    priceValue: string;
-    text: string;
-  }): ReactElement => {
-    return (
-      <Flex align="center" className={classes.priceContainer} wrap="wrap">
-        {discountPriceValue ? (
-          <>
-            <Text className={clsx(classes.price, classes.discount)} mr={8}>
-              ${priceValue}
-            </Text>
-            <Text className={classes.price}>${discountPriceValue}</Text>
-            {priceText(text)}
-          </>
-        ) : (
-          <>
-            <span className={classes.price}>${priceValue}</span>
-            {priceText(text)}
-          </>
-        )}
-      </Flex>
-    );
-  };
-
   return (
     <Box className={classes.card} mt={{ base: 0, xs: 40 }}>
       <Divider mb={20} />
@@ -96,7 +59,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
         </Flex>
 
         <Box className={classes.priceWrapper}>
-          {priceSection({ discountPriceValue: discountPrice, priceValue: price, text: 'individual price' })}
+          <PriceSection discountPriceValue={discountPrice} priceValue={price} text="Individual price" />
         </Box>
 
         <Group align="center" className={classes.counterContainer} gap={8} justify="space-between">
@@ -122,7 +85,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
         </Group>
 
         <Box className={classes.totalPriceWrapper}>
-          {priceSection({ discountPriceValue: totalDiscountPrice, priceValue: totalPrice, text: 'Total cost' })}
+          <PriceSection discountPriceValue={totalDiscountPrice} priceValue={totalPrice} text="Total cost" />
         </Box>
 
         <Tooltip color="gray" label="Remove from cart" transitionProps={{ duration: 500, transition: 'fade-up' }}>
