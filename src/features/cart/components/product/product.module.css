@@ -63,10 +63,6 @@
   }
 }
 
-.priceContainer {
-  width: 100%;
-}
-
 .counterContainer {
   order: 3;
   width: 15%;
@@ -84,16 +80,6 @@
     max-width: 100%;
     padding-bottom: 24px;
   }
-}
-
-.price {
-  color: var(--mantine-color-bright);
-  font-weight: 200;
-}
-
-.discount {
-  text-decoration: line-through;
-  color: #aa9f9c;
 }
 
 .btn {

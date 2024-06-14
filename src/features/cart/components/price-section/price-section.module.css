@@ -1,0 +1,13 @@
+.priceContainer {
+  width: 100%;
+}
+
+.price {
+  color: var(--mantine-color-bright);
+  font-weight: 200;
+}
+
+.discount {
+  text-decoration: line-through;
+  color: #aa9f9c;
+}
