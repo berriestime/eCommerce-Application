@@ -24,6 +24,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
 
   const { quantity } = data;
   const { discountPrice, price } = getPricesFromLineItem(data);
+  const { discountPrice: totalDiscountPrice, price: totalPrice } = getPricesFromLineItem(data, true);
   const productId = data.productId;
   const name = data.name;
   const images = data.variant.images;
@@ -121,7 +122,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
         </Group>
 
         <Box className={classes.totalPriceWrapper}>
-          {priceSection({ discountPriceValue: discountPrice, priceValue: price, text: 'Total cost' })}
+          {priceSection({ discountPriceValue: totalDiscountPrice, priceValue: totalPrice, text: 'Total cost' })}
         </Box>
 
         <Tooltip color="gray" label="Remove from cart" transitionProps={{ duration: 500, transition: 'fade-up' }}>

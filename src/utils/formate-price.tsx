@@ -7,9 +7,9 @@ const formatPrice = (price: string, digit: number): string => {
   return formattedPrice;
 };
 
-const getPricesFromLineItem = (lineItem: LineItem): Prices => {
+const getPricesFromLineItem = (lineItem: LineItem, returnTotalPrice = false): Prices => {
   const curPriceData = lineItem.price;
-  return transformSdkPriceIntoPrices(curPriceData);
+  return transformSdkPriceIntoPrices(curPriceData, returnTotalPrice ? lineItem.quantity : 1);
 };
 
 const getPricesFromProductProjection = (productData: ProductProjection): Prices => {
@@ -17,7 +17,7 @@ const getPricesFromProductProjection = (productData: ProductProjection): Prices 
   return transformSdkPriceIntoPrices(curPriceData);
 };
 
-const transformSdkPriceIntoPrices = (curPriceData: Price | undefined): Prices => {
+const transformSdkPriceIntoPrices = (curPriceData: Price | undefined, quantity = 1): Prices => {
   if (!curPriceData) {
     return {
       discountPrice: '0.00',
@@ -25,16 +25,18 @@ const transformSdkPriceIntoPrices = (curPriceData: Price | undefined): Prices =>
     };
   }
 
-  const curPrice = String(curPriceData?.value.centAmount);
-  const curDiscountPrice = String(curPriceData?.discounted?.value.centAmount);
-  const digit = -Math.abs(Number(curPriceData?.value.fractionDigits));
+  const centAmount = curPriceData.value.centAmount;
+  const curPrice = String(centAmount * quantity);
+  const digit = -1 * Math.abs(curPriceData.value.fractionDigits);
 
   const pricesData: Prices = {
     discountPrice: null,
     price: formatPrice(curPrice, digit),
   };
 
-  if (curDiscountPrice !== 'undefined') {
+  const discountedCentAmount = curPriceData.discounted?.value.centAmount;
+  if (discountedCentAmount) {
+    const curDiscountPrice = String(discountedCentAmount * quantity);
     pricesData.discountPrice = formatPrice(curDiscountPrice, digit);
   }
 
