@@ -38,4 +38,16 @@ const getActiveCart = async (): Promise<Cart> => {
   return response.body;
 };
 
-export { createNewCart, getActiveCart, postCartWithId };
+const deleteActiveCart = async (cartId: string, cartVersion: number): Promise<Cart> => {
+  const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
+  const response = await apiRoot
+    .me()
+    .carts()
+    .withId({ ID: cartId })
+    .delete({ queryArgs: { version: cartVersion } })
+    .execute();
+
+  return response.body;
+};
+
+export { createNewCart, deleteActiveCart, getActiveCart, postCartWithId };
