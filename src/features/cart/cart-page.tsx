@@ -7,19 +7,21 @@ import { clsx } from 'clsx';
 import { BaseButton } from '@/components/base-button';
 import { Footer } from '@/components/footer';
 import { CloseIcon } from '@/components/icons';
-import { useAppSelector } from '@/store';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 import { EmptyCart } from './components/empty-cart';
 import { OrderModal } from './components/order-modal';
 import { Product } from './components/product';
 import { RemoveModal as ClearCartModal } from './components/remove-modal';
+import { clearCart } from './store/clear-cart';
 
 import classes from './cart-page.module.css';
 
 const CartPage = (): JSX.Element => {
-  // const dispatch = useAppDispatch(); // TODO dispatch clear cart function
+  const dispatch = useAppDispatch();
   const lineItems = useAppSelector((state) => state.cart.items);
   const isCartPending = useAppSelector((state) => state.cart.loading);
+  const cart = useAppSelector((state) => state.cart);
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const [modalOrderOpened, { close: closeOrderModal, open: openOrderModal }] = useDisclosure(false);
 
@@ -97,7 +99,7 @@ const CartPage = (): JSX.Element => {
           close={closeModal}
           opened={modalOpened}
           submit={() => {
-            throw new Error('dispatch(clearCart());');
+            void dispatch(clearCart(cart));
           }}
           text="Are you sure you want to clear shopping cart?"
           title="Clear Shopping Cart"

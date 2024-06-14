@@ -6,6 +6,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { CartState } from './types';
 
 import { addProductToCart } from './add-product-to-cart';
+import { clearCart } from './clear-cart';
 import { receiveCart } from './receive-cart';
 import { removeProductFromCart } from './remove-product-from-cart';
 
@@ -60,6 +61,21 @@ const cartSlice = createSlice({
       state.items = action.payload.lineItems;
     });
     builder.addCase(receiveCart.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+
+    // clear (remove) cart
+    builder.addCase(clearCart.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(clearCart.fulfilled, (state) => {
+      state.loading = false;
+      state.id = null;
+      state.version = 0;
+      state.items = [];
+    });
+    builder.addCase(clearCart.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
     });
