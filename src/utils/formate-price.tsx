@@ -43,4 +43,4 @@ const transformSdkPriceIntoPrices = (curPriceData: Price | undefined, quantity =
   return pricesData;
 };
 
-export { getPricesFromLineItem, getPricesFromProductProjection };
+export { formatPrice, getPricesFromLineItem, getPricesFromProductProjection };

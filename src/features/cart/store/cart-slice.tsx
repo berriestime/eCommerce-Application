@@ -3,6 +3,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { createSlice } from '@reduxjs/toolkit';
 
+import { formatPrice } from '@/utils/formate-price';
+
 import type { CartState } from './types';
 
 import { addProductToCart } from './add-product-to-cart';
@@ -15,10 +17,36 @@ const initialState: CartState = {
   id: null,
   items: [],
   loading: false,
+  totalDiscountedPrice: null,
+  totalDiscountedPriceRaw: 0,
+  totalPrice: '0.00',
+  totalPriceRaw: 0,
   version: 0,
 };
 
-// The cart slice
+const getTotals = (items: LineItem[]): { totalDiscountedPrice: number; totalPrice: number } => {
+  let totalPrice = 0;
+  let totalDiscountedPrice = 0;
+  for (const item of items) {
+    const itemCentAmount = item.price.value.centAmount;
+    const itemDiscountedCentAmount = item.price.discounted?.value.centAmount ?? itemCentAmount;
+    totalPrice += itemCentAmount * item.quantity;
+    totalDiscountedPrice += itemDiscountedCentAmount * item.quantity;
+  }
+
+  return { totalDiscountedPrice, totalPrice };
+};
+
+const setTotalsToState = (state: CartState): void => {
+  const { totalDiscountedPrice, totalPrice } = getTotals(state.items);
+  state.totalDiscountedPriceRaw = totalDiscountedPrice;
+  state.totalPriceRaw = totalPrice;
+  if (totalPrice !== totalDiscountedPrice) {
+    state.totalDiscountedPrice = formatPrice(String(totalDiscountedPrice), -2);
+  }
+  state.totalPrice = formatPrice(String(totalPrice), -2);
+};
+
 const cartSlice = createSlice({
   extraReducers: (builder) => {
     // add product to cart
@@ -28,8 +56,9 @@ const cartSlice = createSlice({
     builder.addCase(addProductToCart.fulfilled, (state, action: PayloadAction<Cart>) => {
       state.loading = false;
       state.id = action.payload.id;
-      state.version = action.payload.version; // Update the version
-      state.items = action.payload.lineItems; // Assuming the API returns the updated line items
+      state.version = action.payload.version;
+      state.items = action.payload.lineItems;
+      setTotalsToState(state);
     });
     builder.addCase(addProductToCart.rejected, (state, action) => {
       state.loading = false;
@@ -42,8 +71,9 @@ const cartSlice = createSlice({
     });
     builder.addCase(removeProductFromCart.fulfilled, (state, action: PayloadAction<Cart>) => {
       state.loading = false;
-      state.version = action.payload.version; // Update the version
-      state.items = action.payload.lineItems; // Assuming the API returns the updated line items
+      state.version = action.payload.version;
+      state.items = action.payload.lineItems;
+      setTotalsToState(state);
     });
     builder.addCase(removeProductFromCart.rejected, (state, action) => {
       state.loading = false;
@@ -59,6 +89,7 @@ const cartSlice = createSlice({
       state.id = action.payload.id;
       state.version = action.payload.version;
       state.items = action.payload.lineItems;
+      setTotalsToState(state);
     });
     builder.addCase(receiveCart.rejected, (state, action) => {
       state.loading = false;
@@ -93,6 +124,7 @@ const cartSlice = createSlice({
       state.id = action.payload.id;
       state.version = action.payload.version;
       state.items = action.payload.lineItems;
+      setTotalsToState(state);
     },
   },
 });

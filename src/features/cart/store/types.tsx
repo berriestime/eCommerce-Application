@@ -7,10 +7,14 @@ interface RemoveLineItemPayload {
 
 interface CartState {
   error: null | string;
-  id: null | string; // You need to store the cart id to update it
+  id: null | string;
   items: LineItem[];
   loading: boolean;
-  version: number; // You also need the cart version for update actions
+  totalDiscountedPrice: null | string;
+  totalDiscountedPriceRaw: number;
+  totalPrice: string;
+  totalPriceRaw: number;
+  version: number;
 }
 
 interface CartItem {

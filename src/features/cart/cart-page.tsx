@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from '@/store';
 
 import { EmptyCart } from './components/empty-cart';
 import { OrderModal } from './components/order-modal';
+// import { PriceSection } from './components/price-section';
 import { Product } from './components/product';
 import { RemoveModal as ClearCartModal } from './components/remove-modal';
 import { clearCart } from './store/clear-cart';
@@ -30,6 +31,9 @@ const CartPage = (): JSX.Element => {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState('');
   const floating = value.trim().length !== 0 || focused || undefined;
+
+  // const totalPrice = useAppSelector((state) => state.cart.totalPrice);
+  const totalDiscountedPrice = useAppSelector((state) => state.cart.totalDiscountedPrice);
 
   return (
     <Box className="wrapper">
@@ -84,7 +88,8 @@ const CartPage = (): JSX.Element => {
                 </Flex>
 
                 <Flex align="center" gap={16}>
-                  <Text c="#aa9f9c">Total Cost</Text> <Text c="bright">$1000</Text>
+                  {/* <PriceSection discountPriceValue={totalDiscountedPrice} priceValue={totalPrice} text="Total" /> */}
+                  <Text c="#aa9f9c">Total Cost</Text> <Text c="bright">${totalDiscountedPrice}</Text>{' '}
                 </Flex>
               </Flex>
 
