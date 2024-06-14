@@ -43,6 +43,8 @@ const setTotalsToState = (state: CartState): void => {
   state.totalPriceRaw = totalPrice;
   if (totalPrice !== totalDiscountedPrice) {
     state.totalDiscountedPrice = formatPrice(String(totalDiscountedPrice), -2);
+  } else {
+    state.totalDiscountedPrice = formatPrice(String(totalPrice), -2);
   }
   state.totalPrice = formatPrice(String(totalPrice), -2);
 };
