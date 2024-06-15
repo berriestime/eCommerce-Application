@@ -1,4 +1,4 @@
-import type { ClientResponse, ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import type { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 
 import type { LoaderFunction } from 'react-router-dom';
 
@@ -11,8 +11,8 @@ const loader: LoaderFunction = async ({
 }> => {
   const parsedQueryParams = parseUrl(request);
 
-  const productsResponse: ClientResponse<ProductProjectionPagedQueryResponse> = await getAllProducts(parsedQueryParams);
-  const productsData: ProductProjectionPagedQueryResponse = productsResponse.body;
+  const productsResponse = await getAllProducts(parsedQueryParams);
+  const productsData = productsResponse.body;
 
   return { productsData };
 };
