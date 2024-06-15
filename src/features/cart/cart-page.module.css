@@ -69,3 +69,9 @@
     text-align: center;
   }
 }
+
+.sexy {
+  background: linear-gradient(to bottom left, #f9bf08, #ff4000);
+  background-clip: text;
+  color: transparent;
+}

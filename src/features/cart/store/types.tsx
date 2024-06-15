@@ -10,10 +10,14 @@ interface CartState {
   id: null | string;
   items: LineItem[];
   loading: boolean;
-  totalDiscountedPrice: null | string;
-  totalDiscountedPriceRaw: number;
-  totalPrice: string;
-  totalPriceRaw: number;
+  promocodeDiscount: string;
+  promocodeDiscountRaw: number;
+  totalFinalPrice: string;
+  totalFinalPriceRaw: number;
+  totalInitialPrice: string;
+  totalInitialPriceRaw: number;
+  totalPriceAfterCatalogDiscount: string;
+  totalPriceAfterCatalogDiscountRaw: number;
   version: number;
 }
 

@@ -23,8 +23,8 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
   const [modalOpened, { close: closeModal, open: openModal }] = useDisclosure(false);
 
   const { quantity } = data;
-  const { discountPrice, price } = getPricesFromLineItem(data);
-  const { discountPrice: totalDiscountPrice, price: totalPrice } = getPricesFromLineItem(data, true);
+  const { discountedPrice: discountPrice, price } = getPricesFromLineItem(data);
+  const { discountedPrice: totalDiscountPrice, price: totalPrice } = getPricesFromLineItem(data, true);
   const productId = data.productId;
   const name = data.name;
   const images = data.variant.images;
