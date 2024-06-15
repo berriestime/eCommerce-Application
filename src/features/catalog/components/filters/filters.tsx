@@ -24,18 +24,6 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     return defaultValue;
   };
 
-  const prevLocationKey = useRef(location.pathname);
-
-  useEffect(() => {
-    if (location.pathname !== prevLocationKey.current) {
-      setPriceValue(null);
-      setLavaColorValue(null);
-      setLampColorValue(null);
-      setSearchValue('');
-      setSortValue(null);
-    }
-  }, [location.pathname]);
-
   const priceFrom = parsePriceValue(searchParams.get('priceFrom'), 0);
   const priceTo = parsePriceValue(searchParams.get('priceTo'), 2500);
   const lavaColor = searchParams.get('lavaColor') ?? '';
@@ -56,9 +44,21 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
   const [sortValue, setSortValue] = useState<null | string>(sort);
   const [searchValue, setSearchValue] = useState<string>(search);
 
+  const prevLocationKey = useRef(location.pathname);
+  useEffect(() => {
+    if (location.pathname !== prevLocationKey.current) {
+      setPriceValue(null);
+      setLavaColorValue(null);
+      setLampColorValue(null);
+      setSearchValue('');
+      setSortValue(null);
+    }
+  }, [location.pathname]);
+
   const debouncedSearch = useDebouncedCallback((value: string) => {
     const targetSearchParams = new URLSearchParams(location.search);
     targetSearchParams.set('search', value);
+    targetSearchParams.delete('offset');
     navigate(`?${targetSearchParams.toString()}`);
   }, 1000);
 
@@ -81,6 +81,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
     const targetSearchParams = new URLSearchParams(location.search);
     targetSearchParams.set('priceFrom', (priceFromString * 100).toString());
     targetSearchParams.set('priceTo', (priceToString * 100).toString());
+    targetSearchParams.delete('offset');
     navigate(`?${targetSearchParams.toString()}`);
   };
 
@@ -101,6 +102,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
       setSortValue(selectedValue);
       const targetSearchParams = new URLSearchParams(location.search);
       targetSearchParams.set('sort', selectedValue);
+      targetSearchParams.delete('offset');
       navigate(`?${targetSearchParams.toString()}`);
     }
   };
@@ -171,6 +173,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
                   setLavaColorValue(value);
                   const targetSearchParams = new URLSearchParams(location.search);
                   targetSearchParams.set('lavaColor', value);
+                  targetSearchParams.delete('offset');
                   navigate(`?${targetSearchParams.toString()}`);
                 }}
                 placeholder="Lava color"
@@ -199,6 +202,7 @@ const Filters = ({ showLavaFilters = true }: { showLavaFilters?: boolean }): JSX
                   setLampColorValue(value);
                   const targetSearchParams = new URLSearchParams(location.search);
                   targetSearchParams.set('lampColor', value);
+                  targetSearchParams.delete('offset');
                   navigate(`?${targetSearchParams.toString()}`);
                 }}
                 placeholder="Lamp color"
