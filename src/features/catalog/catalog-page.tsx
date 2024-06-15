@@ -11,6 +11,7 @@ import { CommonCard } from '@/components/product-card/common-card';
 import { Filters } from '@/features/catalog/components/filters';
 
 import { Tabs } from './category/components';
+import { Pagination } from './components/pagination';
 
 const CatalogPage: FC = () => {
   const data = useLoaderData();
@@ -19,7 +20,7 @@ const CatalogPage: FC = () => {
     productsData: ProductProjectionPagedQueryResponse;
   };
 
-  const { results: productResult } = productsData;
+  const { results: productResult, total } = productsData;
 
   const productCards = productResult
     .filter((product) => product.categories[0]?.obj?.ancestors[0]?.id)
@@ -48,6 +49,7 @@ const CatalogPage: FC = () => {
           </Text>
         )}
       </Box>
+      <Pagination totalItems={total!} />
       <Footer />
     </Box>
   );
