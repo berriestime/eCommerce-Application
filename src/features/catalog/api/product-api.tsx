@@ -13,6 +13,8 @@ import { defineApiRoot } from '@/lib/commerstools/define-client';
 type ParsedQueryParams = {
   lampColor?: string;
   lavaColor?: string;
+  limit?: number;
+  offset?: number;
   priceFrom?: number;
   priceTo?: number;
   search?: string;
@@ -27,8 +29,10 @@ const parseUrl = (request: Request): ParsedQueryParams => {
   const lampColor = url.searchParams.get('lampColor') ?? '';
   const sort = url.searchParams.get('sort') ?? '';
   const search = url.searchParams.get('search') ?? '';
+  const limit = parseInt(url.searchParams.get('limit') ?? '');
+  const offset = parseInt(url.searchParams.get('offset') ?? '');
 
-  return { lampColor, lavaColor, priceFrom, priceTo, search, sort };
+  return { lampColor, lavaColor, limit, offset, priceFrom, priceTo, search, sort };
 };
 
 const getProductByKey = (productKey: string): Promise<ClientResponse<ProductProjection>> => {
@@ -45,13 +49,12 @@ async function getAllProducts(
 async function getProductsByCategoryId(
   categoryId: string,
   parsedQueryParams?: ParsedQueryParams,
-  limit = ITEMS_PER_PAGE,
   productId?: string,
 ): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
   const filter = [`categories.id:"${categoryId}"`];
   const filterQuery = productId ? [`id:"${productId}"`] : [];
 
-  return getProductsWithFilter({ filter, filterQuery, limit, parsedQueryParams });
+  return getProductsWithFilter({ filter, filterQuery, parsedQueryParams });
 }
 
 async function getProductsByCategorySubtree(
@@ -70,13 +73,11 @@ async function getProductsWithFilter({
   expand,
   filter = [],
   filterQuery = [],
-  limit = ITEMS_PER_PAGE,
   parsedQueryParams,
 }: {
   expand?: string[];
   filter?: string[];
   filterQuery?: string[];
-  limit?: number;
   parsedQueryParams?: ParsedQueryParams;
 }): Promise<ClientResponse<ProductProjectionPagedQueryResponse>> {
   if (parsedQueryParams?.priceFrom || parsedQueryParams?.priceTo) {
@@ -107,6 +108,9 @@ async function getProductsWithFilter({
   }
   sort.push('id asc');
 
+  const limit = parsedQueryParams?.limit || ITEMS_PER_PAGE;
+  const offset = parsedQueryParams?.offset || 0;
+
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
   const response = await apiRoot
     .productProjections()
@@ -116,8 +120,8 @@ async function getProductsWithFilter({
         expand,
         filter,
         filterQuery,
-        limit: limit,
-        offset: 0,
+        limit,
+        offset,
         sort,
         'text.en-US': parsedQueryParams?.search,
       },
