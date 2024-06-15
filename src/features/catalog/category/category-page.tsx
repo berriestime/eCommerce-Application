@@ -10,6 +10,7 @@ import { Footer } from '@/components/footer';
 import { CommonCard } from '@/components/product-card/common-card';
 
 import { Filters } from '../components/filters';
+import { Pagination } from '../components/pagination';
 import { Tabs } from './components';
 
 const CategoryPage: FC = () => {
@@ -23,7 +24,7 @@ const CategoryPage: FC = () => {
 
   const showLavaFilters = categoryData.key === 'lamps';
 
-  const { results: productResult } = productsData;
+  const { results: productResult, total } = productsData;
 
   const productCards = productResult.map((product) => {
     const { key } = product;
@@ -49,6 +50,7 @@ const CategoryPage: FC = () => {
           </Text>
         )}
       </Box>
+      <Pagination totalItems={total!} />
       <Footer />
     </Box>
   );
