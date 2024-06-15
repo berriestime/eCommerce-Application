@@ -2,7 +2,7 @@ import { createAnonymousFlowClient } from '@/lib/commerstools/create-anonymous-c
 import { type ApiRoots, destroyApiRoots } from '@/lib/commerstools/define-client';
 import { store } from '@/store';
 
-import { forceSetCartState } from '../cart/store/cart-slice';
+import { forceClearCart } from '../cart/store/cart-slice';
 
 const logoutUser = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRoots): ApiRoots => {
   destroyApiRoots();
@@ -10,7 +10,7 @@ const logoutUser = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRoots
   createAnonymousFlowClient();
   // apiRootAnonymous.get().execute().catch(console.error);
 
-  store.dispatch(forceSetCartState({ id: null, lineItems: [], version: 0 }));
+  store.dispatch(forceClearCart());
 
   return { apiRootAnonymous, apiRootLogin, apiRootRefresh };
 };

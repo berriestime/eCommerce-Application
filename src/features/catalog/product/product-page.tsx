@@ -42,7 +42,7 @@ const ProductPage = (): JSX.Element => {
     productData: ProductProjection;
   };
   const { results: cards } = cardsData;
-  const { discountPrice, price } = getPricesFromProductProjection(productData);
+  const { discountedPrice: discountPrice, price } = getPricesFromProductProjection(productData);
 
   const [bigSliderOpened, setOpened] = useState(false);
 

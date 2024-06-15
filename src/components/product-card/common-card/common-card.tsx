@@ -28,7 +28,7 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
 
   const { masterVariant, metaDescription, name } = data;
   const { images } = masterVariant;
-  const { discountPrice, price } = getPricesFromProductProjection(data);
+  const { discountedPrice, price } = getPricesFromProductProjection(data);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -71,7 +71,7 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
             <Image alt={name[LANGUAGE]} className={classes.image} fit="cover" src={images[0]?.url} />
           )}
 
-          {discountPrice && (
+          {discountedPrice && (
             <Badge className={classes.badge} size="xl" variant="transparent">
               {DISCOUNT_SIZE}
             </Badge>
@@ -93,10 +93,10 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
 
       <Box mt="auto">
         <Text mb={20} mt={24}>
-          {discountPrice ? (
+          {discountedPrice ? (
             <>
               <span className={clsx(classes.price, classes.discount)}>${price}</span>
-              <span className={classes.price}>${discountPrice}</span>
+              <span className={classes.price}>${discountedPrice}</span>
             </>
           ) : (
             <span className={classes.price}>${price}</span>

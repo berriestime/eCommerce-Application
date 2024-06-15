@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Flex, Text, Title } from '@mantine/core';
+import { Box, Button, Divider, Flex, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
@@ -27,8 +27,10 @@ const CartPage = (): JSX.Element => {
 
   const productCards = lineItems.map((item) => <Product data={item} key={item.productId} />);
 
-  // const totalPrice = useAppSelector((state) => state.cart.totalPrice);
-  const totalDiscountedPrice = useAppSelector((state) => state.cart.totalDiscountedPrice);
+  const totalPriceAfterCatalogDiscount = useAppSelector((state) => state.cart.totalPriceAfterCatalogDiscount);
+  const totalFinalPrice = useAppSelector((state) => state.cart.totalFinalPrice);
+  const hasDiscount = useAppSelector((state) => Boolean(state.cart.promocodeDiscountRaw));
+  const promocodeDiscount = useAppSelector((state) => state.cart.promocodeDiscount);
 
   return (
     <Box className="wrapper">
@@ -61,11 +63,23 @@ const CartPage = (): JSX.Element => {
         <Box className={classes.contentWrapper} my={56}>
           {lineItems.length > 0 && (
             <Box className={classes.wrapper}>
-              <Flex align="center" className={classes.total} gap={32}>
+              <Flex className={classes.total} gap={32}>
                 <PromoCode />
-                <Flex align="center" gap={16}>
-                  {/* <PriceSection discountPriceValue={totalDiscountedPrice} priceValue={totalPrice} text="Total" /> */}
-                  <Text c="#aa9f9c">Total Cost</Text> <Text c="bright">${totalDiscountedPrice}</Text>{' '}
+                <Flex gap={16}>
+                  <Stack gap={0}>
+                    {hasDiscount && <Text c="#aa9f9c">Before Promocode</Text>}
+                    {hasDiscount && <Text c="#aa9f9c">Promocode Discount</Text>}
+                    <Text c="#aa9f9c">Final Price</Text>
+                  </Stack>
+                  <Stack gap={0}>
+                    {hasDiscount && (
+                      <Text c="#aa9f9c" td="line-through">
+                        ${totalPriceAfterCatalogDiscount}
+                      </Text>
+                    )}
+                    {hasDiscount && <Text className={classes.sexy}>${promocodeDiscount}</Text>}
+                    <Text c="bright">${totalFinalPrice}</Text>
+                  </Stack>
                 </Flex>
               </Flex>
 

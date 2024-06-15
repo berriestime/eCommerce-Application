@@ -1,6 +1,6 @@
 import type { ClientResponse, CustomerSignin } from '@commercetools/platform-sdk';
 
-import { forceSetCartState } from '@/features/cart/store/cart-slice';
+import { forceSetCart } from '@/features/cart/store/cart-slice';
 import { receiveCart } from '@/features/cart/store/receive-cart';
 import { createPasswordFlowClient } from '@/lib/commerstools/create-password-client';
 import { destroyApiRoots } from '@/lib/commerstools/define-client';
@@ -24,7 +24,7 @@ const postCustomerLogin = async (customer: CustomerSignin): Promise<ClientRespon
   };
 
   const response = await apiRoot.login().post({ body: action }).execute();
-  store.dispatch(forceSetCartState(response.body.cart));
+  store.dispatch(forceSetCart(response.body.cart));
   return response;
 };
 
