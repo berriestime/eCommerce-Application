@@ -1,6 +1,4 @@
-import { useState } from 'react';
-
-import { Box, Button, Divider, Flex, Text, TextInput, Title } from '@mantine/core';
+import { Box, Button, Divider, Flex, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
@@ -13,6 +11,7 @@ import { EmptyCart } from './components/empty-cart';
 import { OrderModal } from './components/order-modal';
 // import { PriceSection } from './components/price-section';
 import { Product } from './components/product';
+import { PromoCode } from './components/promo-code';
 import { RemoveModal as ClearCartModal } from './components/remove-modal';
 import { clearCart } from './store/clear-cart';
 
@@ -28,10 +27,6 @@ const CartPage = (): JSX.Element => {
 
   const productCards = lineItems.map((item) => <Product data={item} key={item.productId} />);
 
-  const [focused, setFocused] = useState(false);
-  const [value, setValue] = useState('');
-  const floating = value.trim().length !== 0 || focused || undefined;
-
   // const totalPrice = useAppSelector((state) => state.cart.totalPrice);
   const totalDiscountedPrice = useAppSelector((state) => state.cart.totalDiscountedPrice);
 
@@ -44,7 +39,13 @@ const CartPage = (): JSX.Element => {
           </Title>
 
           {lineItems.length > 0 && (
-            <Button c="#aa9f9c" className={classes.clearBtn} onClick={() => openModal()} variant="transparent">
+            <Button
+              c="#aa9f9c"
+              className={classes.clearBtn}
+              disabled={isCartPending}
+              onClick={() => openModal()}
+              variant="transparent"
+            >
               <Text className={classes.clearText} mr={8}>
                 Clear Shopping Cart
               </Text>
@@ -61,32 +62,7 @@ const CartPage = (): JSX.Element => {
           {lineItems.length > 0 && (
             <Box className={classes.wrapper}>
               <Flex align="center" className={classes.total} gap={32}>
-                <Flex gap={32}>
-                  <TextInput
-                    autoComplete="nope"
-                    classNames={{
-                      input: classes.input,
-                      label: classes.label,
-                      root: classes.root,
-                      wrapper: classes.wrapper,
-                    }}
-                    data-floating={floating}
-                    label="Promo Code"
-                    labelProps={{ 'data-floating': floating }}
-                    onBlur={() => setFocused(false)}
-                    onChange={(event) => setValue(event.currentTarget.value)}
-                    onFocus={() => setFocused(true)}
-                    radius={0}
-                    value={value}
-                  />
-                  <BaseButton
-                    disabled={value.trim().length === 0 || isCartPending}
-                    onClick={() => console.log('Apply')}
-                  >
-                    Apply
-                  </BaseButton>
-                </Flex>
-
+                <PromoCode />
                 <Flex align="center" gap={16}>
                   {/* <PriceSection discountPriceValue={totalDiscountedPrice} priceValue={totalPrice} text="Total" /> */}
                   <Text c="#aa9f9c">Total Cost</Text> <Text c="bright">${totalDiscountedPrice}</Text>{' '}
