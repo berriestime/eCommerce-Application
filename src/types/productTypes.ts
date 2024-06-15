@@ -1,7 +1,7 @@
 import { type ProductProjection } from '@commercetools/platform-sdk';
 
 export type Prices = {
-  discountPrice: null | string;
+  discountedPrice: null | string;
   price: string;
 };
 
