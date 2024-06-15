@@ -34,8 +34,7 @@ async function fetchProductsByCategoryId(
 ): Promise<ProductProjectionPagedQueryResponse> {
   const cardsResponse: ClientResponse<ProductProjectionPagedQueryResponse> = await getProductsByCategoryId(
     categoryId,
-    {},
-    MAX_CARDS_LENGTH,
+    { limit: MAX_CARDS_LENGTH },
     productId,
   );
   return cardsResponse.body;
