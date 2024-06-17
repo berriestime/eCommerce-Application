@@ -71,9 +71,11 @@ const CartPage = (): JSX.Element => {
                 <PromoCode />
                 {hasActivePromocodes && (
                   <Stack gap={0}>
-                    <Box ta={'start'}>Active promo codes:</Box>
+                    <Box fw={300} ta={'start'}>
+                      Active promo codes:
+                    </Box>
                     {activePromocodes.map((x) => (
-                      <Box className={classes.tmp} key={x.id}>
+                      <Box className={classes.tmp} key={x.id} mt={'0.5rem'}>
                         {x.code}
                         <CloseButton
                           onClick={() => {
@@ -84,27 +86,29 @@ const CartPage = (): JSX.Element => {
                     ))}
                   </Stack>
                 )}
-                <Flex gap={16}>
-                  <Stack gap={0}>
-                    {hasDiscount && <Text c="#aa9f9c">Before Promocode</Text>}
-                    {hasDiscount && <Text c="#aa9f9c">Promocode Discount</Text>}
-                    <Text c="#aa9f9c">Final Price</Text>
-                  </Stack>
-                  <Stack gap={0}>
-                    {hasDiscount && (
-                      <Text c="#aa9f9c" td="line-through">
-                        ${totalPriceAfterCatalogDiscount}
-                      </Text>
-                    )}
-                    {hasDiscount && <Text className={classes.sexy}>${promocodeDiscount}</Text>}
-                    <Text c="bright">${totalFinalPrice}</Text>
-                  </Stack>
+                <Flex direction={'column'} gap={16}>
+                  <Flex gap={16}>
+                    <Stack gap={0}>
+                      {hasDiscount && <Text c="#aa9f9c">Before Promocode</Text>}
+                      {hasDiscount && <Text c="#aa9f9c">Promocode Discount</Text>}
+                      <Text c="#aa9f9c">Final Price</Text>
+                    </Stack>
+                    <Stack gap={0}>
+                      {hasDiscount && (
+                        <Text c="#aa9f9c" td="line-through">
+                          ${totalPriceAfterCatalogDiscount}
+                        </Text>
+                      )}
+                      {hasDiscount && <Text className={classes.sexy}>${promocodeDiscount}</Text>}
+                      <Text c="bright">${totalFinalPrice}</Text>
+                    </Stack>
+                  </Flex>
+
+                  <BaseButton className={classes.orderBtn} onClick={() => openOrderModal()}>
+                    Make An Order
+                  </BaseButton>
                 </Flex>
               </Flex>
-
-              <BaseButton className={classes.orderBtn} onClick={() => openOrderModal()}>
-                Make An Order
-              </BaseButton>
             </Box>
           )}
         </Box>

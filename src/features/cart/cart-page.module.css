@@ -9,7 +9,7 @@
 .head {
   justify-content: space-between;
 
-  @media (width <= 450px) {
+  @media (width <=450px) {
     flex-direction: column;
     gap: 32px;
   }
@@ -28,11 +28,11 @@
   padding: 0 100px;
   user-select: none;
 
-  @media (width <= 1200px) {
+  @media (width <=1200px) {
     padding: 0 32px;
   }
 
-  @media (width <= 600px) {
+  @media (width <=600px) {
     padding: 0 16px;
   }
 }
@@ -48,7 +48,7 @@
 .total {
   justify-content: space-between;
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     flex-direction: column;
     gap: 32px;
   }
@@ -57,7 +57,7 @@
 .orderBtn {
   margin-top: 20px;
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     margin-top: 32px;
   }
 }
@@ -65,7 +65,7 @@
 .wrapper {
   text-align: right;
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     text-align: center;
   }
 }
@@ -79,4 +79,8 @@
 .tmp {
   display: flex;
   align-items: end;
+  justify-content: space-between;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  border: 1px solid #aa9f9c55;
 }
