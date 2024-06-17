@@ -54,7 +54,7 @@ const TeamContentBlock = (props: TeamContentBlock): ReactElement => {
       ref={ref}
       target="_blank"
     >
-      <Skeleton display={srcImage ? 'block' : 'none'} h={'15rem'} visible={loading} w={'15rem'}>
+      <Skeleton display={srcImage ? 'block' : 'none'} h={'15rem'} miw={'14,5rem'} visible={loading}>
         <Image className={clsx(classes.image, props.srcImage ? '' : classes.hidden)} src={props.srcImage}></Image>
       </Skeleton>
 
