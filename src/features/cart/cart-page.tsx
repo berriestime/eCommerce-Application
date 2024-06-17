@@ -80,7 +80,7 @@ const CartPage = (): JSX.Element => {
                             if (!navigator.onLine) {
                               addNotification({
                                 message: 'No internet connection. Unable to remove promo code.',
-                                title: 'Error',
+                                title: 'Connection Error',
                                 type: 'error',
                               });
                               return;

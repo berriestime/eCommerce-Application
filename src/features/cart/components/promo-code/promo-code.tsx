@@ -43,7 +43,7 @@ const PromoCode = (): JSX.Element => {
           if (!navigator.onLine) {
             addNotification({
               message: 'No internet connection. Unable to apply promo code.',
-              title: 'Error',
+              title: 'Connection Error',
               type: 'error',
             });
             return;
