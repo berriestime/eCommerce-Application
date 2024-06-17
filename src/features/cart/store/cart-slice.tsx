@@ -12,11 +12,8 @@ import { applyPromoCode } from './apply-promo-code';
 import { clearCart } from './clear-cart';
 import { receiveCart } from './receive-cart';
 import { removeProductFromCart } from './remove-product-from-cart';
-import { removePromoCode } from './remove-promo-code';
 
 const initialState: CartState = {
-  discountCodes: [],
-  discountCodesRaw: [],
   error: null,
   id: null,
   items: [],
@@ -61,15 +58,6 @@ const setTotalsToState = (state: CartState, cart?: Cart): void => {
   state.promocodeDiscount = formatCentAmount(promocodeDiscountRaw);
 };
 
-const setDiscounts = (state: CartState, cart?: Cart): void => {
-  const discountCodesRaw = cart?.discountCodes ?? [];
-  state.discountCodesRaw = discountCodesRaw;
-  state.discountCodes = discountCodesRaw
-    .filter((x) => x.state === 'MatchesCart')
-    .filter((x) => x.discountCode.obj?.isActive)
-    .map((x) => ({ code: x.discountCode.obj!.code, id: x.discountCode.id }));
-};
-
 const cartSlice = createSlice({
   extraReducers: (builder) => {
     for (const pending of [
@@ -78,7 +66,6 @@ const cartSlice = createSlice({
       receiveCart.pending,
       clearCart.pending,
       applyPromoCode.pending,
-      removePromoCode.pending,
     ]) {
       builder.addCase(pending, (state) => {
         state.loading = true;
@@ -90,7 +77,6 @@ const cartSlice = createSlice({
       removeProductFromCart.fulfilled,
       receiveCart.fulfilled,
       applyPromoCode.fulfilled,
-      removePromoCode.fulfilled,
     ]) {
       builder.addCase(fulfilled, (state, action: PayloadAction<Cart>) => {
         state.loading = false;
@@ -98,7 +84,6 @@ const cartSlice = createSlice({
         state.version = action.payload.version;
         state.items = action.payload.lineItems;
         setTotalsToState(state, action.payload);
-        setDiscounts(state, action.payload);
       });
     }
 
@@ -108,7 +93,6 @@ const cartSlice = createSlice({
       receiveCart.rejected,
       clearCart.rejected,
       applyPromoCode.rejected,
-      removePromoCode.rejected,
     ]) {
       builder.addCase(rejected, (state, action) => {
         state.loading = false;

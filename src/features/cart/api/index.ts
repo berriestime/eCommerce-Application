@@ -15,9 +15,6 @@ const postCartWithId = async (cartId: string, actions: CartUpdateAction[], versi
         actions,
         version,
       },
-      queryArgs: {
-        expand: ['discountCodes[*].discountCode'],
-      },
     })
     .execute();
 
@@ -29,12 +26,7 @@ const createNewCart = async (): Promise<Cart> => {
   const response = await apiRoot
     .me()
     .carts()
-    .post({
-      body: { currency: 'USD', taxMode: 'External' },
-      queryArgs: {
-        expand: ['discountCodes[*].discountCode'],
-      },
-    })
+    .post({ body: { currency: 'USD', taxMode: 'External' } })
     .execute();
 
   return response.body;
@@ -42,15 +34,7 @@ const createNewCart = async (): Promise<Cart> => {
 
 const getActiveCart = async (): Promise<Cart> => {
   const apiRoot = defineApiRoot({ apiRootAnonymous, apiRootLogin, apiRootRefresh });
-  const response = await apiRoot
-    .me()
-    .activeCart()
-    .get({
-      queryArgs: {
-        expand: ['discountCodes[*].discountCode'],
-      },
-    })
-    .execute();
+  const response = await apiRoot.me().activeCart().get().execute();
   return response.body;
 };
 
