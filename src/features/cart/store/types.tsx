@@ -2,7 +2,7 @@ import type { DiscountCodeInfo, LineItem } from '@commercetools/platform-sdk';
 
 interface RemoveLineItemPayload {
   lineItemId: string;
-  quantity: number; // Optional - specify if you want to remove a specific quantity
+  quantity: number;
 }
 
 interface CartState {

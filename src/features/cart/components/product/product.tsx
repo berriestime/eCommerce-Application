@@ -68,7 +68,22 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
             className={classes.btn}
             disabled={quantity === 0 || isCartPending}
             onClick={() => {
-              void dispatch(removeProductFromCart({ lineItemId: data.id, quantity: 1 }));
+              if (!navigator.onLine) {
+                addNotification({
+                  message: 'No internet connection. Unable to remove item from cart.',
+                  title: 'Error',
+                  type: 'error',
+                });
+                return;
+              }
+              dispatch(removeProductFromCart({ lineItemId: data.id, quantity: 1 })).catch((error) => {
+                console.error('An error occurred:', error);
+                addNotification({
+                  message: 'Unable to remove item from cart.',
+                  title: 'Error',
+                  type: 'error',
+                });
+              });
             }}
           >
             -
@@ -78,7 +93,22 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
             className={classes.btn}
             disabled={isCartPending}
             onClick={() => {
-              void dispatch(addProductToCart({ productId, quantity: 1, variantId: data.variant.id }));
+              if (!navigator.onLine) {
+                addNotification({
+                  message: 'No internet connection. Unable to add item to cart.',
+                  title: 'Error',
+                  type: 'error',
+                });
+                return;
+              }
+              dispatch(addProductToCart({ productId, quantity: 1, variantId: data.variant.id })).catch((error) => {
+                console.error('An error occurred:', error);
+                addNotification({
+                  message: 'Unable to add item to cart.',
+                  title: 'Error',
+                  type: 'error',
+                });
+              });
             }}
           >
             +
@@ -105,15 +135,40 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
       <RemoveModal
         close={closeModal}
         opened={modalOpened}
-        submit={() => {
-          void dispatch(removeProductFromCart({ lineItemId: data.id, quantity }));
-          addNotification({
-            message: 'Removed from cart',
-            title: 'Success',
-            type: 'info',
-          });
+        submit={async () => {
+          if (!navigator.onLine) {
+            addNotification({
+              message: 'No internet connection. Please check your connection and try again.',
+              title: 'Connection Error',
+              type: 'error',
+            });
+            return;
+          }
+          try {
+            const resultAction = await dispatch(removeProductFromCart({ lineItemId: data.id, quantity }));
+
+            if (removeProductFromCart.fulfilled.match(resultAction)) {
+              addNotification({
+                message: 'Removed from cart',
+                title: 'Success',
+                type: 'info',
+              });
+            } else {
+              addNotification({
+                message: 'Failed to remove from cart',
+                title: 'Error',
+                type: 'error',
+              });
+            }
+          } catch (error) {
+            addNotification({
+              message: 'An error occurred while removing the product from the cart',
+              title: 'Error',
+              type: 'error',
+            });
+          }
         }}
-        text={`Are you sure you want to remove ${name[LANGUAGE]} ?`}
+        text={`Are you sure you want to remove ${name[LANGUAGE]}?`}
         title="Remove from cart"
       />
 
