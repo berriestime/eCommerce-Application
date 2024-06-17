@@ -75,3 +75,8 @@
   background-clip: text;
   color: transparent;
 }
+
+.tmp {
+  display: flex;
+  align-items: end;
+}

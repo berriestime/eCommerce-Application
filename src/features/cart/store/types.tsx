@@ -1,4 +1,4 @@
-import type { LineItem } from '@commercetools/platform-sdk';
+import type { DiscountCodeInfo, LineItem } from '@commercetools/platform-sdk';
 
 interface RemoveLineItemPayload {
   lineItemId: string;
@@ -6,6 +6,8 @@ interface RemoveLineItemPayload {
 }
 
 interface CartState {
+  discountCodes: Array<{ code: string; id: string }>;
+  discountCodesRaw: DiscountCodeInfo[];
   error: null | string;
   id: null | string;
   items: LineItem[];
