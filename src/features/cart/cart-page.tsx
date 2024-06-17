@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Flex, Stack, Text, Title } from '@mantine/core';
+import { Box, Button, CloseButton, Divider, Flex, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 
@@ -14,6 +14,7 @@ import { Product } from './components/product';
 import { PromoCode } from './components/promo-code';
 import { RemoveModal as ClearCartModal } from './components/remove-modal';
 import { clearCart } from './store/clear-cart';
+import { removePromoCode } from './store/remove-promo-code';
 
 import classes from './cart-page.module.css';
 
@@ -31,6 +32,9 @@ const CartPage = (): JSX.Element => {
   const totalFinalPrice = useAppSelector((state) => state.cart.totalFinalPrice);
   const hasDiscount = useAppSelector((state) => Boolean(state.cart.promocodeDiscountRaw));
   const promocodeDiscount = useAppSelector((state) => state.cart.promocodeDiscount);
+
+  const activePromocodes = useAppSelector((state) => state.cart.discountCodes);
+  const hasActivePromocodes = Boolean(activePromocodes.length);
 
   return (
     <Box className="wrapper">
@@ -65,6 +69,21 @@ const CartPage = (): JSX.Element => {
             <Box className={classes.wrapper}>
               <Flex className={classes.total} gap={32}>
                 <PromoCode />
+                {hasActivePromocodes && (
+                  <Stack gap={0}>
+                    <Box>Active promo codes:</Box>
+                    {activePromocodes.map((x) => (
+                      <Box className={classes.tmp} key={x.id}>
+                        {x.code}
+                        <CloseButton
+                          onClick={() => {
+                            void dispatch(removePromoCode(x.id));
+                          }}
+                        />
+                      </Box>
+                    ))}
+                  </Stack>
+                )}
                 <Flex gap={16}>
                   <Stack gap={0}>
                     {hasDiscount && <Text c="#aa9f9c">Before Promocode</Text>}
