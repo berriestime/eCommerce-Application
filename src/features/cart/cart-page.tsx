@@ -71,7 +71,7 @@ const CartPage = (): JSX.Element => {
                 <PromoCode />
                 {hasActivePromocodes && (
                   <Stack gap={0}>
-                    <Box>Active promo codes:</Box>
+                    <Box ta={'start'}>Active promo codes:</Box>
                     {activePromocodes.map((x) => (
                       <Box className={classes.tmp} key={x.id}>
                         {x.code}
