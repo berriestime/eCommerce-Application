@@ -14,6 +14,7 @@ import { addProductToCart } from '@/features/cart/store/add-product-to-cart';
 import { removeProductFromCart } from '@/features/cart/store/remove-product-from-cart';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getPricesFromProductProjection } from '@/utils/formate-price';
+import { addNotification } from '@/utils/show-notification';
 
 import classes from './common-card.module.css';
 
@@ -115,7 +116,14 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
 
               void dispatch(
                 removeProductFromCart({ lineItemId: lineItemFromCart.id, quantity: lineItemFromCart.quantity }),
-              ).then(() => setLoadingBtn(false));
+              ).then(() => {
+                addNotification({
+                  message: 'Removed from cart',
+                  title: 'Success',
+                  type: 'info',
+                });
+                setLoadingBtn(false);
+              });
             }}
           >
             Remove From Cart
@@ -133,7 +141,14 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
               event.preventDefault();
               void dispatch(
                 addProductToCart({ productId: data.id, quantity: 1, variantId: data.masterVariant.id }),
-              ).then(() => setLoadingBtn(false));
+              ).then(() => {
+                addNotification({
+                  message: 'Added to cart',
+                  title: 'Success',
+                  type: 'info',
+                });
+                setLoadingBtn(false);
+              });
             }}
           >
             Add To Cart

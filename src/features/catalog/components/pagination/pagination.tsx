@@ -27,6 +27,8 @@ const Pagination = ({ totalItems }: { totalItems: number }): JSX.Element => {
   return (
     <MantinePagination.Root
       color="transparent"
+      mb={32}
+      mt={20}
       onChange={handlePaginationChange}
       total={Math.ceil(totalItems / limit)}
       value={Math.floor(offset / limit) + 1}

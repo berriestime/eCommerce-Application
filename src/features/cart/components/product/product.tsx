@@ -10,6 +10,7 @@ import { CloseIcon } from '@/components/icons';
 import { LANGUAGE } from '@/constants/catalog-constants';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { getPricesFromLineItem } from '@/utils/formate-price';
+import { addNotification } from '@/utils/show-notification';
 
 import { addProductToCart } from '../../store/add-product-to-cart';
 import { removeProductFromCart } from '../../store/remove-product-from-cart';
@@ -106,6 +107,11 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
         opened={modalOpened}
         submit={() => {
           void dispatch(removeProductFromCart({ lineItemId: data.id, quantity }));
+          addNotification({
+            message: 'Removed from cart',
+            title: 'Success',
+            type: 'info',
+          });
         }}
         text={`Are you sure you want to remove ${name[LANGUAGE]} ?`}
         title="Remove from cart"

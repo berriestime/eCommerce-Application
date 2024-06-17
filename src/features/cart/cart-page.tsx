@@ -6,10 +6,10 @@ import { BaseButton } from '@/components/base-button';
 import { Footer } from '@/components/footer';
 import { CloseIcon } from '@/components/icons';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { addNotification } from '@/utils/show-notification';
 
 import { EmptyCart } from './components/empty-cart';
 import { OrderModal } from './components/order-modal';
-// import { PriceSection } from './components/price-section';
 import { Product } from './components/product';
 import { PromoCode } from './components/promo-code';
 import { RemoveModal as ClearCartModal } from './components/remove-modal';
@@ -117,6 +117,11 @@ const CartPage = (): JSX.Element => {
           close={closeModal}
           opened={modalOpened}
           submit={() => {
+            addNotification({
+              message: 'Cart cleared',
+              title: 'Success',
+              type: 'info',
+            });
             void dispatch(clearCart(cart));
           }}
           text="Are you sure you want to clear shopping cart?"
