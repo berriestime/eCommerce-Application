@@ -34,6 +34,33 @@ const PromoCode = (): JSX.Element => {
         onBlur={() => setFocused(false)}
         onChange={(event) => setValue(event.currentTarget.value)}
         onFocus={() => setFocused(true)}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            if (value.trim().length !== 0 && !isCartPending) {
+              if (!navigator.onLine) {
+                addNotification({
+                  message: 'No internet connection. Unable to apply promo code.',
+                  title: 'Connection Error',
+                  type: 'error',
+                });
+                return;
+              }
+              dispatch(applyPromoCode(value))
+                .then(() => {
+                  setValue('');
+                })
+                .catch((error) => {
+                  console.error('An error occurred:', error);
+                  addNotification({
+                    message: 'Unable to apply promo code.',
+                    title: 'Error',
+                    type: 'error',
+                  });
+                });
+            }
+          }
+        }}
         radius={0}
         value={value}
       />
