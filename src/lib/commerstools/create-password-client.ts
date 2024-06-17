@@ -35,7 +35,6 @@ const createPasswordFlowClient = (customer: { email: string; password: string })
   const ctpClient = import.meta.env.PROD ? ctpClientBuilder.build() : ctpClientBuilder.withLoggerMiddleware().build();
 
   apiRootLogin = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
-  console.log('password-client flow');
 
   return apiRootLogin;
 };

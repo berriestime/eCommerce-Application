@@ -28,7 +28,6 @@ const createRefreshFlowClient = (token: TokenKey): ByProjectKeyRequestBuilder =>
   const ctpClient = import.meta.env.PROD ? ctpClientBuilder.build() : ctpClientBuilder.withLoggerMiddleware().build();
 
   apiRootRefresh = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
-  console.log('refresh-client flow', token);
 
   return apiRootRefresh;
 };
