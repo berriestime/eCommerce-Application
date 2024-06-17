@@ -71,7 +71,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
               if (!navigator.onLine) {
                 addNotification({
                   message: 'No internet connection. Unable to remove item from cart.',
-                  title: 'Error',
+                  title: 'Connection Error',
                   type: 'error',
                 });
                 return;
@@ -96,7 +96,7 @@ const Product = ({ data }: { data: LineItem }): JSX.Element => {
               if (!navigator.onLine) {
                 addNotification({
                   message: 'No internet connection. Unable to add item to cart.',
-                  title: 'Error',
+                  title: 'Connection Error',
                   type: 'error',
                 });
                 return;
