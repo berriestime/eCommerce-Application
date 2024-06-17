@@ -18,6 +18,53 @@ const PromoCode = (): JSX.Element => {
   const isCartPending = useAppSelector((state) => state.cart.loading);
   const dispatch = useAppDispatch();
 
+  const applyPromoCodeHandler = (): void => {
+    if (!navigator.onLine) {
+      addNotification({
+        message: 'No internet connection. Unable to apply promo code.',
+        title: 'Connection Error',
+        type: 'error',
+      });
+      return;
+    }
+
+    const validPromoCodes = ['ROCKETS', 'BIGSAVE3000', 'NEO'];
+    if (validPromoCodes.includes(value)) {
+      dispatch(applyPromoCode(value))
+        .unwrap()
+        .then(() => {
+          setValue('');
+          addNotification({
+            message: 'Promo code successfully applied.',
+            title: 'Success',
+            type: 'success',
+          });
+        })
+        .catch((error): void => {
+          console.error('An error occurred:', error);
+          if (error === 'This promo code has already been applied') {
+            addNotification({
+              message: String(error),
+              title: 'Promo Code Error',
+              type: 'error',
+            });
+          } else {
+            addNotification({
+              message: String(error),
+              title: 'Error',
+              type: 'error',
+            });
+          }
+        });
+    } else {
+      addNotification({
+        message: 'Invalid promo code. Please try again.',
+        title: 'Promo Code Error',
+        type: 'error',
+      });
+    }
+  };
+
   return (
     <Flex gap={16}>
       <TextInput
@@ -35,61 +82,15 @@ const PromoCode = (): JSX.Element => {
         onChange={(event) => setValue(event.currentTarget.value)}
         onFocus={() => setFocused(true)}
         onKeyDown={(event) => {
-          if (event.key === 'Enter') {
+          if (event.key === 'Enter' && value.trim().length !== 0 && !isCartPending) {
             event.preventDefault();
-            if (value.trim().length !== 0 && !isCartPending) {
-              if (!navigator.onLine) {
-                addNotification({
-                  message: 'No internet connection. Unable to apply promo code.',
-                  title: 'Connection Error',
-                  type: 'error',
-                });
-                return;
-              }
-              dispatch(applyPromoCode(value))
-                .then(() => {
-                  setValue('');
-                })
-                .catch((error) => {
-                  console.error('An error occurred:', error);
-                  addNotification({
-                    message: 'Unable to apply promo code.',
-                    title: 'Error',
-                    type: 'error',
-                  });
-                });
-            }
+            applyPromoCodeHandler();
           }
         }}
         radius={0}
         value={value}
       />
-      <BaseButton
-        disabled={value.trim().length === 0 || isCartPending}
-        miw={'6rem'}
-        onClick={() => {
-          if (!navigator.onLine) {
-            addNotification({
-              message: 'No internet connection. Unable to apply promo code.',
-              title: 'Connection Error',
-              type: 'error',
-            });
-            return;
-          }
-          dispatch(applyPromoCode(value))
-            .then(() => {
-              setValue('');
-            })
-            .catch((error) => {
-              console.error('An error occurred:', error);
-              addNotification({
-                message: 'Unable to apply promo code.',
-                title: 'Error',
-                type: 'error',
-              });
-            });
-        }}
-      >
+      <BaseButton disabled={value.trim().length === 0 || isCartPending} onClick={applyPromoCodeHandler}>
         Apply
       </BaseButton>
     </Flex>
