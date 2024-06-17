@@ -39,7 +39,6 @@ const createAnonymousFlowClient = (): ByProjectKeyRequestBuilder => {
   const ctpClient = import.meta.env.PROD ? ctpClientBuilder.build() : ctpClientBuilder.withLoggerMiddleware().build();
 
   apiRootAnonymous = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: VITE_PROJECT_KEY });
-  console.log('anon-client flow');
 
   return apiRootAnonymous;
 };
