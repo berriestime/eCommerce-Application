@@ -2,7 +2,9 @@ import type { ReactElement } from 'react';
 
 import { Flex } from '@mantine/core';
 
-import Fess from '../assets/Fess.png';
+import Anya from '../assets/Anya.jpg';
+import Lena from '../assets/Lena.jpg';
+import Nadya from '../assets/Nadya.jpg';
 import { Member } from '../member/member';
 
 import classes from './list.module.css';
@@ -23,7 +25,7 @@ const MemberList = (): ReactElement => {
         github="berriestime"
         link="https://github.com/berriestime"
         name="Elena Koroleva"
-        photoSrc={Fess}
+        photoSrc={Lena}
         title="Team Leader | Developer"
       />
 
@@ -39,7 +41,7 @@ const MemberList = (): ReactElement => {
         github="Naya252"
         link="https://github.com/Naya252"
         name="Anna Schavelkova"
-        photoSrc={Fess}
+        photoSrc={Anya}
         title="Designer | Developer"
       />
 
@@ -56,7 +58,7 @@ const MemberList = (): ReactElement => {
         github="NadyaGus"
         link="https://github.com/NadyaGus"
         name="Nadezhda Gusakova"
-        photoSrc={Fess}
+        photoSrc={Nadya}
         title="Designer | Developer"
       />
     </Flex>
