@@ -22,6 +22,10 @@ const addNotification = ({
     notification.color = 'red';
   }
 
+  if (type === 'info') {
+    notification.color = 'blue';
+  }
+
   notifications.show(notification);
 };
 
