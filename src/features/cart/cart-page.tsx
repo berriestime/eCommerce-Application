@@ -77,7 +77,22 @@ const CartPage = (): JSX.Element => {
                         {x.code}
                         <CloseButton
                           onClick={() => {
-                            void dispatch(removePromoCode(x.id));
+                            if (!navigator.onLine) {
+                              addNotification({
+                                message: 'No internet connection. Unable to remove promo code.',
+                                title: 'Error',
+                                type: 'error',
+                              });
+                              return;
+                            }
+                            dispatch(removePromoCode(x.id)).catch((error) => {
+                              console.error('An error occurred:', error);
+                              addNotification({
+                                message: 'Unable to remove promo code.',
+                                title: 'Error',
+                                type: 'error',
+                              });
+                            });
                           }}
                         />
                       </Box>
@@ -112,13 +127,38 @@ const CartPage = (): JSX.Element => {
         <ClearCartModal
           close={closeModal}
           opened={modalOpened}
-          submit={() => {
-            addNotification({
-              message: 'Cart cleared',
-              title: 'Success',
-              type: 'info',
-            });
-            void dispatch(clearCart(cart));
+          submit={async () => {
+            if (!navigator.onLine) {
+              addNotification({
+                message: 'No internet connection. Please check your connection and try again.',
+                title: 'Connection Error',
+                type: 'error',
+              });
+              return;
+            }
+            try {
+              const resultAction = await dispatch(clearCart(cart));
+
+              if (clearCart.fulfilled.match(resultAction)) {
+                addNotification({
+                  message: 'Cart cleared',
+                  title: 'Success',
+                  type: 'info',
+                });
+              } else {
+                addNotification({
+                  message: 'Failed to clear cart',
+                  title: 'Error',
+                  type: 'error',
+                });
+              }
+            } catch (error) {
+              addNotification({
+                message: 'An error occurred while clearing the cart',
+                title: 'Error',
+                type: 'error',
+              });
+            }
           }}
           text="Are you sure you want to clear shopping cart?"
           title="Clear Shopping Cart"

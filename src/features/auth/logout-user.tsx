@@ -8,7 +8,6 @@ const logoutUser = ({ apiRootAnonymous, apiRootLogin, apiRootRefresh }: ApiRoots
   destroyApiRoots();
 
   createAnonymousFlowClient();
-  // apiRootAnonymous.get().execute().catch(console.error);
 
   store.dispatch(forceClearCart());
 
