@@ -1,7 +1,7 @@
 .wrapper {
   text-align: right;
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     text-align: center;
   }
 }

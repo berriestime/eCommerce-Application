@@ -18,7 +18,7 @@ const PromoCode = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   return (
-    <Flex gap={32}>
+    <Flex gap={16}>
       <TextInput
         autoComplete="nope"
         classNames={{
@@ -38,6 +38,7 @@ const PromoCode = (): JSX.Element => {
       />
       <BaseButton
         disabled={value.trim().length === 0 || isCartPending}
+        miw={'6rem'}
         onClick={() => {
           void dispatch(applyPromoCode(value));
           setValue('');
