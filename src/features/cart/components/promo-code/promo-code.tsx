@@ -40,7 +40,6 @@ const PromoCode = (): JSX.Element => {
         disabled={value.trim().length === 0 || isCartPending}
         onClick={() => {
           void dispatch(applyPromoCode(value));
-          setValue('');
         }}
       >
         Apply
