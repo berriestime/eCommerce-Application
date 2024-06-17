@@ -7,15 +7,15 @@ export const DISCOUNT_SIZE = '- 15%';
 
 export const PROMO_1 = {
   id: 1,
-  promocode: 'FIRST',
-  text: ' on your first purchase with the promo code',
+  promocode: 'ROCKETS',
+  text: 'on Rockets lamps with the promo code',
   title: '-10%',
 };
 
 export const PROMO_2 = {
   id: 2,
   promocode: 'NEO',
-  text: 'on Neo desk lamps with the promo code',
+  text: 'on Neo lamps with the promo code',
   title: '-15%',
 };
 
