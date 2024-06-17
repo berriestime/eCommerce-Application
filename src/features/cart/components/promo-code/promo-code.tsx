@@ -4,6 +4,7 @@ import { Flex, TextInput } from '@mantine/core';
 
 import { BaseButton } from '@/components/base-button';
 import { useAppDispatch, useAppSelector } from '@/store';
+import { addNotification } from '@/utils/show-notification';
 
 import { applyPromoCode } from '../../store/apply-promo-code';
 
@@ -40,8 +41,26 @@ const PromoCode = (): JSX.Element => {
         disabled={value.trim().length === 0 || isCartPending}
         miw={'6rem'}
         onClick={() => {
-          void dispatch(applyPromoCode(value));
-          setValue('');
+          if (!navigator.onLine) {
+            addNotification({
+              message: 'No internet connection. Unable to apply promo code.',
+              title: 'Error',
+              type: 'error',
+            });
+            return;
+          }
+          dispatch(applyPromoCode(value))
+            .then(() => {
+              setValue('');
+            })
+            .catch((error) => {
+              console.error('An error occurred:', error);
+              addNotification({
+                message: 'Unable to apply promo code.',
+                title: 'Error',
+                type: 'error',
+              });
+            });
         }}
       >
         Apply

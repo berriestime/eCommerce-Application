@@ -113,22 +113,40 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
             loading={loadingBtn}
             onClick={(event) => {
               event.preventDefault();
-
-              void dispatch(
-                removeProductFromCart({ lineItemId: lineItemFromCart.id, quantity: lineItemFromCart.quantity }),
-              ).then(() => {
+              if (!navigator.onLine) {
                 addNotification({
-                  message: 'Removed from cart',
-                  title: 'Success',
-                  type: 'info',
+                  message: 'No internet connection. Unable to remove item from cart.',
+                  title: 'Error',
+                  type: 'error',
                 });
-                setLoadingBtn(false);
-              });
+                return;
+              }
+              setLoadingBtn(true);
+              dispatch(removeProductFromCart({ lineItemId: lineItemFromCart.id, quantity: lineItemFromCart.quantity }))
+                .then(() => {
+                  addNotification({
+                    message: 'Removed from cart',
+                    title: 'Success',
+                    type: 'info',
+                  });
+                })
+                .catch((error) => {
+                  console.error('An error occurred:', error);
+                  addNotification({
+                    message: 'An error occurred while removing the item from the cart.',
+                    title: 'Error',
+                    type: 'error',
+                  });
+                })
+                .finally(() => {
+                  setLoadingBtn(false);
+                });
             }}
           >
             Remove From Cart
           </BaseButton>
         )}
+
         {!isItemInCart && (
           <BaseButton
             c="bright"
@@ -139,16 +157,34 @@ const CommonCard = ({ data, url }: { data: ProductProjection; url: string }): JS
             loading={loadingBtn}
             onClick={(event) => {
               event.preventDefault();
-              void dispatch(
-                addProductToCart({ productId: data.id, quantity: 1, variantId: data.masterVariant.id }),
-              ).then(() => {
+              if (!navigator.onLine) {
                 addNotification({
-                  message: 'Added to cart',
-                  title: 'Success',
-                  type: 'info',
+                  message: 'No internet connection. Unable to add item to cart.',
+                  title: 'Error',
+                  type: 'error',
                 });
-                setLoadingBtn(false);
-              });
+                return;
+              }
+              setLoadingBtn(false);
+              dispatch(addProductToCart({ productId: data.id, quantity: 1, variantId: data.masterVariant.id }))
+                .then(() => {
+                  addNotification({
+                    message: 'Added to cart',
+                    title: 'Success',
+                    type: 'info',
+                  });
+                })
+                .catch((error) => {
+                  console.error('An error occurred:', error);
+                  addNotification({
+                    message: 'An error occurred while adding the item to the cart.',
+                    title: 'Error',
+                    type: 'error',
+                  });
+                })
+                .finally(() => {
+                  setLoadingBtn(false);
+                });
             }}
           >
             Add To Cart

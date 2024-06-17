@@ -9,7 +9,7 @@ import classes from '@/components/modals/modal.module.css';
 type ClearCartModalProps = {
   close: () => void;
   opened: boolean;
-  submit: () => void;
+  submit: () => Promise<void>;
   text: string;
   title: string;
 };
@@ -17,8 +17,16 @@ type ClearCartModalProps = {
 const RemoveModal = ({ close, opened, submit, text, title }: ClearCartModalProps): JSX.Element => {
   const [visible, setVisible] = useState(false);
 
-  const toggle = (): void => {
-    setVisible((prev) => !prev);
+  const handleConfirmClick = (): void => {
+    setVisible(true);
+    submit()
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        setVisible(false);
+        close();
+      });
   };
 
   return (
@@ -26,7 +34,7 @@ const RemoveModal = ({ close, opened, submit, text, title }: ClearCartModalProps
       <Modal.Overlay />
 
       <Modal.Content>
-        <LoadingOverlay loaderProps={{ type: 'oval' }} visible={visible} zIndex="2000" />
+        <LoadingOverlay loaderProps={{ type: 'oval' }} visible={visible} zIndex={2000} />
         <Modal.Header className={classes.header}>
           <Modal.Title c="bright" className={classes.title}>
             {title}
@@ -36,15 +44,7 @@ const RemoveModal = ({ close, opened, submit, text, title }: ClearCartModalProps
         <Modal.Body c="bright" className={classes.body} mt={20}>
           {text}
           <Group grow justify="center" mt={40}>
-            <BaseButton
-              c="bright"
-              onClick={() => {
-                toggle();
-                submit();
-                toggle();
-                close();
-              }}
-            >
+            <BaseButton c="bright" onClick={handleConfirmClick}>
               Ok
             </BaseButton>
             <Button onClick={close} radius="xs" variant="default">

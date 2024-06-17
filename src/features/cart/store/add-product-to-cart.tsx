@@ -19,7 +19,6 @@ const getCart = async (getState: () => unknown): Promise<Pick<Cart, 'id' | 'vers
   }
 };
 
-// Async thunk to add a product to the cart
 const addProductToCart = createAsyncThunk(
   'cart/addProduct',
   async (product: CartItem, { getState, rejectWithValue }) => {

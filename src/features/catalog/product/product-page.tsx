@@ -164,18 +164,36 @@ const ProductPage = (): JSX.Element => {
                 mt={60}
                 onClick={(event) => {
                   event.preventDefault();
-                  void dispatch(
+                  if (!navigator.onLine) {
+                    addNotification({
+                      message: 'No internet connection. Unable to add item to cart.',
+                      title: 'Error',
+                      type: 'error',
+                    });
+                    return;
+                  }
+                  dispatch(
                     addProductToCart({
                       productId: productData.id,
                       quantity: 1,
                       variantId: productData.masterVariant.id,
                     }),
-                  );
-                  addNotification({
-                    message: 'Added to cart',
-                    title: 'Success',
-                    type: 'info',
-                  });
+                  )
+                    .then(() =>
+                      addNotification({
+                        message: 'Added to cart',
+                        title: 'Success',
+                        type: 'info',
+                      }),
+                    )
+                    .catch((error) => {
+                      console.error('An error occurred:', error);
+                      addNotification({
+                        message: 'An error occurred while adding the item to the cart.',
+                        title: 'Error',
+                        type: 'error',
+                      });
+                    });
                 }}
               >
                 Add To Cart
@@ -191,14 +209,32 @@ const ProductPage = (): JSX.Element => {
                 mt={60}
                 onClick={(event) => {
                   event.preventDefault();
-                  void dispatch(
+                  if (!navigator.onLine) {
+                    addNotification({
+                      message: 'No internet connection. Unable to remove item from cart.',
+                      title: 'Error',
+                      type: 'error',
+                    });
+                    return;
+                  }
+                  dispatch(
                     removeProductFromCart({ lineItemId: lineItemFromCart.id, quantity: lineItemFromCart.quantity }),
-                  );
-                  addNotification({
-                    message: 'Removed from cart',
-                    title: 'Success',
-                    type: 'info',
-                  });
+                  )
+                    .then(() =>
+                      addNotification({
+                        message: 'Removed from cart',
+                        title: 'Success',
+                        type: 'info',
+                      }),
+                    )
+                    .catch((error) => {
+                      console.error('An error occurred:', error);
+                      addNotification({
+                        message: 'An error occurred while removing the item from the cart.',
+                        title: 'Error',
+                        type: 'error',
+                      });
+                    });
                 }}
               >
                 Remove From Cart
