@@ -19,6 +19,7 @@ import { removeProductFromCart } from '@/features/cart/store/remove-product-from
 import { CategoriesSection } from '@/features/root-page/components/categories-section';
 import { type RootState, useAppDispatch, useAppSelector } from '@/store';
 import { getPricesFromProductProjection } from '@/utils/formate-price';
+import { addNotification } from '@/utils/show-notification';
 
 import { MiniSlider } from './components/mini-slider';
 import { BigSlider } from './components/slider';
@@ -170,6 +171,11 @@ const ProductPage = (): JSX.Element => {
                       variantId: productData.masterVariant.id,
                     }),
                   );
+                  addNotification({
+                    message: 'Added to cart',
+                    title: 'Success',
+                    type: 'info',
+                  });
                 }}
               >
                 Add To Cart
@@ -188,6 +194,11 @@ const ProductPage = (): JSX.Element => {
                   void dispatch(
                     removeProductFromCart({ lineItemId: lineItemFromCart.id, quantity: lineItemFromCart.quantity }),
                   );
+                  addNotification({
+                    message: 'Removed from cart',
+                    title: 'Success',
+                    type: 'info',
+                  });
                 }}
               >
                 Remove From Cart
